@@ -1,0 +1,7 @@
+﻿[*.cs]
+
+# IDE0058: O valor da expressão nunca é usado
+csharp_style_unused_value_expression_statement_preference = discard_variable
+
+# Default severity for all analyzer diagnostics
+dotnet_analyzer_diagnostic.severity = none

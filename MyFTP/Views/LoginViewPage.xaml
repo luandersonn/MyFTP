@@ -1,0 +1,127 @@
+﻿<Page x:Class="MyFTP.Views.LoginViewPage"
+	  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	  xmlns:controls="using:MyFTP.Controls"
+	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	  xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+	  muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
+	  mc:Ignorable="d">
+
+	<Grid>
+		<controls:TitleBarControl Height="40"
+								  Padding="12,0"
+								  VerticalAlignment="Top"
+								  Canvas.ZIndex="1">
+			<StackPanel VerticalAlignment="Center"
+						IsHitTestVisible="False"
+						Orientation="Horizontal"
+						Spacing="4">
+				<Image Width="25"
+					   Height="25"
+					   VerticalAlignment="Center">
+					<Image.Source>
+						<BitmapImage DecodePixelHeight="32"
+									 DecodePixelWidth="32"
+									 UriSource="/Assets/Square44x44Logo.png" />
+					</Image.Source>
+				</Image>
+				<TextBlock VerticalAlignment="Center"
+						   d:Text="MyFTP"
+						   FontSize="14"
+						   FontWeight="SemiBold"
+						   Text="MyFTP" />
+
+			</StackPanel>
+		</controls:TitleBarControl>
+
+		<muxc:TwoPaneView MinWideModeWidth="820"
+						  Pane1Length="360"
+						  Pane2Length="2*"
+						  TallModeConfiguration="SinglePane"
+						  WideModeConfiguration="RightLeft">
+			<muxc:TwoPaneView.Pane1>
+				<ScrollViewer Margin="0,32,0,0" VerticalScrollBarVisibility="Auto">
+					<StackPanel Width="320"
+								Margin="16"
+								VerticalAlignment="Center"
+								x:DefaultBindMode="TwoWay"
+								Spacing="8">
+
+						<Image Height="100" VerticalAlignment="Center">
+							<Image.Source>
+								<BitmapImage DecodePixelWidth="256" UriSource="/Assets/SplashScreen.png" />
+							</Image.Source>
+						</Image>
+
+						<StackPanel Orientation="Horizontal" Spacing="8">
+							<TextBox Width="212"
+									 VerticalAlignment="Center"
+									 Header="Host"
+									 Text="{x:Bind ViewModel.Host}" />
+
+							<muxc:NumberBox Width="100"
+											VerticalAlignment="Bottom"
+											Header="Port"
+											Value="{x:Bind ViewModel.Port}" />
+						</StackPanel>
+
+						<TextBox Header="Username" Text="{x:Bind ViewModel.Username}" />
+						<PasswordBox Header="Password" Password="{x:Bind ViewModel.Password}" />
+						<CheckBox Content="Save credentials" IsChecked="{x:Bind ViewModel.SaveCredentials}" />
+
+						<Button x:Name="loginButton"
+								Width="320"
+								Margin="0,8,0,0"
+								Click="LoginButtonClick"
+								Content="Login"
+								Style="{ThemeResource AccentButtonStyle}">
+							<Button.KeyboardAccelerators>
+								<KeyboardAccelerator Key="Enter" />
+							</Button.KeyboardAccelerators>
+						</Button>
+
+						<muxc:ProgressBar x:Name="loginProgress" Background="Transparent" />
+						<muxc:InfoBar x:Name="infoBar"
+									  Title="Login error"
+									  d:IsOpen="True"
+									  d:Message="Erro ao fazer login"
+									  IsClosable="False"
+									  Severity="Error" />
+					</StackPanel>
+				</ScrollViewer>
+			</muxc:TwoPaneView.Pane1>
+			<muxc:TwoPaneView.Pane2>
+				<Grid>
+					<Grid.Background>
+						<ImageBrush AlignmentX="Center"
+									AlignmentY="Center"
+									Stretch="UniformToFill">
+							<ImageBrush.ImageSource>
+								<BitmapImage UriSource="/Assets/background/welcome-page-background-image.jpeg" />
+							</ImageBrush.ImageSource>
+						</ImageBrush>
+					</Grid.Background>
+
+					<Button Height="32"
+							Margin="18"
+							VerticalAlignment="Bottom"
+							Content="&#xE946;"
+							FontFamily="Segoe MDL2 Assets"
+							Foreground="{ThemeResource SystemAccentColorLight2}"
+							Style="{ThemeResource TextBlockButtonStyle}">
+						<Button.Flyout>
+							<Flyout Placement="Right">
+								<RichTextBlock>
+									<Paragraph>
+										<Hyperlink Foreground="{ThemeResource SystemBaseHighColor}" NavigateUri="https://www.freepik.com/vectors/background">Background vector created by freepik - www.freepik.com</Hyperlink>
+									</Paragraph>
+								</RichTextBlock>
+							</Flyout>
+						</Button.Flyout>
+					</Button>
+				</Grid>
+			</muxc:TwoPaneView.Pane2>
+		</muxc:TwoPaneView>
+	</Grid>
+</Page>
