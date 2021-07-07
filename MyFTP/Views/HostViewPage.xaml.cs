@@ -99,6 +99,16 @@ namespace MyFTP.Views
 			infoBar.IsOpen = true;
 			Debug.WriteLineIf(e != null, e);
 		}
-		private void ExitApp() => Application.Current.Exit();
+
+		private void OnListViewItemDoubleTapped(object sender, Windows.UI.Xaml.Input.DoubleTappedRoutedEventArgs e)
+		{
+			var frameworkElement = (FrameworkElement)sender;
+			var item = (FtpListItemViewModel)frameworkElement.DataContext;
+			SelectedItem = item;
+		}
+
+		private void OnListViewContextMenuClicked(object sender, RoutedEventArgs e) => throw new NotImplementedException();
+
+		private void ExitApp() => Application.Current.Exit();				
 	}
 }

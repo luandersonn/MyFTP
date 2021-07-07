@@ -102,7 +102,7 @@
 			<!--  Info bar  -->
 			<RowDefinition Height="auto" />
 
-			<!--  Title bar Content  -->
+			<!--  Content  -->
 			<RowDefinition Height="*" />
 		</Grid.RowDefinitions>
 
@@ -418,10 +418,43 @@
 						</Grid>
 					</ListViewBase.Header>
 
-
 					<ListViewBase.ItemTemplate>
 						<DataTemplate x:DataType="viewmodels:FtpListItemViewModel">
-							<Grid Padding="12,0" ColumnSpacing="8">
+							<Grid Margin="-12,-18"
+								  Padding="12,18"
+								  Background="Transparent"
+								  ColumnSpacing="8"
+								  DoubleTapped="OnListViewItemDoubleTapped"
+								  IsDoubleTapEnabled="True">
+								<Grid.ContextFlyout>
+									<MenuFlyout>
+										<MenuFlyoutItem Click="OnListViewContextMenuClicked" Text="Open">
+											<MenuFlyoutItem.Icon>
+												<FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE143;" />
+											</MenuFlyoutItem.Icon>
+										</MenuFlyoutItem>
+										<MenuFlyoutItem Click="OnListViewContextMenuClicked"
+														Icon="Download"
+														Text="Download" />
+
+										<MenuFlyoutSeparator />
+
+										<MenuFlyoutItem Click="OnListViewContextMenuClicked"
+														Icon="Delete"
+														Text="Delete" />
+
+										<MenuFlyoutItem Click="OnListViewContextMenuClicked"
+														Icon="Rename"
+														Text="Rename" />
+										<MenuFlyoutSeparator />
+
+										<MenuFlyoutItem Click="OnListViewContextMenuClicked" Text="Properties">
+											<MenuFlyoutItem.Icon>
+												<FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE946;" />
+											</MenuFlyoutItem.Icon>
+										</MenuFlyoutItem>
+									</MenuFlyout>
+								</Grid.ContextFlyout>
 								<Grid.ColumnDefinitions>
 									<ColumnDefinition Width="25" />
 									<ColumnDefinition Width="*" MinWidth="100" />
@@ -479,9 +512,9 @@
 							</Grid>
 						</DataTemplate>
 					</ListViewBase.ItemTemplate>
-
-
 				</ListView>
+
+				<muxc:ProgressRing IsActive="{x:Bind SelectedItem.IsLoading, Mode=OneWay}" />
 			</Grid>
 		</Grid>
 	</Grid>

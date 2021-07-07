@@ -108,7 +108,8 @@
 							VerticalAlignment="Bottom"
 							Content="&#xE946;"
 							FontFamily="Segoe MDL2 Assets"
-							Foreground="{ThemeResource SystemAccentColorLight2}"
+							Foreground="{ThemeResource SystemBaseHighColor}"
+							RequestedTheme="Dark"
 							Style="{ThemeResource TextBlockButtonStyle}">
 						<Button.Flyout>
 							<Flyout Placement="Right">
