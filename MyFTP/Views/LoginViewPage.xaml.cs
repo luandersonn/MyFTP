@@ -45,6 +45,33 @@ namespace MyFTP.Views
 			{
 				button.IsEnabled = true;
 			}
-		}		
+		}
+
+		private void OnUsernameTextboxTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+		{
+			if (args.CheckCurrent() && args.Reason != AutoSuggestionBoxTextChangeReason.SuggestionChosen)
+			{
+				if (string.IsNullOrWhiteSpace(sender.Text))
+					sender.ItemsSource = ViewModel.SavedCredentialsList;
+				else
+					sender.ItemsSource = ViewModel
+								.SavedCredentialsList
+								.Where(credential => credential.StartsWith(sender.Text, StringComparison.InvariantCultureIgnoreCase));
+			}
+		}
+
+		private void AutoSuggestBoxSuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+		{
+			if (args.SelectedItem is string username)
+			{
+				_ = ViewModel.SelectCredential(username);
+			}
+		}
+
+		private void AutoSuggestBoxLostFocus(object sender, RoutedEventArgs e)
+		{
+			var asb = (AutoSuggestBox)sender;
+			_ = ViewModel.SelectCredential(asb.Text);
+		}
 	}
 }

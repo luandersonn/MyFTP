@@ -48,9 +48,9 @@
 								x:DefaultBindMode="TwoWay"
 								Spacing="8">
 
-						<Image Height="100" VerticalAlignment="Center">
+						<Image Height="64" VerticalAlignment="Center">
 							<Image.Source>
-								<BitmapImage DecodePixelWidth="256" UriSource="/Assets/SplashScreen.png" />
+								<BitmapImage DecodePixelWidth="128" UriSource="/Assets/SplashScreen.png" />
 							</Image.Source>
 						</Image>
 
@@ -66,7 +66,12 @@
 											Value="{x:Bind ViewModel.Port}" />
 						</StackPanel>
 
-						<TextBox Header="Username" Text="{x:Bind ViewModel.Username}" />
+						<AutoSuggestBox Header="Username"
+										ItemsSource="{x:Bind ViewModel.SavedCredentialsList, Mode=OneWay}"
+										LostFocus="AutoSuggestBoxLostFocus"
+										SuggestionChosen="AutoSuggestBoxSuggestionChosen"
+										Text="{x:Bind ViewModel.Username, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+										TextChanged="OnUsernameTextboxTextChanged" />
 						<PasswordBox Header="Password" Password="{x:Bind ViewModel.Password}" />
 						<CheckBox Content="Save credentials" IsChecked="{x:Bind ViewModel.SaveCredentials}" />
 
