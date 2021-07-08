@@ -33,7 +33,7 @@ namespace MyFTP.ViewModels
 		public bool IsDirectory => Type == FtpFileSystemObjectType.Directory;
 		public string Size => FtpItem.Size < 0 ? "" : FtpItem.Size.Bytes().ToString("#.##");
 		public string Modified => FtpItem.Modified.Humanize();
-		public ReadOnlyObservableCollection<FtpListItemViewModel> Items { get; }
+		public ReadOnlyObservableCollection<FtpListItemViewModel> Items { get; }		
 		public bool IsLoaded { get => _isLoaded; private set => Set(ref _isLoaded, value); }
 		public bool IsLoading { get => _isLoading; private set => Set(ref _isLoading, value); }
 
@@ -42,7 +42,7 @@ namespace MyFTP.ViewModels
 		{
 			await AccessUIAsync(() => IsLoading = true);
 			try
-			{
+			{				
 				if (Type != FtpFileSystemObjectType.Directory)
 					throw new NotSupportedException();
 				var result = await Client.GetListingAsync(FtpItem.FullName, token);

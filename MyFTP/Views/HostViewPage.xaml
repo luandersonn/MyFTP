@@ -514,7 +514,38 @@
 					</ListViewBase.ItemTemplate>
 				</ListView>
 
-				<muxc:ProgressRing IsActive="{x:Bind SelectedItem.IsLoading, Mode=OneWay}" />
+
+				<toolkit:SwitchPresenter TargetType="x:Boolean" Value="{x:Bind SelectedItem.IsDirectory, FallbackValue=False, Mode=OneWay}">
+					<toolkit:Case Value="True">
+						<toolkit:SwitchPresenter TargetType="x:Boolean" Value="{x:Bind SelectedItem.IsLoaded, Mode=OneWay}">
+							<toolkit:Case Value="True">
+								<toolkit:SwitchPresenter TargetType="x:Int32" Value="{x:Bind SelectedItem.Items.Count, Mode=OneWay}">
+									<toolkit:Case Value="0">
+										<TextBlock HorizontalAlignment="Center"
+												   VerticalAlignment="Center"
+												   Text="This folder is empty" />
+									</toolkit:Case>
+								</toolkit:SwitchPresenter>
+							</toolkit:Case>
+							<toolkit:Case Value="False">
+								<toolkit:SwitchPresenter TargetType="x:Boolean" Value="{x:Bind SelectedItem.IsLoading, Mode=OneWay}">
+									<toolkit:Case Value="True">
+										<muxc:ProgressBar Margin="50" IsIndeterminate="True" />
+									</toolkit:Case>
+									<toolkit:Case Value="False">
+										<Button MinWidth="120"
+												HorizontalAlignment="Center"
+												VerticalAlignment="Center"
+												Click="OnRefreshButtonClick"
+												Content="Load items"
+												Style="{ThemeResource AccentButtonStyle}" />
+									</toolkit:Case>
+								</toolkit:SwitchPresenter>
+							</toolkit:Case>
+						</toolkit:SwitchPresenter>
+					</toolkit:Case>
+				</toolkit:SwitchPresenter>
+
 			</Grid>
 		</Grid>
 	</Grid>

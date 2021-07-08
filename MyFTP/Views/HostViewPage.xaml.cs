@@ -1,6 +1,7 @@
 ﻿using MyFTP.ViewModels;
 using System;
 using System.Diagnostics;
+using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -50,6 +51,7 @@ namespace MyFTP.Views
 				if (ViewModel == null)
 					throw new InvalidOperationException("Invalid param");
 				await ViewModel.LoadRootItemsAsync(default);
+				treeView.SelectedItem = ViewModel.RootItems.FirstOrDefault();
 			}
 			catch (Exception e)
 			{
@@ -104,11 +106,11 @@ namespace MyFTP.Views
 		{
 			var frameworkElement = (FrameworkElement)sender;
 			var item = (FtpListItemViewModel)frameworkElement.DataContext;
-			SelectedItem = item;
+			treeView.SelectedItem = item;
 		}
 
 		private void OnListViewContextMenuClicked(object sender, RoutedEventArgs e) => throw new NotImplementedException();
 
-		private void ExitApp() => Application.Current.Exit();				
+		private void ExitApp() => Application.Current.Exit();
 	}
 }
