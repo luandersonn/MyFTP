@@ -81,7 +81,7 @@ namespace MyFTP
                     // Quando a pilha de navegação não for restaurada, navegar para a primeira página,
                     // configurando a nova página passando as informações necessárias como um parâmetro
                     // de navegação
-                    rootFrame.Navigate(typeof(Views.LoginViewPage), e.Arguments);
+                    rootFrame.Navigate(typeof(Views.ParticalLoginViewPage), e.Arguments);
 
                     
                 }
