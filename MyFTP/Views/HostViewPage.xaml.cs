@@ -24,7 +24,7 @@ namespace MyFTP.Views
 		public static readonly DependencyProperty ShowFolderOptionsProperty = DependencyProperty.Register("ShowFolderOptions",
 			typeof(bool), typeof(HostViewPage), new PropertyMetadata(false));
 
-		private async static void OnSelectedItemChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		private async static void OnSelectedItemChanged(DependencyObject d, DependencyPropertyChangedEventArgs args)
 		{
 			var p = (HostViewPage)d;
 			if (p.SelectedItem != null
@@ -32,7 +32,14 @@ namespace MyFTP.Views
 				  && !p.SelectedItem.IsLoading
 				  && !p.SelectedItem.IsLoaded)
 			{
-				await p.SelectedItem.LoadItemsAsync();
+				try
+				{
+					await p.SelectedItem.LoadItemsAsync();
+				}
+				catch(Exception e)
+				{
+					p.ShowError(e.Message, e);
+				}
 			}
 			p.ShowFolderOptions = p.SelectedItem?.IsDirectory == true;
 		}

@@ -1,5 +1,4 @@
-﻿using Microsoft.UI.Xaml.Media;
-using MyFTP.Utils;
+﻿using MyFTP.Utils;
 using Windows.ApplicationModel.Core;
 using Windows.UI;
 using Windows.UI.ViewManagement;
@@ -164,11 +163,11 @@ namespace MyFTP.Controls
 		#region override methods
 		protected override void OnApplyTemplate()
 		{
-			AppTitleBar = this.GetTemplateChild<UIElement>(nameof(AppTitleBar));			
-			ContentPresenter = this.GetTemplateChild<ContentPresenter>(nameof(ContentPresenter));
-			InnerContentPresenter = this.GetTemplateChild<ContentPresenter>(nameof(InnerContentPresenter));
-			LeftPaddingColumn = this.GetTemplateChild<ColumnDefinition>(nameof(LeftPaddingColumn));
-			RightPaddingColumn = this.GetTemplateChild<ColumnDefinition>(nameof(RightPaddingColumn));
+			AppTitleBar = this.GetTemplateChild<UIElement>(nameof(AppTitleBar)) ?? new Grid();
+			ContentPresenter = this.GetTemplateChild<ContentPresenter>(nameof(ContentPresenter)) ?? new ContentPresenter();
+			InnerContentPresenter = this.GetTemplateChild<ContentPresenter>(nameof(InnerContentPresenter)) ?? new ContentPresenter();
+			LeftPaddingColumn = this.GetTemplateChild<ColumnDefinition>(nameof(LeftPaddingColumn)) ?? new ColumnDefinition();
+			RightPaddingColumn = this.GetTemplateChild<ColumnDefinition>(nameof(RightPaddingColumn)) ?? new ColumnDefinition();
 		}
 		#endregion
 

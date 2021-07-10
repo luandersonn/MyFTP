@@ -12,13 +12,7 @@ namespace MyFTP.Utils
 		{
 			var methodInfo = controlTemplate.GetType().GetMethod(nameof(GetTemplateChild), BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 
-			T t = methodInfo.Invoke(controlTemplate, new[] { childName }) as T;
-
-			if (isRequired & t is null)
-			{
-				throw new NullReferenceException();
-			}
-
+			T t = methodInfo.Invoke(controlTemplate, new[] { childName }) as T;			
 			return t;
 		}
 	}

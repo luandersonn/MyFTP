@@ -59,6 +59,7 @@ namespace MyFTP.ViewModels
 			catch
 			{
 				await AccessUIAsync(() => IsLoaded = false);
+				throw;
 			}
 			finally
 			{
