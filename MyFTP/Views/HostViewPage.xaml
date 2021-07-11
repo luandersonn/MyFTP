@@ -79,6 +79,7 @@
 
 						<TextBlock Grid.Column="1"
 								   VerticalAlignment="Center"
+								   FontSize="12"
 								   Text="{x:Bind Name}"
 								   TextTrimming="CharacterEllipsis" />
 					</Grid>
@@ -172,6 +173,21 @@
 					<muxc:SplitButton Click="OnDisconnectButtonClick" Content="Disconnect">
 						<muxc:SplitButton.Flyout>
 							<MenuBarItemFlyout Placement="Bottom">
+								<MenuFlyoutSubItem Text="Theme">
+									<muxc:RadioMenuFlyoutItem Click="OnThemeRadioClicked"
+															  IsChecked="True"
+															  Tag="Default"
+															  Text="System" />
+
+									<muxc:RadioMenuFlyoutItem Click="OnThemeRadioClicked"
+															  Tag="Light"
+															  Text="Light" />
+
+									<muxc:RadioMenuFlyoutItem Click="OnThemeRadioClicked"
+															  Tag="Dark"
+															  Text="Dark" />
+								</MenuFlyoutSubItem>
+
 								<MenuFlyoutItem Click="{x:Bind ExitApp, Mode=OneWay}"
 												Icon="Cancel"
 												Text="Exit">
@@ -188,23 +204,6 @@
 								  Content="&#xE946;"
 								  FontFamily="Segoe MDL2 Assets"
 								  IsChecked="{x:Bind infoTeachingTip.IsOpen, Mode=TwoWay}" />
-
-					<ToggleButton x:Name="themeButton"
-								  Height="32"
-								  IsChecked="{x:Bind Theme, Mode=TwoWay}">
-						<ToggleButton.Content>
-							<toolkit:SwitchPresenter TargetType="x:Boolean" Value="{x:Bind themeButton.IsChecked, Mode=OneWay}">
-								<toolkit:Case Value="True">
-									<FontIcon FontSize="14" Glyph="&#xE708;" />
-								</toolkit:Case>
-								<toolkit:Case Value="False">
-									<FontIcon FontSize="14" Glyph="&#xF08C;" />
-								</toolkit:Case>
-							</toolkit:SwitchPresenter>
-						</ToggleButton.Content>
-					</ToggleButton>
-
-
 				</toolkit:WrapPanel>
 
 				<Rectangle Width="1"
@@ -313,9 +312,9 @@
 		<Grid Grid.Row="2">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition x:Name="column"
-								  Width="220"
-								  MinWidth="220"
-								  MaxWidth="300" />
+								  Width="180"
+								  MinWidth="180"
+								  MaxWidth="320" />
 				<ColumnDefinition Width="*" />
 			</Grid.ColumnDefinitions>
 
@@ -325,6 +324,8 @@
 							   CanReorderItems="False"
 							   ItemTemplate="{StaticResource FtpItemsDataTemplate}"
 							   ItemsSource="{x:Bind ViewModel.Root}"
+							   ScrollViewer.HorizontalScrollBarVisibility="Auto"
+							   ScrollViewer.HorizontalScrollMode="Auto"
 							   SelectedItem="{x:Bind SelectedItem, Mode=TwoWay}" />
 			</Border>
 

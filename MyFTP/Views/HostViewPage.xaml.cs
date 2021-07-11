@@ -58,13 +58,7 @@ namespace MyFTP.Views
 				}
 			}
 			p.ShowFolderOptions = p.SelectedItem?.IsDirectory == true;
-		}
-
-		public bool Theme
-		{
-			get => Frame.ActualTheme == ElementTheme.Dark;
-			set => Frame.RequestedTheme = value ? ElementTheme.Dark : ElementTheme.Light;
-		}
+		}		
 
 		protected async override void OnNavigatedTo(NavigationEventArgs args)
 		{
@@ -116,6 +110,12 @@ namespace MyFTP.Views
 			Frame.GoBack();
 		}
 
+		private void OnThemeRadioClicked(object sender, RoutedEventArgs e)
+		{
+			var item = (muxc.RadioMenuFlyoutItem)sender;
+			Frame.RequestedTheme = (ElementTheme)Enum.Parse(typeof(ElementTheme), item.Tag.ToString());
+		}
+
 		private void ShowError(string message, Exception e = null)
 		{
 			infoBar.IsOpen = false;
@@ -136,6 +136,6 @@ namespace MyFTP.Views
 
 		private void OnListViewContextMenuClicked(object sender, RoutedEventArgs e) => throw new NotImplementedException();
 
-		private void ExitApp() => Application.Current.Exit();
+		private void ExitApp() => Application.Current.Exit();		
 	}
 }
