@@ -35,15 +35,17 @@
 			</StackPanel>
 		</controls:TitleBarControl>
 
-		<muxc:TwoPaneView MinWideModeWidth="820"
-						  Pane1Length="360"
-						  Pane2Length="2*"
-						  TallModeConfiguration="SinglePane"
+		<muxc:TwoPaneView x:Name="twoPaneView"
+						  MinTallModeHeight="560"
+						  MinWideModeWidth="820"
+						  Pane1Length="4*"
+						  Pane2Length="*"
+						  TallModeConfiguration="BottomTop"
 						  WideModeConfiguration="RightLeft">
 			<muxc:TwoPaneView.Pane1>
-				<ScrollViewer Margin="0,32,0,0" VerticalScrollBarVisibility="Auto">
+				<ScrollViewer x:Name="pane1ScrollViewer" VerticalScrollBarVisibility="Auto">
 					<StackPanel Width="320"
-								Margin="16"
+								Margin="16,12"
 								VerticalAlignment="Center"
 								x:DefaultBindMode="TwoWay"
 								Spacing="8">
@@ -108,6 +110,10 @@
 						</ImageBrush>
 					</Grid.Background>
 
+					<Rectangle x:Name="rectImageLayer"
+							   Fill="{ThemeResource SystemAltHighColor}"
+							   Opacity="0.2" />
+
 					<Button Height="32"
 							Margin="18"
 							VerticalAlignment="Bottom"
@@ -129,5 +135,21 @@
 				</Grid>
 			</muxc:TwoPaneView.Pane2>
 		</muxc:TwoPaneView>
+
+		<VisualStateManager.VisualStateGroups>
+			<VisualStateGroup>
+				<VisualState x:Name="small" />
+				<VisualState x:Name="wide">
+					<VisualState.StateTriggers>
+						<AdaptiveTrigger MinWindowWidth="821" />
+					</VisualState.StateTriggers>
+					<VisualState.Setters>
+						<Setter Target="twoPaneView.Pane1Length" Value="360" />
+						<Setter Target="rectImageLayer.Visibility" Value="Collapsed" />
+						<Setter Target="pane1ScrollViewer.Margin" Value="0,32,0,0" />
+					</VisualState.Setters>
+				</VisualState>
+			</VisualStateGroup>
+		</VisualStateManager.VisualStateGroups>
 	</Grid>
 </Page>
