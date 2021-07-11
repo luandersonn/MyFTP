@@ -1,16 +1,20 @@
 ﻿using MyFTP.ViewModels;
 using System;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-
+using muxc = Microsoft.UI.Xaml.Controls;
 namespace MyFTP.Views
 {
 	public sealed partial class HostViewPage : Page
 	{
-		public HostViewPage() => InitializeComponent();
+		public HostViewPage()
+		{
+			InitializeComponent();
+			Crumbs = new ObservableCollection<FtpListItemViewModel>();
+		}
 
 		public HostViewModel ViewModel { get => (HostViewModel)GetValue(ViewModelProperty); set => SetValue(ViewModelProperty, value); }
 		public static readonly DependencyProperty ViewModelProperty = DependencyProperty.Register("ViewModel",
@@ -24,21 +28,33 @@ namespace MyFTP.Views
 		public static readonly DependencyProperty ShowFolderOptionsProperty = DependencyProperty.Register("ShowFolderOptions",
 			typeof(bool), typeof(HostViewPage), new PropertyMetadata(false));
 
+		public ObservableCollection<FtpListItemViewModel> Crumbs { get; }
+
 		private async static void OnSelectedItemChanged(DependencyObject d, DependencyPropertyChangedEventArgs args)
 		{
 			var p = (HostViewPage)d;
-			if (p.SelectedItem != null
-				  && p.SelectedItem.IsDirectory
-				  && !p.SelectedItem.IsLoading
-				  && !p.SelectedItem.IsLoaded)
+			var item = (FtpListItemViewModel)p.treeView.SelectedItem;
+			if (item != null && item.IsDirectory)
 			{
-				try
+				// Update the BreadcrumbBar
+				p.Crumbs.Clear();
+				var crumb = item;
+				do
 				{
-					await p.SelectedItem.LoadItemsAsync();
-				}
-				catch(Exception e)
+					p.Crumbs.Insert(0, crumb);
+					crumb = crumb.Parent;
+				} while (crumb != null);
+
+				if (!item.IsLoading && !item.IsLoaded)
 				{
-					p.ShowError(e.Message, e);
+					try
+					{
+						await item.LoadItemsAsync();
+					}
+					catch (Exception e)
+					{
+						p.ShowError(e.Message, e);
+					}
 				}
 			}
 			p.ShowFolderOptions = p.SelectedItem?.IsDirectory == true;
@@ -57,8 +73,8 @@ namespace MyFTP.Views
 				ViewModel = args.Parameter as HostViewModel;
 				if (ViewModel == null)
 					throw new InvalidOperationException("Invalid param");
-				await ViewModel.LoadRootItemsAsync(default);
-				treeView.SelectedItem = ViewModel.RootItems.FirstOrDefault();
+				await ViewModel.Root[0].LoadItemsAsync(default);
+				treeView.SelectedItem = ViewModel.Root[0];
 			}
 			catch (Exception e)
 			{
@@ -108,6 +124,8 @@ namespace MyFTP.Views
 			infoBar.IsOpen = true;
 			Debug.WriteLineIf(e != null, e);
 		}
+
+		private void OnBreadcrumbBarItemClicked(muxc.BreadcrumbBar sender, muxc.BreadcrumbBarItemClickedEventArgs args) => treeView.SelectedItem = args.Item;
 
 		private void OnListViewItemDoubleTapped(object sender, Windows.UI.Xaml.Input.DoubleTappedRoutedEventArgs e)
 		{

@@ -24,7 +24,7 @@
 						 Color="{ThemeResource SystemAccentColor}" />
 
 		<SolidColorBrush x:Key="ListViewItemBackgroundSelectedPointerOver"
-						 Opacity="0.8"
+						 Opacity="0.2"
 						 Color="{ThemeResource SystemAccentColor}" />
 
 
@@ -52,23 +52,18 @@
 									</toolkit:Case>
 
 									<toolkit:Case Value="False">
-
-
 										<toolkit:SwitchPresenter TargetType="x:Boolean" Value="{x:Bind IsLoaded, Mode=OneWay}">
 											<toolkit:Case Value="True">
-												<FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}"
-														  FontSize="14"
+												<FontIcon FontSize="15"
 														  Foreground="{ThemeResource SystemAccentColor}"
 														  Glyph="&#xE188;" />
+
 											</toolkit:Case>
 
 											<toolkit:Case Value="False">
-
-												<FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}"
-														  FontSize="14"
+												<FontIcon FontSize="15"
 														  Glyph="&#xE188;"
-														  Opacity="0.5" />
-
+														  Opacity="0.8" />
 											</toolkit:Case>
 										</toolkit:SwitchPresenter>
 									</toolkit:Case>
@@ -76,15 +71,13 @@
 							</toolkit:Case>
 
 							<toolkit:Case Value="False">
-								<FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}"
-										  FontSize="14"
-										  Glyph="&#xE132;" />
+								<FontIcon FontSize="14" Glyph="&#xE132;" />
 							</toolkit:Case>
 						</toolkit:SwitchPresenter>
 
 						<TextBlock Grid.Column="1"
 								   VerticalAlignment="Center"
-								   Text="{x:Bind FtpItem.Name}"
+								   Text="{x:Bind Name}"
 								   TextTrimming="CharacterEllipsis" />
 					</Grid>
 				</muxc:TreeViewItem.Content>
@@ -118,7 +111,7 @@
 					<ColumnDefinition Width="{x:Bind column.Width, Mode=TwoWay}"
 									  MinWidth="{x:Bind column.MinWidth, Mode=TwoWay}"
 									  MaxWidth="{x:Bind column.MaxWidth, Mode=TwoWay}" />
-					<ColumnDefinition />
+					<ColumnDefinition Width="*" />
 				</Grid.ColumnDefinitions>
 
 				<toolkit:WrapPanel Margin="4"
@@ -135,7 +128,7 @@
 										  PreferredPlacement="Bottom"
 										  Target="{x:Bind infoButton, Mode=OneTime}">
 							<muxc:TeachingTip.IconSource>
-								<muxc:FontIconSource FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE968;" />
+								<muxc:FontIconSource Glyph="&#xE968;" />
 							</muxc:TeachingTip.IconSource>
 							<StackPanel Padding="0,8">
 								<TextBlock Opacity="0.6" Text="Host" />
@@ -191,7 +184,7 @@
 					<ToggleButton x:Name="infoButton"
 								  Height="32"
 								  Content="&#xE946;"
-								  FontFamily="{ThemeResource SymbolThemeFontFamily}"
+								  FontFamily="Segoe MDL2 Assets"
 								  IsChecked="{x:Bind infoTeachingTip.IsOpen, Mode=TwoWay}" />
 
 					<ToggleButton x:Name="themeButton"
@@ -200,14 +193,10 @@
 						<ToggleButton.Content>
 							<toolkit:SwitchPresenter TargetType="x:Boolean" Value="{x:Bind themeButton.IsChecked, Mode=OneWay}">
 								<toolkit:Case Value="True">
-									<FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}"
-											  FontSize="14"
-											  Glyph="&#xE708;" />
+									<FontIcon FontSize="14" Glyph="&#xE708;" />
 								</toolkit:Case>
 								<toolkit:Case Value="False">
-									<FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}"
-											  FontSize="14"
-											  Glyph="&#xF08C;" />
+									<FontIcon FontSize="14" Glyph="&#xF08C;" />
 								</toolkit:Case>
 							</toolkit:SwitchPresenter>
 						</ToggleButton.Content>
@@ -215,8 +204,6 @@
 
 
 				</toolkit:WrapPanel>
-
-
 
 				<Rectangle Width="1"
 						   HorizontalAlignment="Right"
@@ -245,36 +232,71 @@
 					</toolkit:GridSplitter.Resources>
 				</toolkit:GridSplitter>
 
+				<muxc:BreadcrumbBar Grid.Column="1"
+									Margin="12,0"
+									VerticalAlignment="Center"
+									ItemClicked="OnBreadcrumbBarItemClicked"
+									ItemsSource="{x:Bind Crumbs}">
+					<muxc:BreadcrumbBar.ItemTemplate>
+						<DataTemplate x:DataType="viewmodels:FtpListItemViewModel">
+							<Grid Padding="4,0" CornerRadius="4">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="20" />
+									<ColumnDefinition />
+								</Grid.ColumnDefinitions>
+								<FontIcon HorizontalAlignment="Left"
+										  FontSize="15"
+										  Foreground="{ThemeResource SystemAccentColor}"
+										  Glyph="&#xE188;" />
+								<TextBlock Grid.Column="1"
+										   VerticalAlignment="Center"
+										   Text="{x:Bind Name}" />
 
-				<toolkit:WrapPanel Grid.Column="1"
-								   Margin="8,4,4,4"
-								   VerticalAlignment="Center"
-								   ChildrenTransitions="{StaticResource RepositionAnimation}"
-								   HorizontalSpacing="8"
-								   VerticalSpacing="8"
-								   Visibility="{x:Bind ShowFolderOptions, Mode=OneWay}">
-					<Button Height="32"
-							Click="OnRefreshButtonClick"
-							Content="&#xE117;"
-							FontFamily="Segoe MDL2 Assets" />
+								<ToolTipService.ToolTip>
+									<ToolTip Placement="Bottom">
+										<Grid ColumnSpacing="8">
+											<Grid.ColumnDefinitions>
+												<ColumnDefinition />
+												<ColumnDefinition />
+											</Grid.ColumnDefinitions>
 
-					<Button Click="OnUploadFileButtonClick"
-							Content="Upload"
-							Style="{ThemeResource AccentButtonStyle}" />
-					<muxc:DropDownButton Content="New">
-						<muxc:DropDownButton.Flyout>
-							<MenuFlyout Placement="Bottom">
-								<MenuFlyoutItem Icon="Page" Text="File" />
-								<MenuFlyoutItem Text="Folder">
-									<MenuFlyoutItem.Icon>
-										<FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE188;" />
-									</MenuFlyoutItem.Icon>
-								</MenuFlyoutItem>
-							</MenuFlyout>
-						</muxc:DropDownButton.Flyout>
-					</muxc:DropDownButton>
-					<Button Click="OnDownloadFilesButtonClick" Content="Download" />
-				</toolkit:WrapPanel>
+											<Grid.RowDefinitions>
+												<RowDefinition />
+												<RowDefinition />
+												<RowDefinition />
+											</Grid.RowDefinitions>
+
+											<TextBlock Grid.ColumnSpan="2"
+													   FontSize="12"
+													   Text="{x:Bind FullName}" />
+
+											<TextBlock Grid.Row="1"
+													   FontSize="12"
+													   Opacity="0.6"
+													   Text="Modified:" />
+
+											<TextBlock Grid.Row="1"
+													   Grid.Column="1"
+													   FontSize="12"
+													   Text="{x:Bind Modified}" />
+
+											<TextBlock Grid.Row="2"
+													   Grid.Column="0"
+													   FontSize="12"
+													   Opacity="0.6"
+													   Text="Items:" />
+
+											<TextBlock Grid.Row="2"
+													   Grid.Column="1"
+													   FontSize="12"
+													   Text="{x:Bind Items.Count}" />
+										</Grid>
+									</ToolTip>
+								</ToolTipService.ToolTip>
+							</Grid>
+						</DataTemplate>
+					</muxc:BreadcrumbBar.ItemTemplate>
+				</muxc:BreadcrumbBar>
 
 			</Grid>
 		</controls:TitleBarControl>
@@ -292,7 +314,6 @@
 								  Width="220"
 								  MinWidth="220"
 								  MaxWidth="300" />
-
 				<ColumnDefinition Width="*" />
 			</Grid.ColumnDefinitions>
 
@@ -301,7 +322,7 @@
 				<muxc:TreeView x:Name="treeView"
 							   CanReorderItems="False"
 							   ItemTemplate="{StaticResource FtpItemsDataTemplate}"
-							   ItemsSource="{x:Bind ViewModel.RootItems}"
+							   ItemsSource="{x:Bind ViewModel.Root}"
 							   SelectedItem="{x:Bind SelectedItem, Mode=TwoWay}" />
 			</Border>
 
@@ -333,6 +354,7 @@
 			</toolkit:GridSplitter>
 
 			<Grid Grid.Column="2">
+
 				<ListView ui:ListViewExtensions.AlternateColor="{ThemeResource SystemControlBackgroundListLowBrush}"
 						  ItemsSource="{x:Bind SelectedItem.Items, Mode=OneWay}"
 						  SelectionMode="Extended">
@@ -430,7 +452,7 @@
 									<MenuFlyout>
 										<MenuFlyoutItem Click="OnListViewContextMenuClicked" Text="Open">
 											<MenuFlyoutItem.Icon>
-												<FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE143;" />
+												<FontIcon Glyph="&#xE143;" />
 											</MenuFlyoutItem.Icon>
 										</MenuFlyoutItem>
 										<MenuFlyoutItem Click="OnListViewContextMenuClicked"
@@ -450,7 +472,7 @@
 
 										<MenuFlyoutItem Click="OnListViewContextMenuClicked" Text="Properties">
 											<MenuFlyoutItem.Icon>
-												<FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE946;" />
+												<FontIcon Glyph="&#xE946;" />
 											</MenuFlyoutItem.Icon>
 										</MenuFlyoutItem>
 									</MenuFlyout>
@@ -475,18 +497,16 @@
 
 												<toolkit:SwitchPresenter TargetType="x:Boolean" Value="{x:Bind IsLoaded, Mode=OneWay}">
 													<toolkit:Case Value="True">
-														<FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}"
-																  FontSize="14"
+														<FontIcon FontSize="15"
 																  Foreground="{ThemeResource SystemAccentColor}"
 																  Glyph="&#xE188;" />
 													</toolkit:Case>
 
 													<toolkit:Case Value="False">
 
-														<FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}"
-																  FontSize="14"
+														<FontIcon FontSize="15"
 																  Glyph="&#xE188;"
-																  Opacity="0.5" />
+																  Opacity="0.8" />
 
 													</toolkit:Case>
 												</toolkit:SwitchPresenter>
@@ -495,16 +515,14 @@
 									</toolkit:Case>
 
 									<toolkit:Case Value="False">
-										<FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}"
-												  FontSize="14"
-												  Glyph="&#xE132;" />
+										<FontIcon FontSize="15" Glyph="&#xE132;" />
 									</toolkit:Case>
 								</toolkit:SwitchPresenter>
 
 
 								<TextBlock Grid.Column="1"
 										   VerticalAlignment="Center"
-										   Text="{x:Bind FtpItem.Name}"
+										   Text="{x:Bind Name}"
 										   TextTrimming="CharacterEllipsis" />
 
 								<TextBlock Grid.Column="2" Text="{x:Bind Size}" />
@@ -545,7 +563,6 @@
 						</toolkit:SwitchPresenter>
 					</toolkit:Case>
 				</toolkit:SwitchPresenter>
-
 			</Grid>
 		</Grid>
 	</Grid>

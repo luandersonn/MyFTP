@@ -13,7 +13,7 @@ namespace Utils.Comparers
 			else if (!x.IsDirectory && y.IsDirectory)
 				return 1;
 			else
-				return x.FtpItem.Name.CompareTo(y.FtpItem.Name);
+				return x.Name.CompareTo(y.Name);
 		}
 	}
 }
