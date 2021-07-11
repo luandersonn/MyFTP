@@ -22,11 +22,7 @@ namespace MyFTP.Views
 
 		public FtpListItemViewModel SelectedItem { get => (FtpListItemViewModel)GetValue(SelectedItemProperty); set => SetValue(SelectedItemProperty, value); }
 		public static readonly DependencyProperty SelectedItemProperty = DependencyProperty.Register("SelectedItem",
-			typeof(FtpListItemViewModel), typeof(HostViewPage), new PropertyMetadata(null, OnSelectedItemChanged));
-
-		public bool ShowFolderOptions { get => (bool)GetValue(ShowFolderOptionsProperty); set => SetValue(ShowFolderOptionsProperty, value); }
-		public static readonly DependencyProperty ShowFolderOptionsProperty = DependencyProperty.Register("ShowFolderOptions",
-			typeof(bool), typeof(HostViewPage), new PropertyMetadata(false));
+			typeof(FtpListItemViewModel), typeof(HostViewPage), new PropertyMetadata(null, OnSelectedItemChanged));		
 
 		public ObservableCollection<FtpListItemViewModel> Crumbs { get; }
 
@@ -56,8 +52,7 @@ namespace MyFTP.Views
 						p.ShowError(e.Message, e);
 					}
 				}
-			}
-			p.ShowFolderOptions = p.SelectedItem?.IsDirectory == true;
+			}			
 		}		
 
 		protected async override void OnNavigatedTo(NavigationEventArgs args)
@@ -73,24 +68,6 @@ namespace MyFTP.Views
 			catch (Exception e)
 			{
 				ShowError(e.Message, e);
-			}
-		}
-
-		private async void OnRefreshButtonClick(object sender, RoutedEventArgs args)
-		{
-			var button = (Control)sender;
-			button.IsEnabled = false;
-			try
-			{
-				await SelectedItem.LoadItemsAsync();
-			}
-			catch (Exception e)
-			{
-				ShowError(e.Message, e);
-			}
-			finally
-			{
-				button.IsEnabled = true;
 			}
 		}
 

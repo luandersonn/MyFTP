@@ -106,6 +106,7 @@
 								  Title="{x:Bind ViewModel.Client.Host}"
 								  MinHeight="42"
 								  VerticalAlignment="Top"
+								  Background="{ThemeResource SystemControlAcrylicWindowBrush}"
 								  BorderBrush="{ThemeResource SystemBaseLowColor}"
 								  BorderThickness="0,0,0,1"
 								  Canvas.ZIndex="1">
@@ -261,7 +262,7 @@
 													<Setter Property="MinHeight" Value="0" />
 													<Setter Property="Margin" Value="0" />
 													<Setter Property="Padding" Value="4" />
-													<Setter Property="CornerRadius" Value="4"/>
+													<Setter Property="CornerRadius" Value="4" />
 												</Style>
 											</ListViewBase.ItemContainerStyle>
 											<ListViewBase.ItemTemplate>
@@ -438,7 +439,7 @@
 
 				<CommandBar VerticalContentAlignment="Center"
 							DefaultLabelPosition="Right"
-							Visibility="{x:Bind ShowFolderOptions, Mode=OneWay}">
+							Visibility="{x:Bind SelectedItem.IsDirectory, Mode=OneWay}">
 					<CommandBar.Content>
 						<muxc:DropDownButton VerticalAlignment="Center"
 											 Background="Transparent"
@@ -457,7 +458,8 @@
 						</muxc:DropDownButton>
 					</CommandBar.Content>
 
-					<AppBarButton Click="OnRefreshButtonClick"
+					<AppBarButton HorizontalAlignment="Center"
+								  Command="{x:Bind SelectedItem.RefreshCommand, Mode=OneWay}"
 								  Icon="Refresh"
 								  Label="Refresh" />
 
@@ -507,28 +509,6 @@
 							   VerticalAlignment="Stretch"
 							   Fill="{ThemeResource SystemBaseLowColor}" />
 
-					<toolkit:GridSplitter Grid.Column="1"
-										  Width="4"
-										  MinWidth="0"
-										  Margin="0,0,-2,0"
-										  HorizontalAlignment="Right"
-										  Background="Transparent"
-										  Canvas.ZIndex="1"
-										  FontSize="13"
-										  Foreground="Transparent"
-										  ResizeBehavior="BasedOnAlignment"
-										  ResizeDirection="Auto">
-						<toolkit:GridSplitter.Element>
-							<FontIcon />
-						</toolkit:GridSplitter.Element>
-						<toolkit:GridSplitter.Resources>
-							<SolidColorBrush x:Key="SystemControlSplitterPointerOver"
-											 Opacity="0.5"
-											 Color="{ThemeResource SystemBaseLowColor}" />
-
-							<SolidColorBrush x:Key="SystemControlSplitterPressed" Color="{ThemeResource SystemBaseLowColor}" />
-						</toolkit:GridSplitter.Resources>
-					</toolkit:GridSplitter>
 
 					<TextBlock Grid.Column="2"
 							   FontSize="12"
@@ -540,28 +520,6 @@
 							   VerticalAlignment="Stretch"
 							   Fill="{ThemeResource SystemBaseLowColor}" />
 
-					<toolkit:GridSplitter Grid.Column="2"
-										  Width="4"
-										  MinWidth="0"
-										  Margin="0,0,-2,0"
-										  HorizontalAlignment="Right"
-										  Background="Transparent"
-										  Canvas.ZIndex="1"
-										  FontSize="13"
-										  Foreground="Transparent"
-										  ResizeBehavior="PreviousAndNext"
-										  ResizeDirection="Auto">
-						<toolkit:GridSplitter.Element>
-							<FontIcon />
-						</toolkit:GridSplitter.Element>
-						<toolkit:GridSplitter.Resources>
-							<SolidColorBrush x:Key="SystemControlSplitterPointerOver"
-											 Opacity="0.5"
-											 Color="{ThemeResource SystemBaseLowColor}" />
-
-							<SolidColorBrush x:Key="SystemControlSplitterPressed" Color="{ThemeResource SystemBaseLowColor}" />
-						</toolkit:GridSplitter.Resources>
-					</toolkit:GridSplitter>
 
 					<TextBlock Grid.Column="3"
 							   FontSize="12"
@@ -577,10 +535,6 @@
 							   FontSize="12"
 							   Text="Permissions" />
 				</Grid>
-
-				<!--<toolkit:WrapPanel HorizontalAlignment="Right">
-					<Button Content="Olá" />
-				</toolkit:WrapPanel>-->
 
 				<ListView Grid.Row="2"
 						  ui:ListViewExtensions.AlternateColor="{ThemeResource SystemControlBackgroundListLowBrush}"
@@ -717,7 +671,7 @@
 										<Button MinWidth="120"
 												HorizontalAlignment="Center"
 												VerticalAlignment="Center"
-												Click="OnRefreshButtonClick"
+												Command="{x:Bind SelectedItem.RefreshCommand, Mode=OneWay}"
 												Content="Load items"
 												Style="{ThemeResource AccentButtonStyle}" />
 									</toolkit:Case>
@@ -728,5 +682,6 @@
 				</toolkit:SwitchPresenter>
 			</Grid>
 		</Grid>
+
 	</Grid>
 </Page>
