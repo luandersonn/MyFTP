@@ -136,15 +136,18 @@
 							<MenuBarItemFlyout Placement="Bottom">
 								<MenuFlyoutSubItem Text="Theme">
 									<muxc:RadioMenuFlyoutItem Click="OnThemeRadioClicked"
+															  GroupName="Theme"
 															  IsChecked="True"
 															  Tag="Default"
 															  Text="System" />
 
 									<muxc:RadioMenuFlyoutItem Click="OnThemeRadioClicked"
+															  GroupName="Theme"
 															  Tag="Light"
 															  Text="Light" />
 
 									<muxc:RadioMenuFlyoutItem Click="OnThemeRadioClicked"
+															  GroupName="Theme"
 															  Tag="Dark"
 															  Text="Dark" />
 								</MenuFlyoutSubItem>
@@ -402,9 +405,11 @@
 							</StackPanel>
 							<muxc:DropDownButton.Flyout>
 								<MenuFlyout Placement="Bottom">
-									<muxc:RadioMenuFlyoutItem IsChecked="True" Text="Name" />
-									<muxc:RadioMenuFlyoutItem Text="Date" />
-									<muxc:RadioMenuFlyoutItem Text="Size" />
+									<muxc:RadioMenuFlyoutItem GroupName="SortBy"
+															  IsChecked="True"
+															  Text="Name" />
+									<muxc:RadioMenuFlyoutItem GroupName="SortBy" Text="Date" />
+									<muxc:RadioMenuFlyoutItem GroupName="SortBy" Text="Size" />
 								</MenuFlyout>
 							</muxc:DropDownButton.Flyout>
 						</muxc:DropDownButton>
