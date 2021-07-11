@@ -22,8 +22,8 @@ namespace MyFTP.ViewModels
 		#region constructor		
 		public FtpListItemViewModel(IFtpClient client, string name, string fullName, DispatcherQueue dispatcher) : base(dispatcher)
 		{
-			_client = client;
-			Name = name;
+			_client = client;			
+			Name = name;			
 			FullName = fullName;
 			_items = new ObservableSortedCollection<FtpListItemViewModel>(new FtpListItemComparer());
 			Items = new ReadOnlyObservableCollection<FtpListItemViewModel>((ObservableCollection<FtpListItemViewModel>)_items);

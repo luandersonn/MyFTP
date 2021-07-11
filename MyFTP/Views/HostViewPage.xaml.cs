@@ -81,7 +81,7 @@ namespace MyFTP.Views
 			throw new NotImplementedException();
 		}
 
-		private async void OnDisconnectButtonClick(object sender, RoutedEventArgs args)
+		private async void OnDisconnectButtonClick(muxc.SplitButton sender, muxc.SplitButtonClickEventArgs args)
 		{
 			await ViewModel.DisconnectAsync();
 			Frame.GoBack();

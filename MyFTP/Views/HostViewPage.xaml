@@ -100,6 +100,9 @@
 
 			<!--  Content  -->
 			<RowDefinition Height="*" />
+
+			<!--  Status bar  -->
+			<RowDefinition Height="auto" />
 		</Grid.RowDefinitions>
 
 		<controls:TitleBarControl x:Name="titleBar"
@@ -123,65 +126,13 @@
 								   ChildrenTransitions="{StaticResource RepositionAnimation}"
 								   HorizontalSpacing="4"
 								   VerticalSpacing="8">
-					<toolkit:WrapPanel.Resources>
-						<muxc:TeachingTip x:Name="infoTeachingTip"
-										  Title="FTP informations"
-										  d:IsOpen="True"
-										  IsLightDismissEnabled="False"
-										  PlacementMargin="10"
-										  PreferredPlacement="Bottom"
-										  Target="{x:Bind infoButton, Mode=OneTime}">
-							<muxc:TeachingTip.IconSource>
-								<muxc:FontIconSource Glyph="&#xE968;" />
-							</muxc:TeachingTip.IconSource>
-							<StackPanel Padding="0,8">
-								<TextBlock Opacity="0.6" Text="Host" />
-								<TextBlock FontWeight="SemiBold" Text="{x:Bind ViewModel.Client.Host}" />
 
-								<TextBlock Margin="0,8,0,0"
-										   Opacity="0.6"
-										   Text="Username" />
-								<TextBlock FontWeight="SemiBold" Text="{x:Bind ViewModel.Client.Credentials.UserName}" />
-
-								<TextBlock Margin="0,8,0,0"
-										   Opacity="0.6"
-										   Text="Port" />
-								<TextBlock FontWeight="SemiBold" Text="{x:Bind ViewModel.Client.Port}" />
-
-								<TextBlock Margin="0,8,0,0"
-										   Opacity="0.6"
-										   Text="Connection type" />
-								<TextBlock FontWeight="SemiBold" Text="{x:Bind ViewModel.Client.ConnectionType}" />
-
-								<TextBlock Margin="0,8,0,0"
-										   Opacity="0.6"
-										   Text="Server OS" />
-								<TextBlock FontWeight="SemiBold" Text="{x:Bind ViewModel.Client.ServerOS}" />
-
-								<TextBlock Margin="0,8,0,0"
-										   Opacity="0.6"
-										   Text="Server type" />
-								<TextBlock FontWeight="SemiBold" Text="{x:Bind ViewModel.Client.ServerType}" />
-
-								<TextBlock Margin="0,8,0,0"
-										   Opacity="0.6"
-										   Text="System Type" />
-								<TextBlock FontWeight="SemiBold" Text="{x:Bind ViewModel.Client.SystemType}" />
-							</StackPanel>
-						</muxc:TeachingTip>
-					</toolkit:WrapPanel.Resources>
-
-					<Button Height="32"
-							Click="OnDisconnectButtonClick"
-							Content="&#xE7E8;"
-							FontFamily="Segoe MDL2 Assets" />
-
-					<muxc:ToggleSplitButton x:Name="infoButton"
-											Height="32"
-											Content="&#xE946;"
-											FontFamily="Segoe MDL2 Assets"
-											IsChecked="{x:Bind infoTeachingTip.IsOpen, Mode=TwoWay}">
-						<muxc:ToggleSplitButton.Flyout>
+					<muxc:SplitButton Click="OnDisconnectButtonClick">
+						<StackPanel Orientation="Horizontal" Spacing="6">
+							<FontIcon FontSize="14" Glyph="&#xE7E8;" />
+							<TextBlock Text="Disconnect" />
+						</StackPanel>
+						<muxc:SplitButton.Flyout>
 							<MenuBarItemFlyout Placement="Bottom">
 								<MenuFlyoutSubItem Text="Theme">
 									<muxc:RadioMenuFlyoutItem Click="OnThemeRadioClicked"
@@ -206,8 +157,8 @@
 									</MenuFlyoutItem.KeyboardAccelerators>
 								</MenuFlyoutItem>
 							</MenuBarItemFlyout>
-						</muxc:ToggleSplitButton.Flyout>
-					</muxc:ToggleSplitButton>
+						</muxc:SplitButton.Flyout>
+					</muxc:SplitButton>
 				</toolkit:WrapPanel>
 
 				<Rectangle Width="1"
@@ -238,7 +189,7 @@
 				</toolkit:GridSplitter>
 
 				<muxc:BreadcrumbBar Grid.Column="1"
-									Margin="12,0"
+									Margin="4,0"
 									VerticalAlignment="Center"
 									ItemClicked="OnBreadcrumbBarItemClicked"
 									ItemsSource="{x:Bind Crumbs}">
@@ -325,7 +276,8 @@
 										  Glyph="&#xE188;" />
 								<TextBlock Grid.Column="1"
 										   VerticalAlignment="Center"
-										   Text="{x:Bind Name}" />
+										   Text="{x:Bind Name}"
+										   TextTrimming="CharacterEllipsis" />
 
 								<ToolTipService.ToolTip>
 									<ToolTip Placement="Bottom">
@@ -387,7 +339,7 @@
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition x:Name="column"
 								  Width="180"
-								  MinWidth="180"
+								  MinWidth="160"
 								  MaxWidth="320" />
 				<ColumnDefinition Width="*" />
 			</Grid.ColumnDefinitions>
@@ -632,13 +584,16 @@
 										   TextTrimming="CharacterEllipsis" />
 								<TextBlock Grid.Column="2"
 										   FontSize="12"
+										   Foreground="{ThemeResource SystemBaseMediumColor}"
 										   Text="{x:Bind Size}" />
 								<TextBlock Grid.Column="3"
 										   VerticalAlignment="Center"
 										   FontSize="12"
+										   Foreground="{ThemeResource SystemBaseMediumColor}"
 										   Text="{x:Bind Modified}" />
 								<TextBlock Grid.Column="4"
 										   FontSize="12"
+										   Foreground="{ThemeResource SystemBaseMediumColor}"
 										   MaxLines="2"
 										   Text="{x:Bind PermissionCode}"
 										   TextAlignment="Center"
@@ -681,6 +636,112 @@
 					</toolkit:Case>
 				</toolkit:SwitchPresenter>
 			</Grid>
+		</Grid>
+
+		<Grid Grid.Row="3"
+			  Height="30"
+			  Background="{ThemeResource SystemControlAcrylicWindowBrush}"
+			  BorderBrush="{ThemeResource SystemBaseLowColor}"
+			  BorderThickness="0,1,0,0">
+
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="{x:Bind column.Width, Mode=TwoWay}"
+								  MinWidth="{x:Bind column.MinWidth, Mode=TwoWay}"
+								  MaxWidth="{x:Bind column.MaxWidth, Mode=TwoWay}" />
+				<ColumnDefinition />
+			</Grid.ColumnDefinitions>
+
+			<toolkit:WrapPanel Margin="4,0" VerticalAlignment="Center">
+				<toolkit:WrapPanel.Resources>
+					<muxc:TeachingTip x:Name="infoTeachingTip"
+									  Title="FTP informations"
+									  d:IsOpen="True"
+									  IsLightDismissEnabled="True"
+									  PlacementMargin="10"
+									  PreferredPlacement="Top"
+									  Target="{x:Bind infoButton, Mode=OneTime}">
+						<muxc:TeachingTip.IconSource>
+							<muxc:FontIconSource Glyph="&#xE968;" />
+						</muxc:TeachingTip.IconSource>
+						<StackPanel Padding="0,8">
+							<TextBlock Opacity="0.6" Text="Host" />
+							<TextBlock FontWeight="SemiBold" Text="{x:Bind ViewModel.Client.Host}" />
+
+							<TextBlock Margin="0,8,0,0"
+									   Opacity="0.6"
+									   Text="Username" />
+							<TextBlock FontWeight="SemiBold" Text="{x:Bind ViewModel.Client.Credentials.UserName}" />
+
+							<TextBlock Margin="0,8,0,0"
+									   Opacity="0.6"
+									   Text="Port" />
+							<TextBlock FontWeight="SemiBold" Text="{x:Bind ViewModel.Client.Port}" />
+
+							<TextBlock Margin="0,8,0,0"
+									   Opacity="0.6"
+									   Text="Connection type" />
+							<TextBlock FontWeight="SemiBold" Text="{x:Bind ViewModel.Client.ConnectionType}" />
+
+							<TextBlock Margin="0,8,0,0"
+									   Opacity="0.6"
+									   Text="Server OS" />
+							<TextBlock FontWeight="SemiBold" Text="{x:Bind ViewModel.Client.ServerOS}" />
+
+							<TextBlock Margin="0,8,0,0"
+									   Opacity="0.6"
+									   Text="Server type" />
+							<TextBlock FontWeight="SemiBold" Text="{x:Bind ViewModel.Client.ServerType}" />
+
+							<TextBlock Margin="0,8,0,0"
+									   Opacity="0.6"
+									   Text="System Type" />
+							<TextBlock FontWeight="SemiBold" Text="{x:Bind ViewModel.Client.SystemType}" />
+						</StackPanel>
+					</muxc:TeachingTip>
+				</toolkit:WrapPanel.Resources>
+
+
+				<ToggleButton x:Name="infoButton"
+							  Content="&#xE946;"
+							  FontFamily="Segoe MDL2 Assets"
+							  IsChecked="{x:Bind infoTeachingTip.IsOpen, Mode=TwoWay}" />
+			</toolkit:WrapPanel>
+
+			<Rectangle Width="1"
+					   HorizontalAlignment="Right"
+					   VerticalAlignment="Stretch"
+					   Fill="{ThemeResource SystemBaseLowColor}" />
+
+			<toolkit:GridSplitter Width="4"
+								  MinWidth="0"
+								  Margin="0,0,-2,0"
+								  HorizontalAlignment="Right"
+								  Background="Transparent"
+								  Canvas.ZIndex="1"
+								  FontSize="13"
+								  Foreground="Transparent"
+								  ResizeBehavior="BasedOnAlignment"
+								  ResizeDirection="Auto">
+				<toolkit:GridSplitter.Element>
+					<FontIcon />
+				</toolkit:GridSplitter.Element>
+				<toolkit:GridSplitter.Resources>
+					<SolidColorBrush x:Key="SystemControlSplitterPointerOver"
+									 Opacity="0.5"
+									 Color="{ThemeResource SystemBaseLowColor}" />
+
+					<SolidColorBrush x:Key="SystemControlSplitterPressed" Color="{ThemeResource SystemBaseLowColor}" />
+				</toolkit:GridSplitter.Resources>
+			</toolkit:GridSplitter>
+
+			<TextBlock Grid.Column="1"
+					   Margin="12,0"
+					   HorizontalAlignment="Right"
+					   VerticalAlignment="Center"
+					   FontSize="12">
+				<Run Foreground="{ThemeResource SystemBaseMediumColor}" Text="Items:" />
+				<Run Text="{x:Bind SelectedItem.Items.Count, Mode=OneWay}" />
+			</TextBlock>
 		</Grid>
 
 	</Grid>
