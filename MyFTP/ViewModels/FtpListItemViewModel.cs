@@ -38,6 +38,7 @@ namespace MyFTP.ViewModels
 			SubType = item.SubType;
 			Size = item.Size < 0 ? "" : item.Size.Bytes().ToString("#.##");
 			Modified = item.Modified.Humanize();
+			PermissionCode = item.OwnerPermissions.ToString();
 		}
 		public FtpListItemViewModel(IFtpClient client, FtpListItem item, FtpListItemViewModel parent, DispatcherQueue dispatcher) : this(client, item, dispatcher)
 		{
@@ -47,6 +48,7 @@ namespace MyFTP.ViewModels
 
 		public string Name { get; }
 		public string FullName { get; }
+		public string PermissionCode { get; }
 		public FtpListItemViewModel Parent { get; }
 		public FtpFileSystemObjectType Type { get; }
 		public FtpFileSystemObjectSubType SubType { get; }
