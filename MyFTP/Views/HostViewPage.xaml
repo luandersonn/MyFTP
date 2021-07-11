@@ -170,8 +170,17 @@
 						</muxc:TeachingTip>
 					</toolkit:WrapPanel.Resources>
 
-					<muxc:SplitButton Click="OnDisconnectButtonClick" Content="Disconnect">
-						<muxc:SplitButton.Flyout>
+					<Button Height="32"
+							Click="OnDisconnectButtonClick"
+							Content="&#xE7E8;"
+							FontFamily="Segoe MDL2 Assets" />
+
+					<muxc:ToggleSplitButton x:Name="infoButton"
+											Height="32"
+											Content="&#xE946;"
+											FontFamily="Segoe MDL2 Assets"
+											IsChecked="{x:Bind infoTeachingTip.IsOpen, Mode=TwoWay}">
+						<muxc:ToggleSplitButton.Flyout>
 							<MenuBarItemFlyout Placement="Bottom">
 								<MenuFlyoutSubItem Text="Theme">
 									<muxc:RadioMenuFlyoutItem Click="OnThemeRadioClicked"
@@ -196,14 +205,8 @@
 									</MenuFlyoutItem.KeyboardAccelerators>
 								</MenuFlyoutItem>
 							</MenuBarItemFlyout>
-						</muxc:SplitButton.Flyout>
-					</muxc:SplitButton>
-
-					<ToggleButton x:Name="infoButton"
-								  Height="32"
-								  Content="&#xE946;"
-								  FontFamily="Segoe MDL2 Assets"
-								  IsChecked="{x:Bind infoTeachingTip.IsOpen, Mode=TwoWay}" />
+						</muxc:ToggleSplitButton.Flyout>
+					</muxc:ToggleSplitButton>
 				</toolkit:WrapPanel>
 
 				<Rectangle Width="1"
@@ -240,11 +243,81 @@
 									ItemsSource="{x:Bind Crumbs}">
 					<muxc:BreadcrumbBar.ItemTemplate>
 						<DataTemplate x:DataType="viewmodels:FtpListItemViewModel">
-							<Grid Padding="4,0" CornerRadius="4">
+							<Grid Padding="4,0"
+								  Background="Transparent"
+								  CornerRadius="4">
 								<Grid.ColumnDefinitions>
 									<ColumnDefinition Width="20" />
 									<ColumnDefinition />
 								</Grid.ColumnDefinitions>
+								<Grid.ContextFlyout>
+									<Flyout Placement="Bottom">
+										<ListView IsItemClickEnabled="True"
+												  ItemClick="OnListViewItemClick"
+												  ItemsSource="{x:Bind Items}"
+												  SelectionMode="None">
+											<ListViewBase.ItemContainerStyle>
+												<Style BasedOn="{StaticResource ListViewItemExpanded}" TargetType="ListViewItem">
+													<Setter Property="MinHeight" Value="0" />
+													<Setter Property="Margin" Value="0" />
+													<Setter Property="Padding" Value="4" />
+													<Setter Property="CornerRadius" Value="4"/>
+												</Style>
+											</ListViewBase.ItemContainerStyle>
+											<ListViewBase.ItemTemplate>
+												<DataTemplate x:DataType="viewmodels:FtpListItemViewModel">
+													<Grid ColumnSpacing="4">
+														<Grid.ColumnDefinitions>
+															<ColumnDefinition Width="18" />
+															<ColumnDefinition Width="*" />
+														</Grid.ColumnDefinitions>
+
+														<toolkit:SwitchPresenter TargetType="x:Boolean" Value="{x:Bind IsDirectory}">
+															<toolkit:Case Value="True">
+
+																<toolkit:SwitchPresenter TargetType="x:Boolean" Value="{x:Bind IsLoading, Mode=OneWay}">
+																	<toolkit:Case Value="True">
+																		<muxc:ProgressRing Width="20"
+																						   Height="20"
+																						   IsActive="{x:Bind IsLoading, Mode=OneWay}" />
+																	</toolkit:Case>
+
+																	<toolkit:Case Value="False">
+																		<toolkit:SwitchPresenter TargetType="x:Boolean" Value="{x:Bind IsLoaded, Mode=OneWay}">
+																			<toolkit:Case Value="True">
+																				<FontIcon FontSize="15"
+																						  Foreground="{ThemeResource SystemAccentColor}"
+																						  Glyph="&#xE188;" />
+
+																			</toolkit:Case>
+
+																			<toolkit:Case Value="False">
+																				<FontIcon FontSize="15"
+																						  Glyph="&#xE188;"
+																						  Opacity="0.8" />
+																			</toolkit:Case>
+																		</toolkit:SwitchPresenter>
+																	</toolkit:Case>
+																</toolkit:SwitchPresenter>
+															</toolkit:Case>
+
+															<toolkit:Case Value="False">
+																<FontIcon FontSize="14" Glyph="&#xE132;" />
+															</toolkit:Case>
+														</toolkit:SwitchPresenter>
+
+														<TextBlock Grid.Column="1"
+																   VerticalAlignment="Center"
+																   FontSize="12"
+																   Text="{x:Bind Name}"
+																   TextTrimming="CharacterEllipsis" />
+													</Grid>
+												</DataTemplate>
+											</ListViewBase.ItemTemplate>
+										</ListView>
+									</Flyout>
+								</Grid.ContextFlyout>
+
 								<FontIcon HorizontalAlignment="Left"
 										  FontSize="15"
 										  Foreground="{ThemeResource SystemAccentColor}"
@@ -357,113 +430,165 @@
 			</toolkit:GridSplitter>
 
 			<Grid Grid.Column="2">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="auto" />
+					<RowDefinition Height="32" />
+					<RowDefinition Height="*" />
+				</Grid.RowDefinitions>
 
-				<ListView ui:ListViewExtensions.AlternateColor="{ThemeResource SystemControlBackgroundListLowBrush}"
+				<CommandBar VerticalContentAlignment="Center"
+							DefaultLabelPosition="Right"
+							Visibility="{x:Bind ShowFolderOptions, Mode=OneWay}">
+					<CommandBar.Content>
+						<muxc:DropDownButton VerticalAlignment="Center"
+											 Background="Transparent"
+											 BorderThickness="0">
+							<StackPanel Orientation="Horizontal" Spacing="4">
+								<TextBlock Text="Sort by:" />
+								<TextBlock Opacity="0.6" Text="Name" />
+							</StackPanel>
+							<muxc:DropDownButton.Flyout>
+								<MenuFlyout Placement="Bottom">
+									<muxc:RadioMenuFlyoutItem IsChecked="True" Text="Name" />
+									<muxc:RadioMenuFlyoutItem Text="Date" />
+									<muxc:RadioMenuFlyoutItem Text="Size" />
+								</MenuFlyout>
+							</muxc:DropDownButton.Flyout>
+						</muxc:DropDownButton>
+					</CommandBar.Content>
+
+					<AppBarButton Click="OnRefreshButtonClick"
+								  Icon="Refresh"
+								  Label="Refresh" />
+
+					<AppBarSeparator />
+
+					<AppBarButton Click="OnUploadFileButtonClick"
+								  Icon="Upload"
+								  Label="Upload" />
+					<AppBarButton Click="OnDownloadFilesButtonClick"
+								  Icon="Download"
+								  Label="Download" />
+					<AppBarButton Label="New">
+						<AppBarButton.Icon>
+							<FontIcon Glyph="&#xE015;" />
+						</AppBarButton.Icon>
+						<AppBarButton.Flyout>
+							<MenuFlyout Placement="Bottom">
+								<MenuFlyoutItem Icon="NewFolder" Text="New folder" />
+								<MenuFlyoutItem Icon="OpenFile" Text="New file" />
+							</MenuFlyout>
+						</AppBarButton.Flyout>
+					</AppBarButton>
+				</CommandBar>
+
+				<Grid Grid.Row="1"
+					  Background="{ThemeResource SystemAltHighColor}"
+					  ColumnSpacing="8">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="25" />
+						<ColumnDefinition Width="1.5*" MinWidth="150" />
+						<ColumnDefinition Width="*" MinWidth="100" />
+						<ColumnDefinition Width="*" MinWidth="100" />
+						<ColumnDefinition Width="80" MinWidth="80" />
+					</Grid.ColumnDefinitions>
+					<Grid.Resources>
+						<Style TargetType="TextBlock">
+							<Setter Property="VerticalAlignment" Value="Center" />
+						</Style>
+					</Grid.Resources>
+					<TextBlock Grid.Column="1"
+							   FontSize="12"
+							   Text="Name" />
+
+					<Rectangle Grid.Column="1"
+							   Width="1"
+							   HorizontalAlignment="Right"
+							   VerticalAlignment="Stretch"
+							   Fill="{ThemeResource SystemBaseLowColor}" />
+
+					<toolkit:GridSplitter Grid.Column="1"
+										  Width="4"
+										  MinWidth="0"
+										  Margin="0,0,-2,0"
+										  HorizontalAlignment="Right"
+										  Background="Transparent"
+										  Canvas.ZIndex="1"
+										  FontSize="13"
+										  Foreground="Transparent"
+										  ResizeBehavior="BasedOnAlignment"
+										  ResizeDirection="Auto">
+						<toolkit:GridSplitter.Element>
+							<FontIcon />
+						</toolkit:GridSplitter.Element>
+						<toolkit:GridSplitter.Resources>
+							<SolidColorBrush x:Key="SystemControlSplitterPointerOver"
+											 Opacity="0.5"
+											 Color="{ThemeResource SystemBaseLowColor}" />
+
+							<SolidColorBrush x:Key="SystemControlSplitterPressed" Color="{ThemeResource SystemBaseLowColor}" />
+						</toolkit:GridSplitter.Resources>
+					</toolkit:GridSplitter>
+
+					<TextBlock Grid.Column="2"
+							   FontSize="12"
+							   Text="Size" />
+
+					<Rectangle Grid.Column="2"
+							   Width="1"
+							   HorizontalAlignment="Right"
+							   VerticalAlignment="Stretch"
+							   Fill="{ThemeResource SystemBaseLowColor}" />
+
+					<toolkit:GridSplitter Grid.Column="2"
+										  Width="4"
+										  MinWidth="0"
+										  Margin="0,0,-2,0"
+										  HorizontalAlignment="Right"
+										  Background="Transparent"
+										  Canvas.ZIndex="1"
+										  FontSize="13"
+										  Foreground="Transparent"
+										  ResizeBehavior="PreviousAndNext"
+										  ResizeDirection="Auto">
+						<toolkit:GridSplitter.Element>
+							<FontIcon />
+						</toolkit:GridSplitter.Element>
+						<toolkit:GridSplitter.Resources>
+							<SolidColorBrush x:Key="SystemControlSplitterPointerOver"
+											 Opacity="0.5"
+											 Color="{ThemeResource SystemBaseLowColor}" />
+
+							<SolidColorBrush x:Key="SystemControlSplitterPressed" Color="{ThemeResource SystemBaseLowColor}" />
+						</toolkit:GridSplitter.Resources>
+					</toolkit:GridSplitter>
+
+					<TextBlock Grid.Column="3"
+							   FontSize="12"
+							   Text="Date" />
+
+					<Rectangle Grid.Column="3"
+							   Width="1"
+							   HorizontalAlignment="Right"
+							   VerticalAlignment="Stretch"
+							   Fill="{ThemeResource SystemBaseLowColor}" />
+
+					<TextBlock Grid.Column="4"
+							   FontSize="12"
+							   Text="Permissions" />
+				</Grid>
+
+				<!--<toolkit:WrapPanel HorizontalAlignment="Right">
+					<Button Content="Olá" />
+				</toolkit:WrapPanel>-->
+
+				<ListView Grid.Row="2"
+						  ui:ListViewExtensions.AlternateColor="{ThemeResource SystemControlBackgroundListLowBrush}"
 						  ItemsSource="{x:Bind SelectedItem.Items, Mode=OneWay}"
 						  ScrollViewer.HorizontalScrollBarVisibility="Auto"
 						  ScrollViewer.HorizontalScrollMode="Auto"
-						  SelectionMode="Extended">
-					<interactivity:Interaction.Behaviors>
-						<behaviors:StickyHeaderBehavior />
-					</interactivity:Interaction.Behaviors>
-					<ListViewBase.Header>
-						<Grid Height="32"
-							  Padding="16,0,16,0"
-							  Background="{ThemeResource SystemAltHighColor}"
-							  ColumnSpacing="8">
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="25" />
-								<ColumnDefinition Width="1.5*" MinWidth="150" />
-								<ColumnDefinition Width="*" MinWidth="100" />
-								<ColumnDefinition Width="*" MinWidth="100" />
-								<ColumnDefinition Width="80" MinWidth="80" />
-							</Grid.ColumnDefinitions>
-							<Grid.Resources>
-								<Style TargetType="TextBlock">
-									<Setter Property="VerticalAlignment" Value="Center" />
-								</Style>
-							</Grid.Resources>
-							<TextBlock Grid.Column="1"
-									   FontSize="12"
-									   Text="Name" />
-
-							<Rectangle Grid.Column="1"
-									   Width="1"
-									   HorizontalAlignment="Right"
-									   VerticalAlignment="Stretch"
-									   Fill="{ThemeResource SystemBaseLowColor}" />
-
-							<toolkit:GridSplitter Grid.Column="1"
-												  Width="4"
-												  MinWidth="0"
-												  Margin="0,0,-2,0"
-												  HorizontalAlignment="Right"
-												  Background="Transparent"
-												  Canvas.ZIndex="1"
-												  FontSize="13"
-												  Foreground="Transparent"
-												  ResizeBehavior="BasedOnAlignment"
-												  ResizeDirection="Auto">
-								<toolkit:GridSplitter.Element>
-									<FontIcon />
-								</toolkit:GridSplitter.Element>
-								<toolkit:GridSplitter.Resources>
-									<SolidColorBrush x:Key="SystemControlSplitterPointerOver"
-													 Opacity="0.5"
-													 Color="{ThemeResource SystemBaseLowColor}" />
-
-									<SolidColorBrush x:Key="SystemControlSplitterPressed" Color="{ThemeResource SystemBaseLowColor}" />
-								</toolkit:GridSplitter.Resources>
-							</toolkit:GridSplitter>
-
-							<TextBlock Grid.Column="2"
-									   FontSize="12"
-									   Text="Size" />
-
-							<Rectangle Grid.Column="2"
-									   Width="1"
-									   HorizontalAlignment="Right"
-									   VerticalAlignment="Stretch"
-									   Fill="{ThemeResource SystemBaseLowColor}" />
-
-							<toolkit:GridSplitter Grid.Column="2"
-												  Width="4"
-												  MinWidth="0"
-												  Margin="0,0,-2,0"
-												  HorizontalAlignment="Right"
-												  Background="Transparent"
-												  Canvas.ZIndex="1"
-												  FontSize="13"
-												  Foreground="Transparent"
-												  ResizeBehavior="PreviousAndNext"
-												  ResizeDirection="Auto">
-								<toolkit:GridSplitter.Element>
-									<FontIcon />
-								</toolkit:GridSplitter.Element>
-								<toolkit:GridSplitter.Resources>
-									<SolidColorBrush x:Key="SystemControlSplitterPointerOver"
-													 Opacity="0.5"
-													 Color="{ThemeResource SystemBaseLowColor}" />
-
-									<SolidColorBrush x:Key="SystemControlSplitterPressed" Color="{ThemeResource SystemBaseLowColor}" />
-								</toolkit:GridSplitter.Resources>
-							</toolkit:GridSplitter>
-
-							<TextBlock Grid.Column="3"
-									   FontSize="12"
-									   Text="Date" />
-
-							<Rectangle Grid.Column="3"
-									   Width="1"
-									   HorizontalAlignment="Right"
-									   VerticalAlignment="Stretch"
-									   Fill="{ThemeResource SystemBaseLowColor}" />
-
-							<TextBlock Grid.Column="4"
-									   FontSize="12"
-									   Text="Permissions" />
-						</Grid>
-					</ListViewBase.Header>
+						  SelectionMode="Extended"
+						  Transitions="{StaticResource RepositionAnimation}">
 
 					<ListViewBase.ItemTemplate>
 						<DataTemplate x:DataType="viewmodels:FtpListItemViewModel">
@@ -569,8 +694,9 @@
 					</ListViewBase.ItemTemplate>
 				</ListView>
 
-
-				<toolkit:SwitchPresenter TargetType="x:Boolean" Value="{x:Bind SelectedItem.IsDirectory, FallbackValue=False, Mode=OneWay}">
+				<toolkit:SwitchPresenter Grid.Row="2"
+										 TargetType="x:Boolean"
+										 Value="{x:Bind SelectedItem.IsDirectory, FallbackValue=False, Mode=OneWay}">
 					<toolkit:Case Value="True">
 						<toolkit:SwitchPresenter TargetType="x:Boolean" Value="{x:Bind SelectedItem.IsLoaded, Mode=OneWay}">
 							<toolkit:Case Value="True">

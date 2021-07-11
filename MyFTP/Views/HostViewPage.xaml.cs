@@ -104,7 +104,7 @@ namespace MyFTP.Views
 			throw new NotImplementedException();
 		}
 
-		private async void OnDisconnectButtonClick(Microsoft.UI.Xaml.Controls.SplitButton sender, Microsoft.UI.Xaml.Controls.SplitButtonClickEventArgs args)
+		private async void OnDisconnectButtonClick(object sender, RoutedEventArgs args)
 		{
 			await ViewModel.DisconnectAsync();
 			Frame.GoBack();
@@ -126,7 +126,8 @@ namespace MyFTP.Views
 		}
 
 		private void OnBreadcrumbBarItemClicked(muxc.BreadcrumbBar sender, muxc.BreadcrumbBarItemClickedEventArgs args) => treeView.SelectedItem = args.Item;
-
+		private void OnListViewItemClick(object sender, ItemClickEventArgs e) => treeView.SelectedItem = e.ClickedItem;
+		
 		private void OnListViewItemDoubleTapped(object sender, Windows.UI.Xaml.Input.DoubleTappedRoutedEventArgs e)
 		{
 			var frameworkElement = (FrameworkElement)sender;
