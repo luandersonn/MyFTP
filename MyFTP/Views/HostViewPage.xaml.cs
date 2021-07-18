@@ -2,8 +2,12 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using Windows.Storage.FileProperties;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using muxc = Microsoft.UI.Xaml.Controls;
 namespace MyFTP.Views
@@ -22,7 +26,7 @@ namespace MyFTP.Views
 
 		public FtpListItemViewModel SelectedItem { get => (FtpListItemViewModel)GetValue(SelectedItemProperty); set => SetValue(SelectedItemProperty, value); }
 		public static readonly DependencyProperty SelectedItemProperty = DependencyProperty.Register("SelectedItem",
-			typeof(FtpListItemViewModel), typeof(HostViewPage), new PropertyMetadata(null, OnSelectedItemChanged));		
+			typeof(FtpListItemViewModel), typeof(HostViewPage), new PropertyMetadata(null, OnSelectedItemChanged));
 
 		public ObservableCollection<FtpListItemViewModel> Crumbs { get; }
 
@@ -52,8 +56,8 @@ namespace MyFTP.Views
 						p.ShowError(e.Message, e);
 					}
 				}
-			}			
-		}		
+			}
+		}
 
 		protected async override void OnNavigatedTo(NavigationEventArgs args)
 		{
@@ -102,9 +106,74 @@ namespace MyFTP.Views
 			Debug.WriteLineIf(e != null, e);
 		}
 
-		private void OnBreadcrumbBarItemClicked(muxc.BreadcrumbBar sender, muxc.BreadcrumbBarItemClickedEventArgs args) => treeView.SelectedItem = args.Item;
+		private void OnBreadcrumbBarItemClicked(muxc.BreadcrumbBar sender, muxc.BreadcrumbBarItemClickedEventArgs args)
+		{
+			// #BUG 
+			if (args.Index == 0) 
+			{
+				treeView.SelectedNode = treeView.RootNodes.FirstOrDefault();
+			}
+			else
+				treeView.SelectedItem = args.Item;
+		}
+
+		private async void OnListViewContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
+		{
+			if (args.ItemContainer.ContentTemplateRoot is Grid root
+							&& args.Item is FtpListItemViewModel item
+							&& root.Children.OfType<Image>().FirstOrDefault() is Image image)
+			{
+
+				if (args.InRecycleQueue)
+				{
+					image.Source = null;
+				}
+				else
+				{
+					args.Handled = true;
+					switch (args.Phase)
+					{
+						case 0:
+							args.RegisterUpdateCallback(1, OnListViewContainerContentChanging);
+							break;
+
+						case 1:
+
+							var source = new BitmapImage
+							{
+								DecodePixelHeight = 32,
+								DecodePixelWidth = 32,
+								DecodePixelType = DecodePixelType.Logical
+							};
+							image.Source = source;
+							StorageItemThumbnail thumbnail;
+							try
+							{
+								switch (item.Type)
+								{
+									case FluentFTP.FtpFileSystemObjectType.File:
+										thumbnail = await Utils.IconHelper.GetFileIconAsync(Path.GetExtension(item.Name));
+										break;
+									case FluentFTP.FtpFileSystemObjectType.Directory:
+										thumbnail = await Utils.IconHelper.GetFolderIconAsync();
+										break;									
+									default:
+										return;
+								}
+								thumbnail.Seek(0);
+								await source.SetSourceAsync(thumbnail);								
+							}
+							catch (Exception e)
+							{
+								Debug.WriteLine(e);
+							}
+							break;
+					}
+				}
+			}
+		}
 		private void OnListViewItemClick(object sender, ItemClickEventArgs e) => treeView.SelectedItem = e.ClickedItem;
-		
+
 		private void OnListViewItemDoubleTapped(object sender, Windows.UI.Xaml.Input.DoubleTappedRoutedEventArgs e)
 		{
 			var frameworkElement = (FrameworkElement)sender;
@@ -114,6 +183,6 @@ namespace MyFTP.Views
 
 		private void OnListViewContextMenuClicked(object sender, RoutedEventArgs e) => throw new NotImplementedException();
 
-		private void ExitApp() => Application.Current.Exit();		
+		private void ExitApp() => Application.Current.Exit();
 	}
 }

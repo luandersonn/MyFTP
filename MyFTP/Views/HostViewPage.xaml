@@ -207,7 +207,8 @@
 								</Grid.ColumnDefinitions>
 								<Grid.ContextFlyout>
 									<Flyout Placement="Bottom">
-										<ListView IsItemClickEnabled="True"
+										<ListView ContainerContentChanging="OnListViewContainerContentChanging"
+												  IsItemClickEnabled="True"
 												  ItemClick="OnListViewItemClick"
 												  ItemsSource="{x:Bind Items}"
 												  SelectionMode="None">
@@ -227,39 +228,9 @@
 															<ColumnDefinition Width="*" />
 														</Grid.ColumnDefinitions>
 
-														<toolkit:SwitchPresenter TargetType="x:Boolean" Value="{x:Bind IsDirectory}">
-															<toolkit:Case Value="True">
-
-																<toolkit:SwitchPresenter TargetType="x:Boolean" Value="{x:Bind IsLoading, Mode=OneWay}">
-																	<toolkit:Case Value="True">
-																		<muxc:ProgressRing Width="20"
-																						   Height="20"
-																						   IsActive="{x:Bind IsLoading, Mode=OneWay}" />
-																	</toolkit:Case>
-
-																	<toolkit:Case Value="False">
-																		<toolkit:SwitchPresenter TargetType="x:Boolean" Value="{x:Bind IsLoaded, Mode=OneWay}">
-																			<toolkit:Case Value="True">
-																				<FontIcon FontSize="15"
-																						  Foreground="{ThemeResource SystemAccentColor}"
-																						  Glyph="&#xE188;" />
-
-																			</toolkit:Case>
-
-																			<toolkit:Case Value="False">
-																				<FontIcon FontSize="15"
-																						  Glyph="&#xE188;"
-																						  Opacity="0.8" />
-																			</toolkit:Case>
-																		</toolkit:SwitchPresenter>
-																	</toolkit:Case>
-																</toolkit:SwitchPresenter>
-															</toolkit:Case>
-
-															<toolkit:Case Value="False">
-																<FontIcon FontSize="14" Glyph="&#xE132;" />
-															</toolkit:Case>
-														</toolkit:SwitchPresenter>
+														<Image Width="18"
+															   HorizontalAlignment="Center"
+															   VerticalAlignment="Center" />
 
 														<TextBlock Grid.Column="1"
 																   VerticalAlignment="Center"
@@ -494,7 +465,7 @@
 				</Grid>
 
 				<ListView Grid.Row="2"
-						  ui:ListViewExtensions.AlternateColor="{ThemeResource SystemControlBackgroundListLowBrush}"
+						  ContainerContentChanging="OnListViewContainerContentChanging"
 						  ItemsSource="{x:Bind SelectedItem.Items, Mode=OneWay}"
 						  ScrollViewer.HorizontalScrollBarVisibility="Auto"
 						  ScrollViewer.HorizontalScrollMode="Auto"
@@ -507,6 +478,7 @@
 								  Padding="12,18"
 								  Background="Transparent"
 								  ColumnSpacing="8"
+								  DataContext="{x:Bind}"
 								  DoubleTapped="OnListViewItemDoubleTapped"
 								  IsDoubleTapEnabled="True">
 								<Grid.ContextFlyout>
@@ -545,41 +517,10 @@
 									<ColumnDefinition Width="*" MinWidth="100" />
 									<ColumnDefinition Width="80" MinWidth="80" />
 								</Grid.ColumnDefinitions>
-								<toolkit:SwitchPresenter TargetType="x:Boolean" Value="{x:Bind IsDirectory}">
-									<toolkit:Case Value="True">
-										<toolkit:SwitchPresenter TargetType="x:Boolean" Value="{x:Bind IsLoading, Mode=OneWay}">
-											<toolkit:Case Value="True">
-												<muxc:ProgressRing Width="20"
-																   Height="20"
-																   IsActive="{x:Bind IsLoading, Mode=OneWay}" />
-											</toolkit:Case>
 
-											<toolkit:Case Value="False">
-
-
-												<toolkit:SwitchPresenter TargetType="x:Boolean" Value="{x:Bind IsLoaded, Mode=OneWay}">
-													<toolkit:Case Value="True">
-														<FontIcon FontSize="15"
-																  Foreground="{ThemeResource SystemAccentColor}"
-																  Glyph="&#xE188;" />
-													</toolkit:Case>
-
-													<toolkit:Case Value="False">
-
-														<FontIcon FontSize="15"
-																  Glyph="&#xE188;"
-																  Opacity="0.8" />
-
-													</toolkit:Case>
-												</toolkit:SwitchPresenter>
-											</toolkit:Case>
-										</toolkit:SwitchPresenter>
-									</toolkit:Case>
-
-									<toolkit:Case Value="False">
-										<FontIcon FontSize="15" Glyph="&#xE132;" />
-									</toolkit:Case>
-								</toolkit:SwitchPresenter>
+								<Image Width="25"
+									   HorizontalAlignment="Center"
+									   VerticalAlignment="Center" />
 
 
 								<TextBlock Grid.Column="1"
@@ -587,16 +528,21 @@
 										   FontSize="12"
 										   Text="{x:Bind Name}"
 										   TextTrimming="CharacterEllipsis" />
+
 								<TextBlock Grid.Column="2"
+										   VerticalAlignment="Center"
 										   FontSize="12"
 										   Foreground="{ThemeResource SystemBaseMediumColor}"
 										   Text="{x:Bind Size}" />
+
 								<TextBlock Grid.Column="3"
 										   VerticalAlignment="Center"
 										   FontSize="12"
 										   Foreground="{ThemeResource SystemBaseMediumColor}"
 										   Text="{x:Bind Modified}" />
+
 								<TextBlock Grid.Column="4"
+										   VerticalAlignment="Center"
 										   FontSize="12"
 										   Foreground="{ThemeResource SystemBaseMediumColor}"
 										   MaxLines="2"
@@ -707,6 +653,8 @@
 
 
 				<ToggleButton x:Name="infoButton"
+							  Background="Transparent"
+							  BorderThickness="0"
 							  Content="&#xE946;"
 							  FontFamily="Segoe MDL2 Assets"
 							  IsChecked="{x:Bind infoTeachingTip.IsOpen, Mode=TwoWay}" />
