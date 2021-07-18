@@ -36,13 +36,13 @@ namespace MyFTP
 
 		private async void OnUnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
 		{
-            if(e.Exception is NotImplementedException)
+            //if(e.Exception is NotImplementedException)
 			{
                 e.Handled = true;
                 await new ContentDialog
                 {
-                    Title = "NotImplementedException",
-                    Content = e.Exception,
+                    Title = e.Exception,
+                    Content = e.Message,
                     CloseButtonText = "Close"
                 }.ShowAsync();
 			}

@@ -1,5 +1,5 @@
 ﻿using FluentFTP;
-using Humanizer;
+using Microsoft.Toolkit.Mvvm.Input;
 using MyFTP.Collections;
 using MyFTP.Utils;
 using System;
@@ -20,43 +20,48 @@ namespace MyFTP.ViewModels
 		private readonly IFtpClient _client;
 
 		#region constructor		
-		public FtpListItemViewModel(IFtpClient client, string name, string fullName, DispatcherQueue dispatcher) : base(dispatcher)
+
+		private FtpListItemViewModel(IFtpClient client, FtpListItemViewModel parent, DispatcherQueue dispatcher) : base(dispatcher)
 		{
-			_client = client;			
-			Name = name;			
-			FullName = fullName;
+			_client = client ?? throw new ArgumentNullException(nameof(client));
+			Parent = parent;
+
 			_items = new ObservableSortedCollection<FtpListItemViewModel>(new FtpListItemComparer());
 			Items = new ReadOnlyObservableCollection<FtpListItemViewModel>((ObservableCollection<FtpListItemViewModel>)_items);
-			_isLoaded = IsLoading = false;
-			Type = FtpFileSystemObjectType.Directory;
 
-			RefreshCommand = new Microsoft.Toolkit.Mvvm.Input.AsyncRelayCommand(LoadItemsAsync, () => !IsLoading && Type == FtpFileSystemObjectType.Directory);
+			_isLoaded = _isLoading = false;
+
+			RefreshCommand = new AsyncRelayCommand(LoadItemsAsync, () => !IsLoading && Type == FtpFileSystemObjectType.Directory);
+		}
+		public FtpListItemViewModel(IFtpClient client, string name, string fullName, DispatcherQueue dispatcher) : this(client, null, dispatcher)
+		{
+			Name = name;
+			FullName = fullName;
+			Type = FtpFileSystemObjectType.Directory;
 		}
 
-		public FtpListItemViewModel(IFtpClient client, FtpListItem item, DispatcherQueue dispatcher) : this(client, item.Name, item.FullName, dispatcher)
+		public FtpListItemViewModel(IFtpClient client, FtpListItem item, FtpListItemViewModel parent, DispatcherQueue dispatcher) : this(client, parent, dispatcher)
 		{
 			_ftpItem = item ?? throw new ArgumentNullException(nameof(item));
+			Name = item.Name;
+			FullName = item.FullName;
 			Type = item.Type;
 			SubType = item.SubType;
-			Size = item.Size < 0 ? "" : item.Size.Bytes().ToString("#.##");
-			Modified = item.Modified.Humanize();
-			PermissionCode = item.OwnerPermissions.ToString();
-		}
-		public FtpListItemViewModel(IFtpClient client, FtpListItem item, FtpListItemViewModel parent, DispatcherQueue dispatcher) : this(client, item, dispatcher)
-		{
-			Parent = parent;
+			Size = item.Size;
+			Modified = item.Modified;
+			OwnerPermissions = item.OwnerPermissions;
 		}
 		#endregion
 
 		public string Name { get; }
 		public string FullName { get; }
-		public string PermissionCode { get; }
+		public FtpPermission OwnerPermissions { get; }
 		public FtpListItemViewModel Parent { get; }
 		public FtpFileSystemObjectType Type { get; }
 		public FtpFileSystemObjectSubType SubType { get; }
 		public bool IsDirectory => Type == FtpFileSystemObjectType.Directory;
-		public string Size { get; }
-		public string Modified { get; }
+		public long Size { get; }
+		public DateTime Modified { get; }
 		public ReadOnlyObservableCollection<FtpListItemViewModel> Items { get; }
 		public bool IsLoaded { get => _isLoaded; private set => Set(ref _isLoaded, value); }
 		public bool IsLoading { get => _isLoading; private set => Set(ref _isLoading, value); }

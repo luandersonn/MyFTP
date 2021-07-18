@@ -67,7 +67,7 @@ namespace MyFTP.Views
 				if (ViewModel == null)
 					throw new InvalidOperationException("Invalid param");
 				await ViewModel.Root[0].LoadItemsAsync(default);
-				treeView.SelectedItem = ViewModel.Root[0];
+				treeView.SelectedNode = treeView.RootNodes.FirstOrDefault();
 			}
 			catch (Exception e)
 			{

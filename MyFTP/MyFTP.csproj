@@ -128,7 +128,9 @@
       <DependentUpon>Generic.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utils\ControlExtensions.cs" />
+    <Compile Include="Utils\Converters\DateTimeHumanizeConverter.cs" />
     <Compile Include="Utils\Converters\ItemVisibilityConverter.cs" />
+    <Compile Include="Utils\Converters\SizeInBytesHumanizeConverter.cs" />
     <Compile Include="Utils\IconHelper.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="Utils\Comparers\FtpListItemComparer.cs" />

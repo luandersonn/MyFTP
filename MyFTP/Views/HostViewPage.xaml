@@ -359,7 +359,6 @@
 			<Grid Grid.Column="2">
 				<Grid.RowDefinitions>
 					<RowDefinition Height="auto" />
-					<RowDefinition Height="32" />
 					<RowDefinition Height="*" />
 				</Grid.RowDefinitions>
 
@@ -412,65 +411,73 @@
 					</AppBarButton>
 				</CommandBar>
 
-				<Grid Grid.Row="1"
-					  Background="{ThemeResource SystemAltHighColor}"
-					  ColumnSpacing="8">
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="25" />
-						<ColumnDefinition Width="1.5*" MinWidth="150" />
-						<ColumnDefinition Width="*" MinWidth="100" />
-						<ColumnDefinition Width="*" MinWidth="100" />
-						<ColumnDefinition Width="80" MinWidth="80" />
-					</Grid.ColumnDefinitions>
-					<Grid.Resources>
-						<Style TargetType="TextBlock">
-							<Setter Property="VerticalAlignment" Value="Center" />
-						</Style>
-					</Grid.Resources>
-					<TextBlock Grid.Column="1"
-							   FontSize="12"
-							   Text="Name" />
-
-					<Rectangle Grid.Column="1"
-							   Width="1"
-							   HorizontalAlignment="Right"
-							   VerticalAlignment="Stretch"
-							   Fill="{ThemeResource SystemBaseLowColor}" />
-
-
-					<TextBlock Grid.Column="2"
-							   FontSize="12"
-							   Text="Size" />
-
-					<Rectangle Grid.Column="2"
-							   Width="1"
-							   HorizontalAlignment="Right"
-							   VerticalAlignment="Stretch"
-							   Fill="{ThemeResource SystemBaseLowColor}" />
-
-
-					<TextBlock Grid.Column="3"
-							   FontSize="12"
-							   Text="Date" />
-
-					<Rectangle Grid.Column="3"
-							   Width="1"
-							   HorizontalAlignment="Right"
-							   VerticalAlignment="Stretch"
-							   Fill="{ThemeResource SystemBaseLowColor}" />
-
-					<TextBlock Grid.Column="4"
-							   FontSize="12"
-							   Text="Permissions" />
-				</Grid>
-
-				<ListView Grid.Row="2"
+				<ListView Grid.Row="1"
+						  ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True"
 						  ContainerContentChanging="OnListViewContainerContentChanging"
 						  ItemsSource="{x:Bind SelectedItem.Items, Mode=OneWay}"
 						  ScrollViewer.HorizontalScrollBarVisibility="Auto"
 						  ScrollViewer.HorizontalScrollMode="Auto"
 						  SelectionMode="Extended"
 						  Transitions="{StaticResource RepositionAnimation}">
+
+					<interactivity:Interaction.Behaviors>
+						<behaviors:StickyHeaderBehavior />
+					</interactivity:Interaction.Behaviors>
+
+					<ListViewBase.Header>
+						<Grid Height="32"
+							  Padding="12,0"
+							  Background="{ThemeResource SystemAltHighColor}"
+							  ColumnSpacing="8">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="25" />
+								<ColumnDefinition Width="1.5*" MinWidth="150" />
+								<ColumnDefinition Width="*" MinWidth="100" />
+								<ColumnDefinition Width="*" MinWidth="100" />
+								<ColumnDefinition Width="80" MinWidth="80" />
+							</Grid.ColumnDefinitions>
+							<Grid.Resources>
+								<Style TargetType="TextBlock">
+									<Setter Property="VerticalAlignment" Value="Center" />
+								</Style>
+							</Grid.Resources>
+							<TextBlock Grid.ColumnSpan="2"
+									   FontSize="12"
+									   Text="Name" />
+
+							<Rectangle Grid.Column="1"
+									   Width="1"
+									   HorizontalAlignment="Right"
+									   VerticalAlignment="Stretch"
+									   Fill="{ThemeResource SystemBaseLowColor}" />
+
+
+							<TextBlock Grid.Column="2"
+									   FontSize="12"
+									   Text="Size" />
+
+							<Rectangle Grid.Column="2"
+									   Width="1"
+									   HorizontalAlignment="Right"
+									   VerticalAlignment="Stretch"
+									   Fill="{ThemeResource SystemBaseLowColor}" />
+
+
+							<TextBlock Grid.Column="3"
+									   FontSize="12"
+									   Text="Date" />
+
+							<Rectangle Grid.Column="3"
+									   Width="1"
+									   HorizontalAlignment="Right"
+									   VerticalAlignment="Stretch"
+									   Fill="{ThemeResource SystemBaseLowColor}" />
+
+							<TextBlock Grid.Column="4"
+									   FontSize="12"
+									   Text="Permissions" />
+						</Grid>
+					</ListViewBase.Header>
 
 					<ListViewBase.ItemTemplate>
 						<DataTemplate x:DataType="viewmodels:FtpListItemViewModel">
@@ -533,21 +540,24 @@
 										   VerticalAlignment="Center"
 										   FontSize="12"
 										   Foreground="{ThemeResource SystemBaseMediumColor}"
-										   Text="{x:Bind Size}" />
+										   Text="{x:Bind Size, Converter={StaticResource SizeInBytesHumanizeConverter}}"
+										   TextTrimming="CharacterEllipsis" />
 
 								<TextBlock Grid.Column="3"
 										   VerticalAlignment="Center"
 										   FontSize="12"
 										   Foreground="{ThemeResource SystemBaseMediumColor}"
-										   Text="{x:Bind Modified}" />
+										   Text="{x:Bind Modified, Converter={StaticResource DateTimeHumanizeConverter}}"
+										   TextTrimming="CharacterEllipsis" />
 
 								<TextBlock Grid.Column="4"
 										   VerticalAlignment="Center"
 										   FontSize="12"
 										   Foreground="{ThemeResource SystemBaseMediumColor}"
 										   MaxLines="2"
-										   Text="{x:Bind PermissionCode}"
+										   Text="{x:Bind OwnerPermissions}"
 										   TextAlignment="Center"
+										   TextTrimming="CharacterEllipsis"
 										   TextWrapping="Wrap" />
 							</Grid>
 						</DataTemplate>
