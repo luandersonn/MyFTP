@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.Storage.FileProperties;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -66,7 +67,7 @@ namespace MyFTP.Views
 				ViewModel = args.Parameter as HostViewModel;
 				if (ViewModel == null)
 					throw new InvalidOperationException("Invalid param");
-				await ViewModel.Root[0].LoadItemsAsync(default);
+				await Task.Delay(TimeSpan.FromMilliseconds(250));
 				treeView.SelectedNode = treeView.RootNodes.FirstOrDefault();
 			}
 			catch (Exception e)

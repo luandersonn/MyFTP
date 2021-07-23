@@ -13,15 +13,16 @@ namespace MyFTP.ViewModels
 {
 	public class FtpListItemViewModel : BindableItem
 	{
+		#region fields		
 		private readonly IObservableSortedCollection<FtpListItemViewModel> _items;
 		private bool _isLoaded;
 		private bool _isLoading;
 		private readonly FtpListItem _ftpItem;
 		private readonly IFtpClient _client;
+		#endregion
 
-		#region constructor		
-
-		private FtpListItemViewModel(IFtpClient client, FtpListItemViewModel parent, DispatcherQueue dispatcher) : base(dispatcher)
+		#region constructor
+		private FtpListItemViewModel(IFtpClient client, FtpListItemViewModel parent)
 		{
 			_client = client ?? throw new ArgumentNullException(nameof(client));
 			Parent = parent;
@@ -32,15 +33,17 @@ namespace MyFTP.ViewModels
 			_isLoaded = _isLoading = false;
 
 			RefreshCommand = new AsyncRelayCommand(LoadItemsAsync, () => !IsLoading && Type == FtpFileSystemObjectType.Directory);
+
+			Dispatcher = DispatcherQueue.GetForCurrentThread();
 		}
-		public FtpListItemViewModel(IFtpClient client, string name, string fullName, DispatcherQueue dispatcher) : this(client, null, dispatcher)
+		public FtpListItemViewModel(IFtpClient client, string name, string fullName) : this(client, null)
 		{
 			Name = name;
 			FullName = fullName;
 			Type = FtpFileSystemObjectType.Directory;
 		}
 
-		public FtpListItemViewModel(IFtpClient client, FtpListItem item, FtpListItemViewModel parent, DispatcherQueue dispatcher) : this(client, parent, dispatcher)
+		public FtpListItemViewModel(IFtpClient client, FtpListItem item, FtpListItemViewModel parent) : this(client, parent)
 		{
 			_ftpItem = item ?? throw new ArgumentNullException(nameof(item));
 			Name = item.Name;
@@ -53,6 +56,7 @@ namespace MyFTP.ViewModels
 		}
 		#endregion
 
+		#region properties		
 		public string Name { get; }
 		public string FullName { get; }
 		public FtpPermission OwnerPermissions { get; }
@@ -65,12 +69,13 @@ namespace MyFTP.ViewModels
 		public ReadOnlyObservableCollection<FtpListItemViewModel> Items { get; }
 		public bool IsLoaded { get => _isLoaded; private set => Set(ref _isLoaded, value); }
 		public bool IsLoading { get => _isLoading; private set => Set(ref _isLoading, value); }
-
-		#region Commands
-		public Microsoft.Toolkit.Mvvm.Input.IAsyncRelayCommand RefreshCommand { get; }
 		#endregion
 
+		#region commands
+		public IAsyncRelayCommand RefreshCommand { get; }
+		#endregion
 
+		#region methods		
 		public async Task LoadItemsAsync(CancellationToken token = default)
 		{
 			await AccessUIAsync(() => IsLoading = true);
@@ -85,7 +90,7 @@ namespace MyFTP.ViewModels
 					_items.Clear();
 					foreach (var item in result)
 					{
-						_items.AddItem(new FtpListItemViewModel(_client, item, this, Dispatcher));
+						_items.AddItem(new FtpListItemViewModel(_client, item, this));
 					}
 					IsLoaded = true;
 				});
@@ -101,5 +106,6 @@ namespace MyFTP.ViewModels
 				RefreshCommand.NotifyCanExecuteChanged();
 			}
 		}
+		#endregion
 	}
 }

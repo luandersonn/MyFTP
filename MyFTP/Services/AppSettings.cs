@@ -7,7 +7,7 @@ using Windows.Storage;
 
 namespace MyFTP.Services
 {
-	public class AppSettings
+	public class AppSettings : ISettings
 	{
 
 		#region properties
@@ -30,7 +30,7 @@ namespace MyFTP.Services
 		/// <param name="resource">The name of the file where the resource is located</param>
 		/// <returns>The resource string or null if can't not find the resource</returns>
 		public string GetStringFromResource(string resourceName, string resource = "Resources") => ResourceLoader.GetForViewIndependentUse(resource)?.GetString(resourceName);
-		
+
 		public bool TryGet<T>(string key, out T result, string containerKey = "default")
 		{
 			var container = GetContainer(containerKey);
@@ -141,19 +141,5 @@ namespace MyFTP.Services
 		#endregion
 
 		public event EventHandler<AppSettingChangedEventArgs> SettingChanged;
-	}
-
-	public class AppSettingChangedEventArgs : EventArgs
-	{
-		public AppSettingChangedEventArgs(string key, object value, ApplicationDataContainer container)
-		{
-			Key = key;
-			Value = value;
-			Container = container;
-		}
-
-		public object Value { get; }
-		public string Key { get; }
-		public ApplicationDataContainer Container { get; }
 	}
 }

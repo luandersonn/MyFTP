@@ -1,7 +1,8 @@
-﻿using MyFTP.ViewModels;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Toolkit.Mvvm.Messaging;
+using MyFTP.ViewModels;
 using System;
 using System.Linq;
-using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -13,38 +14,14 @@ namespace MyFTP.Views
 		public LoginViewPage()
 		{
 			InitializeComponent();
-			ViewModel = new LoginViewModel(Windows.System.DispatcherQueue.GetForCurrentThread());
+			this.DataContext = App.Current.Services.GetService<LoginViewModel>();
+			WeakReferenceMessenger.Default.Register<HostViewModel>(this, SuccessfulLogin);
 		}
-
-		public LoginViewModel ViewModel { get; }
-
-		private bool ShowError
+		public LoginViewModel ViewModel => (LoginViewModel)DataContext;
+		private void SuccessfulLogin(object recipient, HostViewModel message)
 		{
-			get => infoBar.IsOpen || loginProgress.ShowError;
-			set => infoBar.IsOpen = loginProgress.ShowError = value;
-		}
-
-		private async void LoginButtonClick(object sender, RoutedEventArgs args)
-		{
-			var button = (Button)sender;
-			button.IsEnabled = false;
-			loginProgress.IsIndeterminate = true;
-			ShowError = false;
-			try
-			{
-				await Task.Delay(200);
-				var result = await ViewModel.ConnectAsync();
-				Frame.Navigate(typeof(Views.HostViewPage), result);
-			}
-			catch (Exception e)
-			{
-				infoBar.Message = e.Message;
-				ShowError = true;
-			}
-			finally
-			{
-				button.IsEnabled = true;
-			}
+			Frame.Navigate(typeof(HostViewPage), message);
+			WeakReferenceMessenger.Default.Unregister<HostViewModel>(this);
 		}
 
 		private void OnUsernameTextboxTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)

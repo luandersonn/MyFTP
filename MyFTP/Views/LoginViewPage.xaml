@@ -7,7 +7,11 @@
 	  xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	  muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
 	  mc:Ignorable="d">
-
+	<Page.KeyboardAccelerators>
+		<KeyboardAccelerator Key="Escape"
+							 Invoked="{x:Bind ViewModel.LoginCommand.Cancel}"
+							 IsEnabled="{x:Bind ViewModel.LoginCommand.IsRunning, Mode=OneWay}" />
+	</Page.KeyboardAccelerators>
 	<Grid>
 		<controls:TitleBarControl Height="40"
 								  Padding="12,0"
@@ -48,7 +52,7 @@
 								Margin="16,12"
 								VerticalAlignment="Center"
 								x:DefaultBindMode="TwoWay"
-								Spacing="8">
+								Spacing="6">
 
 						<Image Height="64" VerticalAlignment="Center">
 							<Image.Source>
@@ -75,12 +79,13 @@
 										Text="{x:Bind ViewModel.Username, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
 										TextChanged="OnUsernameTextboxTextChanged" />
 						<PasswordBox Header="Password" Password="{x:Bind ViewModel.Password}" />
-						<CheckBox Content="Save credentials" IsChecked="{x:Bind ViewModel.SaveCredentials}" />
+						<CheckBox Content="Save credentials"
+								  IsChecked="{x:Bind ViewModel.SaveCredentials}"
+								  IsEnabled="{x:Bind ViewModel.CanSaveCredentials, Mode=OneTime}" />
 
-						<Button x:Name="loginButton"
-								Width="320"
+						<Button Width="320"
 								Margin="0,8,0,0"
-								Click="LoginButtonClick"
+								Command="{x:Bind ViewModel.LoginCommand, Mode=OneTime}"
 								Content="Login"
 								Style="{ThemeResource AccentButtonStyle}">
 							<Button.KeyboardAccelerators>
@@ -88,12 +93,18 @@
 							</Button.KeyboardAccelerators>
 						</Button>
 
-						<muxc:ProgressBar x:Name="loginProgress" Background="Transparent" />
+						<muxc:ProgressBar Background="Transparent"
+										  IsIndeterminate="{x:Bind ViewModel.LoginCommand.IsRunning, Mode=OneWay}"
+										  ShowError="{x:Bind infoBar.IsOpen, Mode=OneWay}" />
+
 						<muxc:InfoBar x:Name="infoBar"
 									  Title="Login error"
 									  d:IsOpen="True"
 									  d:Message="Erro ao fazer login"
-									  IsClosable="False"
+									  d:Title="Login error"
+									  IsClosable="True"
+									  IsOpen="{x:Bind ViewModel.LoginCommand.ExecutionTask.IsFaulted, Mode=OneWay}"
+									  Message="{x:Bind ViewModel.LoginCommand.ExecutionTask.Exception.InnerException.Message, Mode=OneWay}"
 									  Severity="Error" />
 					</StackPanel>
 				</ScrollViewer>
