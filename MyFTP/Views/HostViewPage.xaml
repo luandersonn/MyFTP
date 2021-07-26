@@ -8,6 +8,7 @@
 	  xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
 	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	  xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+	  xmlns:services="using:MyFTP.Services"
 	  xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
 	  xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
 	  xmlns:viewmodels="using:MyFTP.ViewModels"
@@ -28,7 +29,6 @@
 		<SolidColorBrush x:Key="ListViewItemBackgroundSelectedPointerOver"
 						 Opacity="0.2"
 						 Color="{ThemeResource SystemAccentColor}" />
-
 
 
 		<DataTemplate x:Key="FtpItemsDataTemplate" x:DataType="viewmodels:FtpListItemViewModel">
@@ -362,8 +362,9 @@
 					<RowDefinition Height="*" />
 				</Grid.RowDefinitions>
 
-				<CommandBar VerticalContentAlignment="Center"
-							DefaultLabelPosition="Right"
+				<CommandBar x:Name="ItemCommandBar"
+							VerticalContentAlignment="Center"
+							DefaultLabelPosition="Collapsed"
 							Visibility="{x:Bind SelectedItem.IsDirectory, Mode=OneWay}">
 					<CommandBar.Content>
 						<muxc:DropDownButton VerticalAlignment="Center"
@@ -385,28 +386,50 @@
 						</muxc:DropDownButton>
 					</CommandBar.Content>
 
-					<AppBarButton HorizontalAlignment="Center"
+					<AppBarButton Width="40"
+								  HorizontalAlignment="Center"
 								  Command="{x:Bind SelectedItem.RefreshCommand, Mode=OneWay}"
 								  Icon="Refresh"
-								  Label="Refresh" />
+								  Label="Refresh"
+								  LabelPosition="Collapsed" />
 
 					<AppBarSeparator />
 
-					<AppBarButton Click="OnUploadFileButtonClick"
+					<AppBarButton x:Name="UploadCommandButton"
+								  Command="{x:Bind SelectedItem.UploadCommand, Mode=OneWay}"
 								  Icon="Upload"
 								  Label="Upload" />
-					<AppBarButton Click="OnDownloadFilesButtonClick"
+
+					<AppBarButton x:Name="DownloadCommandButton"
+								  Command="{x:Bind SelectedItem.DownloadCommand, Mode=OneWay}"
 								  Icon="Download"
 								  Label="Download" />
-					<AppBarButton Label="New">
+
+					<AppBarButton x:Name="OpenFlyoutNewFolderButton" Label="New folder">
 						<AppBarButton.Icon>
-							<FontIcon Glyph="&#xE015;" />
+							<FontIcon Glyph="&#xE8F4;" />
 						</AppBarButton.Icon>
 						<AppBarButton.Flyout>
-							<MenuFlyout Placement="Bottom">
-								<MenuFlyoutItem Icon="NewFolder" Text="New folder" />
-								<MenuFlyoutItem Icon="OpenFile" Text="New file" />
-							</MenuFlyout>
+							<Flyout Opened="{x:Bind FocusNewFolderTextBox, Mode=OneTime}"
+									Placement="Bottom"
+									ShouldConstrainToRootBounds="False">
+								<Grid ColumnSpacing="4">
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="200" />
+										<ColumnDefinition Width="auto" />
+									</Grid.ColumnDefinitions>
+
+									<TextBox x:Name="createFolderTextbox"
+											 VerticalAlignment="Center"
+											 AllowFocusOnInteraction="True"
+											 PlaceholderText="Folder name" />
+									<Button Grid.Column="1"
+											VerticalAlignment="Center"
+											Command="{x:Bind SelectedItem.CreateFolderCommand, Mode=OneWay}"
+											CommandParameter="{x:Bind createFolderTextbox.Text, Mode=OneWay}"
+											Content="Criar" />
+								</Grid>
+							</Flyout>
 						</AppBarButton.Flyout>
 					</AppBarButton>
 				</CommandBar>
@@ -616,7 +639,7 @@
 				<toolkit:WrapPanel.Resources>
 					<muxc:TeachingTip x:Name="infoTeachingTip"
 									  Title="FTP informations"
-									  d:IsOpen="True"
+									  d:IsOpen="False"
 									  IsLightDismissEnabled="True"
 									  PlacementMargin="10"
 									  PreferredPlacement="Top"
@@ -659,6 +682,122 @@
 							<TextBlock FontWeight="SemiBold" Text="{x:Bind ViewModel.Client.SystemType}" />
 						</StackPanel>
 					</muxc:TeachingTip>
+
+					<muxc:TeachingTip x:Name="transferTeachingTip"
+									  Title="Download/Upload"
+									  d:IsOpen="True"
+									  IsLightDismissEnabled="False"
+									  PlacementMargin="10"
+									  PreferredPlacement="Top"
+									  Target="{x:Bind transferButton, Mode=OneTime}">
+						<muxc:TeachingTip.IconSource>
+							<muxc:FontIconSource Glyph="&#xE117;" />
+						</muxc:TeachingTip.IconSource>
+						<muxc:ItemsRepeater Margin="0,4" ItemsSource="{x:Bind TransferService.TransferQueue, Mode=OneTime}">
+							<muxc:ItemsRepeater.ItemTemplate>
+								<DataTemplate x:DataType="services:ITransferItem">
+									<Grid Margin="0,0,0,4"
+										  Padding="4"
+										  BorderBrush="{ThemeResource TeachingTipBorderBrush}"
+										  BorderThickness="0,0,0,1"
+										  ColumnSpacing="4"
+										  CornerRadius="4"
+										  RowSpacing="2">
+										<Grid.Transitions>
+											<TransitionCollection>
+												<AddDeleteThemeTransition />
+											</TransitionCollection>
+										</Grid.Transitions>
+										<Grid.RowDefinitions>
+											<RowDefinition />
+											<RowDefinition />
+											<RowDefinition />
+										</Grid.RowDefinitions>
+										<Grid.ColumnDefinitions>
+											<ColumnDefinition Width="40" />
+											<ColumnDefinition />
+											<ColumnDefinition Width="40" />
+										</Grid.ColumnDefinitions>
+
+										<toolkit:SwitchPresenter Grid.RowSpan="3"
+																 HorizontalAlignment="Stretch"
+																 VerticalAlignment="Stretch"
+																 TargetType="x:String"
+																 Value="{x:Bind Type.ToString()}">
+											<toolkit:Case Value="Upload">
+												<FontIcon HorizontalAlignment="Center"
+														  VerticalAlignment="Center"
+														  FontSize="15"
+														  Glyph="&#xE11C;"
+														  ToolTipService.ToolTip="Upload" />
+											</toolkit:Case>
+
+											<toolkit:Case Value="Download">
+												<FontIcon HorizontalAlignment="Center"
+														  VerticalAlignment="Center"
+														  FontSize="15"
+														  Glyph="&#xE118;"
+														  ToolTipService.ToolTip="Download" />
+											</toolkit:Case>
+										</toolkit:SwitchPresenter>
+
+										<muxc:ProgressRing Grid.RowSpan="3"
+														   Width="40"
+														   Height="40"
+														   HorizontalAlignment="Center"
+														   VerticalAlignment="Center"
+														   Background="{ThemeResource SystemBaseLowColor}"
+														   IsIndeterminate="False"
+														   Maximum="1"
+														   Value="{x:Bind Progress, Mode=OneWay}" />
+
+										<TextBlock x:Name="storageItemTextblock"
+												   Grid.Column="1"
+												   FontSize="12"
+												   Text="{x:Bind StorageItem.Name}"
+												   TextTrimming="CharacterEllipsis">
+											<ToolTipService.ToolTip>
+												<ToolTip Visibility="{Binding ElementName=storageItemTextblock, Path=IsTextTrimmed}">
+													<TextBlock Text="{x:Bind StorageItem.Name}" />
+												</ToolTip>
+											</ToolTipService.ToolTip>
+										</TextBlock>
+
+										<TextBlock x:Name="remotePathTextblock"
+												   Grid.Row="1"
+												   Grid.Column="1"
+												   FontSize="12"
+												   Opacity="0.6"
+												   Text="{x:Bind RemotePath}"
+												   TextTrimming="CharacterEllipsis">
+											<ToolTipService.ToolTip>
+												<ToolTip Visibility="{Binding ElementName=remotePathTextblock, Path=IsTextTrimmed}">
+													<TextBlock Text="{x:Bind RemotePath}" />
+												</ToolTip>
+											</ToolTipService.ToolTip>
+										</TextBlock>
+
+										<TextBlock Grid.Row="2"
+												   Grid.Column="1"
+												   FontSize="12"
+												   Foreground="{ThemeResource SystemAccentColor}"
+												   Text="{x:Bind Status, Mode=OneWay}" />
+
+
+
+										<Button Grid.RowSpan="2"
+												Grid.Column="2"
+												HorizontalAlignment="Right"
+												VerticalAlignment="Stretch"
+												Background="Transparent"
+												Click="{x:Bind Cancel}"
+												Content="&#xE10A;"
+												FontFamily="Segoe MDL2 Assets" />
+									</Grid>
+								</DataTemplate>
+							</muxc:ItemsRepeater.ItemTemplate>
+						</muxc:ItemsRepeater>
+					</muxc:TeachingTip>
 				</toolkit:WrapPanel.Resources>
 
 
@@ -668,6 +807,12 @@
 							  Content="&#xE946;"
 							  FontFamily="Segoe MDL2 Assets"
 							  IsChecked="{x:Bind infoTeachingTip.IsOpen, Mode=TwoWay}" />
+				<ToggleButton x:Name="transferButton"
+							  Background="Transparent"
+							  BorderThickness="0"
+							  Content="&#xE117;"
+							  FontFamily="Segoe MDL2 Assets"
+							  IsChecked="{x:Bind transferTeachingTip.IsOpen, Mode=TwoWay}" />
 			</toolkit:WrapPanel>
 
 			<Rectangle Width="1"
@@ -707,5 +852,23 @@
 			</TextBlock>
 		</Grid>
 
+		<VisualStateManager.VisualStateGroups>
+			<VisualStateGroup>
+				<VisualState>
+					<VisualState.StateTriggers>
+						<AdaptiveTrigger MinWindowWidth="0" />
+					</VisualState.StateTriggers>
+					<VisualState.Setters />
+				</VisualState>
+				<VisualState>
+					<VisualState.StateTriggers>
+						<AdaptiveTrigger MinWindowWidth="720" />
+					</VisualState.StateTriggers>
+					<VisualState.Setters>
+						<Setter Target="ItemCommandBar.DefaultLabelPosition" Value="Right" />
+					</VisualState.Setters>
+				</VisualState>
+			</VisualStateGroup>
+		</VisualStateManager.VisualStateGroups>
 	</Grid>
 </Page>

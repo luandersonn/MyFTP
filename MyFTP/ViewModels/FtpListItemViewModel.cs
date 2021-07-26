@@ -1,9 +1,13 @@
 ﻿using FluentFTP;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.Input;
+using Microsoft.Toolkit.Mvvm.Messaging;
 using MyFTP.Collections;
+using MyFTP.Services;
 using MyFTP.Utils;
 using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Utils.Comparers;
@@ -19,6 +23,9 @@ namespace MyFTP.ViewModels
 		private bool _isLoading;
 		private readonly FtpListItem _ftpItem;
 		private readonly IFtpClient _client;
+		private readonly WeakReferenceMessenger _weakMessenger;
+		private readonly ITransferItemService _transferService;
+		private readonly string _guid;
 		#endregion
 
 		#region constructor
@@ -32,10 +39,22 @@ namespace MyFTP.ViewModels
 
 			_isLoaded = _isLoading = false;
 
-			RefreshCommand = new AsyncRelayCommand(LoadItemsAsync, () => !IsLoading && Type == FtpFileSystemObjectType.Directory);
+			RefreshCommand = new AsyncRelayCommand(RefreshCommandAsync, CanExecuteRefreshCommand);
+			UploadCommand = new AsyncRelayCommand(UploadCommandAsync, CanExecuteUploadCommand);
+			DownloadCommand = new AsyncRelayCommand(DownloadCommandAsync, CanExecuteDownloadCommand);
+			CreateFolderCommand = new AsyncRelayCommand<string>(CreateFolderCommandAsync, CanExecuteCreateFolderCommand);
 
 			Dispatcher = DispatcherQueue.GetForCurrentThread();
+
+			_weakMessenger = WeakReferenceMessenger.Default;
+
+			_transferService = App.Current.Services.GetService<ITransferItemService>();
+			_guid = Guid.NewGuid().ToString();
+			_weakMessenger.Register<object, string>(this, _guid, UploadFinished);
+
+			_client.EnableThreadSafeDataConnections = true;
 		}
+
 		public FtpListItemViewModel(IFtpClient client, string name, string fullName) : this(client, null)
 		{
 			Name = name;
@@ -73,10 +92,11 @@ namespace MyFTP.ViewModels
 
 		#region commands
 		public IAsyncRelayCommand RefreshCommand { get; }
-		#endregion
+		public IAsyncRelayCommand UploadCommand { get; }
+		public IAsyncRelayCommand DownloadCommand { get; }
+		public IAsyncRelayCommand<string> CreateFolderCommand { get; }
 
-		#region methods		
-		public async Task LoadItemsAsync(CancellationToken token = default)
+		public async Task RefreshCommandAsync(CancellationToken token = default)
 		{
 			await AccessUIAsync(() => IsLoading = true);
 			RefreshCommand.NotifyCanExecuteChanged();
@@ -105,6 +125,84 @@ namespace MyFTP.ViewModels
 				await AccessUIAsync(() => IsLoading = false);
 				RefreshCommand.NotifyCanExecuteChanged();
 			}
+		}
+		private async Task UploadCommandAsync(CancellationToken token)
+		{
+			var files = await _weakMessenger.Send<RequestFileMessage>();
+			if (files != null)
+			{
+				foreach (var file in files)
+				{
+					var remotePath = string.Format("{0}/{1}", FullName, file.Name);
+					_transferService.EnqueueUpload(_client, remotePath, file, _guid);
+				}
+			}
+		}
+
+		private Task DownloadCommandAsync(CancellationToken token)
+		{
+			throw new NotImplementedException();
+		}
+
+		private async Task CreateFolderCommandAsync(string folderName, CancellationToken token)
+		{
+			var remotePath = string.Format("{0}/{1}", FullName, folderName);
+			if (await _client.CreateDirectoryAsync(remotePath, false, token))
+			{
+				var item = await _client.GetObjectInfoAsync(remotePath, false, token);
+				_items.AddItem(new FtpListItemViewModel(_client, item, this));
+			}
+		}
+
+
+		#endregion
+
+		#region can execute commands
+		private bool CanExecuteRefreshCommand()
+		{
+			var isNotLoading = !IsLoading;
+			var isDirectory = Type == FtpFileSystemObjectType.Directory;
+
+			return isNotLoading && IsDirectory;
+		}
+
+		private bool CanExecuteUploadCommand()
+		{
+			var canWritePermission = (OwnerPermissions & FtpPermission.Write) == FtpPermission.Write;
+			var isDirectory = Type == FtpFileSystemObjectType.Directory;
+			var transferServiceExists = _transferService != null;
+
+			return canWritePermission && IsDirectory && transferServiceExists;
+		}
+
+		private bool CanExecuteDownloadCommand()
+		{
+			var transferServiceExists = _transferService != null;
+
+			return transferServiceExists;
+		}
+
+		private bool CanExecuteCreateFolderCommand(string folderName)
+		{
+			var canWritePermission = (OwnerPermissions & FtpPermission.Write) == FtpPermission.Write;
+			var nameIsNoEmpty = !string.IsNullOrWhiteSpace(folderName);
+			var nameIsValidPath = folderName.IndexOfAny(Path.GetInvalidPathChars()) == -1;
+			return canWritePermission && nameIsNoEmpty && nameIsValidPath;
+		}
+		#endregion
+
+		#region methods
+		private async void UploadFinished(object recipient, object message)
+		{
+			try
+			{
+				if (message is ITransferItem transferItem)
+				{
+					var item = await _client.GetObjectInfoAsync(transferItem.RemotePath, false);
+					await AccessUIAsync(() => _items.AddItem(new FtpListItemViewModel(_client, item, this)));
+				}
+			}
+			catch { }
 		}
 		#endregion
 	}

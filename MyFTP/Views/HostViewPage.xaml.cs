@@ -1,4 +1,8 @@
-﻿using MyFTP.ViewModels;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Toolkit.Mvvm.Messaging;
+using MyFTP.Services;
+using MyFTP.Utils;
+using MyFTP.ViewModels;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -6,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage.FileProperties;
+using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
@@ -19,6 +24,7 @@ namespace MyFTP.Views
 		{
 			InitializeComponent();
 			Crumbs = new ObservableCollection<FtpListItemViewModel>();
+			TransferService = App.Current.Services.GetRequiredService<ITransferItemService>();
 		}
 
 		public HostViewModel ViewModel { get => (HostViewModel)GetValue(ViewModelProperty); set => SetValue(ViewModelProperty, value); }
@@ -30,6 +36,7 @@ namespace MyFTP.Views
 			typeof(FtpListItemViewModel), typeof(HostViewPage), new PropertyMetadata(null, OnSelectedItemChanged));
 
 		public ObservableCollection<FtpListItemViewModel> Crumbs { get; }
+		public ITransferItemService TransferService { get; }
 
 		private async static void OnSelectedItemChanged(DependencyObject d, DependencyPropertyChangedEventArgs args)
 		{
@@ -50,7 +57,7 @@ namespace MyFTP.Views
 				{
 					try
 					{
-						await item.LoadItemsAsync();
+						await item.RefreshCommandAsync();
 					}
 					catch (Exception e)
 					{
@@ -74,6 +81,24 @@ namespace MyFTP.Views
 			{
 				ShowError(e.Message, e);
 			}
+
+			// FtpListItemViewModel requested a file
+			WeakReferenceMessenger.Default.Register<RequestFileMessage>(this, OnFileRequested);
+		}
+
+		protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+		{
+			WeakReferenceMessenger.Default.Unregister<RequestFileMessage>(this);
+		}
+
+		private void OnFileRequested(object recipient, RequestFileMessage message)
+		{
+			if (!message.HasReceivedResponse)
+			{
+				var filePicker = new FileOpenPicker();				
+				filePicker.FileTypeFilter.Add("*");				
+				message.Reply(filePicker.PickMultipleFilesAsync().AsTask());
+			}
 		}
 
 		private void OnUploadFileButtonClick(object sender, RoutedEventArgs args)
@@ -85,6 +110,9 @@ namespace MyFTP.Views
 		{
 			throw new NotImplementedException();
 		}
+
+		private void FocusNewFolderTextBox() => createFolderTextbox.Focus(FocusState.Programmatic);
+
 
 		private async void OnDisconnectButtonClick(muxc.SplitButton sender, muxc.SplitButtonClickEventArgs args)
 		{
@@ -110,7 +138,7 @@ namespace MyFTP.Views
 		private void OnBreadcrumbBarItemClicked(muxc.BreadcrumbBar sender, muxc.BreadcrumbBarItemClickedEventArgs args)
 		{
 			// #BUG 
-			if (args.Index == 0) 
+			if (args.Index == 0)
 			{
 				treeView.SelectedNode = treeView.RootNodes.FirstOrDefault();
 			}
@@ -157,12 +185,12 @@ namespace MyFTP.Views
 										break;
 									case FluentFTP.FtpFileSystemObjectType.Directory:
 										thumbnail = await Utils.IconHelper.GetFolderIconAsync();
-										break;									
+										break;
 									default:
 										return;
 								}
 								thumbnail.Seek(0);
-								await source.SetSourceAsync(thumbnail);								
+								await source.SetSourceAsync(thumbnail);
 							}
 							catch (Exception e)
 							{

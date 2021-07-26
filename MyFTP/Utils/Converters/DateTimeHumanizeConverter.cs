@@ -12,7 +12,7 @@ namespace MyFTP.Utils.Converters
 			{
 				return date.Humanize();
 			}
-			return value;
+			return "";
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, string language) => throw new NotImplementedException();

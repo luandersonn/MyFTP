@@ -7,11 +7,6 @@
 	  xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	  muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
 	  mc:Ignorable="d">
-	<Page.KeyboardAccelerators>
-		<KeyboardAccelerator Key="Escape"
-							 Invoked="{x:Bind ViewModel.LoginCommand.Cancel}"
-							 IsEnabled="{x:Bind ViewModel.LoginCommand.IsRunning, Mode=OneWay}" />
-	</Page.KeyboardAccelerators>
 	<Grid>
 		<controls:TitleBarControl Height="40"
 								  Padding="12,0"
