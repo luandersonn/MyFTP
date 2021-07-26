@@ -401,9 +401,11 @@
 								  Label="Upload" />
 
 					<AppBarButton x:Name="DownloadCommandButton"
-								  Command="{x:Bind SelectedItem.DownloadCommand, Mode=OneWay}"
+								  Command="{Binding ElementName=itemsListView, Path=SelectedItem.DownloadCommand}"
 								  Icon="Download"
-								  Label="Download" />
+								  Label="Download"
+								  Transitions="{StaticResource RepositionAnimation}"
+								  Visibility="{x:Bind DownloadCommandButton.Command, Converter={StaticResource ItemVisibilityConverter}, Mode=OneWay}" />
 
 					<AppBarButton x:Name="OpenFlyoutNewFolderButton" Label="New folder">
 						<AppBarButton.Icon>
@@ -434,7 +436,8 @@
 					</AppBarButton>
 				</CommandBar>
 
-				<ListView Grid.Row="1"
+				<ListView x:Name="itemsListView"
+						  Grid.Row="1"
 						  ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True"
 						  ContainerContentChanging="OnListViewContainerContentChanging"
 						  ItemsSource="{x:Bind SelectedItem.Items, Mode=OneWay}"
@@ -518,7 +521,7 @@
 												<FontIcon Glyph="&#xE143;" />
 											</MenuFlyoutItem.Icon>
 										</MenuFlyoutItem>
-										<MenuFlyoutItem Click="OnListViewContextMenuClicked"
+										<MenuFlyoutItem Command="{x:Bind DownloadCommand}"
 														Icon="Download"
 														Text="Download" />
 

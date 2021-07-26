@@ -60,17 +60,29 @@ namespace MyFTP.Services
 				switch (Type)
 				{
 					case TransferItemType.Download:
-						throw new NotImplementedException();
+						{
+							if (StorageItem.IsOfType(StorageItemTypes.File))
+							{
+								await DownloadFileAsync((IStorageFile)StorageItem, _source.Token);
+							}
+							else
+							{
+								throw new NotImplementedException();
+							}
+							break;
+						}
 					case TransferItemType.Upload:
-						if (StorageItem.IsOfType(StorageItemTypes.File))
 						{
-							await UploadFileAsync((IStorageFile)StorageItem, _source.Token);
+							if (StorageItem.IsOfType(StorageItemTypes.File))
+							{
+								await UploadFileAsync((IStorageFile)StorageItem, _source.Token);
+							}
+							else
+							{
+								throw new NotImplementedException();
+							}
+							break;
 						}
-						else
-						{
-							throw new NotImplementedException();
-						}
-						break;
 					default:
 						throw new NotSupportedException();
 				}
@@ -112,6 +124,36 @@ namespace MyFTP.Services
 			catch(OperationCanceledException)
 			{
 				_client.DeleteFile(RemotePath);
+				throw;
+			}
+			finally
+			{
+				await tempFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
+			}
+		}
+
+		private async Task DownloadFileAsync(IStorageFile file, CancellationToken token)
+		{
+			// Copy file to Local storage due UWP limiations using System.IO
+			var tempFolder = ApplicationData.Current.TemporaryFolder;
+			// Random file name
+			var tempFileName = Guid.NewGuid().ToString();
+			// Se houver uma colisão de Guid, pelo amor de Deus né, mas se prepara para essa situação difícil
+			var tempFile = await tempFolder.CreateFileAsync(tempFileName, CreationCollisionOption.GenerateUniqueName).AsTask(token);
+			try
+			{
+				var result = await _client.DownloadFileAsync(tempFile.Path, RemotePath, FtpLocalExists.Overwrite, FtpVerify.None, progress, token);
+				switch (result)
+				{
+					case FtpStatus.Failed:
+						throw new FtpException("Failed");
+					case FtpStatus.Skipped:
+						throw new FtpException("Upload skipped");
+				}
+				await tempFile.CopyAndReplaceAsync(file);
+			}
+			catch (OperationCanceledException)
+			{				
 				throw;
 			}
 			finally

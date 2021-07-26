@@ -83,21 +83,33 @@ namespace MyFTP.Views
 			}
 
 			// FtpListItemViewModel requested a file
-			WeakReferenceMessenger.Default.Register<RequestFileMessage>(this, OnFileRequested);
-		}
+			WeakReferenceMessenger.Default.Register<RequestOpenFilesMessage>(this, OnOpenFileRequest);
+			WeakReferenceMessenger.Default.Register<RequestSaveFileMessage>(this, OnSaveFileRequest);
+		}		
 
 		protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
 		{
-			WeakReferenceMessenger.Default.Unregister<RequestFileMessage>(this);
+			WeakReferenceMessenger.Default.Unregister<RequestOpenFilesMessage>(this);
 		}
 
-		private void OnFileRequested(object recipient, RequestFileMessage message)
+		private void OnOpenFileRequest(object recipient, RequestOpenFilesMessage message)
 		{
 			if (!message.HasReceivedResponse)
 			{
 				var filePicker = new FileOpenPicker();				
 				filePicker.FileTypeFilter.Add("*");				
 				message.Reply(filePicker.PickMultipleFilesAsync().AsTask());
+			}
+		}
+
+		private void OnSaveFileRequest(object recipient, RequestSaveFileMessage message)
+		{
+			if(!message.HasReceivedResponse)
+			{
+				var picker = new FileSavePicker();
+				picker.FileTypeChoices.Add("Files", new string[] { "." });
+				picker.SuggestedFileName = message.FileNameSuggestion ?? "";
+				message.Reply(picker.PickSaveFileAsync().AsTask());
 			}
 		}
 

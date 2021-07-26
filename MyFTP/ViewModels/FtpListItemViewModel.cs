@@ -25,6 +25,7 @@ namespace MyFTP.ViewModels
 		private readonly IFtpClient _client;
 		private readonly WeakReferenceMessenger _weakMessenger;
 		private readonly ITransferItemService _transferService;
+		private readonly IDialogService _dialogService;
 		private readonly string _guid;
 		#endregion
 
@@ -44,11 +45,13 @@ namespace MyFTP.ViewModels
 			DownloadCommand = new AsyncRelayCommand(DownloadCommandAsync, CanExecuteDownloadCommand);
 			CreateFolderCommand = new AsyncRelayCommand<string>(CreateFolderCommandAsync, CanExecuteCreateFolderCommand);
 
+
 			Dispatcher = DispatcherQueue.GetForCurrentThread();
 
 			_weakMessenger = WeakReferenceMessenger.Default;
 
 			_transferService = App.Current.Services.GetService<ITransferItemService>();
+			_dialogService = App.Current.Services.GetService<IDialogService>();
 			_guid = Guid.NewGuid().ToString();
 			_weakMessenger.Register<object, string>(this, _guid, UploadFinished);
 
@@ -128,7 +131,7 @@ namespace MyFTP.ViewModels
 		}
 		private async Task UploadCommandAsync(CancellationToken token)
 		{
-			var files = await _weakMessenger.Send<RequestFileMessage>();
+			var files = await _weakMessenger.Send<RequestOpenFilesMessage>();
 			if (files != null)
 			{
 				foreach (var file in files)
@@ -139,9 +142,13 @@ namespace MyFTP.ViewModels
 			}
 		}
 
-		private Task DownloadCommandAsync(CancellationToken token)
+		private async Task DownloadCommandAsync(CancellationToken token)
 		{
-			throw new NotImplementedException();
+			var file = await _weakMessenger.Send<RequestSaveFileMessage>(new RequestSaveFileMessage() { FileNameSuggestion = Name });
+			if(file != null)
+			{
+				_transferService.EnqueueDownload(_client, FullName, file);
+			}			
 		}
 
 		private async Task CreateFolderCommandAsync(string folderName, CancellationToken token)
@@ -178,15 +185,15 @@ namespace MyFTP.ViewModels
 		private bool CanExecuteDownloadCommand()
 		{
 			var transferServiceExists = _transferService != null;
-
-			return transferServiceExists;
+			var isFile = Type == FtpFileSystemObjectType.File;
+			return transferServiceExists && isFile;
 		}
 
 		private bool CanExecuteCreateFolderCommand(string folderName)
-		{
+		{			
 			var canWritePermission = (OwnerPermissions & FtpPermission.Write) == FtpPermission.Write;
 			var nameIsNoEmpty = !string.IsNullOrWhiteSpace(folderName);
-			var nameIsValidPath = folderName.IndexOfAny(Path.GetInvalidPathChars()) == -1;
+			var nameIsValidPath = folderName?.IndexOfAny(Path.GetInvalidPathChars()) == -1;
 			return canWritePermission && nameIsNoEmpty && nameIsValidPath;
 		}
 		#endregion
