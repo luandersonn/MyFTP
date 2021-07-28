@@ -1,0 +1,66 @@
+﻿<ContentDialog x:Class="MyFTP.Controls.DeleteItemDialog"
+			   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			   xmlns:local="using:MyFTP.Controls"
+			   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			   xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+			   Title="Delete file permanently?"
+			   Background="{ThemeResource TeachingTipTransientBackground}"
+			   CloseButtonStyle="{StaticResource ButtonRevealStyle}"
+			   CloseButtonText="Cancel"
+			   CornerRadius="{StaticResource OverlayCornerRadius}"
+			   PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+			   PrimaryButtonStyle="{StaticResource DestructiveButtonStyle}"
+			   PrimaryButtonText="Delete"
+			   SecondaryButtonClick="ContentDialog_SecondaryButtonClick"
+			   mc:Ignorable="d">
+
+	<ContentDialog.Resources>
+		<Style TargetType="TextBlock">
+			<Setter Property="TextWrapping" Value="Wrap" />
+			<Setter Property="MaxLines" Value="2" />
+			<Setter Property="TextTrimming" Value="CharacterEllipsis" />
+			<Setter Property="IsTextSelectionEnabled" Value="True" />
+			<Setter Property="Opacity" Value="0.6" />
+		</Style>
+	</ContentDialog.Resources>
+
+	<Grid ColumnSpacing="12">
+		<Grid.RowDefinitions>
+			<RowDefinition />
+			<RowDefinition />
+			<RowDefinition />
+			<RowDefinition />
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="80" />
+			<ColumnDefinition />
+		</Grid.ColumnDefinitions>
+
+		<muxc:ProgressRing x:Name="progress" Grid.RowSpan="4" />
+
+		<Image x:Name="image"
+			   Grid.Row="0"
+			   Grid.RowSpan="4"
+			   Margin="6"
+			   d:Source="https://upload.wikimedia.org/wikipedia/commons/f/fb/.docx_icon.svg" />
+
+		<TextBlock Grid.Row="0"
+				   Grid.Column="1"
+				   FontWeight="Bold"
+				   Opacity="1"
+				   Text="{x:Bind ViewModel.Name}" />
+		<TextBlock Grid.Row="1"
+				   Grid.Column="1"
+				   Text="{x:Bind ViewModel.FullName}" />
+
+		<TextBlock Grid.Row="2"
+				   Grid.Column="1"
+				   Text="{x:Bind ViewModel.Type}" />
+
+		<TextBlock Grid.Row="3"
+				   Grid.Column="1"
+				   Text="{x:Bind ViewModel.Modified}" />
+	</Grid>
+</ContentDialog>

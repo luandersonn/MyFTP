@@ -30,7 +30,7 @@ namespace MyFTP.Collections
 		public bool RemoveItem(T item)
 		{
 			var index = BinarySearch(item);
-			if (index < 0)
+			if (index >= 0)
 			{
 				RemoveAt(index);
 				return true;

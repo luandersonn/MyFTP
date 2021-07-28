@@ -49,6 +49,7 @@ namespace MyFTP
 			services
 				.AddSingleton<ISettings, AppSettings>()
 				.AddSingleton<ITransferItemService, TransferItemService>()
+				.AddTransient<IDialogService, DialogService>()
 				.AddTransient<LoginViewModel>();
 
 			return services.BuildServiceProvider();

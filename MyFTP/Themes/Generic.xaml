@@ -6,6 +6,7 @@
 
 	<ResourceDictionary.MergedDictionaries>
 		<ResourceDictionary Source="/Controls/TitleBarControl.xaml" />
+		<ResourceDictionary Source="/Themes/DestructiveButtonStyle.xaml" />
 	</ResourceDictionary.MergedDictionaries>
 
 	<converters:ItemVisibilityConverter x:Key="ItemVisibilityConverter" />

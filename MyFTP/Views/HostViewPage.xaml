@@ -527,7 +527,7 @@
 
 										<MenuFlyoutSeparator />
 
-										<MenuFlyoutItem Click="OnListViewContextMenuClicked"
+										<MenuFlyoutItem Command="{x:Bind DeleteCommand}"
 														Icon="Delete"
 														Text="Delete" />
 

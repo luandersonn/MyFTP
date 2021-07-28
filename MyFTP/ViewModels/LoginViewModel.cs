@@ -1,4 +1,5 @@
 ﻿using FluentFTP;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.Toolkit.Mvvm.Messaging;
 using MyFTP.Services;
@@ -107,7 +108,9 @@ namespace MyFTP.ViewModels
 						SaveCredentialsOnLocker(Username, Password);
 					}
 				}
-				var hostVM = new HostViewModel(client);
+				var transferService = App.Current.Services.GetService<ITransferItemService>();
+				var dialogService = App.Current.Services.GetService<IDialogService>();
+				var hostVM = new HostViewModel(client, transferService, dialogService);
 				WeakReferenceMessenger.Default.Send<HostViewModel>(hostVM);
 			}
 			finally

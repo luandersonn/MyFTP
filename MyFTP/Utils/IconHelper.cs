@@ -21,12 +21,16 @@ namespace MyFTP.Utils
 				return thumbnail;
 			}
 
-			var folder = await Local.CreateFolderAsync(dummy_folder_name, CreationCollisionOption.OpenIfExists);
-
-
-			var dummyFile = await folder.CreateFileAsync(fileName, CreationCollisionOption.OpenIfExists);
-			thumbnail = await dummyFile.GetThumbnailAsync(ThumbnailMode.SingleItem, 32, ThumbnailOptions.ResizeThumbnail);
+			thumbnail = await GetFileIconAsync(fileExtension, 32);
 			thumbnails.TryAdd(fileName, thumbnail);
+			return thumbnail;
+		}
+		public static async Task<StorageItemThumbnail> GetFileIconAsync(string fileExtension, uint size)
+		{
+			var fileName = string.Format("dummy{0}", fileExtension);
+			var folder = await Local.CreateFolderAsync(dummy_folder_name, CreationCollisionOption.OpenIfExists);
+			var dummyFile = await folder.CreateFileAsync(fileName, CreationCollisionOption.OpenIfExists);
+			var thumbnail = await dummyFile.GetThumbnailAsync(ThumbnailMode.SingleItem, size, ThumbnailOptions.ResizeThumbnail);
 			return thumbnail;
 		}
 
@@ -39,10 +43,17 @@ namespace MyFTP.Utils
 				return thumbnail;
 			}
 
+			thumbnail = await GetFolderIconAsync(32);
+			thumbnails.TryAdd(folderName, thumbnail);
+			return thumbnail;
+		}
+
+		public static async Task<StorageItemThumbnail> GetFolderIconAsync(uint size)
+		{
+			var folderName = "dummyfolder";
 			var folder = await Local.CreateFolderAsync(dummy_folder_name, CreationCollisionOption.OpenIfExists);
 			var dummyFolder = await folder.CreateFolderAsync(folderName, CreationCollisionOption.OpenIfExists);
-			thumbnail = await dummyFolder.GetThumbnailAsync(ThumbnailMode.SingleItem, 32, ThumbnailOptions.ResizeThumbnail);
-			thumbnails.TryAdd(folderName, thumbnail);
+			var thumbnail = await dummyFolder.GetThumbnailAsync(ThumbnailMode.SingleItem, size, ThumbnailOptions.ResizeThumbnail);
 			return thumbnail;
 		}
 	}
