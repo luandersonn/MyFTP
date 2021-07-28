@@ -1,0 +1,141 @@
+﻿<ContentDialog x:Class="MyFTP.Controls.ReplaceItemDialog"
+			   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			   Title="There is already a file with the same name in this location"
+			   d:Width="420"
+			   Background="{ThemeResource TeachingTipTransientBackground}"
+			   CloseButtonStyle="{StaticResource DefaultButtonStyle}"
+			   CloseButtonText="Skip file"
+			   CornerRadius="{StaticResource OverlayCornerRadius}"
+			   PrimaryButtonStyle="{StaticResource AccentButtonStyle}"
+			   PrimaryButtonText="Replace"
+			   SecondaryButtonStyle="{StaticResource DefaultButtonStyle}"
+			   mc:Ignorable="d">
+
+
+	<ContentDialog.Resources>
+		<Style TargetType="TextBlock">
+			<Setter Property="TextWrapping" Value="Wrap" />
+			<Setter Property="MaxLines" Value="1" />
+			<Setter Property="TextTrimming" Value="CharacterEllipsis" />
+			<Setter Property="IsTextSelectionEnabled" Value="True" />
+			<Setter Property="Opacity" Value="0.6" />
+		</Style>
+	</ContentDialog.Resources>
+
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="20" />
+			<RowDefinition Height="20" />
+			<RowDefinition Height="15" />
+			<RowDefinition Height="15" />
+			<RowDefinition Height="15" />
+			<RowDefinition Height="30" />
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="50" />
+			<ColumnDefinition />
+			<ColumnDefinition Width="auto" />
+			<ColumnDefinition Width="50" />
+			<ColumnDefinition />
+		</Grid.ColumnDefinitions>
+
+		<TextBlock Grid.Row="0"
+				   Grid.ColumnSpan="2"
+				   FontWeight="Bold"
+				   Opacity="1"
+				   Text="Current file"
+				   TextWrapping="Wrap" />
+
+		<Image x:Name="itemToReplaceImage"
+			   Grid.Row="1"
+			   Grid.RowSpan="4"
+			   Margin="4"
+			   HorizontalAlignment="Left"
+			   d:Source="https://upload.wikimedia.org/wikipedia/commons/f/fb/.docx_icon.svg" />
+
+		<TextBlock Grid.Row="1"
+				   Grid.Column="1"
+				   d:Text="My document.docx"
+				   Opacity="1"
+				   Text="{x:Bind ItemToReplace.Name}" />
+
+		<TextBlock Grid.Row="2"
+				   Grid.Column="1"
+				   d:Text="Jun 21, 2021"
+				   FontSize="12"
+				   Text="{x:Bind ItemToReplace.Modified.ToLongDateString(), Mode=OneWay}" />
+
+		<TextBlock Grid.Row="3"
+				   Grid.Column="1"
+				   d:Text="09:35 AM"
+				   FontSize="12"
+				   Text="{x:Bind ItemToReplace.Modified.ToLongTimeString(), Mode=OneWay}" />
+
+		<TextBlock Grid.Row="4"
+				   Grid.Column="1"
+				   d:Text="3.2 MB"
+				   FontSize="12"
+				   Text="{x:Bind ItemToReplace.Size, Converter={StaticResource SizeInBytesHumanizeConverter}}" />
+
+
+		<FontIcon Grid.Row="1"
+				  Grid.RowSpan="4"
+				  Grid.Column="2"
+				  VerticalAlignment="Center"
+				  FontSize="25"
+				  Glyph="&#xE76C;" />
+
+
+		<TextBlock Grid.Row="0"
+				   Grid.Column="3"
+				   Grid.ColumnSpan="2"
+				   FontWeight="Bold"
+				   Opacity="1"
+				   Text="New file"
+				   TextWrapping="Wrap" />
+
+		<Image x:Name="newFileImage"
+			   Grid.Row="1"
+			   Grid.RowSpan="4"
+			   Grid.Column="3"
+			   Margin="4"
+			   d:Source="https://upload.wikimedia.org/wikipedia/commons/f/fb/.docx_icon.svg"
+			   Stretch="Uniform" />
+
+		<TextBlock Grid.Row="1"
+				   Grid.Column="4"
+				   d:Text="My document.docx"
+				   Opacity="1"
+				   Text="{x:Bind NewFile.Name}" />
+
+		<TextBlock Grid.Row="2"
+				   Grid.Column="4"
+				   d:Text="Jun 21, 2021"
+				   FontSize="12"
+				   MaxLines="2"
+				   Text="{x:Bind NewFileProperties.DateModified.Date.ToLongDateString(), Mode=OneWay}" />
+
+		<TextBlock Grid.Row="3"
+				   Grid.Column="4"
+				   d:Text="11:35 AM"
+				   FontSize="12"
+				   MaxLines="2"
+				   Text="{x:Bind NewFileProperties.DateModified.Date.ToLongTimeString(), Mode=OneWay}" />
+
+		<TextBlock Grid.Row="4"
+				   Grid.Column="4"
+				   d:Text="3.6 MB"
+				   FontSize="12"
+				   Text="{x:Bind NewFileProperties.Size, Converter={StaticResource SizeInBytesHumanizeConverter}, Mode=OneWay}" />
+
+		<CheckBox Grid.Row="5"
+				  Grid.ColumnSpan="5"
+				  VerticalAlignment="Bottom"
+				  Content="Don't ask again"
+				  IsEnabled="False" />
+
+	</Grid>
+</ContentDialog>

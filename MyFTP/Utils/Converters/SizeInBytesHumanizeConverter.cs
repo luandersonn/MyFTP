@@ -8,13 +8,37 @@ namespace MyFTP.Utils.Converters
 	{
 		public object Convert(object value, Type targetType, object parameter, string language)
 		{
-			if (value is long bytes)
+			try
 			{
+				if (value is ulong l)
+				{
+					if (l > long.MaxValue)
+						return ConvertUlong(l);
+					else
+						value = long.Parse(l.ToString());
+				}
+
+				var bytes = (long)value;
 				if (bytes < 0)
 					return "";
 				return bytes.Bytes().ToString("#.##");
 			}
-			return value.ToString();
+			catch
+			{
+				return value.ToString();
+			}
+		}
+
+		private string ConvertUlong(ulong bytes)
+		{
+			string[] sizes = { "B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
+			int order = 0;
+			while (bytes >= 1024 && order < sizes.Length - 1)
+			{
+				order++;
+				bytes = bytes / 1024;
+			}
+			return string.Format("{0:0.##} {1}", bytes, sizes[order]);
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, string language) => throw new NotImplementedException();

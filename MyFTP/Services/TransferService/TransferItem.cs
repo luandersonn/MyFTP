@@ -112,7 +112,14 @@ namespace MyFTP.Services
 			try
 			{
 				await file.CopyAndReplaceAsync(tempFile).AsTask(token);				
-				var result = await _client.UploadFileAsync(tempFile.Path, RemotePath, FtpRemoteExists.Skip, false, FtpVerify.None, progress, token);
+				var result = await _client.UploadFileAsync(tempFile.Path, RemotePath, FtpRemoteExists.Overwrite, false, FtpVerify.None, progress, token);
+				// Update Modified date
+				var basicProps = await file.GetBasicPropertiesAsync();
+				if (basicProps != null)
+				{
+					await _client.SetModifiedTimeAsync(RemotePath, basicProps.DateModified.Date);
+				}
+				
 				switch (result)
 				{
 					case FtpStatus.Failed:

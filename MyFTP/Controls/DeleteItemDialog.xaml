@@ -7,7 +7,7 @@
 			   xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 			   Title="Delete file permanently?"
 			   Background="{ThemeResource TeachingTipTransientBackground}"
-			   CloseButtonStyle="{StaticResource ButtonRevealStyle}"
+			   CloseButtonStyle="{StaticResource DefaultButtonStyle}"
 			   CloseButtonText="Cancel"
 			   CornerRadius="{StaticResource OverlayCornerRadius}"
 			   PrimaryButtonClick="ContentDialog_PrimaryButtonClick"

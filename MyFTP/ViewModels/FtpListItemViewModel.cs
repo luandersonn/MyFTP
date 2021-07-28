@@ -7,6 +7,7 @@ using MyFTP.Utils;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Utils.Comparers;
@@ -134,13 +135,19 @@ namespace MyFTP.ViewModels
 		}
 		private async Task UploadCommandAsync(CancellationToken token)
 		{
-			var files = await _weakMessenger.Send<RequestOpenFilesMessage>();
+			var files = await _weakMessenger.Send<RequestOpenFilesMessage>();			
 			if (files != null)
 			{
 				foreach (var file in files)
 				{
+					bool result = true;
 					var remotePath = string.Format("{0}/{1}", FullName, file.Name);
-					_transferService.EnqueueUpload(_client, remotePath, file, _guid);
+					if (_dialogService != null && await _client.GetObjectInfoAsync(remotePath, token: token) is FtpListItem current)
+					{
+						result = await _dialogService.AskForReplaceAsync(file, new FtpListItemViewModel(_client, current, this, null, null));
+					}
+					if (result)
+						_transferService.EnqueueUpload(_client, remotePath, file, _guid);
 				}
 			}
 		}
@@ -229,7 +236,18 @@ namespace MyFTP.ViewModels
 					var item = await _client.GetObjectInfoAsync(transferItem.RemotePath, false);
 					if (item != null)
 					{
-						await AccessUIAsync(() => _items.AddItem(new FtpListItemViewModel(_client, item, this, _transferService, _dialogService)));
+						var search = _items
+							.Select((_item, index) => (_item, index))
+							.FirstOrDefault(x => x._item.FullName == transferItem.RemotePath);
+
+						if(search == default)
+						{
+							await AccessUIAsync(() => _items.AddItem(new FtpListItemViewModel(_client, item, this, _transferService, _dialogService)));
+						}												
+						else
+						{
+							await AccessUIAsync(() => _items[search.index] = new FtpListItemViewModel(_client, item, this, _transferService, _dialogService));
+						}
 					}
 				}
 			}

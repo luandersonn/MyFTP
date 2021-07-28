@@ -12,29 +12,24 @@ namespace MyFTP.Utils
 		private static readonly string dummy_folder_name = "dummy";
 		private static StorageFolder Local => ApplicationData.Current.LocalFolder;
 
-		public static async Task<StorageItemThumbnail> GetFileIconAsync(string fileExtension)
+		public static async Task<StorageItemThumbnail> GetFileIconAsync(string fileExtension, uint size = 32)
 		{
 			var fileName = string.Format("dummy{0}", fileExtension);
 
-			if (thumbnails.TryGetValue(fileName, out var thumbnail))
+			if (size == 32 && thumbnails.TryGetValue(fileName, out var thumbnail))
 			{
 				return thumbnail;
 			}
 
-			thumbnail = await GetFileIconAsync(fileExtension, 32);
-			thumbnails.TryAdd(fileName, thumbnail);
-			return thumbnail;
-		}
-		public static async Task<StorageItemThumbnail> GetFileIconAsync(string fileExtension, uint size)
-		{
-			var fileName = string.Format("dummy{0}", fileExtension);
 			var folder = await Local.CreateFolderAsync(dummy_folder_name, CreationCollisionOption.OpenIfExists);
 			var dummyFile = await folder.CreateFileAsync(fileName, CreationCollisionOption.OpenIfExists);
-			var thumbnail = await dummyFile.GetThumbnailAsync(ThumbnailMode.SingleItem, size, ThumbnailOptions.ResizeThumbnail);
+			thumbnail = await dummyFile.GetThumbnailAsync(ThumbnailMode.SingleItem, size, ThumbnailOptions.ResizeThumbnail);
+			if (size == 32)
+				thumbnails.TryAdd(fileName, thumbnail);
 			return thumbnail;
 		}
 
-		public static async Task<StorageItemThumbnail> GetFolderIconAsync()
+		public static async Task<StorageItemThumbnail> GetFolderIconAsync(uint size = 32)
 		{
 			var folderName = "dummyfolder";
 
@@ -43,17 +38,11 @@ namespace MyFTP.Utils
 				return thumbnail;
 			}
 
-			thumbnail = await GetFolderIconAsync(32);
-			thumbnails.TryAdd(folderName, thumbnail);
-			return thumbnail;
-		}
-
-		public static async Task<StorageItemThumbnail> GetFolderIconAsync(uint size)
-		{
-			var folderName = "dummyfolder";
 			var folder = await Local.CreateFolderAsync(dummy_folder_name, CreationCollisionOption.OpenIfExists);
 			var dummyFolder = await folder.CreateFolderAsync(folderName, CreationCollisionOption.OpenIfExists);
-			var thumbnail = await dummyFolder.GetThumbnailAsync(ThumbnailMode.SingleItem, size, ThumbnailOptions.ResizeThumbnail);
+			thumbnail = await dummyFolder.GetThumbnailAsync(ThumbnailMode.SingleItem, size, ThumbnailOptions.ResizeThumbnail);
+			if (size == 32)
+				thumbnails.TryAdd(folderName, thumbnail);
 			return thumbnail;
 		}
 	}
