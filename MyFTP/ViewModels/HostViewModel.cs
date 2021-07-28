@@ -1,4 +1,5 @@
 ﻿using FluentFTP;
+using Microsoft.Toolkit.Mvvm.Input;
 using MyFTP.Collections;
 using MyFTP.Services;
 using MyFTP.Utils;
@@ -16,6 +17,11 @@ namespace MyFTP.ViewModels
 		public IDialogService DialogService { get; }
 		public ReadOnlyObservableCollection<FtpListItemViewModel> Root { get; }
 
+		public IAsyncRelayCommand<FtpListItemViewModel> RefreshCommand { get; }
+		public IAsyncRelayCommand<FtpListItemViewModel> UploadCommand { get; }
+		public IAsyncRelayCommand<FtpListItemViewModel> DownloadCommand { get; }
+		public IAsyncRelayCommand<FtpListItemViewModel> DeleteCommand { get; }
+
 		public HostViewModel(IFtpClient client, ITransferItemService transferService, IDialogService dialogService)
 		{
 			Client = client;
@@ -24,8 +30,26 @@ namespace MyFTP.ViewModels
 			_items = new ObservableSortedCollection<FtpListItemViewModel>(new FtpListItemComparer());
 			Root = new ReadOnlyObservableCollection<FtpListItemViewModel>((ObservableSortedCollection<FtpListItemViewModel>)_items);
 			_items.AddItem(new FtpListItemViewModel(client, client.Host, "", transferService, dialogService));
+
+			RefreshCommand = new AsyncRelayCommand<FtpListItemViewModel>
+				(async item => await item.RefreshCommand.ExecuteAsync(null),
+				item => IsNotNull(item) && item.RefreshCommand.CanExecute(null));
+
+			UploadCommand = new AsyncRelayCommand<FtpListItemViewModel>
+				(async item => await item.UploadCommand.ExecuteAsync(null),
+				item => IsNotNull(item) && item.UploadCommand.CanExecute(null));
+
+			DownloadCommand = new AsyncRelayCommand<FtpListItemViewModel>
+				(async item => await item.DownloadCommand.ExecuteAsync(null),
+				item => IsNotNull(item) && item.DownloadCommand.CanExecute(null));
+
+			DeleteCommand = new AsyncRelayCommand<FtpListItemViewModel>
+				(async item => await item.DeleteCommand.ExecuteAsync(null),
+				item => IsNotNull(item) && item.DeleteCommand.CanExecute(null));
 		}
 
 		public async Task DisconnectAsync() => await Client.DisconnectAsync();
+
+		private bool IsNotNull(FtpListItemViewModel item) => item != null;
 	}
 }

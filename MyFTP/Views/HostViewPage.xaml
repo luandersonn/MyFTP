@@ -364,8 +364,7 @@
 
 				<CommandBar x:Name="ItemCommandBar"
 							VerticalContentAlignment="Center"
-							DefaultLabelPosition="Collapsed"
-							Visibility="{x:Bind SelectedItem.IsDirectory, Mode=OneWay}">
+							DefaultLabelPosition="Collapsed">
 					<CommandBar.Content>
 						<muxc:DropDownButton VerticalAlignment="Center"
 											 Background="Transparent"
@@ -388,7 +387,8 @@
 
 					<AppBarButton Width="40"
 								  HorizontalAlignment="Center"
-								  Command="{x:Bind SelectedItem.RefreshCommand, Mode=OneWay}"
+								  Command="{x:Bind ViewModel.RefreshCommand}"
+								  CommandParameter="{x:Bind SelectedItem, Mode=OneWay}"
 								  Icon="Refresh"
 								  Label="Refresh"
 								  LabelPosition="Collapsed" />
@@ -396,16 +396,15 @@
 					<AppBarSeparator />
 
 					<AppBarButton x:Name="UploadCommandButton"
-								  Command="{x:Bind SelectedItem.UploadCommand, Mode=OneWay}"
+								  Command="{x:Bind ViewModel.UploadCommand}"
+								  CommandParameter="{x:Bind SelectedItem, Mode=OneWay}"
 								  Icon="Upload"
 								  Label="Upload" />
 
 					<AppBarButton x:Name="DownloadCommandButton"
-								  Command="{Binding ElementName=itemsListView, Path=SelectedItem.DownloadCommand}"
 								  Icon="Download"
-								  Label="Download"
-								  Transitions="{StaticResource RepositionAnimation}"
-								  Visibility="{x:Bind DownloadCommandButton.Command, Converter={StaticResource ItemVisibilityConverter}, Mode=OneWay}" />
+								  IsEnabled="False"
+								  Label="Download" />
 
 					<AppBarButton x:Name="OpenFlyoutNewFolderButton" Label="New folder">
 						<AppBarButton.Icon>

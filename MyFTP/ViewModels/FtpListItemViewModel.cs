@@ -42,9 +42,9 @@ namespace MyFTP.ViewModels
 			RefreshCommand = new AsyncRelayCommand(RefreshCommandAsync, CanExecuteRefreshCommand);
 			UploadCommand = new AsyncRelayCommand(UploadCommandAsync, CanExecuteUploadCommand);
 			DownloadCommand = new AsyncRelayCommand(DownloadCommandAsync, CanExecuteDownloadCommand);
-			CreateFolderCommand = new AsyncRelayCommand<string>(CreateFolderCommandAsync, CanExecuteCreateFolderCommand);
 			DeleteCommand = new AsyncRelayCommand(DeleteCommandAsync, CanExecuteDeleteCommand);
-
+			CreateFolderCommand = new AsyncRelayCommand<string>(CreateFolderCommandAsync, CanExecuteCreateFolderCommand);
+			
 
 			Dispatcher = DispatcherQueue.GetForCurrentThread();
 
@@ -98,9 +98,9 @@ namespace MyFTP.ViewModels
 		#region commands
 		public IAsyncRelayCommand RefreshCommand { get; }
 		public IAsyncRelayCommand UploadCommand { get; }
-		public IAsyncRelayCommand DownloadCommand { get; }
-		public IAsyncRelayCommand<string> CreateFolderCommand { get; }
+		public IAsyncRelayCommand DownloadCommand { get; }	
 		public IAsyncRelayCommand DeleteCommand { get; }
+		public IAsyncRelayCommand<string> CreateFolderCommand { get; }
 
 		public async Task RefreshCommandAsync(CancellationToken token = default)
 		{
@@ -154,16 +154,6 @@ namespace MyFTP.ViewModels
 			}
 		}
 
-		private async Task CreateFolderCommandAsync(string folderName, CancellationToken token)
-		{
-			var remotePath = string.Format("{0}/{1}", FullName, folderName);
-			if (await _client.CreateDirectoryAsync(remotePath, false, token))
-			{
-				var item = await _client.GetObjectInfoAsync(remotePath, false, token);
-				_items.AddItem(new FtpListItemViewModel(_client, item, this, _transferService, _dialogService));
-			}
-		}
-
 		private async Task DeleteCommandAsync(CancellationToken token)
 		{
 			if (await _dialogService.AskForDeleteAsync(this))
@@ -177,7 +167,15 @@ namespace MyFTP.ViewModels
 			}
 		}
 
-
+		private async Task CreateFolderCommandAsync(string folderName, CancellationToken token)
+		{
+			var remotePath = string.Format("{0}/{1}", FullName, folderName);
+			if (await _client.CreateDirectoryAsync(remotePath, false, token))
+			{
+				var item = await _client.GetObjectInfoAsync(remotePath, false, token);
+				_items.AddItem(new FtpListItemViewModel(_client, item, this, _transferService, _dialogService));
+			}
+		}
 		#endregion
 
 		#region can execute commands
@@ -205,20 +203,20 @@ namespace MyFTP.ViewModels
 			return transferServiceExists && isFile;
 		}
 
-		private bool CanExecuteCreateFolderCommand(string folderName)
-		{
-			var canWritePermission = (OwnerPermissions & FtpPermission.Write) == FtpPermission.Write;
-			var nameIsNoEmpty = !string.IsNullOrWhiteSpace(folderName);
-			var nameIsValidPath = folderName?.IndexOfAny(Path.GetInvalidPathChars()) == -1;
-			return canWritePermission && nameIsNoEmpty && nameIsValidPath;
-		}
-
 		private bool CanExecuteDeleteCommand()
 		{
 			var canWritePermission = (OwnerPermissions & FtpPermission.Write) == FtpPermission.Write;
 			var dialogServiceExists = _dialogService != null;
 			return canWritePermission && dialogServiceExists;
 		}
+
+		private bool CanExecuteCreateFolderCommand(string folderName)
+		{
+			var canWritePermission = (OwnerPermissions & FtpPermission.Write) == FtpPermission.Write;
+			var nameIsNoEmpty = !string.IsNullOrWhiteSpace(folderName);
+			var nameIsValidPath = folderName?.IndexOfAny(Path.GetInvalidPathChars()) == -1;
+			return canWritePermission && nameIsNoEmpty && nameIsValidPath;
+		}		
 		#endregion
 
 		#region methods
