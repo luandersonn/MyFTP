@@ -21,6 +21,7 @@ namespace MyFTP.ViewModels
 		private readonly IObservableSortedCollection<FtpListItemViewModel> _items;
 		private bool _isLoaded;
 		private bool _isLoading;
+		private FtpPermission _ownerPermissions;
 		private readonly FtpListItem _ftpItem;
 		private readonly IFtpClient _client;
 		private readonly WeakReferenceMessenger _weakMessenger;
@@ -30,7 +31,7 @@ namespace MyFTP.ViewModels
 		#endregion
 
 		#region constructor
-		private FtpListItemViewModel(IFtpClient client, FtpListItemViewModel parent, ITransferItemService transferService, IDialogService dialogService)
+		public FtpListItemViewModel(IFtpClient client, FtpListItem item, FtpListItemViewModel parent, ITransferItemService transferService, IDialogService dialogService)	
 		{
 			_client = client ?? throw new ArgumentNullException(nameof(client));
 			Parent = parent;
@@ -45,7 +46,7 @@ namespace MyFTP.ViewModels
 			DownloadCommand = new AsyncRelayCommand(DownloadCommandAsync, CanExecuteDownloadCommand);
 			DeleteCommand = new AsyncRelayCommand(DeleteCommandAsync, CanExecuteDeleteCommand);
 			CreateFolderCommand = new AsyncRelayCommand<string>(CreateFolderCommandAsync, CanExecuteCreateFolderCommand);
-			
+
 
 			Dispatcher = DispatcherQueue.GetForCurrentThread();
 
@@ -57,21 +58,13 @@ namespace MyFTP.ViewModels
 			_weakMessenger.Register<object, string>(this, _guid, UploadFinished);
 
 			_client.EnableThreadSafeDataConnections = true;
-		}
 
-		public FtpListItemViewModel(IFtpClient client, string name, string fullName, ITransferItemService transferService, IDialogService dialogService)
-			: this(client, null, transferService, dialogService)
-		{
-			Name = name;
-			FullName = fullName;
-			Type = FtpFileSystemObjectType.Directory;
-		}
-
-		public FtpListItemViewModel(IFtpClient client, FtpListItem item, FtpListItemViewModel parent, ITransferItemService transferService, IDialogService dialogService)
-			: this(client, parent, transferService, dialogService)
-		{
 			_ftpItem = item ?? throw new ArgumentNullException(nameof(item));
-			Name = item.Name;
+
+			if (item.Name == "/")
+				Name = client.Host;
+			else
+				Name = item.Name;
 			FullName = item.FullName;
 			Type = item.Type;
 			SubType = item.SubType;
@@ -84,7 +77,7 @@ namespace MyFTP.ViewModels
 		#region properties		
 		public string Name { get; }
 		public string FullName { get; }
-		public FtpPermission OwnerPermissions { get; }
+		public FtpPermission OwnerPermissions { get => _ownerPermissions; private set => Set(ref _ownerPermissions, value); }
 		public FtpListItemViewModel Parent { get; }
 		public FtpFileSystemObjectType Type { get; }
 		public FtpFileSystemObjectSubType SubType { get; }
@@ -99,43 +92,50 @@ namespace MyFTP.ViewModels
 		#region commands
 		public IAsyncRelayCommand RefreshCommand { get; }
 		public IAsyncRelayCommand UploadCommand { get; }
-		public IAsyncRelayCommand DownloadCommand { get; }	
+		public IAsyncRelayCommand DownloadCommand { get; }
 		public IAsyncRelayCommand DeleteCommand { get; }
 		public IAsyncRelayCommand<string> CreateFolderCommand { get; }
 
 		public async Task RefreshCommandAsync(CancellationToken token = default)
 		{
-			await AccessUIAsync(() => IsLoading = true);
+			IsLoading = true;
 			RefreshCommand.NotifyCanExecuteChanged();
 			try
 			{
 				if (Type != FtpFileSystemObjectType.Directory)
 					throw new NotSupportedException();
+				// Load the root permission manually
+				if (!IsLoaded && FullName == "")
+				{					
+					OwnerPermissions = (await _client.GetFilePermissionsAsync("/", token)).OwnerPermissions;
+					UploadCommand?.NotifyCanExecuteChanged();
+					DeleteCommand?.NotifyCanExecuteChanged();
+					CreateFolderCommand?.NotifyCanExecuteChanged();
+
+				}
 				var result = await _client.GetListingAsync(FullName, token);
-				await AccessUIAsync(() =>
+
+				_items.Clear();
+				foreach (var item in result)
 				{
-					_items.Clear();
-					foreach (var item in result)
-					{
-						_items.AddItem(new FtpListItemViewModel(_client, item, this, _transferService, _dialogService));
-					}
-					IsLoaded = true;
-				});
+					_items.AddItem(new FtpListItemViewModel(_client, item, this, _transferService, _dialogService));
+				}
+				IsLoaded = true;
 			}
 			catch
 			{
-				await AccessUIAsync(() => IsLoaded = false);
+				IsLoaded = false;
 				throw;
 			}
 			finally
 			{
-				await AccessUIAsync(() => IsLoading = false);
+				IsLoading = false;
 				RefreshCommand.NotifyCanExecuteChanged();
 			}
 		}
 		private async Task UploadCommandAsync(CancellationToken token)
 		{
-			var files = await _weakMessenger.Send<RequestOpenFilesMessage>();			
+			var files = await _weakMessenger.Send<RequestOpenFilesMessage>();
 			if (files != null)
 			{
 				foreach (var file in files)
@@ -223,7 +223,7 @@ namespace MyFTP.ViewModels
 			var nameIsNoEmpty = !string.IsNullOrWhiteSpace(folderName);
 			var nameIsValidPath = folderName?.IndexOfAny(Path.GetInvalidPathChars()) == -1;
 			return canWritePermission && nameIsNoEmpty && nameIsValidPath;
-		}		
+		}
 		#endregion
 
 		#region methods
@@ -240,10 +240,10 @@ namespace MyFTP.ViewModels
 							.Select((_item, index) => (_item, index))
 							.FirstOrDefault(x => x._item.FullName == transferItem.RemotePath);
 
-						if(search == default)
+						if (search == default)
 						{
 							await AccessUIAsync(() => _items.AddItem(new FtpListItemViewModel(_client, item, this, _transferService, _dialogService)));
-						}												
+						}
 						else
 						{
 							await AccessUIAsync(() => _items[search.index] = new FtpListItemViewModel(_client, item, this, _transferService, _dialogService));

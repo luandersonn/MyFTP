@@ -1,9 +1,12 @@
 ﻿using FluentFTP;
 using Microsoft.Toolkit.Mvvm.Input;
+using Microsoft.Toolkit.Uwp;
 using MyFTP.Collections;
 using MyFTP.Services;
 using MyFTP.Utils;
+using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using Utils.Comparers;
 
@@ -28,8 +31,7 @@ namespace MyFTP.ViewModels
 			TransferService = transferService;
 			DialogService = dialogService;
 			_items = new ObservableSortedCollection<FtpListItemViewModel>(new FtpListItemComparer());
-			Root = new ReadOnlyObservableCollection<FtpListItemViewModel>((ObservableSortedCollection<FtpListItemViewModel>)_items);
-			_items.AddItem(new FtpListItemViewModel(client, client.Host, "", transferService, dialogService));
+			Root = new ReadOnlyObservableCollection<FtpListItemViewModel>((ObservableSortedCollection<FtpListItemViewModel>)_items);			
 
 			RefreshCommand = new AsyncRelayCommand<FtpListItemViewModel>
 				(async item => await item.RefreshCommand.ExecuteAsync(null),
@@ -45,7 +47,16 @@ namespace MyFTP.ViewModels
 
 			DeleteCommand = new AsyncRelayCommand<FtpListItemViewModel>
 				(async item => await item.DeleteCommand.ExecuteAsync(null),
-				item => IsNotNull(item) && item.DeleteCommand.CanExecute(null));
+				item => IsNotNull(item) && item.DeleteCommand.CanExecute(null));			
+		}
+
+		public async Task LoadRootAsync()
+		{
+			if (!_items.Any())
+			{
+				var item = await Client.GetObjectInfoAsync("/");
+				_items.AddItem(new FtpListItemViewModel(Client, item, null, TransferService, DialogService));
+			}
 		}
 
 		public async Task DisconnectAsync() => await Client.DisconnectAsync();

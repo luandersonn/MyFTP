@@ -23,8 +23,7 @@ namespace MyFTP.Views
 		public HostViewPage()
 		{
 			InitializeComponent();
-			Crumbs = new ObservableCollection<FtpListItemViewModel>();
-			TransferService = App.Current.Services.GetRequiredService<ITransferItemService>();
+			Crumbs = new ObservableCollection<FtpListItemViewModel>();			
 		}
 
 		public HostViewModel ViewModel { get => (HostViewModel)GetValue(ViewModelProperty); set => SetValue(ViewModelProperty, value); }
@@ -35,8 +34,7 @@ namespace MyFTP.Views
 		public static readonly DependencyProperty SelectedItemProperty = DependencyProperty.Register("SelectedItem",
 			typeof(FtpListItemViewModel), typeof(HostViewPage), new PropertyMetadata(null, OnSelectedItemChanged));
 
-		public ObservableCollection<FtpListItemViewModel> Crumbs { get; }
-		public ITransferItemService TransferService { get; }
+		public ObservableCollection<FtpListItemViewModel> Crumbs { get; }		
 
 		private async static void OnSelectedItemChanged(DependencyObject d, DependencyPropertyChangedEventArgs args)
 		{
@@ -74,7 +72,7 @@ namespace MyFTP.Views
 				ViewModel = args.Parameter as HostViewModel;
 				if (ViewModel == null)
 					throw new InvalidOperationException("Invalid param");
-				await Task.Delay(TimeSpan.FromMilliseconds(250));
+				await ViewModel.LoadRootAsync();
 				treeView.SelectedNode = treeView.RootNodes.FirstOrDefault();
 			}
 			catch (Exception e)
@@ -90,6 +88,7 @@ namespace MyFTP.Views
 		protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
 		{
 			WeakReferenceMessenger.Default.Unregister<RequestOpenFilesMessage>(this);
+			WeakReferenceMessenger.Default.Unregister<RequestSaveFileMessage>(this);
 		}
 
 		private void OnOpenFileRequest(object recipient, RequestOpenFilesMessage message)
@@ -112,24 +111,18 @@ namespace MyFTP.Views
 				message.Reply(picker.PickSaveFileAsync().AsTask());
 			}
 		}
-
-		private void OnUploadFileButtonClick(object sender, RoutedEventArgs args)
-		{
-			throw new NotImplementedException();
-		}
-
-		private void OnDownloadFilesButtonClick(object sender, RoutedEventArgs args)
-		{
-			throw new NotImplementedException();
-		}
-
 		private void FocusNewFolderTextBox() => createFolderTextbox.Focus(FocusState.Programmatic);
-
 
 		private async void OnDisconnectButtonClick(muxc.SplitButton sender, muxc.SplitButtonClickEventArgs args)
 		{
-			await ViewModel.DisconnectAsync();
-			Frame.GoBack();
+			try
+			{
+				await ViewModel.DisconnectAsync();
+			}
+			finally
+			{
+				Frame.GoBack();
+			}
 		}
 
 		private void OnThemeRadioClicked(object sender, RoutedEventArgs e)
