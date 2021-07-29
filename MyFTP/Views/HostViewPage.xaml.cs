@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Toolkit.Mvvm.Messaging;
-using MyFTP.Services;
+﻿using Microsoft.Toolkit.Mvvm.Messaging;
 using MyFTP.Utils;
 using MyFTP.ViewModels;
 using System;
@@ -8,7 +6,6 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using Windows.Storage.FileProperties;
 using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
@@ -23,7 +20,7 @@ namespace MyFTP.Views
 		public HostViewPage()
 		{
 			InitializeComponent();
-			Crumbs = new ObservableCollection<FtpListItemViewModel>();			
+			Crumbs = new ObservableCollection<FtpListItemViewModel>();
 		}
 
 		public HostViewModel ViewModel { get => (HostViewModel)GetValue(ViewModelProperty); set => SetValue(ViewModelProperty, value); }
@@ -34,7 +31,7 @@ namespace MyFTP.Views
 		public static readonly DependencyProperty SelectedItemProperty = DependencyProperty.Register("SelectedItem",
 			typeof(FtpListItemViewModel), typeof(HostViewPage), new PropertyMetadata(null, OnSelectedItemChanged));
 
-		public ObservableCollection<FtpListItemViewModel> Crumbs { get; }		
+		public ObservableCollection<FtpListItemViewModel> Crumbs { get; }
 
 		private async static void OnSelectedItemChanged(DependencyObject d, DependencyPropertyChangedEventArgs args)
 		{
@@ -53,14 +50,7 @@ namespace MyFTP.Views
 
 				if (!item.IsLoading && !item.IsLoaded)
 				{
-					try
-					{
-						await item.RefreshCommandAsync();
-					}
-					catch (Exception e)
-					{
-						p.ShowError(e.Message, e);
-					}
+					await item.RefreshCommand.ExecuteAsync(null);					
 				}
 			}
 		}
@@ -83,7 +73,8 @@ namespace MyFTP.Views
 			// FtpListItemViewModel requested a file
 			WeakReferenceMessenger.Default.Register<RequestOpenFilesMessage>(this, OnOpenFileRequest);
 			WeakReferenceMessenger.Default.Register<RequestSaveFileMessage>(this, OnSaveFileRequest);
-		}		
+			WeakReferenceMessenger.Default.Register<ErrorMessage>(this, OnErrorMessage);
+		}
 
 		protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
 		{
@@ -95,21 +86,26 @@ namespace MyFTP.Views
 		{
 			if (!message.HasReceivedResponse)
 			{
-				var filePicker = new FileOpenPicker();				
-				filePicker.FileTypeFilter.Add("*");				
+				var filePicker = new FileOpenPicker();
+				filePicker.FileTypeFilter.Add("*");
 				message.Reply(filePicker.PickMultipleFilesAsync().AsTask());
 			}
 		}
 
 		private void OnSaveFileRequest(object recipient, RequestSaveFileMessage message)
 		{
-			if(!message.HasReceivedResponse)
+			if (!message.HasReceivedResponse)
 			{
 				var picker = new FileSavePicker();
 				picker.FileTypeChoices.Add("Files", new string[] { "." });
 				picker.SuggestedFileName = message.FileNameSuggestion ?? "";
 				message.Reply(picker.PickSaveFileAsync().AsTask());
 			}
+		}
+
+		private void OnErrorMessage(object recipient, ErrorMessage message)
+		{
+			ShowError(message.Exception.Message, message.Exception);
 		}
 		private void FocusNewFolderTextBox() => createFolderTextbox.Focus(FocusState.Programmatic);
 
@@ -213,9 +209,7 @@ namespace MyFTP.Views
 			var frameworkElement = (FrameworkElement)sender;
 			var item = (FtpListItemViewModel)frameworkElement.DataContext;
 			treeView.SelectedItem = item;
-		}
-
-		private void OnListViewContextMenuClicked(object sender, RoutedEventArgs e) => throw new NotImplementedException();
+		}		
 
 		private void ExitApp() => Application.Current.Exit();
 	}

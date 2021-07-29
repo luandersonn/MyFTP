@@ -515,7 +515,7 @@
 								  IsDoubleTapEnabled="True">
 								<Grid.ContextFlyout>
 									<MenuFlyout>
-										<MenuFlyoutItem Click="OnListViewContextMenuClicked" Text="Open">
+										<MenuFlyoutItem Text="Open">
 											<MenuFlyoutItem.Icon>
 												<FontIcon Glyph="&#xE143;" />
 											</MenuFlyoutItem.Icon>
@@ -530,12 +530,12 @@
 														Icon="Delete"
 														Text="Delete" />
 
-										<MenuFlyoutItem Click="OnListViewContextMenuClicked"
+										<MenuFlyoutItem Command="{x:Bind RenameCommand}"
 														Icon="Rename"
 														Text="Rename" />
 										<MenuFlyoutSeparator />
 
-										<MenuFlyoutItem Click="OnListViewContextMenuClicked" Text="Properties">
+										<MenuFlyoutItem Text="Properties">
 											<MenuFlyoutItem.Icon>
 												<FontIcon Glyph="&#xE946;" />
 											</MenuFlyoutItem.Icon>

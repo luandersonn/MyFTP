@@ -128,6 +128,7 @@
     <Compile Include="Controls\TitleBarControl.xaml.cs">
       <DependentUpon>TitleBarControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utils\Messages.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AppSettings.cs" />
     <Compile Include="Services\DialogService.cs" />
@@ -154,8 +155,6 @@
     <Compile Include="Collections\IObservableSortedCollection.cs" />
     <Compile Include="Collections\ObservableSortedCollection.cs" />
     <Compile Include="Utils\BindableItem.cs" />
-    <Compile Include="Utils\RequestOpenFilesMessage.cs" />
-    <Compile Include="Utils\RequestFolderMessage.cs" />
     <Compile Include="Views\LoginViewPage.xaml.cs">
       <DependentUpon>LoginViewPage.xaml</DependentUpon>
     </Compile>
