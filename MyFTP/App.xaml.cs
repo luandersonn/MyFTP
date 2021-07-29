@@ -17,6 +17,8 @@ namespace MyFTP
 	/// </summary>
 	sealed partial class App : Application
 	{
+		private ISettings settings;
+
 		/// <summary>
 		/// Inicializa o objeto singleton do aplicativo. Essa é a primeira linha do código criado
 		/// executado e, por isso, é o equivalente lógico de main() ou WinMain().
@@ -28,7 +30,26 @@ namespace MyFTP
 			this.InitializeComponent();
 			this.Suspending += OnSuspending;
 			this.UnhandledException += OnUnhandledException;
+			settings = App.Current.Services.GetService<ISettings>();
+			if (settings != null)
+			{
+				settings.SettingChanged += Settings_SettingChanged;
+			}
 		}
+
+		private void Settings_SettingChanged(object sender, AppSettingChangedEventArgs e)
+		{
+			if (e.Key == "AppTheme")
+			{
+				var settings = App.Current.Services.GetService<ISettings>();
+				if (settings != null && Window.Current.Content is Frame f)
+				{
+					settings.TryGet("AppTheme", out ElementTheme theme);
+					f.RequestedTheme = theme;
+				}
+			}
+		}
+
 		/// <summary>
 		/// Gets the current <see cref="App"/> instance in use
 		/// </summary>
@@ -84,6 +105,11 @@ namespace MyFTP
 			{
 				// Crie um Quadro para atuar como o contexto de navegação e navegue para a primeira página
 				rootFrame = new Frame();
+
+				if (settings != null && settings.TryGet<ElementTheme>("AppTheme", out var theme))
+				{
+					rootFrame.RequestedTheme = theme;
+				}
 
 				rootFrame.NavigationFailed += OnNavigationFailed;
 				if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)

@@ -1,4 +1,6 @@
-﻿using Microsoft.Toolkit.Mvvm.Messaging;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Toolkit.Mvvm.Messaging;
+using MyFTP.Services;
 using MyFTP.Utils;
 using MyFTP.ViewModels;
 using System;
@@ -50,7 +52,7 @@ namespace MyFTP.Views
 
 				if (!item.IsLoading && !item.IsLoaded)
 				{
-					await item.RefreshCommand.ExecuteAsync(null);					
+					await item.RefreshCommand.ExecuteAsync(null);
 				}
 			}
 		}
@@ -107,6 +109,7 @@ namespace MyFTP.Views
 		{
 			ShowError(message.Exception.Message, message.Exception);
 		}
+
 		private void FocusNewFolderTextBox() => createFolderTextbox.Focus(FocusState.Programmatic);
 
 		private async void OnDisconnectButtonClick(muxc.SplitButton sender, muxc.SplitButtonClickEventArgs args)
@@ -121,11 +124,27 @@ namespace MyFTP.Views
 			}
 		}
 
-		private void OnThemeRadioClicked(object sender, RoutedEventArgs e)
+		private void OnRadioThemeLoaded(object sender, RoutedEventArgs e)
 		{
-			var item = (muxc.RadioMenuFlyoutItem)sender;
-			Frame.RequestedTheme = (ElementTheme)Enum.Parse(typeof(ElementTheme), item.Tag.ToString());
+			var radio = (muxc.RadioMenuFlyoutItem)sender;
+			var radioTheme = ((ElementTheme)Enum.Parse(typeof(ElementTheme), radio.Tag.ToString())).ToString();
+			if (Frame.RequestedTheme.ToString() == radioTheme)
+			{
+				radio.IsChecked = true;
+			}
 		}
+
+		private void OnRadioActualThemeChanged(FrameworkElement sender, object args) => OnRadioThemeLoaded(sender, null);
+
+		private void OnRadioThemeClick(object sender, RoutedEventArgs e)
+		{
+			var radio = (muxc.RadioMenuFlyoutItem)sender;
+			var radioTheme = ((ElementTheme)Enum.Parse(typeof(ElementTheme), radio.Tag.ToString()));
+			var settings = App.Current.Services.GetService<ISettings>();
+			if (settings != null)
+				settings.TrySet("AppTheme", radioTheme);
+		}
+
 
 		private void ShowError(string message, Exception e = null)
 		{
@@ -209,7 +228,7 @@ namespace MyFTP.Views
 			var frameworkElement = (FrameworkElement)sender;
 			var item = (FtpListItemViewModel)frameworkElement.DataContext;
 			treeView.SelectedItem = item;
-		}		
+		}
 
 		private void ExitApp() => Application.Current.Exit();
 	}

@@ -135,19 +135,22 @@
 						<muxc:SplitButton.Flyout>
 							<MenuBarItemFlyout Placement="Bottom">
 								<MenuFlyoutSubItem Text="Theme">
-									<muxc:RadioMenuFlyoutItem Click="OnThemeRadioClicked"
+									<muxc:RadioMenuFlyoutItem ActualThemeChanged="OnRadioActualThemeChanged"
+															  Click="OnRadioThemeClick"
 															  GroupName="Theme"
-															  IsChecked="True"
+															  Loaded="OnRadioThemeLoaded"
 															  Tag="Default"
 															  Text="System" />
 
-									<muxc:RadioMenuFlyoutItem Click="OnThemeRadioClicked"
+									<muxc:RadioMenuFlyoutItem Click="OnRadioThemeClick"
 															  GroupName="Theme"
+															  Loaded="OnRadioThemeLoaded"
 															  Tag="Light"
 															  Text="Light" />
 
-									<muxc:RadioMenuFlyoutItem Click="OnThemeRadioClicked"
+									<muxc:RadioMenuFlyoutItem Click="OnRadioThemeClick"
 															  GroupName="Theme"
+															  Loaded="OnRadioThemeLoaded"
 															  Tag="Dark"
 															  Text="Dark" />
 								</MenuFlyoutSubItem>
