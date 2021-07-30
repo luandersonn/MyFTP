@@ -21,7 +21,11 @@ namespace MyFTP.ViewModels
 		private readonly IObservableSortedCollection<FtpListItemViewModel> _items;
 		private bool _isLoaded;
 		private bool _isLoading;
+		private bool _isRenameDialogOpen;
+		private bool _isRenaming;
 		private FtpPermission _ownerPermissions;
+		private string _fullName;
+		private string _name;
 		private readonly FtpListItem _ftpItem;
 		private readonly IFtpClient _client;
 		private readonly WeakReferenceMessenger _weakMessenger;
@@ -45,7 +49,8 @@ namespace MyFTP.ViewModels
 			UploadCommand = new AsyncRelayCommand(UploadCommandAsync, CanExecuteUploadCommand);
 			DownloadCommand = new AsyncRelayCommand(DownloadCommandAsync, CanExecuteDownloadCommand);
 			DeleteCommand = new AsyncRelayCommand(DeleteCommandAsync, CanExecuteDeleteCommand);
-			RenameCommand = new AsyncRelayCommand(RenameCommandAsync, () => true);
+			OpenRenameDialogCommand = new AsyncRelayCommand(OpenRenameDialogCommandAsync, CanExecuteOpenRenameDialogCommand);
+			RenameCommand = new AsyncRelayCommand<string>(RenameCommandAsync, CanExecuteRenameCommand);
 			CreateFolderCommand = new AsyncRelayCommand<string>(CreateFolderCommandAsync, CanExecuteCreateFolderCommand);
 
 
@@ -76,8 +81,8 @@ namespace MyFTP.ViewModels
 		#endregion
 
 		#region properties		
-		public string Name { get; }
-		public string FullName { get; }
+		public string Name { get => _name; private set => Set(ref _name, value); }
+		public string FullName { get => _fullName; private set => Set(ref _fullName, value); }
 		public FtpPermission OwnerPermissions { get => _ownerPermissions; private set => Set(ref _ownerPermissions, value); }
 		public FtpListItemViewModel Parent { get; }
 		public FtpFileSystemObjectType Type { get; }
@@ -95,7 +100,8 @@ namespace MyFTP.ViewModels
 		public IAsyncRelayCommand UploadCommand { get; }
 		public IAsyncRelayCommand DownloadCommand { get; }
 		public IAsyncRelayCommand DeleteCommand { get; }
-		public IAsyncRelayCommand RenameCommand { get; }
+		public IAsyncRelayCommand OpenRenameDialogCommand { get; }
+		public IAsyncRelayCommand<string> RenameCommand { get; }
 		public IAsyncRelayCommand<string> CreateFolderCommand { get; }
 
 		public async Task RefreshCommandAsync(CancellationToken token = default)
@@ -197,15 +203,47 @@ namespace MyFTP.ViewModels
 			}
 		}
 
-		private async Task RenameCommandAsync(CancellationToken token)
+		private async Task OpenRenameDialogCommandAsync(CancellationToken token)
 		{
 			try
 			{
-				throw new NotImplementedException();
+				_isRenameDialogOpen = true;
+				OpenRenameDialogCommand.NotifyCanExecuteChanged();
+				await _dialogService.OpenRenameDialogAsync(RenameCommand, Name);
 			}
 			catch (Exception e)
 			{
-				_weakMessenger.Send<ErrorMessage>(new ErrorMessage(e));			
+				_weakMessenger.Send<ErrorMessage>(new ErrorMessage(e));
+			}
+			finally
+			{
+				_isRenameDialogOpen = false;
+				OpenRenameDialogCommand.NotifyCanExecuteChanged();
+			}
+		}
+
+		private async Task RenameCommandAsync(string newItemName, CancellationToken token)
+		{
+			try
+			{
+				_isRenaming = true;
+				RenameCommand.NotifyCanExecuteChanged();
+				var newRemotePath = FullName.Substring(0, FullName.Length - Name.Length) + newItemName;
+				if (await _client.DirectoryExistsAsync(newRemotePath, token) || await _client.FileExistsAsync(newRemotePath))
+					throw new FtpException("This name is already used by a directory or file");
+				await _client.RenameAsync(FullName, newRemotePath, token: token);
+				Name = newItemName;
+				FullName = newRemotePath;
+			}
+			catch (Exception e)
+			{
+				_weakMessenger.Send<ErrorMessage>(new ErrorMessage(e));
+				throw;
+			}
+			finally
+			{
+				_isRenaming = false;
+				RenameCommand.NotifyCanExecuteChanged();
 			}
 		}
 
@@ -257,6 +295,27 @@ namespace MyFTP.ViewModels
 			var canWritePermission = (OwnerPermissions & FtpPermission.Write) == FtpPermission.Write;
 			var dialogServiceExists = _dialogService != null;
 			return canWritePermission && dialogServiceExists;
+		}
+
+		private bool CanExecuteOpenRenameDialogCommand()
+		{
+			var canWritePermission = (OwnerPermissions & FtpPermission.Write) == FtpPermission.Write;
+			var dialogServiceExists = _dialogService != null;
+			var renameDialogIsClosed = !_isRenameDialogOpen;
+			return canWritePermission && dialogServiceExists && renameDialogIsClosed;
+		}
+
+		private bool CanExecuteRenameCommand(string itemName)
+		{
+			var canWritePermission = (OwnerPermissions & FtpPermission.Write) == FtpPermission.Write;
+			var nameIsNoEmpty = !string.IsNullOrWhiteSpace(itemName);
+			var nameIsValidPath = Type == FtpFileSystemObjectType.Directory
+				? itemName?.IndexOfAny(Path.GetInvalidPathChars()) == -1
+				: itemName?.IndexOfAny(Path.GetInvalidFileNameChars()) == -1;
+			var notEqualsToCurrent = itemName != Name;
+			var isNotRenaming = !_isRenaming;
+
+			return canWritePermission && nameIsNoEmpty && nameIsValidPath && notEqualsToCurrent && isNotRenaming;
 		}
 
 		private bool CanExecuteCreateFolderCommand(string folderName)

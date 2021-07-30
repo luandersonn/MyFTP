@@ -1,0 +1,75 @@
+﻿<ContentDialog x:Class="MyFTP.Controls.RenameItemDialog"
+			   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			   xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+			   xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
+			   Title="Rename item"
+			   CloseButtonText="Close"
+			   DefaultButton="Primary"
+			   IsPrimaryButtonEnabled="False"
+			   PrimaryButtonClick="OnPrimaryButtonClick"
+			   PrimaryButtonCommand="{x:Bind RenameCommand}"
+			   PrimaryButtonText="Rename"
+			   Style="{StaticResource DefaultContentDialogStyle}"
+			   mc:Ignorable="d">
+
+	<Grid RowSpacing="4">
+		<Grid.RowDefinitions>
+			<RowDefinition />
+			<RowDefinition />
+			<RowDefinition />
+		</Grid.RowDefinitions>
+
+		<TextBlock IsTextSelectionEnabled="True"
+				   MaxLines="2"
+				   Text="{Binding}"
+				   TextTrimming="CharacterEllipsis"
+				   TextWrapping="Wrap" />
+
+		<AutoSuggestBox x:Name="renameBox"
+						Grid.Row="1"
+						MinWidth="400"
+						d:PlaceholderText="Rename item"
+						KeyUp="RenameBoxKeyUp"
+						QueryIcon="Rename"
+						QuerySubmitted="RenameBoxQuerySubmitted"
+						Text="{x:Bind ItemName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+
+
+
+		<toolkit:SwitchPresenter Grid.Row="2"
+								 TargetType="x:Boolean"
+								 Value="{x:Bind RenameCommand.ExecutionTask.IsFaulted, Mode=OneWay}">
+			<toolkit:Case Value="True">
+				<muxc:InfoBar x:Name="erroInfoBar"
+							  Title="{x:Bind RenameCommand.ExecutionTask.Exception.InnerException.Message, Mode=OneWay}"
+							  d:IsOpen="True"
+							  d:Severity="Success"
+							  d:Title="Rename*"
+							  IsClosable="False"
+							  IsOpen="{x:Bind RenameCommand.ExecutionTask.IsFaulted, Mode=OneWay}"
+							  Severity="Error" />
+			</toolkit:Case>
+			<toolkit:Case Value="False">
+				<muxc:InfoBar x:Name="sucessoInfoBar"
+							  Title="Sucesso"
+							  d:IsOpen="True"
+							  d:Severity="Success"
+							  d:Title="Rename*"
+							  IsClosable="False"
+							  IsOpen="{x:Bind RenameCommand.ExecutionTask.IsCompletedSuccessfully, Mode=OneWay}"
+							  Severity="Success" />
+			</toolkit:Case>
+		</toolkit:SwitchPresenter>
+
+		<muxc:ProgressBar x:Name="renameProgress"
+						  Grid.Row="2"
+						  VerticalAlignment="Center"
+						  d:IsIndeterminate="True"
+						  Background="Transparent"
+						  IsIndeterminate="{x:Bind RenameCommand.IsRunning, Mode=OneWay}" />
+	</Grid>
+</ContentDialog>

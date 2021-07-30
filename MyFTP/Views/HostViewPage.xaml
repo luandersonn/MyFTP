@@ -253,7 +253,7 @@
 										  Glyph="&#xE188;" />
 								<TextBlock Grid.Column="1"
 										   VerticalAlignment="Center"
-										   Text="{x:Bind Name}"
+										   Text="{x:Bind Name, Mode=OneWay}"
 										   TextTrimming="CharacterEllipsis" />
 
 								<ToolTipService.ToolTip>
@@ -533,7 +533,7 @@
 														Icon="Delete"
 														Text="Delete" />
 
-										<MenuFlyoutItem Command="{x:Bind RenameCommand}"
+										<MenuFlyoutItem Command="{x:Bind OpenRenameDialogCommand}"
 														Icon="Rename"
 														Text="Rename" />
 										<MenuFlyoutSeparator />
@@ -561,7 +561,7 @@
 								<TextBlock Grid.Column="1"
 										   VerticalAlignment="Center"
 										   FontSize="12"
-										   Text="{x:Bind Name}"
+										   Text="{x:Bind Name, Mode=OneWay}"
 										   TextTrimming="CharacterEllipsis" />
 
 								<TextBlock Grid.Column="2"

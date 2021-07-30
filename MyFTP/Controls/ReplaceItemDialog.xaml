@@ -5,13 +5,10 @@
 			   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			   Title="There is already a file with the same name in this location"
 			   d:Width="420"
-			   Background="{ThemeResource TeachingTipTransientBackground}"
-			   CloseButtonStyle="{StaticResource DefaultButtonStyle}"
 			   CloseButtonText="Skip file"
-			   CornerRadius="{StaticResource OverlayCornerRadius}"
 			   PrimaryButtonStyle="{StaticResource AccentButtonStyle}"
 			   PrimaryButtonText="Replace"
-			   SecondaryButtonStyle="{StaticResource DefaultButtonStyle}"
+			   Style="{StaticResource DefaultContentDialogStyle}"
 			   mc:Ignorable="d">
 
 

@@ -1,4 +1,5 @@
-﻿using MyFTP.ViewModels;
+﻿using Microsoft.Toolkit.Mvvm.Input;
+using MyFTP.ViewModels;
 using System;
 using System.Threading.Tasks;
 using Windows.Storage;
@@ -36,6 +37,18 @@ namespace MyFTP.Services
 				RequestedTheme = theme
 			};
 			return await dialog.ShowAsync() == ContentDialogResult.Primary;
+		}
+
+		public async Task OpenRenameDialogAsync(IAsyncRelayCommand<string> renameCommand, string originalName)
+		{
+			ElementTheme theme = default;
+			_settings?.TryGet<ElementTheme>("AppTheme", out theme);
+
+			var dialog = new Controls.RenameItemDialog(renameCommand, originalName)
+			{
+				RequestedTheme = theme
+			};
+			await dialog.ShowAsync();
 		}
 	}
 }

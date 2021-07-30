@@ -122,6 +122,9 @@
     <Compile Include="Controls\DeleteItemDialog.xaml.cs">
       <DependentUpon>DeleteItemDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\RenameItemDialog.xaml.cs">
+      <DependentUpon>RenameItemDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ReplaceItemDialog.xaml.cs">
       <DependentUpon>ReplaceItemDialog.xaml</DependentUpon>
     </Compile>
@@ -228,6 +231,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="Controls\DeleteItemDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\RenameItemDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

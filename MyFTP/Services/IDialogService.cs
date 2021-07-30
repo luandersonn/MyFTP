@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using Microsoft.Toolkit.Mvvm.Input;
+using System.Threading.Tasks;
 using Windows.Storage;
 
 namespace MyFTP.Services
@@ -7,6 +8,7 @@ namespace MyFTP.Services
 	{
 		Task<bool> AskForReplaceAsync(StorageFile newFile, ViewModels.FtpListItemViewModel itemToReplace);
 		Task<bool> AskForDeleteAsync(ViewModels.FtpListItemViewModel itemToDelete);
+		Task OpenRenameDialogAsync(IAsyncRelayCommand<string> renameCommand, string originalName);
 	}
 }
 

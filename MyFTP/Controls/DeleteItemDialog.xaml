@@ -6,14 +6,12 @@
 			   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			   xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 			   Title="Delete file permanently?"
-			   Background="{ThemeResource TeachingTipTransientBackground}"
-			   CloseButtonStyle="{StaticResource DefaultButtonStyle}"
 			   CloseButtonText="Cancel"
-			   CornerRadius="{StaticResource OverlayCornerRadius}"
 			   PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
 			   PrimaryButtonStyle="{StaticResource DestructiveButtonStyle}"
 			   PrimaryButtonText="Delete"
 			   SecondaryButtonClick="ContentDialog_SecondaryButtonClick"
+			   Style="{StaticResource DefaultContentDialogStyle}"
 			   mc:Ignorable="d">
 
 	<ContentDialog.Resources>
