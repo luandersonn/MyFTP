@@ -10,6 +10,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Utils.Comparers;
+using Windows.Storage;
 
 namespace MyFTP.ViewModels
 {
@@ -20,7 +21,6 @@ namespace MyFTP.ViewModels
 		public ITransferItemService TransferService { get; }
 		public IDialogService DialogService { get; }
 		public ReadOnlyObservableCollection<FtpListItemViewModel> Root { get; }
-
 		public IAsyncRelayCommand<FtpListItemViewModel> RefreshCommand { get; }
 		public IAsyncRelayCommand<FtpListItemViewModel> UploadCommand { get; }
 		public IAsyncRelayCommand<IEnumerable<FtpListItemViewModel>> DownloadCommand { get; }
@@ -43,7 +43,7 @@ namespace MyFTP.ViewModels
 				item => IsNotNull(item) && item.UploadCommand.CanExecute(null));
 
 			DownloadCommand = new AsyncRelayCommand<IEnumerable<FtpListItemViewModel>>(DownloadCommandAsync, CanExecuteDownloadCommand);
-			
+
 			DeleteCommand = new AsyncRelayCommand<FtpListItemViewModel>(
 				async (item) => await item.DeleteCommand.ExecuteAsync(null),
 				(item) => item.DeleteCommand.CanExecute(item));
@@ -56,8 +56,16 @@ namespace MyFTP.ViewModels
 			{
 				foreach (var item in items)
 				{
-					var file = await folder.CreateFileAsync(item.Name, Windows.Storage.CreationCollisionOption.GenerateUniqueName);
-					TransferService.EnqueueDownload(Client, item.FullName, file);
+					if (item.Type == FtpFileSystemObjectType.Directory)
+					{
+						var newFolder = await folder.CreateFolderAsync(item.Name, CreationCollisionOption.ReplaceExisting);
+						TransferService.EnqueueDownload(Client, item.FullName, newFolder);
+					}
+					else
+					{
+						var file = await folder.CreateFileAsync(item.Name, CreationCollisionOption.GenerateUniqueName);
+						TransferService.EnqueueDownload(Client, item.FullName, file);
+					}
 				}
 			}
 		}

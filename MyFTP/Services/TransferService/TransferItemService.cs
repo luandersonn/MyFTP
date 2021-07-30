@@ -26,7 +26,7 @@ namespace MyFTP.Services
 		public TransferItemService()
 		{
 			_producer = new BlockingCollection<ITransferItem>();
-			_transferItems = new ObservableCollection<ITransferItem>();			
+			_transferItems = new ObservableCollection<ITransferItem>();
 			_dispatcher = DispatcherQueue.GetForCurrentThread();
 			_tokens = new Dictionary<ITransferItem, string>();
 			_weakMessenger = WeakReferenceMessenger.Default;

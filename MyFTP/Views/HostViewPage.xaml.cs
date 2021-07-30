@@ -242,6 +242,15 @@ namespace MyFTP.Views
 		}
 		private void OnListViewItemClick(object sender, ItemClickEventArgs e) => treeView.SelectedItem = e.ClickedItem;
 
+		private void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+		{
+			var control = (Control)sender;
+			var item = (FtpListItemViewModel)control.DataContext;
+			if (item.Type == FluentFTP.FtpFileSystemObjectType.Directory)
+				treeView.SelectedItem = item;
+			else
+				throw new NotImplementedException();
+		}
 		private void OnListViewItemDoubleTapped(object sender, Windows.UI.Xaml.Input.DoubleTappedRoutedEventArgs e)
 		{
 			var frameworkElement = (FrameworkElement)sender;

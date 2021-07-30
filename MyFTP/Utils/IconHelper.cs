@@ -33,7 +33,7 @@ namespace MyFTP.Utils
 		{
 			var folderName = "dummyfolder";
 
-			if (thumbnails.TryGetValue(folderName, out var thumbnail))
+			if (size == 32 && thumbnails.TryGetValue(folderName, out var thumbnail))
 			{
 				return thumbnail;
 			}

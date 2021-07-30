@@ -519,7 +519,7 @@
 								  IsDoubleTapEnabled="True">
 								<Grid.ContextFlyout>
 									<MenuFlyout>
-										<MenuFlyoutItem Text="Open">
+										<MenuFlyoutItem Text="Open" Click="MenuFlyoutItem_Click">
 											<MenuFlyoutItem.Icon>
 												<FontIcon Glyph="&#xE143;" />
 											</MenuFlyoutItem.Icon>

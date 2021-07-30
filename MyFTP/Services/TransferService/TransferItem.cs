@@ -1,7 +1,6 @@
 ﻿using FluentFTP;
 using MyFTP.Utils;
 using System;
-using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Storage;
@@ -47,7 +46,7 @@ namespace MyFTP.Services
 		#endregion
 
 		#region methods
-		public void Cancel() => _source.Cancel();		
+		public void Cancel() => _source.Cancel();
 
 		public async Task StartAsync(CancellationToken token)
 		{
@@ -66,8 +65,8 @@ namespace MyFTP.Services
 								await DownloadFileAsync((IStorageFile)StorageItem, _source.Token);
 							}
 							else
-							{								
-								await DownloadDirectoryAsync((IStorageFolder)StorageItem, _source.Token);								
+							{
+								await DownloadDirectoryAsync((IStorageFolder)StorageItem, _source.Token);
 							}
 							break;
 						}
@@ -99,7 +98,7 @@ namespace MyFTP.Services
 				Exception = e;
 				throw;
 			}
-		}		
+		}
 
 		private async Task UploadFileAsync(IStorageFile file, CancellationToken token)
 		{
@@ -111,7 +110,7 @@ namespace MyFTP.Services
 			var tempFile = await tempFolder.CreateFileAsync(tempFileName, CreationCollisionOption.GenerateUniqueName).AsTask(token);
 			try
 			{
-				await file.CopyAndReplaceAsync(tempFile).AsTask(token);				
+				await file.CopyAndReplaceAsync(tempFile).AsTask(token);
 				var result = await _client.UploadFileAsync(tempFile.Path, RemotePath, FtpRemoteExists.Overwrite, false, FtpVerify.None, progress, token);
 				// Update Modified date
 				var basicProps = await file.GetBasicPropertiesAsync();
@@ -119,7 +118,7 @@ namespace MyFTP.Services
 				{
 					await _client.SetModifiedTimeAsync(RemotePath, basicProps.DateModified.Date);
 				}
-				
+
 				switch (result)
 				{
 					case FtpStatus.Failed:
@@ -128,7 +127,7 @@ namespace MyFTP.Services
 						throw new FtpException("Upload skipped");
 				}
 			}
-			catch(OperationCanceledException)
+			catch (OperationCanceledException)
 			{
 				_client.DeleteFile(RemotePath);
 				throw;
@@ -158,14 +157,14 @@ namespace MyFTP.Services
 						throw new FtpException("Upload skipped");
 				}
 				await tempFile.CopyAndReplaceAsync(file);
-			}			
+			}
 			finally
 			{
 				await tempFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
 			}
 		}
 
-		private async Task DownloadDirectoryAsync(IStorageFolder storageFolder, CancellationToken token)
+		private async Task DownloadDirectoryAsync(IStorageFolder folder, CancellationToken token)
 		{
 			var tempFolder = ApplicationData.Current.TemporaryFolder;
 			var tempFolderName = Guid.NewGuid().ToString();
@@ -179,17 +178,17 @@ namespace MyFTP.Services
 																		FtpVerify.None,
 																		progress: progress,
 																		token: token);
-				await CopyFolderAsync(tempFolder, storageFolder);
-			}			
+				await CopyFolderAsync(tempFolder, folder);
+			}
 			finally
 			{
 				await tempFolder.DeleteAsync(StorageDeleteOption.PermanentDelete);
-			}			
+			}
 		}
-		
+
 		// https://stackoverflow.com/a/27797685/4811833
 		public async Task CopyFolderAsync(IStorageFolder source, IStorageFolder destinationFolder, string desiredName = null)
-		{			
+		{
 			foreach (var file in await source.GetFilesAsync())
 			{
 				await file.CopyAsync(destinationFolder, file.Name, NameCollisionOption.ReplaceExisting);
