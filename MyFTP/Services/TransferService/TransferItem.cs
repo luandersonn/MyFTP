@@ -66,8 +66,8 @@ namespace MyFTP.Services
 								await DownloadFileAsync((IStorageFile)StorageItem, _source.Token);
 							}
 							else
-							{
-								throw new NotImplementedException();
+							{								
+								await DownloadDirectoryAsync((IStorageFolder)StorageItem, _source.Token);								
 							}
 							break;
 						}
@@ -99,7 +99,7 @@ namespace MyFTP.Services
 				Exception = e;
 				throw;
 			}
-		}
+		}		
 
 		private async Task UploadFileAsync(IStorageFile file, CancellationToken token)
 		{
@@ -158,14 +158,46 @@ namespace MyFTP.Services
 						throw new FtpException("Upload skipped");
 				}
 				await tempFile.CopyAndReplaceAsync(file);
-			}
-			catch (OperationCanceledException)
-			{				
-				throw;
-			}
+			}			
 			finally
 			{
 				await tempFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
+			}
+		}
+
+		private async Task DownloadDirectoryAsync(IStorageFolder storageFolder, CancellationToken token)
+		{
+			var tempFolder = ApplicationData.Current.TemporaryFolder;
+			var tempFolderName = Guid.NewGuid().ToString();
+			tempFolder = await tempFolder.CreateFolderAsync(tempFolderName, CreationCollisionOption.ReplaceExisting);
+			try
+			{
+				var result = await _client.DownloadDirectoryAsync(tempFolder.Path,
+																		RemotePath,
+																		FtpFolderSyncMode.Update,
+																		FtpLocalExists.Overwrite,
+																		FtpVerify.None,
+																		progress: progress,
+																		token: token);
+				await CopyFolderAsync(tempFolder, storageFolder);
+			}			
+			finally
+			{
+				await tempFolder.DeleteAsync(StorageDeleteOption.PermanentDelete);
+			}			
+		}
+		
+		// https://stackoverflow.com/a/27797685/4811833
+		public async Task CopyFolderAsync(IStorageFolder source, IStorageFolder destinationFolder, string desiredName = null)
+		{			
+			foreach (var file in await source.GetFilesAsync())
+			{
+				await file.CopyAsync(destinationFolder, file.Name, NameCollisionOption.ReplaceExisting);
+			}
+			foreach (var folder in await source.GetFoldersAsync())
+			{
+				var newFolder = await destinationFolder.CreateFolderAsync(folder.Name, CreationCollisionOption.ReplaceExisting);
+				await CopyFolderAsync(folder, newFolder);
 			}
 		}
 

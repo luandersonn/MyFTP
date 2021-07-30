@@ -171,10 +171,21 @@ namespace MyFTP.ViewModels
 		{
 			try
 			{
-				var file = await _weakMessenger.Send<RequestSaveFileMessage>(new RequestSaveFileMessage() { FileNameSuggestion = Name });
-				if (file != null)
+				if (Type == FtpFileSystemObjectType.Directory)
 				{
-					_transferService.EnqueueDownload(_client, FullName, file);
+					var folder = await _weakMessenger.Send<RequestOpenFolderMessage>();
+					if (folder != null)
+					{
+						_transferService.EnqueueDownload(_client, FullName, folder);
+					}
+				}
+				else
+				{
+					var file = await _weakMessenger.Send<RequestSaveFileMessage>(new RequestSaveFileMessage() { FileNameSuggestion = Name });
+					if (file != null)
+					{
+						_transferService.EnqueueDownload(_client, FullName, file);
+					}
 				}
 			}
 			catch (Exception e)
@@ -286,8 +297,7 @@ namespace MyFTP.ViewModels
 		private bool CanExecuteDownloadCommand()
 		{
 			var transferServiceExists = _transferService != null;
-			var isFile = Type == FtpFileSystemObjectType.File;
-			return transferServiceExists && isFile;
+			return transferServiceExists;
 		}
 
 		private bool CanExecuteDeleteCommand()
