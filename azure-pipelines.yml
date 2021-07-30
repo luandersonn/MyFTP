@@ -1,0 +1,49 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  solution: '**/*.sln'
+  buildPlatform: 'x86|x64|ARM'
+  buildConfiguration: 'Release'
+  appxPackageDir: '$(build.artifactStagingDirectory)\AppxPackages\\'
+
+steps:
+# Update the app version
+- powershell: |
+    $versionMajor = (get-date -format yyyy) -replace '^0+', ''
+    $versionMinor = (get-date -format MMdd) -replace '^0+', ''
+    $versionBuild = (get-date -format HHmm) -replace '^0+', ''
+
+    [xml]$manifest = get-content ".\FluentCast\Package.appxmanifest"
+    $manifest.Package.Identity.Version = "$versionMajor.$versionMinor.$versionBuild.0"
+    $manifest.save("FluentCast/Package.appxmanifest")
+
+    write-output $manifest.Package.Identity.Version
+  displayName: Version Package Manifest
+
+- task: NuGetToolInstaller@1
+- task: NuGetCommand@2
+  inputs:
+    restoreSolution: '$(solution)'
+
+- task: VSBuild@1
+  inputs:
+    platform: 'x86'
+    solution: '$(solution)'
+    configuration: '$(buildConfiguration)'
+    msbuildArgs: '/p:AppxBundlePlatforms="$(buildPlatform)" /p:AppxPackageDir="$(appxPackageDir)" /p:AppxBundle=Always /p:UapAppxPackageBuildMode=CI'
+- task: CopyFiles@2
+  displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+  inputs:
+    SourceFolder: '$(system.defaultworkingdirectory)'
+    Contents: '**\bin\$(BuildConfiguration)\**'
+    TargetFolder: '$(build.artifactstagingdirectory)'
+
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: drop'
+  inputs:
+    PathtoPublish: '$(build.artifactstagingdirectory)'
