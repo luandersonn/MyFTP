@@ -17,9 +17,9 @@ steps:
     $versionMinor = (get-date -format MMdd) -replace '^0+', ''
     $versionBuild = (get-date -format HHmm) -replace '^0+', ''
 
-    [xml]$manifest = get-content ".\FluentCast\Package.appxmanifest"
+    [xml]$manifest = get-content ".\MyFTP\Package.appxmanifest"
     $manifest.Package.Identity.Version = "$versionMajor.$versionMinor.$versionBuild.0"
-    $manifest.save("FluentCast/Package.appxmanifest")
+    $manifest.save("MyFTP/Package.appxmanifest")
 
     write-output $manifest.Package.Identity.Version
   displayName: Version Package Manifest
