@@ -1,10 +1,11 @@
 ﻿using FluentFTP;
 using Microsoft.Toolkit.Mvvm.Input;
-using Microsoft.Toolkit.Uwp;
+using Microsoft.Toolkit.Mvvm.Messaging;
 using MyFTP.Collections;
 using MyFTP.Services;
 using MyFTP.Utils;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,7 +23,7 @@ namespace MyFTP.ViewModels
 
 		public IAsyncRelayCommand<FtpListItemViewModel> RefreshCommand { get; }
 		public IAsyncRelayCommand<FtpListItemViewModel> UploadCommand { get; }
-		public IAsyncRelayCommand<FtpListItemViewModel> DownloadCommand { get; }
+		public IAsyncRelayCommand<IEnumerable<FtpListItemViewModel>> DownloadCommand { get; }
 		public IAsyncRelayCommand<FtpListItemViewModel> DeleteCommand { get; }
 
 		public HostViewModel(IFtpClient client, ITransferItemService transferService, IDialogService dialogService)
@@ -31,7 +32,7 @@ namespace MyFTP.ViewModels
 			TransferService = transferService;
 			DialogService = dialogService;
 			_items = new ObservableSortedCollection<FtpListItemViewModel>(new FtpListItemComparer());
-			Root = new ReadOnlyObservableCollection<FtpListItemViewModel>((ObservableSortedCollection<FtpListItemViewModel>)_items);			
+			Root = new ReadOnlyObservableCollection<FtpListItemViewModel>((ObservableSortedCollection<FtpListItemViewModel>)_items);
 
 			RefreshCommand = new AsyncRelayCommand<FtpListItemViewModel>
 				(async item => await item.RefreshCommand.ExecuteAsync(null),
@@ -41,14 +42,32 @@ namespace MyFTP.ViewModels
 				(async item => await item.UploadCommand.ExecuteAsync(null),
 				item => IsNotNull(item) && item.UploadCommand.CanExecute(null));
 
-			DownloadCommand = new AsyncRelayCommand<FtpListItemViewModel>
-				(async item => await item.DownloadCommand.ExecuteAsync(null),
-				item => IsNotNull(item) && item.DownloadCommand.CanExecute(null));
-
-			DeleteCommand = new AsyncRelayCommand<FtpListItemViewModel>
-				(async item => await item.DeleteCommand.ExecuteAsync(null),
-				item => IsNotNull(item) && item.DeleteCommand.CanExecute(null));			
+			DownloadCommand = new AsyncRelayCommand<IEnumerable<FtpListItemViewModel>>(DownloadCommandAsync, CanExecuteDownloadCommand);
+			
+			DeleteCommand = new AsyncRelayCommand<FtpListItemViewModel>(
+				async (item) => await item.DeleteCommand.ExecuteAsync(null),
+				(item) => item.DeleteCommand.CanExecute(item));
 		}
+
+		private async Task DownloadCommandAsync(IEnumerable<FtpListItemViewModel> items)
+		{
+			var folder = await WeakReferenceMessenger.Default.Send<RequestOpenFolderMessage>();
+			if (folder != null)
+			{
+				foreach (var item in items)
+				{
+					var file = await folder.CreateFileAsync(item.Name, Windows.Storage.CreationCollisionOption.GenerateUniqueName);
+					TransferService.EnqueueDownload(Client, item.FullName, file);
+				}
+			}
+		}
+
+		#region can execute
+		private bool CanExecuteDownloadCommand(IEnumerable<FtpListItemViewModel> items)
+		{
+			return items != null && items.Any() && items.All(item => item.DownloadCommand.CanExecute(null));
+		}
+		#endregion
 
 		public async Task LoadRootAsync()
 		{

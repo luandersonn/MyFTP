@@ -75,6 +75,7 @@ namespace MyFTP.Views
 			// FtpListItemViewModel requested a file
 			WeakReferenceMessenger.Default.Register<RequestOpenFilesMessage>(this, OnOpenFileRequest);
 			WeakReferenceMessenger.Default.Register<RequestSaveFileMessage>(this, OnSaveFileRequest);
+			WeakReferenceMessenger.Default.Register<RequestOpenFolderMessage>(this, OnOpenFolderRequest);	
 			WeakReferenceMessenger.Default.Register<ErrorMessage>(this, OnErrorMessage);
 		}
 
@@ -82,6 +83,8 @@ namespace MyFTP.Views
 		{
 			WeakReferenceMessenger.Default.Unregister<RequestOpenFilesMessage>(this);
 			WeakReferenceMessenger.Default.Unregister<RequestSaveFileMessage>(this);
+			WeakReferenceMessenger.Default.Unregister<RequestOpenFolderMessage>(this);
+		
 		}
 
 		private void OnOpenFileRequest(object recipient, RequestOpenFilesMessage message)
@@ -99,9 +102,19 @@ namespace MyFTP.Views
 			if (!message.HasReceivedResponse)
 			{
 				var picker = new FileSavePicker();
-				picker.FileTypeChoices.Add("Files", new string[] { "." });
+				picker.FileTypeChoices.Add("File", new string[] { "." });				
 				picker.SuggestedFileName = message.FileNameSuggestion ?? "";
 				message.Reply(picker.PickSaveFileAsync().AsTask());
+			}
+		}
+
+		private void OnOpenFolderRequest(object recipient, RequestOpenFolderMessage message)
+		{
+			if (!message.HasReceivedResponse)
+			{
+				var picker = new FolderPicker();
+				picker.FileTypeFilter.Add(".");
+				message.Reply(picker.PickSingleFolderAsync().AsTask());
 			}
 		}
 
@@ -221,6 +234,12 @@ namespace MyFTP.Views
 				}
 			}
 		}
+
+		private void OnListViewSelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			var list = (ListView)sender;
+			DownloadCommandButton.CommandParameter = list.SelectedItems.Cast<FtpListItemViewModel>();
+		}
 		private void OnListViewItemClick(object sender, ItemClickEventArgs e) => treeView.SelectedItem = e.ClickedItem;
 
 		private void OnListViewItemDoubleTapped(object sender, Windows.UI.Xaml.Input.DoubleTappedRoutedEventArgs e)
@@ -230,6 +249,6 @@ namespace MyFTP.Views
 			treeView.SelectedItem = item;
 		}
 
-		private void ExitApp() => Application.Current.Exit();
+		private void ExitApp() => Application.Current.Exit();		
 	}
 }

@@ -20,14 +20,7 @@ namespace MyFTP.Utils
 	{
 		public string FileNameSuggestion { get; set; }
 	}
-	/// <summary>
-	/// Request to save content on Folder
-	/// </summary>
-	public class RequestSaveFolderMessage : AsyncRequestMessage<StorageFolder>
-	{
-		public string FolderNameSuggestion { get; set; }
-	}
-	
+		
 	public class ErrorMessage
 	{
 		public ErrorMessage(Exception exception) => Exception = exception ?? throw new ArgumentNullException(nameof(exception));

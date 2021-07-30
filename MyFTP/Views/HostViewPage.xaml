@@ -405,8 +405,8 @@
 								  Label="Upload" />
 
 					<AppBarButton x:Name="DownloadCommandButton"
+								  Command="{x:Bind ViewModel.DownloadCommand}"
 								  Icon="Download"
-								  IsEnabled="False"
 								  Label="Download" />
 
 					<AppBarButton x:Name="OpenFlyoutNewFolderButton" Label="New folder">
@@ -445,6 +445,7 @@
 						  ItemsSource="{x:Bind SelectedItem.Items, Mode=OneWay}"
 						  ScrollViewer.HorizontalScrollBarVisibility="Auto"
 						  ScrollViewer.HorizontalScrollMode="Auto"
+						  SelectionChanged="OnListViewSelectionChanged"
 						  SelectionMode="Extended"
 						  Transitions="{StaticResource RepositionAnimation}">
 
