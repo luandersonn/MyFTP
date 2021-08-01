@@ -158,6 +158,9 @@
     <Compile Include="Collections\IObservableSortedCollection.cs" />
     <Compile Include="Collections\ObservableSortedCollection.cs" />
     <Compile Include="Utils\BindableItem.cs" />
+    <Compile Include="Views\FtpDirectoryViewPage.xaml.cs">
+      <DependentUpon>FtpDirectoryViewPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\LoginViewPage.xaml.cs">
       <DependentUpon>LoginViewPage.xaml</DependentUpon>
     </Compile>
@@ -253,6 +256,10 @@
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\FtpDirectoryViewPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\LoginViewPage.xaml">
       <SubType>Designer</SubType>
