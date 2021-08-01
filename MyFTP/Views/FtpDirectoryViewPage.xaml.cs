@@ -1,7 +1,9 @@
 ﻿using Microsoft.Toolkit.Mvvm.Messaging;
+using Microsoft.Toolkit.Uwp.UI;
 using MyFTP.Utils;
 using MyFTP.ViewModels;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -14,9 +16,18 @@ namespace MyFTP.Views
 {
 	public sealed partial class FtpDirectoryViewPage : Page
 	{
+		public FtpListItemViewModel ViewModel { get => (FtpListItemViewModel)GetValue(ViewModelProperty); set => SetValue(ViewModelProperty, value); }
+		public static readonly DependencyProperty ViewModelProperty = DependencyProperty.Register("ViewModel",
+			typeof(FtpListItemViewModel), typeof(FtpDirectoryViewPage), new PropertyMetadata(null));
+
+		public IEnumerable<FtpListItemViewModel> SelectedItems { get => (IEnumerable<FtpListItemViewModel>)GetValue(SelectedItemsProperty); set => SetValue(SelectedItemsProperty, value); }
+		public static readonly DependencyProperty SelectedItemsProperty = DependencyProperty.Register("SelectedItems",
+				typeof(IEnumerable<FtpListItemViewModel>), typeof(FtpDirectoryViewPage), new PropertyMetadata(null));
+
 		public FtpDirectoryViewPage()
 		{
 			this.InitializeComponent();
+			SelectedItems = Enumerable.Empty<FtpListItemViewModel>();
 			Loaded += (sender, args) =>
 			{
 				WeakReferenceMessenger.Default.Register<SelectedItemChangedMessage<FtpListItemViewModel>>(this, OnViewModelChanged);
@@ -27,9 +38,6 @@ namespace MyFTP.Views
 			};
 		}
 
-		public FtpListItemViewModel ViewModel { get => (FtpListItemViewModel)GetValue(ViewModelProperty); set => SetValue(ViewModelProperty, value); }
-		public static readonly DependencyProperty ViewModelProperty = DependencyProperty.Register("ViewModel",
-			typeof(FtpListItemViewModel), typeof(FtpDirectoryViewPage), new PropertyMetadata(null));
 
 		private async void OnViewModelChanged(object recipient, SelectedItemChangedMessage<FtpListItemViewModel> message)
 		{
@@ -93,11 +101,20 @@ namespace MyFTP.Views
 				}
 			}
 		}
+		private void FocusNewFolderTextBox() => createFolderTextbox.Focus(FocusState.Programmatic);
+
+		private void SelectAll()
+		{
+			if (SelectedItems.Count() == ViewModel.Items.Count)
+				itemsListView.DeselectAll();
+			else
+				itemsListView.SelectAllSafe();
+		}
 
 		private void OnListViewSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			//var list = (ListView)sender;
-			//DownloadCommandButton.CommandParameter = list.SelectedItems.Cast<FtpListItemViewModel>();
+			var list = (ListView)sender;
+			SelectedItems = list.SelectedItems.Cast<FtpListItemViewModel>();
 		}
 		private void OnListViewItemClick(object sender, ItemClickEventArgs e)
 		{
@@ -118,11 +135,6 @@ namespace MyFTP.Views
 			var frameworkElement = (FrameworkElement)sender;
 			var item = (FtpListItemViewModel)frameworkElement.DataContext;
 			WeakReferenceMessenger.Default.Send(new SelectedItemChangedMessage<FtpListItemViewModel>(item));
-		}
-
-		private void FocusNewFolderTextBox()
-		{
-			//createFolderTextbox.Focus(FocusState.Programmatic);
 		}
 	}
 }

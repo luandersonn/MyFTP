@@ -5,12 +5,14 @@ using MyFTP.Collections;
 using MyFTP.Services;
 using MyFTP.Utils;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Utils.Comparers;
+using Windows.Storage;
 using Windows.System;
 
 namespace MyFTP.ViewModels
@@ -47,7 +49,7 @@ namespace MyFTP.ViewModels
 
 			RefreshCommand = new AsyncRelayCommand(RefreshCommandAsync, CanExecuteRefreshCommand);
 			UploadCommand = new AsyncRelayCommand(UploadCommandAsync, CanExecuteUploadCommand);
-			DownloadCommand = new AsyncRelayCommand(DownloadCommandAsync, CanExecuteDownloadCommand);
+			DownloadCommand = new AsyncRelayCommand<IEnumerable<FtpListItemViewModel>>(DownloadCommandAsync, CanExecuteDownloadCommand);
 			DeleteCommand = new AsyncRelayCommand(DeleteCommandAsync, CanExecuteDeleteCommand);
 			OpenRenameDialogCommand = new AsyncRelayCommand(OpenRenameDialogCommandAsync, CanExecuteOpenRenameDialogCommand);
 			RenameCommand = new AsyncRelayCommand<string>(RenameCommandAsync, CanExecuteRenameCommand);
@@ -98,7 +100,7 @@ namespace MyFTP.ViewModels
 		#region commands
 		public IAsyncRelayCommand RefreshCommand { get; }
 		public IAsyncRelayCommand UploadCommand { get; }
-		public IAsyncRelayCommand DownloadCommand { get; }
+		public IAsyncRelayCommand<IEnumerable<FtpListItemViewModel>> DownloadCommand { get; }
 		public IAsyncRelayCommand DeleteCommand { get; }
 		public IAsyncRelayCommand OpenRenameDialogCommand { get; }
 		public IAsyncRelayCommand<string> RenameCommand { get; }
@@ -167,11 +169,31 @@ namespace MyFTP.ViewModels
 			}
 		}
 
-		private async Task DownloadCommandAsync(CancellationToken token)
+		private async Task DownloadCommandAsync(IEnumerable<FtpListItemViewModel> arg, CancellationToken token)
 		{
 			try
 			{
-				if (Type == FtpFileSystemObjectType.Directory)
+				if (arg != null && arg.Any())
+				{
+					var folder = await _weakMessenger.Send<RequestOpenFolderMessage>();
+					if (folder != null)
+					{
+						foreach (var item in arg)
+						{
+							if (item.Type == FtpFileSystemObjectType.Directory)
+							{
+								var _foder = await folder.CreateFolderAsync(item.Name, CreationCollisionOption.OpenIfExists);
+								_transferService.EnqueueDownload(item._client, item.FullName, _foder);
+							}
+							else
+							{
+								var _file = await folder.CreateFileAsync(item.Name, CreationCollisionOption.ReplaceExisting);
+								_transferService.EnqueueDownload(item._client, item.FullName, _file);
+							}
+						}
+					}
+				}
+				else if (Type == FtpFileSystemObjectType.Directory)
 				{
 					var folder = await _weakMessenger.Send<RequestOpenFolderMessage>();
 					if (folder != null)
@@ -294,10 +316,14 @@ namespace MyFTP.ViewModels
 			return canWritePermission && IsDirectory && transferServiceExists;
 		}
 
-		private bool CanExecuteDownloadCommand()
+		private bool CanExecuteDownloadCommand(IEnumerable<FtpListItemViewModel> arg)
 		{
+			if (arg is null)
+				return true;
+
 			var transferServiceExists = _transferService != null;
-			return transferServiceExists;
+			var containsItem = arg.Any();
+			return transferServiceExists && containsItem;
 		}
 
 		private bool CanExecuteDeleteCommand()
@@ -333,7 +359,8 @@ namespace MyFTP.ViewModels
 			var canWritePermission = (OwnerPermissions & FtpPermission.Write) == FtpPermission.Write;
 			var nameIsNoEmpty = !string.IsNullOrWhiteSpace(folderName);
 			var nameIsValidPath = folderName?.IndexOfAny(Path.GetInvalidPathChars()) == -1;
-			return canWritePermission && nameIsNoEmpty && nameIsValidPath;
+			var isDirectory = Type == FtpFileSystemObjectType.Directory;
+			return canWritePermission && nameIsNoEmpty && nameIsValidPath && isDirectory;
 		}
 		#endregion
 

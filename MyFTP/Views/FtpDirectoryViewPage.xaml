@@ -112,6 +112,72 @@
 			<RowDefinition />
 		</Grid.RowDefinitions>
 
+		<CommandBar Background="{ThemeResource SystemAltMediumHighColor}" DefaultLabelPosition="Right">
+			<AppBarButton Icon="NewFolder"
+						  Label="New folder"
+						  LabelPosition="Collapsed">
+				<AppBarButton.Flyout>
+					<Flyout Opened="{x:Bind FocusNewFolderTextBox, Mode=OneTime}"
+							Placement="Bottom"
+							ShouldConstrainToRootBounds="False">
+						<Grid ColumnSpacing="4">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="200" />
+								<ColumnDefinition Width="auto" />
+							</Grid.ColumnDefinitions>
+
+							<TextBox x:Name="createFolderTextbox"
+									 VerticalAlignment="Center"
+									 AllowFocusOnInteraction="True"
+									 PlaceholderText="Folder name" />
+							<Button Grid.Column="1"
+									VerticalAlignment="Center"
+									Command="{x:Bind ViewModel.CreateFolderCommand, Mode=OneWay}"
+									CommandParameter="{x:Bind createFolderTextbox.Text, Mode=OneWay}"
+									Content="Create"
+									Style="{ThemeResource AccentButtonStyle}" />
+						</Grid>
+					</Flyout>
+				</AppBarButton.Flyout>
+				<AppBarButton.KeyboardAccelerators>
+					<KeyboardAccelerator Key="N" Modifiers="Control,Shift" />
+				</AppBarButton.KeyboardAccelerators>
+			</AppBarButton>
+			<AppBarSeparator />
+			<AppBarButton Command="{x:Bind ViewModel.UploadCommand, Mode=OneWay}"
+						  Icon="Upload"
+						  Label="Upload" />
+			<AppBarButton Command="{x:Bind ViewModel.DownloadCommand, Mode=OneWay}"
+						  CommandParameter="{x:Bind SelectedItems, Mode=OneWay}"
+						  Icon="Download"
+						  Label="Download" />
+			<AppBarButton Command="{x:Bind ViewModel.RefreshCommand, Mode=OneWay}"
+						  Icon="Refresh"
+						  Label="Refresh"
+						  LabelPosition="Collapsed">
+				<AppBarButton.KeyboardAccelerators>
+					<KeyboardAccelerator Key="F5" />
+				</AppBarButton.KeyboardAccelerators>
+			</AppBarButton>
+
+			<CommandBar.SecondaryCommands>
+
+				<AppBarButton Click="{x:Bind SelectAll}"
+							  Icon="SelectAll"
+							  Label="Select all">
+					<AppBarButton.KeyboardAccelerators>
+						<KeyboardAccelerator Key="A" Modifiers="Control" />
+					</AppBarButton.KeyboardAccelerators>
+				</AppBarButton>
+				<AppBarSeparator />
+				<AppBarButton Label="Properties">
+					<AppBarButton.Icon>
+						<FontIcon Glyph="&#xE946;" />
+					</AppBarButton.Icon>
+				</AppBarButton>
+			</CommandBar.SecondaryCommands>
+		</CommandBar>
+
 		<ListView x:Name="itemsListView"
 				  Grid.Row="1"
 				  ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True"
@@ -130,7 +196,10 @@
 			<ListViewBase.Header>
 				<Grid Height="32"
 					  Padding="12,0"
-					  Background="{ThemeResource SystemAltMediumColor}"
+					  Background="{ThemeResource SystemControlAcrylicElementBrush}"
+					  BackgroundSizing="OuterBorderEdge"
+					  BorderBrush="{ThemeResource SystemBaseLowColor}"
+					  BorderThickness="0,1"
 					  ColumnSpacing="8">
 					<Grid.ColumnDefinitions>
 						<ColumnDefinition Width="25" />
