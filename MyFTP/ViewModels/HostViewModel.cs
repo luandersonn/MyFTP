@@ -83,6 +83,16 @@ namespace MyFTP.ViewModels
 			if (!_items.Any())
 			{
 				var item = await Client.GetObjectInfoAsync("/");
+
+				if (item is null)
+				{
+					var d = default(DateTime);
+					item = new FtpListItem("", "/" , -1, true, ref d)
+					{
+						FullName = "/",
+						Type = FtpFileSystemObjectType.Directory						
+					};
+				}
 				_items.AddItem(new FtpListItemViewModel(Client, item, null, TransferService, DialogService));
 			}
 		}

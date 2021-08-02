@@ -19,6 +19,8 @@ namespace MyFTP.Services
 				return $"{v.Major}.{v.Minor}.{v.Revision}.{v.Build}";
 			}
 		}
+
+		public string AppCenterKey => GetStringFromResource("AppCenterKey", "appsettings") ?? "";
 		#endregion
 
 		#region methods		

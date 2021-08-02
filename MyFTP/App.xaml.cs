@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
+using Microsoft.Extensions.DependencyInjection;
 using MyFTP.Services;
 using MyFTP.ViewModels;
 using System;
@@ -34,6 +37,8 @@ namespace MyFTP
 			if (settings != null)
 			{
 				settings.SettingChanged += Settings_SettingChanged;
+				// Setup AppCenter
+				AppCenter.Start(settings.AppCenterKey, typeof(Analytics), typeof(Crashes));
 			}
 		}
 
