@@ -22,7 +22,7 @@ namespace MyFTP.Views
 		public HostViewPage()
 		{
 			InitializeComponent();
-			Crumbs = new ObservableCollection<FtpListItemViewModel>();		
+			Crumbs = new ObservableCollection<FtpListItemViewModel>();
 			Loaded += (sender, args) =>
 			{
 				WeakReferenceMessenger.Default.Register<RequestOpenFilesMessage>(this, OnOpenFileRequest);
@@ -175,6 +175,10 @@ namespace MyFTP.Views
 			Debug.WriteLineIf(e != null, e);
 		}
 
+		private void OnButtonUpClicked(object sender, RoutedEventArgs args)
+		{
+			treeView.SelectedItem = Crumbs.Reverse().Skip(1).FirstOrDefault();
+		}
 		private void OnBreadcrumbBarItemClicked(muxc.BreadcrumbBar sender, muxc.BreadcrumbBarItemClickedEventArgs args)
 		{
 			// #BUG 

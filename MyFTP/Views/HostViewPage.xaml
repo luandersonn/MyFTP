@@ -101,6 +101,7 @@
 					<ColumnDefinition Width="{x:Bind column.Width, Mode=TwoWay}"
 									  MinWidth="{x:Bind column.MinWidth, Mode=TwoWay}"
 									  MaxWidth="{x:Bind column.MaxWidth, Mode=TwoWay}" />
+					<ColumnDefinition Width="auto" />
 					<ColumnDefinition Width="*" />
 				</Grid.ColumnDefinitions>
 
@@ -177,8 +178,22 @@
 					</toolkit:GridSplitter.Resources>
 				</toolkit:GridSplitter>
 
-				<muxc:BreadcrumbBar Grid.Column="1"
-									Margin="4,0"
+				<Button Grid.Column="1"
+						Height="32"
+						Margin="4,0,2,0"
+						Background="Transparent"
+						BorderThickness="0"
+						Click="OnButtonUpClicked"
+						Content="&#xE110;"
+						FontFamily="Segoe MDL2 Assets"
+						IsEnabled="{x:Bind SelectedItem.Parent, Converter={StaticResource ItemToBoolConverter}, Mode=OneWay}">
+					<Button.Resources>
+						<SolidColorBrush x:Key="ButtonBackgroundDisabled" Color="Transparent" />
+					</Button.Resources>
+				</Button>
+
+				<muxc:BreadcrumbBar Grid.Column="2"
+									Margin="2,0,4,0"
 									VerticalAlignment="Center"
 									ItemClicked="OnBreadcrumbBarItemClicked"
 									ItemsSource="{x:Bind Crumbs}">
@@ -576,7 +591,7 @@
 					Background="Transparent"
 					BorderThickness="0"
 					Click="{x:Bind OpenCloseTransferList, Mode=OneTime}"
-					Visibility="{x:Bind ViewModel.TransferService.CurrentItem, Converter={StaticResource ItemVisibilityConverter}}">
+					Visibility="{x:Bind ViewModel.TransferService.CurrentItem, Converter={StaticResource ItemToBoolConverter}}">
 				<StackPanel Orientation="Horizontal" Spacing="8">
 					<FontIcon x:Name="syncIcon"
 							  VerticalAlignment="Center"
