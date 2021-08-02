@@ -53,7 +53,7 @@
 										Text="Rename" />
 						<MenuFlyoutSeparator />
 
-						<MenuFlyoutItem Text="Properties">
+						<MenuFlyoutItem IsEnabled="False" Text="Properties">
 							<MenuFlyoutItem.Icon>
 								<FontIcon Glyph="&#xE946;" />
 							</MenuFlyoutItem.Icon>
@@ -170,7 +170,7 @@
 					</AppBarButton.KeyboardAccelerators>
 				</AppBarButton>
 				<AppBarSeparator />
-				<AppBarButton Label="Properties">
+				<AppBarButton IsEnabled="False" Label="Properties">
 					<AppBarButton.Icon>
 						<FontIcon Glyph="&#xE946;" />
 					</AppBarButton.Icon>
@@ -237,7 +237,7 @@
 
 					<TextBlock Grid.Column="3"
 							   FontSize="12"
-							   Text="Date" />
+							   Text="Modified" />
 
 					<Rectangle Grid.Column="3"
 							   Width="1"
@@ -252,7 +252,7 @@
 			</ListViewBase.Header>
 		</ListView>
 
-		<toolkit:SwitchPresenter Grid.Row="2"
+		<toolkit:SwitchPresenter Grid.Row="1"
 								 TargetType="x:Boolean"
 								 Value="{x:Bind ViewModel.IsDirectory, FallbackValue=False, Mode=OneWay}">
 			<toolkit:Case Value="True">

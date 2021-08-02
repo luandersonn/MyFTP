@@ -88,6 +88,36 @@ namespace MyFTP.Services
 			item.CancelRequested += CanceledRequested;
 		}
 
+
+
+		public async Task DownloadAsync(IFtpClient client, string remoteFilePath, IStorageFile destinationFile, IProgress<double> progress, CancellationToken token)
+		{
+			await TransferAsync(client, remoteFilePath, destinationFile, TransferItemType.Download, progress, token);
+		}
+
+		public async Task DownloadAsync(IFtpClient client, string remoteFolderPath, IStorageFolder destinationFolder, IProgress<double> progress, CancellationToken token)
+		{
+			await TransferAsync(client, remoteFolderPath, destinationFolder, TransferItemType.Download, progress, token);
+		}
+
+		public async Task UploadAsync(IFtpClient client, string remoteFilePath, IStorageFile destinationFile, IProgress<double> progress, CancellationToken token)
+		{
+			await TransferAsync(client, remoteFilePath, destinationFile, TransferItemType.Upload, progress, token);
+		}
+
+		public async Task UploadAsync(IFtpClient client, string remoteFolderPath, IStorageFolder destinationFolder, IProgress<double> progress, CancellationToken token)
+		{
+			await TransferAsync(client, remoteFolderPath, destinationFolder, TransferItemType.Upload, progress, token);
+		}
+
+		private async Task TransferAsync(IFtpClient client, string remotePath, IStorageItem storageItem, TransferItemType type, IProgress<double> progress, CancellationToken token)
+		{
+			var progressReport = new Progress<FtpProgress>(x => progress.Report(x.Progress / 100.0));
+			var item = new TransferItem(client, remotePath, storageItem, type, progressReport);
+			await item.StartAsync(token);
+			if (item.Exception != null)
+				throw item.Exception;
+		}
 		private async Task RunAsync(CancellationToken cancellationToken)
 		{
 			while (true)

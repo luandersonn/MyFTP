@@ -38,27 +38,26 @@
 						Text="{x:Bind ItemName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
 
-
-
 		<toolkit:SwitchPresenter Grid.Row="2"
+								 d:Value="True"
 								 TargetType="x:Boolean"
 								 Value="{x:Bind RenameCommand.ExecutionTask.IsFaulted, Mode=OneWay}">
 			<toolkit:Case Value="True">
 				<muxc:InfoBar x:Name="erroInfoBar"
 							  Title="{x:Bind RenameCommand.ExecutionTask.Exception.InnerException.Message, Mode=OneWay}"
 							  d:IsOpen="True"
-							  d:Severity="Success"
-							  d:Title="Rename*"
+							  d:Severity="Error"
+							  d:Title="Error"
 							  IsClosable="False"
 							  IsOpen="{x:Bind RenameCommand.ExecutionTask.IsFaulted, Mode=OneWay}"
 							  Severity="Error" />
 			</toolkit:Case>
 			<toolkit:Case Value="False">
 				<muxc:InfoBar x:Name="sucessoInfoBar"
-							  Title="Sucesso"
+							  Title="Renamed successfully"
 							  d:IsOpen="True"
 							  d:Severity="Success"
-							  d:Title="Rename*"
+							  d:Title="Renamed successfully"
 							  IsClosable="False"
 							  IsOpen="{x:Bind RenameCommand.ExecutionTask.IsCompletedSuccessfully, Mode=OneWay}"
 							  Severity="Success" />

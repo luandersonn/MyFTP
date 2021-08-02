@@ -29,7 +29,7 @@ namespace MyFTP.ViewModels
 		private string _fullName;
 		private string _name;
 		private readonly FtpListItem _ftpItem;
-		private readonly IFtpClient _client;
+		public readonly IFtpClient _client;
 		private readonly WeakReferenceMessenger _weakMessenger;
 		private readonly ITransferItemService _transferService;
 		private readonly IDialogService _dialogService;
@@ -317,13 +317,10 @@ namespace MyFTP.ViewModels
 		}
 
 		private bool CanExecuteDownloadCommand(IEnumerable<FtpListItemViewModel> arg)
-		{
-			if (arg is null)
-				return true;
-
+		{	
 			var transferServiceExists = _transferService != null;
-			var containsItem = arg.Any();
-			return transferServiceExists && containsItem;
+			var containsItem = arg?.Any() == true;
+			return transferServiceExists && (containsItem || arg is null);
 		}
 
 		private bool CanExecuteDeleteCommand()
