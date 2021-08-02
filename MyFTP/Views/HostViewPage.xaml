@@ -404,8 +404,9 @@
 				</muxc:TeachingTip>
 
 				<muxc:TeachingTip x:Name="transferTeachingTip"
-								  Title="Download/Upload"
+								  Title="Transfer queue"
 								  d:IsOpen="True"
+								  d:Title="Tranfer queue"
 								  IsLightDismissEnabled="True"
 								  PlacementMargin="10"
 								  PreferredPlacement="Top"
@@ -518,6 +519,15 @@
 						</muxc:ItemsRepeater.ItemTemplate>
 					</muxc:ItemsRepeater>
 				</muxc:TeachingTip>
+
+				<Storyboard x:Name="IconRotation"
+							AutoReverse="False"
+							RepeatBehavior="Forever">
+					<DoubleAnimation Storyboard.TargetName="syncIcon"
+									 Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)"
+									 To="360"
+									 Duration="0:0:1" />
+				</Storyboard>
 			</Grid.Resources>
 
 			<toolkit:WrapPanel Margin="4,0" VerticalAlignment="Center">
@@ -557,14 +567,42 @@
 				</toolkit:GridSplitter.Resources>
 			</toolkit:GridSplitter>
 
-			<ToggleButton x:Name="transferButton"
-						  Grid.Column="1"
-						  Margin="4,0"
-						  Background="Transparent"
-						  BorderThickness="0"
-						  Content="&#xE117;"
-						  FontFamily="Segoe MDL2 Assets"
-						  IsChecked="{x:Bind transferTeachingTip.IsOpen, Mode=TwoWay}" />
+			<Button x:Name="transferButton"
+					Grid.Column="1"
+					Height="25"
+					Margin="4,0"
+					Padding="8,2"
+					x:DefaultBindMode="OneWay"
+					Background="Transparent"
+					BorderThickness="0"
+					Click="{x:Bind OpenCloseTransferList, Mode=OneTime}"
+					Visibility="{x:Bind ViewModel.TransferService.CurrentItem, Converter={StaticResource ItemVisibilityConverter}}">
+				<StackPanel Orientation="Horizontal" Spacing="8">
+					<FontIcon x:Name="syncIcon"
+							  VerticalAlignment="Center"
+							  FontSize="15"
+							  Glyph="&#xE117;"
+							  RenderTransformOrigin="0.5,0.5">
+						<FontIcon.RenderTransform>
+							<CompositeTransform />
+						</FontIcon.RenderTransform>
+					</FontIcon>
+					<StackPanel Width="150"
+								VerticalAlignment="Center"
+								Orientation="Vertical"
+								Spacing="2">
+						<TextBlock d:Text="My picture.jpg"
+								   FontSize="12"
+								   Text="{x:Bind ViewModel.TransferService.CurrentItem.StorageItem.Name}"
+								   TextAlignment="Center"
+								   TextTrimming="CharacterEllipsis" />
+
+						<muxc:ProgressBar d:Value="0.4"
+										  Maximum="1"
+										  Value="{x:Bind ViewModel.TransferService.CurrentItem.Progress}" />
+					</StackPanel>
+				</StackPanel>
+			</Button>
 
 			<TextBlock Grid.Column="1"
 					   Margin="12,0"

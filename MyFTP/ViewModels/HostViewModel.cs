@@ -30,6 +30,7 @@ namespace MyFTP.ViewModels
 		{
 			Client = client;
 			TransferService = transferService;
+			transferService?.Start();
 			DialogService = dialogService;
 			_items = new ObservableSortedCollection<FtpListItemViewModel>(new FtpListItemComparer());
 			Root = new ReadOnlyObservableCollection<FtpListItemViewModel>((ObservableSortedCollection<FtpListItemViewModel>)_items);

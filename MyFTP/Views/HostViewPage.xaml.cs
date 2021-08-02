@@ -30,6 +30,7 @@ namespace MyFTP.Views
 				WeakReferenceMessenger.Default.Register<RequestOpenFolderMessage>(this, OnOpenFolderRequest);
 				WeakReferenceMessenger.Default.Register<ErrorMessage>(this, OnErrorMessage);
 				WeakReferenceMessenger.Default.Register<SelectedItemChangedMessage<FtpListItemViewModel>>(this, OnSelectedItemChanged);
+				IconRotation.Begin();
 			};
 			Unloaded += (sender, args) =>
 			{
@@ -38,6 +39,7 @@ namespace MyFTP.Views
 				WeakReferenceMessenger.Default.Unregister<RequestOpenFolderMessage>(this);
 				WeakReferenceMessenger.Default.Unregister<ErrorMessage>(this);
 				WeakReferenceMessenger.Default.Unregister<SelectedItemChangedMessage<FtpListItemViewModel>>(this);
+				IconRotation.Stop();
 			};
 		}
 
@@ -237,6 +239,8 @@ namespace MyFTP.Views
 				}
 			}
 		}
+
+		private void OpenCloseTransferList() => transferTeachingTip.IsOpen = !transferTeachingTip.IsOpen;
 
 		private void OnListViewItemClick(object sender, ItemClickEventArgs e)
 		{

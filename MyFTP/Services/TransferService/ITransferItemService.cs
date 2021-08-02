@@ -1,14 +1,16 @@
 ﻿using FluentFTP;
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Storage;
 
 namespace MyFTP.Services
 {
-	public interface ITransferItemService
+	public interface ITransferItemService : INotifyPropertyChanged
 	{
+		ITransferItem CurrentItem { get; }
 		ReadOnlyObservableCollection<ITransferItem> TransferQueue { get; }
 		void EnqueueDownload(IFtpClient client, string remoteFilePath, IStorageFile destinationFile);
 		void EnqueueDownload(IFtpClient client, string remoteFolderPath, IStorageFolder destinationFolder);
@@ -19,5 +21,8 @@ namespace MyFTP.Services
 		Task DownloadAsync(IFtpClient client, string remoteFolderPath, IStorageFolder destinationFolder, IProgress<double> progress, CancellationToken token);
 		Task UploadAsync(IFtpClient client, string remoteFilePath, IStorageFile destinationFile, IProgress<double> progress, CancellationToken token);
 		Task UploadAsync(IFtpClient client, string remoteFolderPath, IStorageFolder destinationFolder, IProgress<double> progress, CancellationToken token);
+
+		void Start();
+		void Stop();		
 	}
 }
