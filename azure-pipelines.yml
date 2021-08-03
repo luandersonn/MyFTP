@@ -1,6 +1,9 @@
 trigger:
 - main
 
+# Do not trigger on pull request
+pr: none
+
 pool:
   vmImage: 'windows-latest'
 
@@ -24,6 +27,7 @@ steps:
     write-output $manifest.Package.Identity.Version
   displayName: Version Package Manifest
   
+# Setup the AppCenter Key
 - task: PowerShell@2
   displayName: Set AppCenter key
   inputs:
