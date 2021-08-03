@@ -5,6 +5,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Storage;
@@ -20,6 +21,10 @@ namespace MyFTP.Services
 		private readonly ObservableCollection<ITransferItem> _transferItems;
 		private readonly DispatcherQueue _dispatcher;
 		private readonly WeakReferenceMessenger _weakMessenger;
+		private CancellationTokenSource _source;
+		private ITransferItem _currentItem;
+
+		public event PropertyChangedEventHandler PropertyChanged;
 		#endregion
 
 		#region constructor		
@@ -30,18 +35,34 @@ namespace MyFTP.Services
 			_dispatcher = DispatcherQueue.GetForCurrentThread();
 			_tokens = new Dictionary<ITransferItem, string>();
 			_weakMessenger = WeakReferenceMessenger.Default;
-
 			TransferQueue = new ReadOnlyObservableCollection<ITransferItem>(_transferItems);
-
-			Task.Run(async () => await RunAsync(default));
 		}
 		#endregion
 
 		#region properties		
 		public ReadOnlyObservableCollection<ITransferItem> TransferQueue { get; }
+		public ITransferItem CurrentItem
+		{
+			get => _currentItem;
+			private set
+			{
+				if (!Equals(_currentItem, value))
+				{
+					_currentItem = value;
+					PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentItem)));
+				}
+			}
+		}
 		#endregion
 
 		#region methods		
+		public void Start()
+		{
+			_source?.Cancel();
+			_source = new CancellationTokenSource();
+			Task.Run(async () => await RunAsync(_source.Token));
+		}
+		public void Stop() => _source?.Cancel();
 		public void EnqueueDownload(IFtpClient client, string remoteFilePath, IStorageFile destinationFile)
 		{
 			if (client is null) throw new ArgumentNullException(nameof(client));
@@ -52,7 +73,6 @@ namespace MyFTP.Services
 			_transferItems.Add(item);
 			item.CancelRequested += CanceledRequested;
 		}
-
 		public void EnqueueDownload(IFtpClient client, string remoteFolderPath, IStorageFolder destinationFolder)
 		{
 			if (client is null) throw new ArgumentNullException(nameof(client));
@@ -63,7 +83,6 @@ namespace MyFTP.Services
 			_transferItems.Add(item);
 			item.CancelRequested += CanceledRequested;
 		}
-
 		public void EnqueueUpload(IFtpClient client, string remoteFilePath, IStorageFile localFile, string token)
 		{
 			if (client is null) throw new ArgumentNullException(nameof(client));
@@ -75,7 +94,6 @@ namespace MyFTP.Services
 			_tokens.Add(item, token);
 			item.CancelRequested += CanceledRequested;
 		}
-
 		public void EnqueueUpload(IFtpClient client, string remoteFolderPath, IStorageFolder localFolder, string token)
 		{
 			if (client is null) throw new ArgumentNullException(nameof(client));
@@ -86,6 +104,30 @@ namespace MyFTP.Services
 			_transferItems.Add(item);
 			_tokens.Add(item, token);
 			item.CancelRequested += CanceledRequested;
+		}
+		public async Task DownloadAsync(IFtpClient client, string remoteFilePath, IStorageFile destinationFile, IProgress<double> progress, CancellationToken token)
+		{
+			await TransferAsync(client, remoteFilePath, destinationFile, TransferItemType.Download, progress, token);
+		}
+		public async Task DownloadAsync(IFtpClient client, string remoteFolderPath, IStorageFolder destinationFolder, IProgress<double> progress, CancellationToken token)
+		{
+			await TransferAsync(client, remoteFolderPath, destinationFolder, TransferItemType.Download, progress, token);
+		}
+		public async Task UploadAsync(IFtpClient client, string remoteFilePath, IStorageFile destinationFile, IProgress<double> progress, CancellationToken token)
+		{
+			await TransferAsync(client, remoteFilePath, destinationFile, TransferItemType.Upload, progress, token);
+		}
+		public async Task UploadAsync(IFtpClient client, string remoteFolderPath, IStorageFolder destinationFolder, IProgress<double> progress, CancellationToken token)
+		{
+			await TransferAsync(client, remoteFolderPath, destinationFolder, TransferItemType.Upload, progress, token);
+		}
+		private async Task TransferAsync(IFtpClient client, string remotePath, IStorageItem storageItem, TransferItemType type, IProgress<double> progress, CancellationToken token)
+		{
+			var progressReport = new Progress<FtpProgress>(x => progress.Report(x.Progress / 100.0));
+			var item = new TransferItem(client, remotePath, storageItem, type, progressReport);
+			await item.StartAsync(token);
+			if (item.Exception != null)
+				throw item.Exception;
 		}
 
 		private async Task RunAsync(CancellationToken cancellationToken)
@@ -99,6 +141,7 @@ namespace MyFTP.Services
 				{
 					try
 					{
+						CurrentItem = item;
 						await item.StartAsync(cancellationToken);
 						// Transfer completed, notify the sender about it
 						if (item.Status == TransferItemStatus.Completed && _tokens.TryGetValue(item, out var token))
@@ -118,33 +161,35 @@ namespace MyFTP.Services
 						{
 							// Wait 10 secs before remove from transfer list							
 							await Task.Delay(TimeSpan.FromSeconds(10));
-							await AccessUI(() => _transferItems.Remove(item));
+							await AccessUI(() =>
+							{
+								_transferItems.Remove(item);
+								if (CurrentItem == item)
+									CurrentItem = null;
+							});
 						});
 						item.CancelRequested -= CanceledRequested;
 					}
 				});
 			}
 		}
-
 		private async void CanceledRequested(object sender, EventArgs args)
 		{
-			await AccessUIAsync(async () =>
+			await AccessUI(() =>
 			{
 				var item = (ITransferItem)sender;
 				item.CancelRequested -= CanceledRequested;
-				await Task.Delay(TimeSpan.FromSeconds(2));
 				_transferItems.Remove(item);
 				_tokens.Remove(item);
 			});
 		}
-
 		private async Task AccessUI(Action function)
 		{
-			await _dispatcher.EnqueueAsync(function, DispatcherQueuePriority.Low);
+			await _dispatcher.EnqueueAsync(function, DispatcherQueuePriority.Normal);
 		}
 		private async Task AccessUIAsync(Func<Task> function)
 		{
-			await _dispatcher.EnqueueAsync(function, DispatcherQueuePriority.Low);
+			await _dispatcher.EnqueueAsync(function, DispatcherQueuePriority.Normal);
 		}
 		#endregion
 	}

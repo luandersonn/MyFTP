@@ -9,7 +9,7 @@
 		<ResourceDictionary Source="/Themes/DestructiveButtonStyle.xaml" />
 	</ResourceDictionary.MergedDictionaries>
 
-	<converters:ItemVisibilityConverter x:Key="ItemVisibilityConverter" />
+	<converters:ItemToBoolConverter x:Key="ItemToBoolConverter" />
 	<converters:SizeInBytesHumanizeConverter x:Key="SizeInBytesHumanizeConverter" />
 	<converters:DateTimeHumanizeConverter x:Key="DateTimeHumanizeConverter" />
 </ResourceDictionary>

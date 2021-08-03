@@ -23,6 +23,24 @@ namespace MyFTP.Views
 		{
 			InitializeComponent();
 			Crumbs = new ObservableCollection<FtpListItemViewModel>();
+			Loaded += (sender, args) =>
+			{
+				WeakReferenceMessenger.Default.Register<RequestOpenFilesMessage>(this, OnOpenFileRequest);
+				WeakReferenceMessenger.Default.Register<RequestSaveFileMessage>(this, OnSaveFileRequest);
+				WeakReferenceMessenger.Default.Register<RequestOpenFolderMessage>(this, OnOpenFolderRequest);
+				WeakReferenceMessenger.Default.Register<ErrorMessage>(this, OnErrorMessage);
+				WeakReferenceMessenger.Default.Register<SelectedItemChangedMessage<FtpListItemViewModel>>(this, OnSelectedItemChanged);
+				IconRotation.Begin();
+			};
+			Unloaded += (sender, args) =>
+			{
+				WeakReferenceMessenger.Default.Unregister<RequestOpenFilesMessage>(this);
+				WeakReferenceMessenger.Default.Unregister<RequestSaveFileMessage>(this);
+				WeakReferenceMessenger.Default.Unregister<RequestOpenFolderMessage>(this);
+				WeakReferenceMessenger.Default.Unregister<ErrorMessage>(this);
+				WeakReferenceMessenger.Default.Unregister<SelectedItemChangedMessage<FtpListItemViewModel>>(this);
+				IconRotation.Stop();
+			};
 		}
 
 		public HostViewModel ViewModel { get => (HostViewModel)GetValue(ViewModelProperty); set => SetValue(ViewModelProperty, value); }
@@ -35,11 +53,12 @@ namespace MyFTP.Views
 
 		public ObservableCollection<FtpListItemViewModel> Crumbs { get; }
 
-		private async static void OnSelectedItemChanged(DependencyObject d, DependencyPropertyChangedEventArgs args)
+		private static void OnSelectedItemChanged(DependencyObject d, DependencyPropertyChangedEventArgs args)
 		{
 			var p = (HostViewPage)d;
-			var item = (FtpListItemViewModel)p.treeView.SelectedItem;
-			if (item != null && item.IsDirectory)
+			var item = (FtpListItemViewModel)args.NewValue;
+
+			if (item != null)
 			{
 				// Update the BreadcrumbBar
 				p.Crumbs.Clear();
@@ -49,11 +68,7 @@ namespace MyFTP.Views
 					p.Crumbs.Insert(0, crumb);
 					crumb = crumb.Parent;
 				} while (crumb != null);
-
-				if (!item.IsLoading && !item.IsLoaded)
-				{
-					await item.RefreshCommand.ExecuteAsync(null);
-				}
+				WeakReferenceMessenger.Default.Send(new SelectedItemChangedMessage<FtpListItemViewModel>(item));
 			}
 		}
 
@@ -61,6 +76,7 @@ namespace MyFTP.Views
 		{
 			try
 			{
+				_frame.Navigate(typeof(FtpDirectoryViewPage));
 				ViewModel = args.Parameter as HostViewModel;
 				if (ViewModel == null)
 					throw new InvalidOperationException("Invalid param");
@@ -71,20 +87,6 @@ namespace MyFTP.Views
 			{
 				ShowError(e.Message, e);
 			}
-
-			// FtpListItemViewModel requested a file
-			WeakReferenceMessenger.Default.Register<RequestOpenFilesMessage>(this, OnOpenFileRequest);
-			WeakReferenceMessenger.Default.Register<RequestSaveFileMessage>(this, OnSaveFileRequest);
-			WeakReferenceMessenger.Default.Register<RequestOpenFolderMessage>(this, OnOpenFolderRequest);	
-			WeakReferenceMessenger.Default.Register<ErrorMessage>(this, OnErrorMessage);
-		}
-
-		protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
-		{
-			WeakReferenceMessenger.Default.Unregister<RequestOpenFilesMessage>(this);
-			WeakReferenceMessenger.Default.Unregister<RequestSaveFileMessage>(this);
-			WeakReferenceMessenger.Default.Unregister<RequestOpenFolderMessage>(this);
-		
 		}
 
 		private void OnOpenFileRequest(object recipient, RequestOpenFilesMessage message)
@@ -102,7 +104,7 @@ namespace MyFTP.Views
 			if (!message.HasReceivedResponse)
 			{
 				var picker = new FileSavePicker();
-				picker.FileTypeChoices.Add("File", new string[] { "." });				
+				picker.FileTypeChoices.Add("File", new string[] { "." });
 				picker.SuggestedFileName = message.FileNameSuggestion ?? "";
 				message.Reply(picker.PickSaveFileAsync().AsTask());
 			}
@@ -123,7 +125,12 @@ namespace MyFTP.Views
 			ShowError(message.Exception.Message, message.Exception);
 		}
 
-		private void FocusNewFolderTextBox() => createFolderTextbox.Focus(FocusState.Programmatic);
+		private void OnSelectedItemChanged(object recipient, SelectedItemChangedMessage<FtpListItemViewModel> message)
+		{
+			treeView.SelectedItem = message.Item;
+		}
+
+
 
 		private async void OnDisconnectButtonClick(muxc.SplitButton sender, muxc.SplitButtonClickEventArgs args)
 		{
@@ -168,6 +175,10 @@ namespace MyFTP.Views
 			Debug.WriteLineIf(e != null, e);
 		}
 
+		private void OnButtonUpClicked(object sender, RoutedEventArgs args)
+		{
+			treeView.SelectedItem = Crumbs.Reverse().Skip(1).FirstOrDefault();
+		}
 		private void OnBreadcrumbBarItemClicked(muxc.BreadcrumbBar sender, muxc.BreadcrumbBarItemClickedEventArgs args)
 		{
 			// #BUG 
@@ -203,8 +214,6 @@ namespace MyFTP.Views
 
 							var source = new BitmapImage
 							{
-								DecodePixelHeight = 32,
-								DecodePixelWidth = 32,
 								DecodePixelType = DecodePixelType.Logical
 							};
 							image.Source = source;
@@ -235,29 +244,13 @@ namespace MyFTP.Views
 			}
 		}
 
-		private void OnListViewSelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			var list = (ListView)sender;
-			DownloadCommandButton.CommandParameter = list.SelectedItems.Cast<FtpListItemViewModel>();
-		}
-		private void OnListViewItemClick(object sender, ItemClickEventArgs e) => treeView.SelectedItem = e.ClickedItem;
+		private void OpenCloseTransferList() => transferTeachingTip.IsOpen = !transferTeachingTip.IsOpen;
 
-		private void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+		private void OnListViewItemClick(object sender, ItemClickEventArgs e)
 		{
-			var control = (Control)sender;
-			var item = (FtpListItemViewModel)control.DataContext;
-			if (item.Type == FluentFTP.FtpFileSystemObjectType.Directory)
-				treeView.SelectedItem = item;
-			else
-				throw new NotImplementedException();
-		}
-		private void OnListViewItemDoubleTapped(object sender, Windows.UI.Xaml.Input.DoubleTappedRoutedEventArgs e)
-		{
-			var frameworkElement = (FrameworkElement)sender;
-			var item = (FtpListItemViewModel)frameworkElement.DataContext;
-			treeView.SelectedItem = item;
+			treeView.SelectedItem = e.ClickedItem;
 		}
 
-		private void ExitApp() => Application.Current.Exit();		
+		private void ExitApp() => Application.Current.Exit();
 	}
 }

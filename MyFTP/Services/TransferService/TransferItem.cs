@@ -21,7 +21,7 @@ namespace MyFTP.Services
 		#endregion
 
 		#region constructor	
-		public TransferItem(IFtpClient client, string remoteFilePath, IStorageItem destinationFile, TransferItemType type)
+		public TransferItem(IFtpClient client, string remoteFilePath, IStorageItem destinationFile, TransferItemType type, IProgress<FtpProgress> progress = null)
 		{
 			_client = client ?? throw new ArgumentNullException(nameof(client));
 			RemotePath = remoteFilePath ?? throw new ArgumentNullException(nameof(remoteFilePath));
@@ -32,7 +32,7 @@ namespace MyFTP.Services
 			Progress = 0;
 
 			_source = new CancellationTokenSource();
-			progress = new Progress<FtpProgress>(ProgressUpdate);
+			this.progress = progress ?? new Progress<FtpProgress>(ProgressUpdate);
 		}
 		#endregion
 
@@ -87,9 +87,10 @@ namespace MyFTP.Services
 				}
 				Status = TransferItemStatus.Completed;
 			}
-			catch (OperationCanceledException)
+			catch (OperationCanceledException e)
 			{
 				Status = TransferItemStatus.Canceled;
+				Exception = e;
 				CancelRequested?.Invoke(this, new EventArgs());
 			}
 			catch (Exception e)

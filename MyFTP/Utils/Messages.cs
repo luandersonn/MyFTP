@@ -20,11 +20,19 @@ namespace MyFTP.Utils
 	{
 		public string FileNameSuggestion { get; set; }
 	}
-		
+
 	public class ErrorMessage
 	{
 		public ErrorMessage(Exception exception) => Exception = exception ?? throw new ArgumentNullException(nameof(exception));
 
-		public Exception Exception { get; }		
+		public Exception Exception { get; }
 	}
+
+	public class SelectedItemChangedMessage<T>
+	{
+		public SelectedItemChangedMessage() { }
+		public SelectedItemChangedMessage(T item) => Item = item;
+		public T Item { get; }
+	}
+
 }

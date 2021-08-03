@@ -7,6 +7,7 @@ namespace MyFTP.Services
 	public interface ISettings
 	{
 		string AppVersion { get; }
+		string AppCenterKey { get; }
 		string GetStringFromResource(string resourceName, string resource = "Resources");
 		bool TryGet<T>(string key, out T result, string containerKey = "default");
 		bool TrySet<T>(string key, T value, string containerKey = "default");

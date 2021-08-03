@@ -2,34 +2,20 @@
 	  x:Class="MyFTP.Views.HostViewPage"
 	  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	  xmlns:behaviors="using:Microsoft.Toolkit.Uwp.UI.Behaviors"
 	  xmlns:controls="using:MyFTP.Controls"
 	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-	  xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
 	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	  xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	  xmlns:services="using:MyFTP.Services"
 	  xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
-	  xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
 	  xmlns:viewmodels="using:MyFTP.ViewModels"
-	  Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+	  muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
 	  mc:Ignorable="d">
 
 	<Page.Resources>
 		<TransitionCollection x:Key="RepositionAnimation">
 			<RepositionThemeTransition />
 		</TransitionCollection>
-
-		<SolidColorBrush x:Key="ListViewItemBackgroundPointerOver" Color="{ThemeResource SystemBaseLowColor}" />
-
-		<SolidColorBrush x:Key="ListViewItemBackgroundSelected"
-						 Opacity="0.4"
-						 Color="{ThemeResource SystemAccentColor}" />
-
-		<SolidColorBrush x:Key="ListViewItemBackgroundSelectedPointerOver"
-						 Opacity="0.2"
-						 Color="{ThemeResource SystemAccentColor}" />
-
 
 		<DataTemplate x:Key="FtpItemsDataTemplate" x:DataType="viewmodels:FtpListItemViewModel">
 			<muxc:TreeViewItem x:Name="root"
@@ -80,14 +66,12 @@
 						<TextBlock Grid.Column="1"
 								   VerticalAlignment="Center"
 								   FontSize="12"
-								   Text="{x:Bind Name}"
+								   Text="{x:Bind Name, Mode=OneWay}"
 								   TextTrimming="CharacterEllipsis" />
 					</Grid>
 				</muxc:TreeViewItem.Content>
 			</muxc:TreeViewItem>
 		</DataTemplate>
-
-		<x:Double x:Key="ColumnT">200</x:Double>
 	</Page.Resources>
 
 	<Grid>
@@ -109,7 +93,6 @@
 								  Title="{x:Bind ViewModel.Client.Host}"
 								  MinHeight="42"
 								  VerticalAlignment="Top"
-								  Background="{ThemeResource SystemControlAcrylicWindowBrush}"
 								  BorderBrush="{ThemeResource SystemBaseLowColor}"
 								  BorderThickness="0,0,0,1"
 								  Canvas.ZIndex="1">
@@ -118,6 +101,7 @@
 					<ColumnDefinition Width="{x:Bind column.Width, Mode=TwoWay}"
 									  MinWidth="{x:Bind column.MinWidth, Mode=TwoWay}"
 									  MaxWidth="{x:Bind column.MaxWidth, Mode=TwoWay}" />
+					<ColumnDefinition Width="auto" />
 					<ColumnDefinition Width="*" />
 				</Grid.ColumnDefinitions>
 
@@ -194,8 +178,22 @@
 					</toolkit:GridSplitter.Resources>
 				</toolkit:GridSplitter>
 
-				<muxc:BreadcrumbBar Grid.Column="1"
-									Margin="4,0"
+				<Button Grid.Column="1"
+						Height="32"
+						Margin="4,0,2,0"
+						Background="Transparent"
+						BorderThickness="0"
+						Click="OnButtonUpClicked"
+						Content="&#xE110;"
+						FontFamily="Segoe MDL2 Assets"
+						IsEnabled="{x:Bind SelectedItem.Parent, Converter={StaticResource ItemToBoolConverter}, Mode=OneWay}">
+					<Button.Resources>
+						<SolidColorBrush x:Key="ButtonBackgroundDisabled" Color="Transparent" />
+					</Button.Resources>
+				</Button>
+
+				<muxc:BreadcrumbBar Grid.Column="2"
+									Margin="2,0,4,0"
 									VerticalAlignment="Center"
 									ItemClicked="OnBreadcrumbBarItemClicked"
 									ItemsSource="{x:Bind Crumbs}">
@@ -238,7 +236,7 @@
 														<TextBlock Grid.Column="1"
 																   VerticalAlignment="Center"
 																   FontSize="12"
-																   Text="{x:Bind Name}"
+																   Text="{x:Bind Name, Mode=OneWay}"
 																   TextTrimming="CharacterEllipsis" />
 													</Grid>
 												</DataTemplate>
@@ -321,16 +319,15 @@
 				<ColumnDefinition Width="*" />
 			</Grid.ColumnDefinitions>
 
-			<Border Background="{ThemeResource SystemControlAltHighAcrylicWindowBrush}">
 
-				<muxc:TreeView x:Name="treeView"
-							   CanReorderItems="False"
-							   ItemTemplate="{StaticResource FtpItemsDataTemplate}"
-							   ItemsSource="{x:Bind ViewModel.Root}"
-							   ScrollViewer.HorizontalScrollBarVisibility="Auto"
-							   ScrollViewer.HorizontalScrollMode="Auto"
-							   SelectedItem="{x:Bind SelectedItem, Mode=TwoWay}" />
-			</Border>
+			<muxc:TreeView x:Name="treeView"
+						   CanReorderItems="False"
+						   ItemTemplate="{StaticResource FtpItemsDataTemplate}"
+						   ItemsSource="{x:Bind ViewModel.Root}"
+						   ScrollViewer.HorizontalScrollBarVisibility="Auto"
+						   ScrollViewer.HorizontalScrollMode="Auto"
+						   SelectedItem="{x:Bind SelectedItem, Mode=TwoWay}" />
+
 
 			<Rectangle Width="1"
 					   HorizontalAlignment="Right"
@@ -359,278 +356,11 @@
 				</toolkit:GridSplitter.Resources>
 			</toolkit:GridSplitter>
 
-			<Grid Grid.Column="2">
-				<Grid.RowDefinitions>
-					<RowDefinition Height="auto" />
-					<RowDefinition Height="*" />
-				</Grid.RowDefinitions>
-
-				<CommandBar x:Name="ItemCommandBar"
-							VerticalContentAlignment="Center"
-							DefaultLabelPosition="Collapsed">
-					<CommandBar.Content>
-						<muxc:DropDownButton VerticalAlignment="Center"
-											 Background="Transparent"
-											 BorderThickness="0">
-							<StackPanel Orientation="Horizontal" Spacing="4">
-								<TextBlock Text="Sort by:" />
-								<TextBlock Opacity="0.6" Text="Name" />
-							</StackPanel>
-							<muxc:DropDownButton.Flyout>
-								<MenuFlyout Placement="Bottom">
-									<muxc:RadioMenuFlyoutItem GroupName="SortBy"
-															  IsChecked="True"
-															  Text="Name" />
-									<muxc:RadioMenuFlyoutItem GroupName="SortBy" Text="Date" />
-									<muxc:RadioMenuFlyoutItem GroupName="SortBy" Text="Size" />
-								</MenuFlyout>
-							</muxc:DropDownButton.Flyout>
-						</muxc:DropDownButton>
-					</CommandBar.Content>
-
-					<AppBarButton Width="40"
-								  HorizontalAlignment="Center"
-								  Command="{x:Bind ViewModel.RefreshCommand}"
-								  CommandParameter="{x:Bind SelectedItem, Mode=OneWay}"
-								  Icon="Refresh"
-								  Label="Refresh"
-								  LabelPosition="Collapsed" />
-
-					<AppBarSeparator />
-
-					<AppBarButton x:Name="UploadCommandButton"
-								  Command="{x:Bind ViewModel.UploadCommand}"
-								  CommandParameter="{x:Bind SelectedItem, Mode=OneWay}"
-								  Icon="Upload"
-								  Label="Upload" />
-
-					<AppBarButton x:Name="DownloadCommandButton"
-								  Command="{x:Bind ViewModel.DownloadCommand}"
-								  Icon="Download"
-								  Label="Download" />
-
-					<AppBarButton x:Name="OpenFlyoutNewFolderButton" Label="New folder">
-						<AppBarButton.Icon>
-							<FontIcon Glyph="&#xE8F4;" />
-						</AppBarButton.Icon>
-						<AppBarButton.Flyout>
-							<Flyout Opened="{x:Bind FocusNewFolderTextBox, Mode=OneTime}"
-									Placement="Bottom"
-									ShouldConstrainToRootBounds="False">
-								<Grid ColumnSpacing="4">
-									<Grid.ColumnDefinitions>
-										<ColumnDefinition Width="200" />
-										<ColumnDefinition Width="auto" />
-									</Grid.ColumnDefinitions>
-
-									<TextBox x:Name="createFolderTextbox"
-											 VerticalAlignment="Center"
-											 AllowFocusOnInteraction="True"
-											 PlaceholderText="Folder name" />
-									<Button Grid.Column="1"
-											VerticalAlignment="Center"
-											Command="{x:Bind SelectedItem.CreateFolderCommand, Mode=OneWay}"
-											CommandParameter="{x:Bind createFolderTextbox.Text, Mode=OneWay}"
-											Content="Criar" />
-								</Grid>
-							</Flyout>
-						</AppBarButton.Flyout>
-					</AppBarButton>
-				</CommandBar>
-
-				<ListView x:Name="itemsListView"
-						  Grid.Row="1"
-						  ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True"
-						  ContainerContentChanging="OnListViewContainerContentChanging"
-						  ItemsSource="{x:Bind SelectedItem.Items, Mode=OneWay}"
-						  ScrollViewer.HorizontalScrollBarVisibility="Auto"
-						  ScrollViewer.HorizontalScrollMode="Auto"
-						  SelectionChanged="OnListViewSelectionChanged"
-						  SelectionMode="Extended"
-						  Transitions="{StaticResource RepositionAnimation}">
-
-					<interactivity:Interaction.Behaviors>
-						<behaviors:StickyHeaderBehavior />
-					</interactivity:Interaction.Behaviors>
-
-					<ListViewBase.Header>
-						<Grid Height="32"
-							  Padding="12,0"
-							  Background="{ThemeResource SystemAltHighColor}"
-							  ColumnSpacing="8">
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="25" />
-								<ColumnDefinition Width="1.5*" MinWidth="150" />
-								<ColumnDefinition Width="*" MinWidth="100" />
-								<ColumnDefinition Width="*" MinWidth="100" />
-								<ColumnDefinition Width="80" MinWidth="80" />
-							</Grid.ColumnDefinitions>
-							<Grid.Resources>
-								<Style TargetType="TextBlock">
-									<Setter Property="VerticalAlignment" Value="Center" />
-								</Style>
-							</Grid.Resources>
-							<TextBlock Grid.ColumnSpan="2"
-									   FontSize="12"
-									   Text="Name" />
-
-							<Rectangle Grid.Column="1"
-									   Width="1"
-									   HorizontalAlignment="Right"
-									   VerticalAlignment="Stretch"
-									   Fill="{ThemeResource SystemBaseLowColor}" />
-
-
-							<TextBlock Grid.Column="2"
-									   FontSize="12"
-									   Text="Size" />
-
-							<Rectangle Grid.Column="2"
-									   Width="1"
-									   HorizontalAlignment="Right"
-									   VerticalAlignment="Stretch"
-									   Fill="{ThemeResource SystemBaseLowColor}" />
-
-
-							<TextBlock Grid.Column="3"
-									   FontSize="12"
-									   Text="Date" />
-
-							<Rectangle Grid.Column="3"
-									   Width="1"
-									   HorizontalAlignment="Right"
-									   VerticalAlignment="Stretch"
-									   Fill="{ThemeResource SystemBaseLowColor}" />
-
-							<TextBlock Grid.Column="4"
-									   FontSize="12"
-									   Text="Permissions" />
-						</Grid>
-					</ListViewBase.Header>
-
-					<ListViewBase.ItemTemplate>
-						<DataTemplate x:DataType="viewmodels:FtpListItemViewModel">
-							<Grid Margin="-12,-18"
-								  Padding="12,18"
-								  Background="Transparent"
-								  ColumnSpacing="8"
-								  DataContext="{x:Bind}"
-								  DoubleTapped="OnListViewItemDoubleTapped"
-								  IsDoubleTapEnabled="True">
-								<Grid.ContextFlyout>
-									<MenuFlyout>
-										<MenuFlyoutItem Text="Open" Click="MenuFlyoutItem_Click">
-											<MenuFlyoutItem.Icon>
-												<FontIcon Glyph="&#xE143;" />
-											</MenuFlyoutItem.Icon>
-										</MenuFlyoutItem>
-										<MenuFlyoutItem Command="{x:Bind DownloadCommand}"
-														Icon="Download"
-														Text="Download" />
-
-										<MenuFlyoutSeparator />
-
-										<MenuFlyoutItem Command="{x:Bind DeleteCommand}"
-														Icon="Delete"
-														Text="Delete" />
-
-										<MenuFlyoutItem Command="{x:Bind OpenRenameDialogCommand}"
-														Icon="Rename"
-														Text="Rename" />
-										<MenuFlyoutSeparator />
-
-										<MenuFlyoutItem Text="Properties">
-											<MenuFlyoutItem.Icon>
-												<FontIcon Glyph="&#xE946;" />
-											</MenuFlyoutItem.Icon>
-										</MenuFlyoutItem>
-									</MenuFlyout>
-								</Grid.ContextFlyout>
-								<Grid.ColumnDefinitions>
-									<ColumnDefinition Width="25" />
-									<ColumnDefinition Width="1.5*" MinWidth="150" />
-									<ColumnDefinition Width="*" MinWidth="100" />
-									<ColumnDefinition Width="*" MinWidth="100" />
-									<ColumnDefinition Width="80" MinWidth="80" />
-								</Grid.ColumnDefinitions>
-
-								<Image Width="25"
-									   HorizontalAlignment="Center"
-									   VerticalAlignment="Center" />
-
-
-								<TextBlock Grid.Column="1"
-										   VerticalAlignment="Center"
-										   FontSize="12"
-										   Text="{x:Bind Name, Mode=OneWay}"
-										   TextTrimming="CharacterEllipsis" />
-
-								<TextBlock Grid.Column="2"
-										   VerticalAlignment="Center"
-										   FontSize="12"
-										   Foreground="{ThemeResource SystemBaseMediumColor}"
-										   Text="{x:Bind Size, Converter={StaticResource SizeInBytesHumanizeConverter}}"
-										   TextTrimming="CharacterEllipsis" />
-
-								<TextBlock Grid.Column="3"
-										   VerticalAlignment="Center"
-										   FontSize="12"
-										   Foreground="{ThemeResource SystemBaseMediumColor}"
-										   Text="{x:Bind Modified, Converter={StaticResource DateTimeHumanizeConverter}}"
-										   TextTrimming="CharacterEllipsis" />
-
-								<TextBlock Grid.Column="4"
-										   VerticalAlignment="Center"
-										   FontSize="12"
-										   Foreground="{ThemeResource SystemBaseMediumColor}"
-										   MaxLines="2"
-										   Text="{x:Bind OwnerPermissions}"
-										   TextAlignment="Center"
-										   TextTrimming="CharacterEllipsis"
-										   TextWrapping="Wrap" />
-							</Grid>
-						</DataTemplate>
-					</ListViewBase.ItemTemplate>
-				</ListView>
-
-				<toolkit:SwitchPresenter Grid.Row="2"
-										 TargetType="x:Boolean"
-										 Value="{x:Bind SelectedItem.IsDirectory, FallbackValue=False, Mode=OneWay}">
-					<toolkit:Case Value="True">
-						<toolkit:SwitchPresenter TargetType="x:Boolean" Value="{x:Bind SelectedItem.IsLoaded, Mode=OneWay}">
-							<toolkit:Case Value="True">
-								<toolkit:SwitchPresenter TargetType="x:Int32" Value="{x:Bind SelectedItem.Items.Count, Mode=OneWay}">
-									<toolkit:Case Value="0">
-										<TextBlock HorizontalAlignment="Center"
-												   VerticalAlignment="Center"
-												   Text="This folder is empty" />
-									</toolkit:Case>
-								</toolkit:SwitchPresenter>
-							</toolkit:Case>
-							<toolkit:Case Value="False">
-								<toolkit:SwitchPresenter TargetType="x:Boolean" Value="{x:Bind SelectedItem.IsLoading, Mode=OneWay}">
-									<toolkit:Case Value="True">
-										<muxc:ProgressBar Margin="50" IsIndeterminate="True" />
-									</toolkit:Case>
-									<toolkit:Case Value="False">
-										<Button MinWidth="120"
-												HorizontalAlignment="Center"
-												VerticalAlignment="Center"
-												Command="{x:Bind SelectedItem.RefreshCommand, Mode=OneWay}"
-												Content="Load items"
-												Style="{ThemeResource AccentButtonStyle}" />
-									</toolkit:Case>
-								</toolkit:SwitchPresenter>
-							</toolkit:Case>
-						</toolkit:SwitchPresenter>
-					</toolkit:Case>
-				</toolkit:SwitchPresenter>
-			</Grid>
+			<Frame x:Name="_frame" Grid.Column="1" />
 		</Grid>
 
 		<Grid Grid.Row="3"
 			  Height="30"
-			  Background="{ThemeResource SystemControlAcrylicWindowBrush}"
 			  BorderBrush="{ThemeResource SystemBaseLowColor}"
 			  BorderThickness="0,1,0,0">
 
@@ -689,8 +419,9 @@
 				</muxc:TeachingTip>
 
 				<muxc:TeachingTip x:Name="transferTeachingTip"
-								  Title="Download/Upload"
+								  Title="Transfer queue"
 								  d:IsOpen="True"
+								  d:Title="Tranfer queue"
 								  IsLightDismissEnabled="True"
 								  PlacementMargin="10"
 								  PreferredPlacement="Top"
@@ -803,6 +534,15 @@
 						</muxc:ItemsRepeater.ItemTemplate>
 					</muxc:ItemsRepeater>
 				</muxc:TeachingTip>
+
+				<Storyboard x:Name="IconRotation"
+							AutoReverse="False"
+							RepeatBehavior="Forever">
+					<DoubleAnimation Storyboard.TargetName="syncIcon"
+									 Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)"
+									 To="360"
+									 Duration="0:0:1" />
+				</Storyboard>
 			</Grid.Resources>
 
 			<toolkit:WrapPanel Margin="4,0" VerticalAlignment="Center">
@@ -842,14 +582,42 @@
 				</toolkit:GridSplitter.Resources>
 			</toolkit:GridSplitter>
 
-			<ToggleButton x:Name="transferButton"
-						  Grid.Column="1"
-						  Margin="4,0"
-						  Background="Transparent"
-						  BorderThickness="0"
-						  Content="&#xE117;"
-						  FontFamily="Segoe MDL2 Assets"
-						  IsChecked="{x:Bind transferTeachingTip.IsOpen, Mode=TwoWay}" />
+			<Button x:Name="transferButton"
+					Grid.Column="1"
+					Height="25"
+					Margin="4,0"
+					Padding="8,2"
+					x:DefaultBindMode="OneWay"
+					Background="Transparent"
+					BorderThickness="0"
+					Click="{x:Bind OpenCloseTransferList, Mode=OneTime}"
+					Visibility="{x:Bind ViewModel.TransferService.CurrentItem, Converter={StaticResource ItemToBoolConverter}}">
+				<StackPanel Orientation="Horizontal" Spacing="8">
+					<FontIcon x:Name="syncIcon"
+							  VerticalAlignment="Center"
+							  FontSize="15"
+							  Glyph="&#xE117;"
+							  RenderTransformOrigin="0.5,0.5">
+						<FontIcon.RenderTransform>
+							<CompositeTransform />
+						</FontIcon.RenderTransform>
+					</FontIcon>
+					<StackPanel Width="150"
+								VerticalAlignment="Center"
+								Orientation="Vertical"
+								Spacing="2">
+						<TextBlock d:Text="My picture.jpg"
+								   FontSize="12"
+								   Text="{x:Bind ViewModel.TransferService.CurrentItem.StorageItem.Name}"
+								   TextAlignment="Center"
+								   TextTrimming="CharacterEllipsis" />
+
+						<muxc:ProgressBar d:Value="0.4"
+										  Maximum="1"
+										  Value="{x:Bind ViewModel.TransferService.CurrentItem.Progress}" />
+					</StackPanel>
+				</StackPanel>
+			</Button>
 
 			<TextBlock Grid.Column="1"
 					   Margin="12,0"
