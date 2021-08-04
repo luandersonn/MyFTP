@@ -45,69 +45,114 @@
 						  TallModeConfiguration="BottomTop"
 						  WideModeConfiguration="RightLeft">
 			<muxc:TwoPaneView.Pane1>
-				<ScrollViewer x:Name="pane1ScrollViewer" VerticalScrollBarVisibility="Auto">
-					<StackPanel Width="320"
-								Margin="16,8"
-								VerticalAlignment="Center"
-								x:DefaultBindMode="TwoWay"
-								Spacing="4">
+				<Grid>
+					<ScrollViewer x:Name="pane1ScrollViewer" VerticalScrollBarVisibility="Auto">
+						<StackPanel Width="320"
+									Margin="16,8"
+									VerticalAlignment="Center"
+									x:DefaultBindMode="TwoWay"
+									Spacing="4">
 
-						<Image Height="64" VerticalAlignment="Center">
-							<Image.Source>
-								<BitmapImage DecodePixelWidth="128" UriSource="/Assets/SplashScreen.png" />
-							</Image.Source>
-						</Image>
+							<Image Height="64" VerticalAlignment="Center">
+								<Image.Source>
+									<BitmapImage DecodePixelWidth="128" UriSource="/Assets/SplashScreen.png" />
+								</Image.Source>
+							</Image>
 
-						<StackPanel Orientation="Horizontal" Spacing="8">
-							<TextBox Width="212"
-									 VerticalAlignment="Center"
-									 Header="Host"
-									 Text="{x:Bind ViewModel.Host}" />
+							<StackPanel Orientation="Horizontal" Spacing="8">
+								<TextBox Width="212"
+										 VerticalAlignment="Center"
+										 Header="Host"
+										 Text="{x:Bind ViewModel.Host}" />
 
-							<muxc:NumberBox Width="100"
-											VerticalAlignment="Bottom"
-											Header="Port"
-											Value="{x:Bind ViewModel.Port}" />
+								<muxc:NumberBox Width="100"
+												VerticalAlignment="Bottom"
+												Header="Port"
+												Value="{x:Bind ViewModel.Port}" />
+							</StackPanel>
+
+							<AutoSuggestBox Header="Username"
+											ItemsSource="{x:Bind ViewModel.SavedCredentialsList, Mode=OneWay}"
+											LostFocus="AutoSuggestBoxLostFocus"
+											SuggestionChosen="AutoSuggestBoxSuggestionChosen"
+											Text="{x:Bind ViewModel.Username, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
+											TextChanged="OnUsernameTextboxTextChanged" />
+							<PasswordBox Header="Password" Password="{x:Bind ViewModel.Password}" />
+							<CheckBox Content="Save credentials"
+									  IsChecked="{x:Bind ViewModel.SaveCredentials}"
+									  IsEnabled="{x:Bind ViewModel.CanSaveCredentials, Mode=OneTime}" />
+
+							<Button Width="320"
+									Margin="0,8,0,0"
+									Command="{x:Bind ViewModel.LoginCommand, Mode=OneTime}"
+									Content="Login"
+									Style="{ThemeResource AccentButtonStyle}">
+								<Button.KeyboardAccelerators>
+									<KeyboardAccelerator Key="Enter" />
+								</Button.KeyboardAccelerators>
+							</Button>
+
+							<muxc:ProgressBar Background="Transparent"
+											  IsIndeterminate="{x:Bind ViewModel.LoginCommand.IsRunning, Mode=OneWay}"
+											  ShowError="{x:Bind infoBar.IsOpen, Mode=OneWay}" />
+
+							<muxc:InfoBar x:Name="infoBar"
+										  Title="Login error"
+										  d:IsOpen="True"
+										  d:Message="Erro ao fazer login"
+										  d:Title="Login error"
+										  IsClosable="False"
+										  IsOpen="{x:Bind ViewModel.LoginCommand.ExecutionTask.IsFaulted, Mode=OneWay}"
+										  Message="{x:Bind ViewModel.LoginCommand.ExecutionTask.Exception.InnerException.Message, Mode=OneWay}"
+										  Severity="Error" />
+
+							<HyperlinkButton Content="Privacy policy" NavigateUri="https://myftp.luandersonn.com/privacy" />
 						</StackPanel>
+					</ScrollViewer>
+					<Button Height="32"
+							Margin="16"
+							HorizontalAlignment="Right"
+							VerticalAlignment="Bottom"
+							Content="&#xE136;"
+							FontFamily="Segoe MDL2 Assets"
+							ToolTipService.ToolTip="Salved credentials"
+							Visibility="{x:Bind ViewModel.SavedCredentialsList.Count, Converter={StaticResource ItemToBoolConverter}, Mode=OneWay}">
+						<Button.Flyout>
+							<Flyout>
+								<ListView IsItemClickEnabled="True"
+										  ItemClick="OnCredentialClicked"
+										  ItemsSource="{x:Bind ViewModel.SavedCredentialsList}"
+										  SelectionMode="None">
+									<ListView.ItemTemplate>
+										<DataTemplate>
+											<Grid ColumnSpacing="4">
+												<Grid.ColumnDefinitions>
+													<ColumnDefinition Width="auto" />
+													<ColumnDefinition Width="*" />
+													<ColumnDefinition Width="auto" />
+												</Grid.ColumnDefinitions>
+												<FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE13D;" />
 
-						<AutoSuggestBox Header="Username"
-										ItemsSource="{x:Bind ViewModel.SavedCredentialsList, Mode=OneWay}"
-										LostFocus="AutoSuggestBoxLostFocus"
-										SuggestionChosen="AutoSuggestBoxSuggestionChosen"
-										Text="{x:Bind ViewModel.Username, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
-										TextChanged="OnUsernameTextboxTextChanged" />
-						<PasswordBox Header="Password" Password="{x:Bind ViewModel.Password}" />
-						<CheckBox Content="Save credentials"
-								  IsChecked="{x:Bind ViewModel.SaveCredentials}"
-								  IsEnabled="{x:Bind ViewModel.CanSaveCredentials, Mode=OneTime}" />
+												<TextBlock Grid.Column="1"
+														   VerticalAlignment="Center"
+														   Text="{Binding}"
+														   TextTrimming="CharacterEllipsis" />
 
-						<Button Width="320"
-								Margin="0,8,0,0"
-								Command="{x:Bind ViewModel.LoginCommand, Mode=OneTime}"
-								Content="Login"
-								Style="{ThemeResource AccentButtonStyle}">
-							<Button.KeyboardAccelerators>
-								<KeyboardAccelerator Key="Enter" />
-							</Button.KeyboardAccelerators>
-						</Button>
-
-						<muxc:ProgressBar Background="Transparent"
-										  IsIndeterminate="{x:Bind ViewModel.LoginCommand.IsRunning, Mode=OneWay}"
-										  ShowError="{x:Bind infoBar.IsOpen, Mode=OneWay}" />
-
-						<muxc:InfoBar x:Name="infoBar"
-									  Title="Login error"
-									  d:IsOpen="True"
-									  d:Message="Erro ao fazer login"
-									  d:Title="Login error"
-									  IsClosable="False"
-									  IsOpen="{x:Bind ViewModel.LoginCommand.ExecutionTask.IsFaulted, Mode=OneWay}"
-									  Message="{x:Bind ViewModel.LoginCommand.ExecutionTask.Exception.InnerException.Message, Mode=OneWay}"
-									  Severity="Error" />
-
-						<HyperlinkButton Content="Privacy policy" NavigateUri="https://myftp.luandersonn.com/privacy" />
-					</StackPanel>
-				</ScrollViewer>
+												<Button Grid.Column="2"
+														Background="Transparent"
+														Click="OnDeleteSalvedCredentialClicked"
+														Content="&#xE107;"
+														FontFamily="Segoe MDL2 Assets"
+														Style="{ThemeResource DestructiveButtonStyle}"
+														ToolTipService.ToolTip="Delete credential" />
+											</Grid>
+										</DataTemplate>
+									</ListView.ItemTemplate>
+								</ListView>
+							</Flyout>
+						</Button.Flyout>
+					</Button>
+				</Grid>
 			</muxc:TwoPaneView.Pane1>
 			<muxc:TwoPaneView.Pane2>
 				<Grid>

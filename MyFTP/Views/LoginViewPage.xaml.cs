@@ -50,5 +50,17 @@ namespace MyFTP.Views
 			var asb = (AutoSuggestBox)sender;
 			_ = ViewModel.SelectCredential(asb.Text);
 		}
+
+		private void OnCredentialClicked(object sender, ItemClickEventArgs e)
+		{
+			var username = (string)e.ClickedItem;
+			ViewModel.SelectCredential(username);
+		}
+		private void OnDeleteSalvedCredentialClicked(object sender, RoutedEventArgs e)
+		{
+			var button = (Button)sender;
+			var userName = (string)button.DataContext;
+			ViewModel.DeleteCredential(userName);
+		}
 	}
 }

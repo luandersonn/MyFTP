@@ -51,8 +51,7 @@ namespace MyFTP.ViewModels
 			// Get saved credentials
 			if (settings != null
 				&& settings.TryGet(nameof(Host), out _host)
-				&& settings.TryGet(nameof(Port), out _port)
-				&& settings.TryGet(nameof(Username), out _username))
+				&& settings.TryGet(nameof(Port), out _port))
 			{
 				var credential = GetCredentialFromLocker(_username);
 				if (credential != null)
@@ -80,6 +79,17 @@ namespace MyFTP.ViewModels
 			}
 			return false;
 		}
+		public bool DeleteCredential(string username)
+		{
+			var credential = GetCredentialFromLocker(username);
+			if (credential != null)
+			{
+				RemoveCredentialFromLocker(credential);
+				_savedCredentialsList.Remove(username);
+				return true;
+			}
+			return false;
+		}
 		private bool CanLogin() => !_isLoggingin;
 		private async Task LoginAsync(CancellationToken token)
 		{
@@ -89,7 +99,6 @@ namespace MyFTP.ViewModels
 			// Anonymous login
 			try
 			{
-
 				if (string.IsNullOrWhiteSpace(Username) && string.IsNullOrWhiteSpace(Password))
 				{
 					client = new FtpClient(Host);
@@ -104,7 +113,6 @@ namespace MyFTP.ViewModels
 					{
 						settings.TrySet(nameof(Host), Host);
 						settings.TrySet(nameof(Port), Port);
-						settings.TrySet(nameof(Username), Username);
 						SaveCredentialsOnLocker(Username, Password);
 					}
 				}
@@ -124,6 +132,12 @@ namespace MyFTP.ViewModels
 		{
 			var vault = new PasswordVault();
 			vault.Add(new PasswordCredential(_passwordCredentialResourceName, username, password));
+		}
+
+		private void RemoveCredentialFromLocker(PasswordCredential credential)
+		{
+			var vault = new PasswordVault();
+			vault.Remove(credential);
 		}
 
 		private PasswordCredential GetCredentialFromLocker(string username)
