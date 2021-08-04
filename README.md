@@ -1,3 +1,5 @@
+[![Build Status](https://dev.azure.com/luandersonn/MyFTP/_apis/build/status/luandersonn.MyFTP?branchName=main)](https://dev.azure.com/luandersonn/MyFTP/_build/latest?definitionId=11&branchName=main)
+
 # MyFTP
 
 A simple, fast, lightweight, and beautiful FTP client
