@@ -56,7 +56,7 @@ namespace MyFTP.Views
 			var username = (string)e.ClickedItem;
 			ViewModel.SelectCredential(username);
 		}
-		private void OnDeleteSalvedCredentialClicked(object sender, RoutedEventArgs e)
+		private void OnDeleteSavedCredentialClicked(object sender, RoutedEventArgs e)
 		{
 			var button = (Button)sender;
 			var userName = (string)button.DataContext;

@@ -115,7 +115,7 @@
 							VerticalAlignment="Bottom"
 							Content="&#xE136;"
 							FontFamily="Segoe MDL2 Assets"
-							ToolTipService.ToolTip="Salved credentials"
+							ToolTipService.ToolTip="Saved credentials"
 							Visibility="{x:Bind ViewModel.SavedCredentialsList.Count, Converter={StaticResource ItemToBoolConverter}, Mode=OneWay}">
 						<Button.Flyout>
 							<Flyout>
@@ -140,7 +140,7 @@
 
 												<Button Grid.Column="2"
 														Background="Transparent"
-														Click="OnDeleteSalvedCredentialClicked"
+														Click="OnDeleteSavedCredentialClicked"
 														Content="&#xE107;"
 														FontFamily="Segoe MDL2 Assets"
 														Style="{ThemeResource DestructiveButtonStyle}"
