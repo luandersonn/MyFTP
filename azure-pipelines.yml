@@ -1,6 +1,9 @@
 trigger:
 - main
 
+# Do not trigger on pull request
+pr: none
+
 pool:
   vmImage: 'windows-latest'
 
@@ -23,6 +26,19 @@ steps:
 
     write-output $manifest.Package.Identity.Version
   displayName: Version Package Manifest
+  
+# Setup the AppCenter Key
+- task: PowerShell@2
+  displayName: Set AppCenter key
+  inputs:
+    targetType: 'inline'
+    script: |      
+      [xml]$xmlDoc = Get-Content $(Build.SourcesDirectory)\MyFTP\appsettings.resw      
+      $xmlDoc.SelectSingleNode("//root/data[@name='AppCenterKey']").Value = "$env:APP_CENTER_KEY_MAPPED"
+      $xmlDoc.Save('$(Build.SourcesDirectory)\MyFTp\appsettings.resw')
+    failOnStderr: true
+  env:    
+    APP_CENTER_KEY_MAPPED: $(AppCenterKey)
 
 - task: NuGetToolInstaller@1
 - task: NuGetCommand@2

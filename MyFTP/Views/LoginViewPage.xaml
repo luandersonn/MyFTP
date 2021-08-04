@@ -52,7 +52,6 @@
 									VerticalAlignment="Center"
 									x:DefaultBindMode="TwoWay"
 									Spacing="4">
-
 							<Image Height="64" VerticalAlignment="Center">
 								<Image.Source>
 									<BitmapImage DecodePixelWidth="128" UriSource="/Assets/SplashScreen.png" />
@@ -105,7 +104,6 @@
 										  IsOpen="{x:Bind ViewModel.LoginCommand.ExecutionTask.IsFaulted, Mode=OneWay}"
 										  Message="{x:Bind ViewModel.LoginCommand.ExecutionTask.Exception.InnerException.Message, Mode=OneWay}"
 										  Severity="Error" />
-
 							<HyperlinkButton Content="Privacy policy" NavigateUri="https://myftp.luandersonn.com/privacy" />
 						</StackPanel>
 					</ScrollViewer>
