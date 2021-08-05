@@ -1,0 +1,89 @@
+﻿<ContentDialog x:Class="MyFTP.Controls.AboutDialog"
+			   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			   xmlns:local="using:MyFTP.Controls"
+			   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			   Title="MyFTP Client"
+			   CloseButtonText="Close"
+			   PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+			   PrimaryButtonStyle="{ThemeResource AccentButtonStyle}"
+			   PrimaryButtonText="Review on Microsoft Store"
+			   Style="{ThemeResource DefaultContentDialogStyle}"
+			   mc:Ignorable="d">
+
+	<ContentDialog.TitleTemplate>
+		<DataTemplate>
+			<Grid Height="50" MinWidth="350">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="50" />
+					<ColumnDefinition />
+				</Grid.ColumnDefinitions>
+
+				<Image HorizontalAlignment="Left" VerticalAlignment="Center">
+					<Image.Source>
+						<BitmapImage DecodePixelWidth="128" UriSource="/Assets/Square44x44Logo.png" />
+					</Image.Source>
+				</Image>
+				<TextBlock Grid.Column="1"
+						   VerticalAlignment="Center"
+						   FontSize="25"
+						   Text="{Binding}" />
+			</Grid>
+		</DataTemplate>
+	</ContentDialog.TitleTemplate>
+
+	<Grid ColumnSpacing="8">
+		<Grid.RowDefinitions>
+			<RowDefinition />
+			<RowDefinition />
+			<RowDefinition />
+			<RowDefinition />
+			<RowDefinition />
+			<RowDefinition />
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*" MinWidth="100" />
+			<ColumnDefinition Width="*" />
+		</Grid.ColumnDefinitions>
+		<TextBlock Foreground="{ThemeResource SystemBaseMediumColor}" Text="App version" />
+		<TextBlock Grid.Column="1">
+			<Run Text="{x:Bind Settings.AppVersion}" />
+			<Run Text="(Preview)" />
+		</TextBlock>
+
+		<TextBlock Grid.Row="1"
+				   Foreground="{ThemeResource SystemBaseMediumColor}"
+				   Text="Manufacturer" />
+
+		<TextBlock Grid.Row="1"
+				   Grid.Column="1"
+				   Text="{x:Bind SystemInformation.DeviceManufacturer}" />
+
+		<TextBlock Grid.Row="2"
+				   Foreground="{ThemeResource SystemBaseMediumColor}"
+				   Text="Model" />
+
+		<TextBlock Grid.Row="2"
+				   Grid.Column="1"
+				   Text="{x:Bind SystemInformation.DeviceModel}" />
+
+		<TextBlock Grid.Row="3"
+				   Foreground="{ThemeResource SystemBaseMediumColor}"
+				   Text="OS Version" />
+
+		<TextBlock Grid.Row="3"
+				   Grid.Column="1"
+				   Text="{x:Bind SystemInformation.OperatingSystemVersion}" />
+
+		<TextBlock Grid.Row="4"
+				   Foreground="{ThemeResource SystemBaseMediumColor}"
+				   Text="OS Architecture" />
+
+		<TextBlock Grid.Row="4"
+				   Grid.Column="1"
+				   Text="{x:Bind SystemInformation.OperatingSystemArchitecture}" />
+
+
+	</Grid>
+</ContentDialog>

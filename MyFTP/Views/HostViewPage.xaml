@@ -139,6 +139,16 @@
 															  Text="Dark" />
 								</MenuFlyoutSubItem>
 
+								<MenuFlyoutItem Click="OnAboutMenuFlyoutItemClicked" Text="About">
+									<MenuFlyoutItem.KeyboardAccelerators>
+										<KeyboardAccelerator Key="F1" />
+									</MenuFlyoutItem.KeyboardAccelerators>
+									<MenuFlyoutItem.Icon>
+										<FontIcon Glyph="&#xE946;" />
+									</MenuFlyoutItem.Icon>
+								</MenuFlyoutItem>
+								<MenuFlyoutSeparator />
+
 								<MenuFlyoutItem Click="{x:Bind ExitApp, Mode=OneWay}"
 												Icon="Cancel"
 												Text="Exit">
