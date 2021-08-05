@@ -186,7 +186,7 @@
 						Click="OnButtonUpClicked"
 						Content="&#xE110;"
 						FontFamily="Segoe MDL2 Assets"
-						IsEnabled="{x:Bind SelectedItem.Parent, Converter={StaticResource ItemToBoolConverter}, Mode=OneWay}">
+						IsEnabled="{x:Bind NavigationHistory.CurrentItem.Parent, Converter={StaticResource ItemToBoolConverter}, Mode=OneWay}">
 					<Button.Resources>
 						<SolidColorBrush x:Key="ButtonBackgroundDisabled" Color="Transparent" />
 					</Button.Resources>
@@ -326,7 +326,7 @@
 						   ItemsSource="{x:Bind ViewModel.Root}"
 						   ScrollViewer.HorizontalScrollBarVisibility="Auto"
 						   ScrollViewer.HorizontalScrollMode="Auto"
-						   SelectedItem="{x:Bind SelectedItem, Mode=TwoWay}" />
+						   SelectedItem="{x:Bind NavigationHistory.CurrentItem, Mode=OneWay}" />
 
 
 			<Rectangle Width="1"
@@ -625,7 +625,7 @@
 					   VerticalAlignment="Center"
 					   FontSize="12">
 				<Run Foreground="{ThemeResource SystemBaseMediumColor}" Text="Items:" />
-				<Run Text="{x:Bind SelectedItem.Items.Count, Mode=OneWay}" />
+				<Run Text="{x:Bind NavigationHistory.CurrentItem.Items.Count, Mode=OneWay}" />
 			</TextBlock>
 		</Grid>
 
