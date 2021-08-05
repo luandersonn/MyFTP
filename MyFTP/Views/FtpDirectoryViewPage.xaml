@@ -180,6 +180,7 @@
 
 		<ListView x:Name="itemsListView"
 				  Grid.Row="1"
+				  ui:ListViewExtensions.ItemContainerStretchDirection="Horizontal"
 				  ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True"
 				  ContainerContentChanging="OnListViewContainerContentChanging"
 				  ItemTemplate="{StaticResource FtpItemsTemplate}"
