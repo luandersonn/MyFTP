@@ -152,6 +152,7 @@
     <Compile Include="Utils\Converters\ItemToBoolConverter.cs" />
     <Compile Include="Utils\Converters\SizeInBytesHumanizeConverter.cs" />
     <Compile Include="Utils\IconHelper.cs" />
+    <Compile Include="Utils\NavigationHistory.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="Utils\Comparers\FtpListItemComparer.cs" />
     <Compile Include="ViewModels\FtpListItemViewModel.cs" />

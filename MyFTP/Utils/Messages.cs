@@ -28,11 +28,16 @@ namespace MyFTP.Utils
 		public Exception Exception { get; }
 	}
 
-	public class SelectedItemChangedMessage<T>
+	public class SelectedItemChangedMessage<T> : RequestMessage<T>
 	{
 		public SelectedItemChangedMessage() { }
-		public SelectedItemChangedMessage(T item) => Item = item;
+		public SelectedItemChangedMessage(object sender, T item)
+		{
+			Sender = sender;
+			Item = item;
+		}
+
+		public object Sender { get; }
 		public T Item { get; }
 	}
-
 }
