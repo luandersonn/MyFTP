@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.Messaging;
+using MyFTP.Controls;
 using MyFTP.Services;
 using MyFTP.Utils;
 using MyFTP.ViewModels;
@@ -211,6 +212,18 @@ namespace MyFTP.Views
 				settings.TrySet("AppTheme", radioTheme);
 		}
 
+		private async void OnAboutMenuFlyoutItemClicked(object sender, RoutedEventArgs e)
+		{
+			try
+			{
+				this.IsEnabled = false;
+				await new AboutDialog().ShowAsync();
+			}
+			finally
+			{
+				this.IsEnabled = true;
+			}
+		}
 
 		private void ShowError(string message, Exception e = null)
 		{
