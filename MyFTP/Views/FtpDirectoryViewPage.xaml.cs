@@ -136,7 +136,7 @@ namespace MyFTP.Views
 			}
 			else
 			{
-				WeakReferenceMessenger.Default.Send(new SelectedItemChangedMessage<FtpListItemViewModel>(item));
+				WeakReferenceMessenger.Default.Send(new SelectedItemChangedMessage<FtpListItemViewModel>(this, item));
 			}
 		}
 		private async void OnListViewItemDoubleTapped(object sender, Windows.UI.Xaml.Input.DoubleTappedRoutedEventArgs e)
@@ -151,7 +151,7 @@ namespace MyFTP.Views
 			}
 			else
 			{
-				WeakReferenceMessenger.Default.Send(new SelectedItemChangedMessage<FtpListItemViewModel>(item));
+				WeakReferenceMessenger.Default.Send(new SelectedItemChangedMessage<FtpListItemViewModel>(this, item));
 			}
 		}
 		//TODO: REMOVE THIS

@@ -119,6 +119,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\AboutDialog.xaml.cs">
+      <DependentUpon>AboutDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\DeleteItemDialog.xaml.cs">
       <DependentUpon>DeleteItemDialog.xaml</DependentUpon>
     </Compile>
@@ -131,6 +134,7 @@
     <Compile Include="Controls\TitleBarControl.xaml.cs">
       <DependentUpon>TitleBarControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Services\StoreService.cs" />
     <Compile Include="Utils\FileHelper.cs" />
     <Compile Include="Utils\Messages.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -152,6 +156,7 @@
     <Compile Include="Utils\Converters\ItemToBoolConverter.cs" />
     <Compile Include="Utils\Converters\SizeInBytesHumanizeConverter.cs" />
     <Compile Include="Utils\IconHelper.cs" />
+    <Compile Include="Utils\NavigationHistory.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="Utils\Comparers\FtpListItemComparer.cs" />
     <Compile Include="ViewModels\FtpListItemViewModel.cs" />
@@ -234,6 +239,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Controls\AboutDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\DeleteItemDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

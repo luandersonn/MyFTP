@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.Messaging;
+using MyFTP.Controls;
 using MyFTP.Services;
 using MyFTP.Utils;
 using MyFTP.ViewModels;
@@ -10,8 +11,10 @@ using System.IO;
 using System.Linq;
 using Windows.Storage.FileProperties;
 using Windows.Storage.Pickers;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using muxc = Microsoft.UI.Xaml.Controls;
@@ -19,10 +22,12 @@ namespace MyFTP.Views
 {
 	public sealed partial class HostViewPage : Page
 	{
+		private long _onTreeViewSelectedItemChangedToken;
 		public HostViewPage()
 		{
 			InitializeComponent();
 			Crumbs = new ObservableCollection<FtpListItemViewModel>();
+			NavigationHistory = new NavigationHistory<FtpListItemViewModel>();
 			Loaded += (sender, args) =>
 			{
 				WeakReferenceMessenger.Default.Register<RequestOpenFilesMessage>(this, OnOpenFileRequest);
@@ -30,6 +35,11 @@ namespace MyFTP.Views
 				WeakReferenceMessenger.Default.Register<RequestOpenFolderMessage>(this, OnOpenFolderRequest);
 				WeakReferenceMessenger.Default.Register<ErrorMessage>(this, OnErrorMessage);
 				WeakReferenceMessenger.Default.Register<SelectedItemChangedMessage<FtpListItemViewModel>>(this, OnSelectedItemChanged);
+				_onTreeViewSelectedItemChangedToken = treeView.RegisterPropertyChangedCallback(muxc.TreeView.SelectedItemProperty, OnSelectedItemChanged);
+				Window.Current.CoreWindow.PointerPressed += OnCoreWindowPointerPressed;
+				this.AddKeyboardAccelerator(VirtualKey.Back, OnAcceleratorRequested);
+				this.AddKeyboardAccelerator(VirtualKey.Left, VirtualKeyModifiers.Menu, OnAcceleratorRequested);
+				this.AddKeyboardAccelerator(VirtualKey.Right, VirtualKeyModifiers.Menu, OnAcceleratorRequested);
 				IconRotation.Begin();
 			};
 			Unloaded += (sender, args) =>
@@ -39,6 +49,8 @@ namespace MyFTP.Views
 				WeakReferenceMessenger.Default.Unregister<RequestOpenFolderMessage>(this);
 				WeakReferenceMessenger.Default.Unregister<ErrorMessage>(this);
 				WeakReferenceMessenger.Default.Unregister<SelectedItemChangedMessage<FtpListItemViewModel>>(this);
+				treeView.UnregisterPropertyChangedCallback(muxc.TreeView.SelectedItemProperty, _onTreeViewSelectedItemChangedToken);
+				Window.Current.CoreWindow.PointerPressed -= OnCoreWindowPointerPressed;
 				IconRotation.Stop();
 			};
 		}
@@ -47,30 +59,8 @@ namespace MyFTP.Views
 		public static readonly DependencyProperty ViewModelProperty = DependencyProperty.Register("ViewModel",
 			typeof(HostViewModel), typeof(HostViewPage), new PropertyMetadata(null));
 
-		public FtpListItemViewModel SelectedItem { get => (FtpListItemViewModel)GetValue(SelectedItemProperty); set => SetValue(SelectedItemProperty, value); }
-		public static readonly DependencyProperty SelectedItemProperty = DependencyProperty.Register("SelectedItem",
-			typeof(FtpListItemViewModel), typeof(HostViewPage), new PropertyMetadata(null, OnSelectedItemChanged));
-
 		public ObservableCollection<FtpListItemViewModel> Crumbs { get; }
-
-		private static void OnSelectedItemChanged(DependencyObject d, DependencyPropertyChangedEventArgs args)
-		{
-			var p = (HostViewPage)d;
-			var item = (FtpListItemViewModel)args.NewValue;
-
-			if (item != null)
-			{
-				// Update the BreadcrumbBar
-				p.Crumbs.Clear();
-				var crumb = item;
-				do
-				{
-					p.Crumbs.Insert(0, crumb);
-					crumb = crumb.Parent;
-				} while (crumb != null);
-				WeakReferenceMessenger.Default.Send(new SelectedItemChangedMessage<FtpListItemViewModel>(item));
-			}
-		}
+		public NavigationHistory<FtpListItemViewModel> NavigationHistory { get; }
 
 		protected async override void OnNavigatedTo(NavigationEventArgs args)
 		{
@@ -88,6 +78,7 @@ namespace MyFTP.Views
 				ShowError(e.Message, e);
 			}
 		}
+
 
 		private void OnOpenFileRequest(object recipient, RequestOpenFilesMessage message)
 		{
@@ -130,7 +121,63 @@ namespace MyFTP.Views
 			treeView.SelectedItem = message.Item;
 		}
 
+		private void OnSelectedItemChanged(DependencyObject d, DependencyProperty args)
+		{
+			var item = (FtpListItemViewModel)d.GetValue(args);
 
+			if (item != null)
+			{
+				if (item != NavigationHistory.CurrentItem)
+				{
+					if (NavigationHistory.CanGoForward)
+						NavigationHistory.NavigateTo(item, NavigationHistory.CurrentItemIndex + 1);
+					else
+						NavigationHistory.NavigateTo(item);
+				}
+				// Update the BreadcrumbBar
+				Crumbs.Clear();
+				var crumb = item;
+				do
+				{
+					Crumbs.Insert(0, crumb);
+					crumb = crumb.Parent;
+				} while (crumb != null);
+				WeakReferenceMessenger.Default.Send(new SelectedItemChangedMessage<FtpListItemViewModel>(this, item));
+			}
+		}
+
+		private void OnCoreWindowPointerPressed(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.PointerEventArgs args)
+		{
+			if (args.CurrentPoint.Properties.IsXButton1Pressed)
+			{
+				// Mouse back button pressed
+				args.Handled = NavigationHistory.GoBack();
+			}
+			else if (args.CurrentPoint.Properties.IsXButton2Pressed)
+			{
+				// Mouse forward button pressed				
+				args.Handled = NavigationHistory.GoForward();
+			}
+		}
+
+		private void OnAcceleratorRequested(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
+		{
+			switch (args.KeyboardAccelerator.Key)
+			{
+				case VirtualKey.Back when NavigationHistory.CurrentItem?.Parent != null: // Go up
+					treeView.SelectedItem = NavigationHistory.CurrentItem.Parent;
+					args.Handled = true;
+					break;
+
+				case VirtualKey.Left when args.KeyboardAccelerator.Modifiers == VirtualKeyModifiers.Menu:
+					args.Handled = NavigationHistory.GoBack();
+					break;
+
+				case VirtualKey.Right when args.KeyboardAccelerator.Modifiers == VirtualKeyModifiers.Menu:
+					args.Handled = NavigationHistory.GoForward();
+					break;
+			}
+		}
 
 		private async void OnDisconnectButtonClick(muxc.SplitButton sender, muxc.SplitButtonClickEventArgs args)
 		{
@@ -165,6 +212,18 @@ namespace MyFTP.Views
 				settings.TrySet("AppTheme", radioTheme);
 		}
 
+		private async void OnAboutMenuFlyoutItemClicked(object sender, RoutedEventArgs e)
+		{
+			try
+			{
+				this.IsEnabled = false;
+				await new AboutDialog().ShowAsync();
+			}
+			finally
+			{
+				this.IsEnabled = true;
+			}
+		}
 
 		private void ShowError(string message, Exception e = null)
 		{
