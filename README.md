@@ -26,3 +26,5 @@ Designed with Windows UI Library, MyFTP takes advantage of the new Windows 11 In
 <img src="https://luandersonn.com/images/myftp/replace-dialog-screenshot.png" alt="Replace dialog screenshot" width="600" height="350" loading="lazy" />
 <img src="https://luandersonn.com/images/myftp/resize-panel-screenshot.png" alt="Resize panel screenshot" width="600" height="350" loading="lazy" />
                     
+## $ Support
+<a href="https://www.buymeacoffee.com/luandersonn1">![Buy me a coffee](https://luandersonn.com/images/buymeacoffee-banner.svg)</a>
