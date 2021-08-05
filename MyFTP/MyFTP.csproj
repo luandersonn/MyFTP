@@ -134,6 +134,7 @@
     <Compile Include="Controls\TitleBarControl.xaml.cs">
       <DependentUpon>TitleBarControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Services\AppCenterService.cs" />
     <Compile Include="Services\StoreService.cs" />
     <Compile Include="Utils\FileHelper.cs" />
     <Compile Include="Utils\Messages.cs" />

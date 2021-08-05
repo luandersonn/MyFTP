@@ -8,7 +8,7 @@
 			   CloseButtonText="Close"
 			   PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
 			   PrimaryButtonStyle="{ThemeResource AccentButtonStyle}"
-			   PrimaryButtonText="Review on Microsoft Store"
+			   PrimaryButtonText="Write a review"
 			   Style="{ThemeResource DefaultContentDialogStyle}"
 			   mc:Ignorable="d">
 
@@ -28,13 +28,25 @@
 				<TextBlock Grid.Column="1"
 						   VerticalAlignment="Center"
 						   FontSize="25"
+						   FontWeight="Bold"
 						   Text="{Binding}" />
 			</Grid>
 		</DataTemplate>
 	</ContentDialog.TitleTemplate>
 
-	<Grid ColumnSpacing="8">
+
+	<Grid ColumnSpacing="8" RowSpacing="4">
+		<Grid.Resources>
+			<Style TargetType="TextBlock">
+				<Setter Property="IsTextSelectionEnabled" Value="True" />
+				<Setter Property="VerticalAlignment" Value="Center" />
+				<Setter Property="TextWrapping" Value="Wrap" />
+				<Setter Property="TextTrimming" Value="CharacterEllipsis" />
+				<Setter Property="MaxLines" Value="2" />
+			</Style>
+		</Grid.Resources>
 		<Grid.RowDefinitions>
+			<RowDefinition />
 			<RowDefinition />
 			<RowDefinition />
 			<RowDefinition />
@@ -48,7 +60,7 @@
 		</Grid.ColumnDefinitions>
 		<TextBlock Foreground="{ThemeResource SystemBaseMediumColor}" Text="App version" />
 		<TextBlock Grid.Column="1">
-			<Run Text="{x:Bind Settings.AppVersion}" />
+			<Run d:Text="1.0.0.0" Text="{x:Bind Settings.AppVersion}" />
 			<Run Text="(Preview)" />
 		</TextBlock>
 
@@ -58,6 +70,7 @@
 
 		<TextBlock Grid.Row="1"
 				   Grid.Column="1"
+				   d:Text="Microsoft"
 				   Text="{x:Bind SystemInformation.DeviceManufacturer}" />
 
 		<TextBlock Grid.Row="2"
@@ -66,6 +79,7 @@
 
 		<TextBlock Grid.Row="2"
 				   Grid.Column="1"
+				   d:Text="PC 2"
 				   Text="{x:Bind SystemInformation.DeviceModel}" />
 
 		<TextBlock Grid.Row="3"
@@ -74,6 +88,7 @@
 
 		<TextBlock Grid.Row="3"
 				   Grid.Column="1"
+				   d:Text="10.0.0"
 				   Text="{x:Bind SystemInformation.OperatingSystemVersion}" />
 
 		<TextBlock Grid.Row="4"
@@ -82,8 +97,29 @@
 
 		<TextBlock Grid.Row="4"
 				   Grid.Column="1"
+				   d:Text="X64"
 				   Text="{x:Bind SystemInformation.OperatingSystemArchitecture}" />
 
+		<TextBlock Grid.Row="5"
+				   VerticalAlignment="Center"
+				   Foreground="{ThemeResource SystemBaseMediumColor}"
+				   Text="Source code" />
+
+		<HyperlinkButton Grid.Row="5"
+						 Grid.Column="1"
+						 Padding="0"
+						 Content="GitHub"
+						 NavigateUri="https://github.com/luandersonn/MyFTP" />
+
+		<TextBlock Grid.Row="6"
+				   Foreground="{ThemeResource SystemBaseMediumColor}"
+				   Text="Support the dev" />
+
+		<HyperlinkButton Grid.Row="6"
+						 Grid.Column="1"
+						 Padding="0"
+						 Content="Buy me a coffee"
+						 NavigateUri="https://www.buymeacoffee.com/luandersonn1" />
 
 	</Grid>
 </ContentDialog>

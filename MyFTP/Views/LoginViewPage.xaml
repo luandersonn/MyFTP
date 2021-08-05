@@ -137,7 +137,6 @@
 														   TextTrimming="CharacterEllipsis" />
 
 												<Button Grid.Column="2"
-														Background="Transparent"
 														Click="OnDeleteSavedCredentialClicked"
 														Content="&#xE107;"
 														FontFamily="Segoe MDL2 Assets"

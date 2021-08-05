@@ -16,11 +16,14 @@ namespace MyFTP.Controls
 			ElementTheme theme = default;
 			Settings?.TryGet<ElementTheme>("AppTheme", out theme);
 			RequestedTheme = theme;
+
+			AppCenterService = App.Current.Services.GetService<AppCenterService>();
 		}
 
 		public ISettings Settings { get; }
 		public SystemInformation SystemInformation => SystemInformation.Instance;
 		public StoreService StoreService { get; }
+		public AppCenterService AppCenterService { get; }
 
 		private async void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
 		{
@@ -28,6 +31,7 @@ namespace MyFTP.Controls
 			try
 			{
 				await SystemInformation.LaunchStoreForReviewAsync();
+				AppCenterService?.TrackEvent("LaunchStoreForReviewAsync");
 			}
 			catch { }
 		}
