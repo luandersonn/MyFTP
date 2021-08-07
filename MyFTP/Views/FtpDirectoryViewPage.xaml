@@ -6,11 +6,16 @@
 	  xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
 	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	  xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+	  xmlns:muxd="using:Microsoft.UI.Xaml.Media"
 	  xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
 	  xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
 	  xmlns:utils="using:MyFTP.Utils"
 	  xmlns:viewmodels="using:MyFTP.ViewModels"
+	  AllowDrop="True"
 	  Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+	  DragEnter="{x:Bind ShowItemDropArea, Mode=OneTime}"
+	  DragLeave="{x:Bind HideItemDropArea, Mode=OneTime}"
+	  Drop="{x:Bind HideItemDropArea, Mode=OneTime}"
 	  mc:Ignorable="d">
 
 	<Page.Resources>
@@ -289,5 +294,33 @@
 				</toolkit:SwitchPresenter>
 			</toolkit:Case>
 		</toolkit:SwitchPresenter>
+
+		<Grid x:Name="ItemDropArea"
+			  Grid.Row="1"
+			  Width="300"
+			  Height="150"
+			  Margin="0,0,12,12"
+			  Padding="8"
+			  HorizontalAlignment="Right"
+			  VerticalAlignment="Bottom"
+			  utils:DragAndDropHelper.DropTarget="{x:Bind ViewModel, Mode=OneWay}"
+			  utils:DragAndDropHelper.IsDropItemsEnabled="{x:Bind ViewModel.IsDirectory, Mode=OneWay}"
+			  Background="{ThemeResource SystemControlAccentAcrylicElementAccentMediumHighBrush}"
+			  CornerRadius="8"
+			  Visibility="Collapsed">
+
+
+			<Rectangle RadiusX="8"
+					   RadiusY="8"
+					   Stroke="{ThemeResource SystemBaseHighColor}"
+					   StrokeDashArray="10,5" />
+
+			<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+				<TextBlock Text="Drop here to upload to this folder" TextAlignment="Center" />
+				<TextBlock Opacity="0.6"
+						   Text="{x:Bind ViewModel.FullName, Mode=OneWay}"
+						   TextAlignment="Center" />
+			</StackPanel>
+		</Grid>
 	</Grid>
 </Page>

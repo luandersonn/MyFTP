@@ -195,5 +195,10 @@ namespace MyFTP.Views
 
 			await dialog.ShowAsync();
 		}
+
+		private void ShowItemDropArea() => ItemDropArea.Visibility = Visibility.Visible;
+
+		private void HideItemDropArea() => ItemDropArea.Visibility = Visibility.Collapsed;
+		
 	}
 }

@@ -21,28 +21,26 @@ namespace MyFTP.Utils
 			element.SetValue(IsDragItemsEnabledProperty, value);
 			switch (element)
 			{
-				case ListViewBase lvb when value:
-					lvb.CanDragItems = true;
-					lvb.DragItemsStarting += OnListviewDragItemsStarting;
-					lvb.DragItemsCompleted += OnListviewDragItemsCompleted;
+				case ListViewBase lvb:
+					lvb.DragItemsStarting -= OnListviewDragItemsStarting;
+					lvb.DragItemsCompleted -= OnListviewDragItemsCompleted;
+					lvb.CanDragItems = value;
+					if (value)
+					{						
+						lvb.DragItemsStarting += OnListviewDragItemsStarting;
+						lvb.DragItemsCompleted += OnListviewDragItemsCompleted;
+					}					
 					break;
 
 				case muxc.TreeView tv when value:
-					tv.CanDragItems = true;
-					tv.DragItemsStarting += OnTreeviewDragItemsStarting;
-					tv.DragItemsCompleted += OnTreeviewDragItemsCompleted;
-					break;
-
-				case ListViewBase lvb:
-					lvb.CanDragItems = false;
-					lvb.DragItemsStarting -= OnListviewDragItemsStarting;
-					lvb.DragItemsCompleted -= OnListviewDragItemsCompleted;
-					break;
-
-				case muxc.TreeView tv:
-					tv.CanDragItems = false;
 					tv.DragItemsStarting -= OnTreeviewDragItemsStarting;
 					tv.DragItemsCompleted -= OnTreeviewDragItemsCompleted;
+					tv.CanDragItems = value;
+					if (value)
+					{
+						tv.DragItemsStarting += OnTreeviewDragItemsStarting;
+						tv.DragItemsCompleted += OnTreeviewDragItemsCompleted;
+					}
 					break;
 			}
 		}
@@ -81,6 +79,9 @@ namespace MyFTP.Utils
 		public static void SetIsDropItemsEnabled(UIElement element, bool value)
 		{
 			element.SetValue(IsDropItemsEnabledProperty, value);
+			element.DragOver -= OnElementDragEnter;
+			element.DragLeave -= OnElementLeave;
+			element.Drop -= OnElementDrop;
 			if (value)
 			{
 				element.AllowDrop = true;
@@ -90,10 +91,7 @@ namespace MyFTP.Utils
 			}
 			else
 			{
-				element.AllowDrop = false;
-				element.DragOver -= OnElementDragEnter;
-				element.DragLeave -= OnElementLeave;
-				element.Drop -= OnElementDrop;
+				element.AllowDrop = false;				
 			}
 		}
 
@@ -124,10 +122,9 @@ namespace MyFTP.Utils
 		private static void OnElementLeave(object sender, DragEventArgs e)
 		{
 
-		}
-
+		}		
 		private async static void OnElementDrop(object sender, DragEventArgs args)
-		{
+		{			
 			var element = (UIElement)sender;
 			var target = GetDropTarget(element) as IDropTarget;
 			if (target == null)
@@ -140,10 +137,11 @@ namespace MyFTP.Utils
 				target.DropItems(items);
 			}
 			else if (args.DataView.Contains(StandardDataFormats.StorageItems)) // dragging files from system
-			{
+			{				
 				var items = await args.DataView.GetStorageItemsAsync();
 				target.DropItems(items);
 			}
+			
 		}
 		public static readonly DependencyProperty IsDropItemsEnabledProperty = DependencyProperty.RegisterAttached("IsDropItemsEnabled", typeof(bool), typeof(DragAndDropHelper), new PropertyMetadata(false));
 		public static IDropTarget GetDropTarget(UIElement obj) => (IDropTarget)obj.GetValue(DropTargetProperty);
