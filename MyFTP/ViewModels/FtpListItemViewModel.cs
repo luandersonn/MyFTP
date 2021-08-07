@@ -440,41 +440,18 @@ namespace MyFTP.ViewModels
 				_weakMessenger.Send(new ErrorMessage(new Exception($"{error} items cannot be moved")));
 		}
 
-		public async void DropItems(IReadOnlyList<IStorageItem> items)
+		public void DropItems(IReadOnlyList<IStorageItem> items)
 		{
 			foreach (var item in items)
 			{
 				var remotePath = string.Format("{0}/{1}", FullName, item.Name);
 				if (item.IsOfType(StorageItemTypes.Folder))
 				{
-					try
-					{
-						_transferService.EnqueueUpload(_client, remotePath, (StorageFolder)item, _guid);
-					}
-					catch (Exception e)
-					{
-						_weakMessenger.Send(new ErrorMessage(e));
-					}
+					_transferService.EnqueueUpload(_client, remotePath, (StorageFolder)item, _guid);
 				}
 				else
 				{
-					try
-					{
-						bool result = true;
-
-						if (_dialogService != null && await _client.GetObjectInfoAsync(remotePath) is FtpListItem current)
-						{
-							result = await _dialogService.AskForReplaceAsync((StorageFile)item, new FtpListItemViewModel(_client, current, this, null, null));
-						}
-						if (result)
-						{
-							_transferService.EnqueueUpload(_client, remotePath, (StorageFile)item, _guid);
-						}
-					}
-					catch (Exception e)
-					{
-						_weakMessenger.Send(new ErrorMessage(e));
-					}
+					_transferService.EnqueueUpload(_client, remotePath, (StorageFile)item, _guid);
 				}
 			}
 		}

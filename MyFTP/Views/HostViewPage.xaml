@@ -18,6 +18,7 @@
 			<RepositionThemeTransition />
 		</TransitionCollection>
 
+
 		<DataTemplate x:Key="FtpItemsDataTemplate" x:DataType="viewmodels:FtpListItemViewModel">
 			<muxc:TreeViewItem x:Name="root"
 							   HorizontalContentAlignment="Stretch"
@@ -51,8 +52,8 @@
 
 											<toolkit:Case Value="False">
 												<FontIcon FontSize="15"
-														  Glyph="&#xE188;"
-														  Opacity="0.8" />
+														  Foreground="{ThemeResource SystemBaseMediumLowColor}"
+														  Glyph="&#xE188;" />
 											</toolkit:Case>
 										</toolkit:SwitchPresenter>
 									</toolkit:Case>
@@ -211,10 +212,15 @@
 					<muxc:BreadcrumbBar.ItemTemplate>
 						<DataTemplate x:DataType="viewmodels:FtpListItemViewModel">
 							<Grid Padding="4,0"
+								  utils:DragAndDropHelper.DragLeaveBackground="Transparent"
+								  utils:DragAndDropHelper.DragOverBackground="{ThemeResource SystemControlBackgroundBaseMediumBrush}"
 								  utils:DragAndDropHelper.DropTarget="{x:Bind}"
 								  utils:DragAndDropHelper.IsDropItemsEnabled="{x:Bind IsDirectory}"
 								  Background="Transparent"
 								  CornerRadius="4">
+								<Grid.BackgroundTransition>
+									<BrushTransition Duration="0:0:0.300" />
+								</Grid.BackgroundTransition>
 								<Grid.ColumnDefinitions>
 									<ColumnDefinition Width="20" />
 									<ColumnDefinition />
