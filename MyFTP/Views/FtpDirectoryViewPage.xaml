@@ -31,8 +31,8 @@
 						 Color="{ThemeResource SystemAccentColor}" />
 
 		<DataTemplate x:Key="FtpItemsTemplate" x:DataType="viewmodels:FtpListItemViewModel">
-			<Grid Margin="-12,-18"
-				  Padding="12,18"
+			<Grid Height="36"
+				  Padding="16,2"
 				  utils:DragAndDropHelper.DragLeaveBackground="Transparent"
 				  utils:DragAndDropHelper.DragOverBackground="{ThemeResource AccentButtonBackgroundPressed}"
 				  utils:DragAndDropHelper.DropTarget="{x:Bind}"
@@ -204,7 +204,14 @@
 				  ScrollViewer.HorizontalScrollMode="Auto"
 				  SelectionChanged="OnListViewSelectionChanged"
 				  SelectionMode="Extended">
-
+			<ListViewBase.ItemContainerStyle>
+				<Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
+					<Setter Property="Padding" Value="0" />
+					<Setter Property="Margin" Value="4,0" />
+					<Setter Property="MinHeight" Value="0" />
+					<Setter Property="MinWidth" Value="0" />
+				</Style>
+			</ListViewBase.ItemContainerStyle>
 			<interactivity:Interaction.Behaviors>
 				<behaviors:StickyHeaderBehavior />
 			</interactivity:Interaction.Behaviors>
