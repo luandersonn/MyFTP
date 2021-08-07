@@ -17,7 +17,7 @@ Designed with Windows UI Library, MyFTP takes advantage of the new Windows 11 In
 - Download files and folders
 - Rename files and folders
 - Delete files and folders
-- Upload files
+- Upload files and folders
 
 ## Screenshots
 
