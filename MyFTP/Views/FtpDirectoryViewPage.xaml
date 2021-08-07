@@ -8,6 +8,7 @@
 	  xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	  xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
 	  xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
+	  xmlns:utils="using:MyFTP.Utils"
 	  xmlns:viewmodels="using:MyFTP.ViewModels"
 	  Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	  mc:Ignorable="d">
@@ -26,6 +27,8 @@
 		<DataTemplate x:Key="FtpItemsTemplate" x:DataType="viewmodels:FtpListItemViewModel">
 			<Grid Margin="-12,-18"
 				  Padding="12,18"
+				  utils:DragAndDropHelper.DropTarget="{x:Bind}"
+				  utils:DragAndDropHelper.IsDropItemsEnabled="{x:Bind IsDirectory}"
 				  Background="Transparent"
 				  ColumnSpacing="8"
 				  DataContext="{x:Bind}"
@@ -182,6 +185,7 @@
 				  Grid.Row="1"
 				  ui:ListViewExtensions.ItemContainerStretchDirection="Horizontal"
 				  ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True"
+				  utils:DragAndDropHelper.IsDragItemsEnabled="True"
 				  ContainerContentChanging="OnListViewContainerContentChanging"
 				  ItemTemplate="{StaticResource FtpItemsTemplate}"
 				  ItemsSource="{x:Bind ViewModel.Items, Mode=OneWay}"

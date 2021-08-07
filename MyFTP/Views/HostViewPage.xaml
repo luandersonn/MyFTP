@@ -8,6 +8,7 @@
 	  xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	  xmlns:services="using:MyFTP.Services"
 	  xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
+	  xmlns:utils="using:MyFTP.Utils"
 	  xmlns:viewmodels="using:MyFTP.ViewModels"
 	  muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
 	  mc:Ignorable="d">
@@ -210,6 +211,8 @@
 					<muxc:BreadcrumbBar.ItemTemplate>
 						<DataTemplate x:DataType="viewmodels:FtpListItemViewModel">
 							<Grid Padding="4,0"
+								  utils:DragAndDropHelper.DropTarget="{x:Bind}"
+								  utils:DragAndDropHelper.IsDropItemsEnabled="{x:Bind IsDirectory}"
 								  Background="Transparent"
 								  CornerRadius="4">
 								<Grid.ColumnDefinitions>
@@ -331,6 +334,7 @@
 
 
 			<muxc:TreeView x:Name="treeView"
+						   utils:DragAndDropHelper.IsDragItemsEnabled="True"
 						   CanReorderItems="False"
 						   ItemTemplate="{StaticResource FtpItemsDataTemplate}"
 						   ItemsSource="{x:Bind ViewModel.Root}"
