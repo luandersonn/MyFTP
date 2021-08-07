@@ -136,6 +136,7 @@
     </Compile>
     <Compile Include="Services\AppCenterService.cs" />
     <Compile Include="Services\StoreService.cs" />
+    <Compile Include="Utils\DragAndDropHelper.cs" />
     <Compile Include="Utils\FileHelper.cs" />
     <Compile Include="Utils\Messages.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

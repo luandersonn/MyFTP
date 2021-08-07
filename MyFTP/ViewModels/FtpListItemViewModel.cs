@@ -17,7 +17,7 @@ using Windows.System;
 
 namespace MyFTP.ViewModels
 {
-	public class FtpListItemViewModel : BindableItem
+	public class FtpListItemViewModel : BindableItem, IDragTarget, IDropTarget
 	{
 		#region fields		
 		private readonly IObservableSortedCollection<FtpListItemViewModel> _items;
@@ -26,8 +26,8 @@ namespace MyFTP.ViewModels
 		private bool _isRenameDialogOpen;
 		private bool _isRenaming;
 		private FtpPermission _ownerPermissions;
-		private string _fullName;
 		private string _name;
+		private FtpListItemViewModel _parent;
 		private readonly FtpListItem _ftpItem;
 		public readonly IFtpClient _client;
 		private readonly WeakReferenceMessenger _weakMessenger;
@@ -73,7 +73,6 @@ namespace MyFTP.ViewModels
 				Name = client.Host;
 			else
 				Name = item.Name;
-			FullName = item.FullName;
 			Type = item.Type;
 			SubType = item.SubType;
 			Size = item.Size;
@@ -82,11 +81,20 @@ namespace MyFTP.ViewModels
 		}
 		#endregion
 
-		#region properties		
+		#region properties
 		public string Name { get => _name; private set => Set(ref _name, value); }
-		public string FullName { get => _fullName; private set => Set(ref _fullName, value); }
+		public string FullName
+		{
+			get
+			{
+				if (Parent == null)
+					return "/";
+				else
+					return Parent.FullName + "/" + Name;
+			}
+		}
 		public FtpPermission OwnerPermissions { get => _ownerPermissions; private set => Set(ref _ownerPermissions, value); }
-		public FtpListItemViewModel Parent { get; }
+		public FtpListItemViewModel Parent { get => _parent; private set => Set(ref _parent, value); }
 		public FtpFileSystemObjectType Type { get; }
 		public FtpFileSystemObjectSubType SubType { get; }
 		public bool IsDirectory => Type == FtpFileSystemObjectType.Directory;
@@ -266,7 +274,7 @@ namespace MyFTP.ViewModels
 					throw new FtpException("This name is already used by a directory or file");
 				await _client.RenameAsync(FullName, newRemotePath, token: token);
 				Name = newItemName;
-				FullName = newRemotePath;
+				OnPropertyChanged(nameof(FullName));
 			}
 			catch (Exception e)
 			{
@@ -317,7 +325,7 @@ namespace MyFTP.ViewModels
 		}
 
 		private bool CanExecuteDownloadCommand(IEnumerable<FtpListItemViewModel> arg)
-		{	
+		{
 			var transferServiceExists = _transferService != null;
 			var containsItem = arg?.Any() == true;
 			return transferServiceExists && (containsItem || arg is null);
@@ -388,6 +396,68 @@ namespace MyFTP.ViewModels
 			}
 			catch { }
 		}
+
+		public async void DropItems(IEnumerable<IDragTarget> items)
+		{
+			int success = 0, error = 0;
+			foreach (var item in items.Cast<FtpListItemViewModel>())
+			{
+				try
+				{
+					var newRemotePath = string.Format("{0}/{1}", FullName, item.Name);
+					bool hasSuccess = false;
+					switch (item.Type)
+					{
+						case FtpFileSystemObjectType.File:
+							hasSuccess = await _client.MoveFileAsync(item.FullName, newRemotePath, FtpRemoteExists.Skip, default);
+							break;
+
+						case FtpFileSystemObjectType.Directory:
+							hasSuccess = await _client.MoveDirectoryAsync(item.FullName, newRemotePath, FtpRemoteExists.Skip, default);
+							break;
+					}
+
+					if (hasSuccess)
+					{
+						success++;
+						item.Parent?._items.RemoveItem(item);
+						item.Parent = this;
+						OnPropertyChanged(FullName);
+						_items.AddItem(item);
+					}
+					else
+					{
+						error++;
+					}
+				}
+				catch
+				{
+					error++;
+				}
+			}
+
+			if (error != 0)
+				_weakMessenger.Send(new ErrorMessage(new Exception($"{error} items cannot be moved")));
+		}
+
+		public void DropItems(IReadOnlyList<IStorageItem> items)
+		{
+			foreach (var item in items)
+			{
+				var remotePath = string.Format("{0}/{1}", FullName, item.Name);
+				if (item.IsOfType(StorageItemTypes.Folder))
+				{
+					_transferService.EnqueueUpload(_client, remotePath, (StorageFolder)item, _guid);
+				}
+				else
+				{
+					_transferService.EnqueueUpload(_client, remotePath, (StorageFile)item, _guid);
+				}
+			}
+		}
+
+		public bool IsDragItemSupported(IDragTarget item) => item.GetType() == typeof(FtpListItemViewModel) && item != this;
+
 		#endregion
 	}
 }

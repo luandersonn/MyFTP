@@ -1,6 +1,7 @@
 ﻿<Page x:Class="MyFTP.Views.FtpDirectoryViewPage"
 	  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	  xmlns:ani="using:Microsoft.Toolkit.Uwp.UI.Animations"
 	  xmlns:behaviors="using:Microsoft.Toolkit.Uwp.UI.Behaviors"
 	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	  xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
@@ -8,8 +9,14 @@
 	  xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	  xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
 	  xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
+	  xmlns:utils="using:MyFTP.Utils"
 	  xmlns:viewmodels="using:MyFTP.ViewModels"
+	  AllowDrop="True"
 	  Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+	  DragEnter="{x:Bind ShowItemDropArea, Mode=OneTime}"
+	  DragLeave="{x:Bind HideItemDropArea, Mode=OneTime}"
+	  Drop="{x:Bind HideItemDropArea, Mode=OneTime}"
+	  Loaded="{x:Bind HideItemDropArea, Mode=OneTime}"
 	  mc:Ignorable="d">
 
 	<Page.Resources>
@@ -24,13 +31,20 @@
 						 Color="{ThemeResource SystemAccentColor}" />
 
 		<DataTemplate x:Key="FtpItemsTemplate" x:DataType="viewmodels:FtpListItemViewModel">
-			<Grid Margin="-12,-18"
-				  Padding="12,18"
+			<Grid Height="36"
+				  Padding="16,2"
+				  utils:DragAndDropHelper.DragLeaveBackground="Transparent"
+				  utils:DragAndDropHelper.DragOverBackground="{ThemeResource AccentButtonBackgroundPressed}"
+				  utils:DragAndDropHelper.DropTarget="{x:Bind}"
+				  utils:DragAndDropHelper.IsDropItemsEnabled="{x:Bind IsDirectory}"
 				  Background="Transparent"
 				  ColumnSpacing="8"
 				  DataContext="{x:Bind}"
 				  DoubleTapped="OnListViewItemDoubleTapped"
 				  IsDoubleTapEnabled="True">
+				<Grid.BackgroundTransition>
+					<BrushTransition Duration="0:0:0.300" />
+				</Grid.BackgroundTransition>
 				<Grid.ContextFlyout>
 					<MenuFlyout>
 						<MenuFlyoutItem Click="MenuFlyoutItem_Click" Text="Open">
@@ -182,6 +196,7 @@
 				  Grid.Row="1"
 				  ui:ListViewExtensions.ItemContainerStretchDirection="Horizontal"
 				  ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True"
+				  utils:DragAndDropHelper.IsDragItemsEnabled="True"
 				  ContainerContentChanging="OnListViewContainerContentChanging"
 				  ItemTemplate="{StaticResource FtpItemsTemplate}"
 				  ItemsSource="{x:Bind ViewModel.Items, Mode=OneWay}"
@@ -189,7 +204,14 @@
 				  ScrollViewer.HorizontalScrollMode="Auto"
 				  SelectionChanged="OnListViewSelectionChanged"
 				  SelectionMode="Extended">
-
+			<ListViewBase.ItemContainerStyle>
+				<Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
+					<Setter Property="Padding" Value="0" />
+					<Setter Property="Margin" Value="4,0" />
+					<Setter Property="MinHeight" Value="0" />
+					<Setter Property="MinWidth" Value="0" />
+				</Style>
+			</ListViewBase.ItemContainerStyle>
 			<interactivity:Interaction.Behaviors>
 				<behaviors:StickyHeaderBehavior />
 			</interactivity:Interaction.Behaviors>
@@ -285,5 +307,68 @@
 				</toolkit:SwitchPresenter>
 			</toolkit:Case>
 		</toolkit:SwitchPresenter>
+
+		<Grid x:Name="ItemDropArea"
+			  Grid.Row="1"
+			  Width="300"
+			  Height="150"
+			  Margin="0,0,12,12"
+			  Padding="8"
+			  HorizontalAlignment="Right"
+			  VerticalAlignment="Bottom"
+			  utils:DragAndDropHelper.DragLeaveBackground="{ThemeResource SystemControlAccentAcrylicElementAccentMediumHighBrush}"
+			  utils:DragAndDropHelper.DragOverBackground="{ThemeResource SystemColorControlAccentBrush}"
+			  utils:DragAndDropHelper.DropTarget="{x:Bind ViewModel, Mode=OneWay}"
+			  utils:DragAndDropHelper.IsDropItemsEnabled="{x:Bind ViewModel.IsDirectory, Mode=OneWay}"
+			  AllowDrop="True"
+			  Background="{ThemeResource SystemControlAccentAcrylicElementAccentMediumHighBrush}"
+			  CornerRadius="8"
+			  Visibility="Visible">
+			<Grid.BackgroundTransition>
+				<BrushTransition Duration="0:0:0.300" />
+			</Grid.BackgroundTransition>
+
+
+			<ani:Explicit.Animations>
+				<ani:AnimationSet x:Name="fadeOut">
+					<ani:OpacityAnimation Delay="0"
+										  EasingMode="EaseOut"
+										  EasingType="Linear"
+										  To="0"
+										  Duration="0:0:0.300" />
+					<ani:TranslationAnimation To="0,200,0" Duration="0:0:0.300" />
+				</ani:AnimationSet>
+
+				<ani:AnimationSet x:Name="fadeIn">
+					<ani:OpacityAnimation Delay="0"
+										  EasingMode="EaseOut"
+										  EasingType="Linear"
+										  To="1"
+										  Duration="0:0:0.300" />
+					<ani:TranslationAnimation To="0,0,0" Duration="0:0:0.300" />
+				</ani:AnimationSet>
+			</ani:Explicit.Animations>
+
+			<Rectangle RadiusX="8"
+					   RadiusY="8"
+					   Stroke="{ThemeResource SystemBaseHighColor}"
+					   StrokeDashArray="10,5" />
+
+			<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+				<FontIcon Margin="15"
+						  FontSize="30"
+						  Glyph="&#xE11C;" />
+
+				<TextBlock MaxLines="2"
+						   Text="Drop here to upload to this folder"
+						   TextAlignment="Center"
+						   TextTrimming="CharacterEllipsis"
+						   TextWrapping="Wrap" />
+				<TextBlock Opacity="0.6"
+						   Text="{x:Bind ViewModel.FullName, Mode=OneWay}"
+						   TextAlignment="Center"
+						   TextTrimming="CharacterEllipsis" />
+			</StackPanel>
+		</Grid>
 	</Grid>
 </Page>
