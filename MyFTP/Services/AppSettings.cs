@@ -16,7 +16,7 @@ namespace MyFTP.Services
 			get
 			{
 				var v = Microsoft.Toolkit.Uwp.Helpers.SystemInformation.Instance.ApplicationVersion;
-				return $"{v.Major}.{v.Minor}.{v.Revision}.{v.Build}";
+				return $"{v.Major}.{v.Minor}.{v.Build}.{v.Revision}";
 			}
 		}
 
