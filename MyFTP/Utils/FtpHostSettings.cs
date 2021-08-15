@@ -11,8 +11,8 @@ namespace MyFTP.Utils
 {
 	public class FtpHostSettings
 	{
-		private static readonly string _passwordCredentialResourceName = "MyFTP";
-		private static readonly string FileName = "servers.json";		
+		private static readonly string _passwordCredentialResourceName = "MyFTPClient";
+		private static readonly string FileName = "servers.json";
 		public string Id { get; set; }
 		public string Host { get; set; }
 		public string Username { get; set; }
@@ -43,7 +43,40 @@ namespace MyFTP.Utils
 		public void SetDefaultSaveLocation(StorageFolder location)
 		{
 			StorageApplicationPermissions.FutureAccessList.AddOrReplace(Id, location);
-		}		
+		}
+
+		public static async Task<FtpHostSettings> GetAsync(string host, int port, string username)
+		{
+			var id = GetId(host, port, username);
+			return await GetAsync(id);
+		}
+
+		public static async Task<FtpHostSettings> GetAsync(string id)
+		{
+			var dic = await GetAllAsync();
+			if (dic.ContainsKey(id))
+				return dic[id];
+			return null;
+		}
+
+		public static async Task<FtpHostSettings> GetOrCreateAsync(string host, int port, string username)
+		{
+			var dic = await GetAllAsync();
+			var id = GetId(host, port, username);
+			if (dic.ContainsKey(id))
+			{
+				return dic[id];
+			}
+			var settings = new FtpHostSettings
+			{
+				Id = id,
+				Host = host,
+				Port = port,
+				Username = username
+			};
+			await settings.SaveAsync();
+			return settings;
+		}
 
 		public static async Task DeleteAsync(string id)
 		{
@@ -70,8 +103,9 @@ namespace MyFTP.Utils
 				Debug.WriteLine("Error on read servers.json file: " + e);
 				return new Dictionary<string, FtpHostSettings>();
 			}
+			ClearOldCredentials();
 			return JsonConvert.DeserializeObject<Dictionary<string, FtpHostSettings>>(json) ?? new Dictionary<string, FtpHostSettings>();
-		}		
+		}
 
 		#region locker
 		public PasswordCredential GetCredentialFromLocker()
@@ -86,10 +120,10 @@ namespace MyFTP.Utils
 				return null;
 			}
 		}
-		private void SaveCredentialsOnLocker(string username, string password)
+		public void SavePasswordOnLocker(string password)
 		{
-			var vault = new PasswordVault();
-			vault.Add(new PasswordCredential(_passwordCredentialResourceName, username, password));
+			var vault = new PasswordVault();			
+			vault.Add(new PasswordCredential(_passwordCredentialResourceName, Id, password));
 		}
 
 		private void RemoveCredentialFromLocker(PasswordCredential credential)
@@ -97,8 +131,29 @@ namespace MyFTP.Utils
 			var vault = new PasswordVault();
 			vault.Remove(credential);
 		}
+
+		// Clear old passwords
+		private static void ClearOldCredentials()
+		{
+			var vault = new PasswordVault();
+
+			var oldResourceName = "MyFTP";
+			try
+			{
+				foreach (var item in vault.FindAllByResource(oldResourceName))
+				{
+					vault.Remove(item);
+				}
+			}
+			catch(Exception e)
+			{
+				Debug.WriteLine(e);
+			}
+		}
 		#endregion
 
-		public override string ToString() => $"{Username}@{Host}@{Port}";
+		public static string GetId(string host, int port, string username) => $"{username}@{host}:{port}";
+
+		public override string ToString() => $"{Username}@{Host}:{Port}";
 	}
 }

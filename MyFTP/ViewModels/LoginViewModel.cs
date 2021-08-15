@@ -5,20 +5,18 @@ using Microsoft.Toolkit.Mvvm.Messaging;
 using MyFTP.Services;
 using MyFTP.Utils;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using Windows.Security.Credentials;
+using Windows.System;
 
 namespace MyFTP.ViewModels
 {
 	public class LoginViewModel : BindableItem
 	{
 		#region fields		
-		private ObservableCollection<string> _savedCredentialsList;
+		private ObservableCollection<FtpHostSettingsViewModel> _savedCredentialsList;
 		private string _host;
 		private int _port;
 		private string _username;
@@ -26,11 +24,10 @@ namespace MyFTP.ViewModels
 		private bool _saveCredentials;
 		private readonly ISettings settings;
 		private bool _isLoggingin;
-		private string _passwordCredentialResourceName = "MyFTP";
 		#endregion
 
 		#region properties		
-		public ReadOnlyObservableCollection<string> SavedCredentialsList { get; }
+		public ReadOnlyObservableCollection<FtpHostSettingsViewModel> SavedCredentialsList { get; }
 		public string Host { get => _host; set => Set(ref _host, value); }
 		public int Port { get => _port; set => Set(ref _port, value); }
 		public string Username { get => _username; set => Set(ref _username, value); }
@@ -41,81 +38,79 @@ namespace MyFTP.ViewModels
 		#endregion
 
 		#region constructor		
-		public LoginViewModel(ISettings settings)
+		public LoginViewModel(ISettings settings) : base(DispatcherQueue.GetForCurrentThread())
 		{
 			this.settings = settings;
 
-			_savedCredentialsList = new ObservableCollection<string>(GetAllCredentials().Select(x => x.UserName));
-			SavedCredentialsList = new ReadOnlyObservableCollection<string>(_savedCredentialsList);
+			_savedCredentialsList = new ObservableCollection<FtpHostSettingsViewModel>();
+			SavedCredentialsList = new ReadOnlyObservableCollection<FtpHostSettingsViewModel>(_savedCredentialsList);
 
-			// Get saved credentials
-			if (settings != null
-				&& settings.TryGet(nameof(Host), out _host)
-				&& settings.TryGet(nameof(Port), out _port))
-			{
-				var credential = GetCredentialFromLocker(_username);
-				if (credential != null)
-				{
-					credential.RetrievePassword();
-					_password = credential.Password;
-				}
-			}
-			_saveCredentials = settings != null;
+			_saveCredentials = true;
 
-			LoginCommand = new AsyncRelayCommand(LoginAsync, CanLogin);
+			LoginCommand = new AsyncRelayCommand<FtpHostSettingsViewModel>(LoginCommandAsync, CanLogin);
+
+			Task.Run(LoadSavedHostsAsync);
 		}
 		#endregion
 
 		#region methods
-		public bool SelectCredential(string username)
+		private bool CanLogin(FtpHostSettingsViewModel args) => !_isLoggingin;
+
+		private async Task LoginCommandAsync(FtpHostSettingsViewModel arg, CancellationToken token)
 		{
-			var credential = GetCredentialFromLocker(username);
-			if (credential != null)
-			{
-				credential.RetrievePassword();
-				Username = username;
-				Password = credential.Password;
-				return true;
-			}
-			return false;
-		}
-		public bool DeleteCredential(string username)
-		{
-			var credential = GetCredentialFromLocker(username);
-			if (credential != null)
-			{
-				RemoveCredentialFromLocker(credential);
-				_savedCredentialsList.Remove(username);
-				return true;
-			}
-			return false;
-		}
-		private bool CanLogin() => !_isLoggingin;
-		private async Task LoginAsync(CancellationToken token)
-		{
-			IFtpClient client;
-			_isLoggingin = true;
-			LoginCommand.NotifyCanExecuteChanged();
-			// Anonymous login
 			try
 			{
-				if (string.IsNullOrWhiteSpace(Username) && string.IsNullOrWhiteSpace(Password))
+				_isLoggingin = true;
+				LoginCommand.NotifyCanExecuteChanged();
+
+				IFtpClient client = null;
+				string host = null;
+				string username = null;
+				string password = null;
+				int port;
+
+				if (arg == null)
 				{
-					client = new FtpClient(Host);
+					host = Host;
+					username = Username;
+					password = Password;
+					port = Port;
+				}
+				else
+				{
+					host = arg.Host;
+					username = arg.Username;
+
+					var credential = arg.Item.GetCredentialFromLocker();
+					if (credential != null)
+					{
+						credential.RetrievePassword();
+						password = credential.Password;
+					}
+					port = arg.Port;
+				}
+
+				if (string.IsNullOrWhiteSpace(username) && string.IsNullOrWhiteSpace(password))
+				{
+					// Anonymous login
+					client = new FtpClient(host);
 					client.Port = Port;
 					await client.ConnectAsync(token);
 				}
 				else
 				{
-					client = new FtpClient(Host, Port, new NetworkCredential(Username, Password));
+					client = new FtpClient(host, port, new NetworkCredential(username, password));
 					await client.ConnectAsync(token);
-					if (SaveCredentials && settings != null)
-					{
-						settings.TrySet(nameof(Host), Host);
-						settings.TrySet(nameof(Port), Port);
-						SaveCredentialsOnLocker(Username, Password);
-					}
 				}
+
+
+				if (SaveCredentials && arg == null)
+				{
+					var ftpHostSettings = await FtpHostSettings.GetOrCreateAsync(host, port, username);
+					if (!string.IsNullOrWhiteSpace(password))
+						ftpHostSettings.SavePasswordOnLocker(password);
+				}
+
 				var transferService = App.Current.Services.GetService<ITransferItemService>();
 				var dialogService = App.Current.Services.GetService<IDialogService>();
 				var hostVM = new HostViewModel(client, transferService, dialogService);
@@ -128,41 +123,18 @@ namespace MyFTP.ViewModels
 			}
 		}
 
-		private void SaveCredentialsOnLocker(string username, string password)
+		public void Delete(FtpHostSettingsViewModel item)
 		{
-			var vault = new PasswordVault();
-			vault.Add(new PasswordCredential(_passwordCredentialResourceName, username, password));
+			_savedCredentialsList.Remove(item);
 		}
 
-		private void RemoveCredentialFromLocker(PasswordCredential credential)
+		private async Task LoadSavedHostsAsync()
 		{
-			var vault = new PasswordVault();
-			vault.Remove(credential);
-		}
-
-		private PasswordCredential GetCredentialFromLocker(string username)
-		{
-			try
+			var hosts = await FtpHostSettings.GetAllAsync();
+			await AccessUIAsync(() => _savedCredentialsList.Clear());
+			foreach (var (_, host) in hosts)
 			{
-				var vault = new PasswordVault();
-				return vault.Retrieve(_passwordCredentialResourceName, username);
-			}
-			catch
-			{
-				return null;
-			}
-		}
-
-		private IEnumerable<PasswordCredential> GetAllCredentials()
-		{
-			try
-			{
-				PasswordVault vault = new PasswordVault();
-				return vault.FindAllByResource(_passwordCredentialResourceName);
-			}
-			catch
-			{
-				return new PasswordCredential[] { };
+				await AccessUIAsync(() => _savedCredentialsList.Add(new FtpHostSettingsViewModel(host)));
 			}
 		}
 		#endregion

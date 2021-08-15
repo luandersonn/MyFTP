@@ -13,10 +13,10 @@ namespace MyFTP.ViewModels
 	{
 		#region fields	
 		private readonly WeakReferenceMessenger _weakMessenger;
-		private readonly FtpHostSettings item;
 		#endregion
 
 		#region properties
+		public FtpHostSettings Item { get; }
 		public string Id { get; }
 		public string Host { get; }
 		public int Port { get; }
@@ -29,8 +29,9 @@ namespace MyFTP.ViewModels
 		#endregion
 
 		#region constructor		
-		public FtpHostSettingsViewModel(FtpHostSettings item, StorageFolder folder)
+		public FtpHostSettingsViewModel(FtpHostSettings item, StorageFolder folder = null)
 		{
+			Item = item;
 			Id = item.Id;
 			Host = item.Host;
 			Port = item.Port;
@@ -41,8 +42,7 @@ namespace MyFTP.ViewModels
 			OpenFolderCommand = new AsyncRelayCommand(OpenFolderCommandAsync);
 			ResetFolderCommand = new RelayCommand(ResetFolder);
 			DeleteSettingCommand = new AsyncRelayCommand(DeleteSettingCommandAsync);
-			_weakMessenger = WeakReferenceMessenger.Default;
-			this.item = item;
+			_weakMessenger = WeakReferenceMessenger.Default;			
 		}
 		#endregion
 
@@ -54,7 +54,7 @@ namespace MyFTP.ViewModels
 			{
 				try
 				{
-					item.SetDefaultSaveLocation(folder);
+					Item.SetDefaultSaveLocation(folder);
 					Folder = folder;
 					OnPropertyChanged(nameof(Folder));
 				}

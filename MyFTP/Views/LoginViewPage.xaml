@@ -5,6 +5,8 @@
 	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	  xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+	  xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
+	  xmlns:viewmodels="using:MyFTP.ViewModels"
 	  muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
 	  mc:Ignorable="d">
 	<Grid>
@@ -58,11 +60,13 @@
 								</Image.Source>
 							</Image>
 
-							<StackPanel Orientation="Horizontal" Spacing="8">
+							<StackPanel Orientation="Horizontal" Spacing="2">
 								<TextBox Width="212"
 										 VerticalAlignment="Center"
 										 Header="Host"
 										 Text="{x:Bind ViewModel.Host}" />
+
+								<TextBlock VerticalAlignment="Center" Text=":" />
 
 								<muxc:NumberBox Width="100"
 												VerticalAlignment="Bottom"
@@ -70,12 +74,7 @@
 												Value="{x:Bind ViewModel.Port}" />
 							</StackPanel>
 
-							<AutoSuggestBox Header="Username"
-											ItemsSource="{x:Bind ViewModel.SavedCredentialsList, Mode=OneWay}"
-											LostFocus="AutoSuggestBoxLostFocus"
-											SuggestionChosen="AutoSuggestBoxSuggestionChosen"
-											Text="{x:Bind ViewModel.Username, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
-											TextChanged="OnUsernameTextboxTextChanged" />
+							<TextBox Header="Username" Text="{x:Bind ViewModel.Username, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
 							<PasswordBox Header="Password" Password="{x:Bind ViewModel.Password}" />
 							<CheckBox Content="Save credentials"
 									  IsChecked="{x:Bind ViewModel.SaveCredentials}"
@@ -91,7 +90,8 @@
 								</Button.KeyboardAccelerators>
 							</Button>
 
-							<muxc:ProgressBar Background="Transparent"
+							<muxc:ProgressBar d:IsIndeterminate="True"
+											  Background="Transparent"
 											  IsIndeterminate="{x:Bind ViewModel.LoginCommand.IsRunning, Mode=OneWay}"
 											  ShowError="{x:Bind infoBar.IsOpen, Mode=OneWay}" />
 
@@ -116,28 +116,37 @@
 							ToolTipService.ToolTip="Saved credentials"
 							Visibility="{x:Bind ViewModel.SavedCredentialsList.Count, Converter={StaticResource ItemToBoolConverter}, Mode=OneWay}">
 						<Button.Flyout>
-							<Flyout>
-								<ListView IsItemClickEnabled="True"
-										  ItemClick="OnCredentialClicked"
+							<Flyout Placement="LeftEdgeAlignedBottom">
+								<ListView ui:ListViewExtensions.Command="{x:Bind ViewModel.LoginCommand}"
+										  IsItemClickEnabled="True"
 										  ItemsSource="{x:Bind ViewModel.SavedCredentialsList}"
 										  SelectionMode="None">
 									<ListView.ItemTemplate>
-										<DataTemplate>
-											<Grid ColumnSpacing="4">
+										<DataTemplate x:DataType="viewmodels:FtpHostSettingsViewModel">
+											<Grid Padding="0,8"
+												  ColumnSpacing="12"
+												  ToolTipService.ToolTip="Click to connect">
 												<Grid.ColumnDefinitions>
 													<ColumnDefinition Width="auto" />
 													<ColumnDefinition Width="*" />
 													<ColumnDefinition Width="auto" />
 												</Grid.ColumnDefinitions>
-												<FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE13D;" />
+												<FontIcon FontSize="20" Glyph="&#xE13D;" />
 
-												<TextBlock Grid.Column="1"
-														   VerticalAlignment="Center"
-														   Text="{Binding}"
-														   TextTrimming="CharacterEllipsis" />
+												<StackPanel Grid.Column="1" VerticalAlignment="Center">
+													<TextBlock VerticalAlignment="Bottom" TextTrimming="CharacterEllipsis">
+														<Run Text="{x:Bind Host}" /><Run Text=":" /><Run Text="{x:Bind Port}" />
+													</TextBlock>
+
+													<TextBlock FontStyle="Italic"
+															   Opacity="0.6"
+															   Text="{x:Bind Username}"
+															   Visibility="{x:Bind Username, Converter={StaticResource ItemToBoolConverter}}" />
+												</StackPanel>
 
 												<Button Grid.Column="2"
-														Click="OnDeleteSavedCredentialClicked"
+														Click="OnDeleteCredentialClicked"
+														Command="{x:Bind DeleteSettingCommand}"
 														Content="&#xE107;"
 														FontFamily="Segoe MDL2 Assets"
 														Style="{ThemeResource DestructiveButtonStyle}"
