@@ -159,6 +159,8 @@
     <Compile Include="Utils\Converters\SizeInBytesHumanizeConverter.cs" />
     <Compile Include="Utils\IconHelper.cs" />
     <Compile Include="Utils\NavigationHistory.cs" />
+    <Compile Include="Utils\FtpHostSettings.cs" />
+    <Compile Include="ViewModels\FtpHostSettingsViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="Utils\Comparers\FtpListItemComparer.cs" />
     <Compile Include="ViewModels\FtpListItemViewModel.cs" />
@@ -166,6 +168,8 @@
     <Compile Include="Collections\IObservableSortedCollection.cs" />
     <Compile Include="Collections\ObservableSortedCollection.cs" />
     <Compile Include="Utils\BindableItem.cs" />
+    <Compile Include="ViewModels\SettingsViewModel.cs" />
+    <Compile Include="ViewModels\UpdateServiceViewModel.cs" />
     <Compile Include="Views\FtpDirectoryViewPage.xaml.cs">
       <DependentUpon>FtpDirectoryViewPage.xaml</DependentUpon>
     </Compile>
@@ -174,6 +178,9 @@
     </Compile>
     <Compile Include="Views\HostViewPage.xaml.cs">
       <DependentUpon>HostViewPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SettingsViewPage.xaml.cs">
+      <DependentUpon>SettingsViewPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -278,6 +285,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\HostViewPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SettingsViewPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

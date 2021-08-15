@@ -73,11 +73,14 @@ namespace MyFTP
 			var services = new ServiceCollection();
 
 			services
-				.AddSingleton<ISettings, AppSettings>()				
+				.AddSingleton<ISettings, AppSettings>()
 				.AddSingleton<ITransferItemService, TransferItemService>()
 				.AddTransient<IDialogService, DialogService>()
 				.AddSingleton<Services.AppCenterService>()
-				.AddTransient<LoginViewModel>();
+				.AddTransient<LoginViewModel>()
+				.AddTransient<SettingsViewModel>()
+				.AddSingleton<UpdateServiceViewModel>();
+
 
 			return services.BuildServiceProvider();
 		}
