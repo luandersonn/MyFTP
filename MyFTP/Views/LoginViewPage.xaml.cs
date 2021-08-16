@@ -12,13 +12,13 @@ namespace MyFTP.Views
 		{
 			InitializeComponent();
 			this.DataContext = App.Current.Services.GetService<LoginViewModel>();
-			WeakReferenceMessenger.Default.Register<HostViewModel>(this, SuccessfulLogin);
+			Loaded += (sender, args) => WeakReferenceMessenger.Default.Register<FtpListItemViewModel>(this, SuccessfulLogin);
+			Unloaded += (sender, args) => WeakReferenceMessenger.Default.Unregister<FtpListItemViewModel>(this);
 		}
 		public LoginViewModel ViewModel => (LoginViewModel)DataContext;
-		private void SuccessfulLogin(object recipient, HostViewModel message)
+		private void SuccessfulLogin(object recipient, FtpListItemViewModel message)
 		{
-			Frame.Navigate(typeof(HostViewPage), message);
-			WeakReferenceMessenger.Default.Unregister<HostViewModel>(this);
+			Frame.Navigate(typeof(HostViewPage), message);			
 		}
 
 		private void OnDeleteCredentialClicked(object sender, RoutedEventArgs e)
@@ -27,5 +27,7 @@ namespace MyFTP.Views
 			var item = (FtpHostSettingsViewModel)button.DataContext;
 			ViewModel.Delete(item);
 		}
+
+		private void GoToSettings() => Frame.Navigate(typeof(SettingsViewPage));
 	}
 }

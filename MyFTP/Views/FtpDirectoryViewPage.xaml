@@ -12,7 +12,7 @@
 	  xmlns:utils="using:MyFTP.Utils"
 	  xmlns:viewmodels="using:MyFTP.ViewModels"
 	  AllowDrop="True"
-	  Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+	  Background="{ThemeResource SystemAltLowColor}"
 	  DragEnter="{x:Bind ShowItemDropArea, Mode=OneTime}"
 	  DragLeave="{x:Bind HideItemDropArea, Mode=OneTime}"
 	  Drop="{x:Bind HideItemDropArea, Mode=OneTime}"
@@ -126,7 +126,7 @@
 			<RowDefinition />
 		</Grid.RowDefinitions>
 
-		<CommandBar Background="{ThemeResource SystemAltMediumHighColor}" DefaultLabelPosition="Right">
+		<CommandBar Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" DefaultLabelPosition="Right">
 			<AppBarButton Icon="NewFolder"
 						  Label="New folder"
 						  LabelPosition="Collapsed">

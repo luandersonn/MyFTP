@@ -78,6 +78,7 @@ namespace MyFTP
 				.AddTransient<IDialogService, DialogService>()
 				.AddSingleton<Services.AppCenterService>()
 				.AddTransient<LoginViewModel>()
+				.AddSingleton<HostViewModel>()
 				.AddTransient<SettingsViewModel>()
 				.AddSingleton<UpdateServiceViewModel>();
 

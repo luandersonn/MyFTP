@@ -6,6 +6,7 @@
 	  xmlns:local="using:MyFTP.Views"
 	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	  xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+	  xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
 	  xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
 	  xmlns:viewmodels="using:MyFTP.ViewModels"
 	  mc:Ignorable="d">
@@ -126,77 +127,78 @@
 					<muxc:Expander.Header>
 						<StackPanel Orientation="Horizontal" Spacing="8">
 							<FontIcon FontSize="14" Glyph="&#xE17B;" />
-							<TextBlock Text="Servers" />
+							<TextBlock Text="Hosts" />
 						</StackPanel>
 					</muxc:Expander.Header>
-					<StackPanel CornerRadius="4">
-						<ListView ui:ListViewExtensions.ItemContainerStretchDirection="Horizontal"
-								  ItemsSource="{x:Bind ViewModel.FtpServerSettingsList}"
-								  SelectionMode="None">
-							<ListViewBase.ItemContainerStyle>
-								<Style BasedOn="{StaticResource ListViewItemExpanded}" TargetType="ListViewItem">
-									<Setter Property="Padding" Value="16,12" />
-									<Setter Property="BorderThickness" Value="0,0,0,1" />
-									<Setter Property="BorderBrush" Value="{ThemeResource SystemBaseLowColor}" />
-								</Style>
-							</ListViewBase.ItemContainerStyle>
-							<ListView.ItemTemplate>
-								<DataTemplate x:DataType="viewmodels:FtpHostSettingsViewModel">
-									<StackPanel Padding="0,0,0,10" Spacing="8">
+					<toolkit:SwitchPresenter TargetType="x:Int32" Value="{x:Bind ViewModel.FtpHostSettingsList.Count, Mode=OneWay}">
+						<toolkit:Case Value="0">
+							<TextBlock HorizontalAlignment="Center" Text="No saved hosts" />
+						</toolkit:Case>
+						<toolkit:Case IsDefault="True">
+							<muxc:ItemsRepeater ItemsSource="{x:Bind ViewModel.FtpHostSettingsList}">
+								<muxc:ItemsRepeater.ItemTemplate>
+									<DataTemplate x:DataType="viewmodels:FtpHostSettingsViewModel">
+										<StackPanel Padding="16,12" Spacing="8">
 
-										<TextBlock FontWeight="SemiBold" Text="{x:Bind Host}" />
+											<TextBlock FontWeight="SemiBold" TextTrimming="CharacterEllipsis">
+												<Run Text="{x:Bind Host}" /><Run Text=":" /><Run Text="{x:Bind Port}" />
+												<Run FontWeight="Normal"
+													 Foreground="{ThemeResource AccentButtonBackground}"
+													 Text="{x:Bind Username}" />
+											</TextBlock>
 
-										<Grid Background="Transparent" ColumnSpacing="8">
-											<Grid.ColumnDefinitions>
-												<ColumnDefinition Width="auto" />
-												<ColumnDefinition />
-												<ColumnDefinition Width="auto" />
-											</Grid.ColumnDefinitions>
-											<Grid.RowDefinitions>
-												<RowDefinition />
-												<RowDefinition />
-											</Grid.RowDefinitions>
+											<Grid Background="Transparent" ColumnSpacing="8">
+												<Grid.ColumnDefinitions>
+													<ColumnDefinition Width="auto" />
+													<ColumnDefinition />
+													<ColumnDefinition Width="auto" />
+												</Grid.ColumnDefinitions>
+												<Grid.RowDefinitions>
+													<RowDefinition />
+													<RowDefinition />
+												</Grid.RowDefinitions>
 
-											<Grid.ContextFlyout>
-												<MenuFlyout>
-													<MenuFlyoutItem Command="{x:Bind ResetFolderCommand}" Text="Restore default folder">
-														<MenuFlyoutItem.Icon>
-															<FontIcon Glyph="&#xEBC4;" />
-														</MenuFlyoutItem.Icon>
-													</MenuFlyoutItem>
-												</MenuFlyout>
-											</Grid.ContextFlyout>
+												<Grid.ContextFlyout>
+													<MenuFlyout>
+														<MenuFlyoutItem Command="{x:Bind ResetFolderCommand}" Text="Restore default folder">
+															<MenuFlyoutItem.Icon>
+																<FontIcon Glyph="&#xEBC4;" />
+															</MenuFlyoutItem.Icon>
+														</MenuFlyoutItem>
+													</MenuFlyout>
+												</Grid.ContextFlyout>
 
-											<TextBlock VerticalAlignment="Center"
-													   Foreground="{ThemeResource SystemBaseMediumColor}"
-													   Text="Default save folder" />
+												<TextBlock VerticalAlignment="Center"
+														   Foreground="{ThemeResource SystemBaseMediumColor}"
+														   Text="Default save folder" />
 
-											<HyperlinkButton Grid.Column="1"
-															 VerticalAlignment="Center"
-															 Command="{x:Bind OpenFolderCommand}">
-												<ToolTipService.ToolTip>
-													<StackPanel>
-														<TextBlock FontWeight="SemiBold" Text="{Binding Folder.Name, Mode=OneWay}" />
-														<TextBlock Opacity="0.6"
-																   Text="{x:Bind Folder.Path, Mode=OneWay}"
-																   TextWrapping="Wrap" />
-													</StackPanel>
-												</ToolTipService.ToolTip>
-												<TextBlock FontSize="12"
-														   Text="{x:Bind Folder.Path, Mode=OneWay}"
-														   TextTrimming="CharacterEllipsis" />
-											</HyperlinkButton>
+												<HyperlinkButton Grid.Column="1"
+																 VerticalAlignment="Center"
+																 Command="{x:Bind OpenFolderCommand}">
+													<ToolTipService.ToolTip>
+														<StackPanel>
+															<TextBlock FontWeight="SemiBold" Text="{Binding Folder.Name, Mode=OneWay}" />
+															<TextBlock Opacity="0.6"
+																	   Text="{x:Bind Folder.Path, Mode=OneWay}"
+																	   TextWrapping="Wrap" />
+														</StackPanel>
+													</ToolTipService.ToolTip>
+													<TextBlock FontSize="12"
+															   Text="{x:Bind Folder.Path, Mode=OneWay}"
+															   TextTrimming="CharacterEllipsis" />
+												</HyperlinkButton>
 
-											<Button Grid.Column="2"
-													VerticalAlignment="Center"
-													Command="{x:Bind ChangeFolderCommand}"
-													Content="Change" />
-										</Grid>
-									</StackPanel>
-								</DataTemplate>
-							</ListView.ItemTemplate>
-						</ListView>
-					</StackPanel>
+												<Button Grid.Column="2"
+														VerticalAlignment="Center"
+														Command="{x:Bind ChangeFolderCommand}"
+														Content="Change" />
+											</Grid>
+										</StackPanel>
+									</DataTemplate>
+								</muxc:ItemsRepeater.ItemTemplate>
+							</muxc:ItemsRepeater>
+						</toolkit:Case>
+					</toolkit:SwitchPresenter>
 				</muxc:Expander>
 
 				<muxc:Expander Collapsed="{x:Bind Collapsed}" Expanding="{x:Bind Expanding}">

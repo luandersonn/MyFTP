@@ -179,7 +179,7 @@ namespace MyFTP.Views
 				{
 					await Task.Delay(TimeSpan.FromSeconds(1));
 					progressBar.IsIndeterminate = false;
-					await transferService.DownloadAsync(item._client, item.FullName, file, progress, source.Token);
+					await transferService.DownloadAsync(item.Client, item.FullName, file, progress, source.Token);
 					await Launcher.LaunchFileAsync(file);
 				}
 				catch

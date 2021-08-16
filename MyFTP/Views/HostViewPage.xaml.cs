@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.Storage.FileProperties;
 using Windows.Storage.Pickers;
 using Windows.System;
@@ -26,6 +27,7 @@ namespace MyFTP.Views
 		public HostViewPage()
 		{
 			InitializeComponent();
+			ViewModel = App.Current.Services.GetRequiredService<HostViewModel>();
 			Crumbs = new ObservableCollection<FtpListItemViewModel>();
 			NavigationHistory = new NavigationHistory<FtpListItemViewModel>();
 			Loaded += (sender, args) =>
@@ -55,27 +57,29 @@ namespace MyFTP.Views
 			};
 		}
 
-		public HostViewModel ViewModel { get => (HostViewModel)GetValue(ViewModelProperty); set => SetValue(ViewModelProperty, value); }
-		public static readonly DependencyProperty ViewModelProperty = DependencyProperty.Register("ViewModel",
-			typeof(HostViewModel), typeof(HostViewPage), new PropertyMetadata(null));
 
+		public HostViewModel ViewModel { get; }
 		public ObservableCollection<FtpListItemViewModel> Crumbs { get; }
 		public NavigationHistory<FtpListItemViewModel> NavigationHistory { get; }
 
 		protected async override void OnNavigatedTo(NavigationEventArgs args)
 		{
-			try
+			_frame.Navigate(typeof(FtpDirectoryViewPage));
+			if (args.NavigationMode == NavigationMode.New)
 			{
-				_frame.Navigate(typeof(FtpDirectoryViewPage));
-				ViewModel = args.Parameter as HostViewModel;
-				if (ViewModel == null)
-					throw new InvalidOperationException("Invalid param");
-				await ViewModel.LoadRootAsync();
-				treeView.SelectedNode = treeView.RootNodes.FirstOrDefault();
-			}
-			catch (Exception e)
-			{
-				ShowError(e.Message, e);
+				try
+				{
+					var root = args.Parameter as FtpListItemViewModel;
+					if (root == null)
+						throw new InvalidOperationException("Invalid param");
+					ViewModel.AddItem(root);
+					await Task.Delay(500);
+					treeView.SelectedNode = treeView.RootNodes.FirstOrDefault(x => x.Content == root);
+				}
+				catch (Exception e)
+				{
+					ShowError(e.Message, e);
+				}
 			}
 		}
 
@@ -144,6 +148,10 @@ namespace MyFTP.Views
 				} while (crumb != null);
 				WeakReferenceMessenger.Default.Send(new SelectedItemChangedMessage<FtpListItemViewModel>(this, item));
 			}
+			else if (treeView.RootNodes.Count == 0) // No Hosts! Back to login page
+			{
+				Frame.GoBack();
+			}
 		}
 
 		private void OnCoreWindowPointerPressed(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.PointerEventArgs args)
@@ -176,18 +184,6 @@ namespace MyFTP.Views
 				case VirtualKey.Right when args.KeyboardAccelerator.Modifiers == VirtualKeyModifiers.Menu:
 					args.Handled = NavigationHistory.GoForward();
 					break;
-			}
-		}
-
-		private async void OnDisconnectButtonClick(muxc.SplitButton sender, muxc.SplitButtonClickEventArgs args)
-		{
-			try
-			{
-				await ViewModel.DisconnectAsync();
-			}
-			finally
-			{
-				Frame.GoBack();
 			}
 		}
 
@@ -236,14 +232,18 @@ namespace MyFTP.Views
 
 		private void OnButtonUpClicked(object sender, RoutedEventArgs args)
 		{
-			treeView.SelectedItem = Crumbs.Reverse().Skip(1).FirstOrDefault();
+			var item = Crumbs.Reverse().Skip(1).FirstOrDefault();
+			if (item.Parent == null) // root #BUG 
+				treeView.SelectedNode = treeView.RootNodes.FirstOrDefault(x => x.Content == item);
+			else
+				treeView.SelectedItem = item;
 		}
 		private void OnBreadcrumbBarItemClicked(muxc.BreadcrumbBar sender, muxc.BreadcrumbBarItemClickedEventArgs args)
 		{
 			// #BUG 
 			if (args.Index == 0)
 			{
-				treeView.SelectedNode = treeView.RootNodes.FirstOrDefault();
+				treeView.SelectedNode = treeView.RootNodes.FirstOrDefault(x => x.Content == args.Item);
 			}
 			else
 				treeView.SelectedItem = args.Item;
@@ -309,6 +309,9 @@ namespace MyFTP.Views
 		{
 			treeView.SelectedItem = e.ClickedItem;
 		}
+
+		private void GoToSettings() => Frame.Navigate(typeof(SettingsViewPage));
+
 
 		private void ExitApp() => Application.Current.Exit();
 	}

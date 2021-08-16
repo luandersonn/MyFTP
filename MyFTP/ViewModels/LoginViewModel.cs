@@ -68,7 +68,7 @@ namespace MyFTP.ViewModels
 				string username = null;
 				string password = null;
 				int port;
-
+				
 				if (arg == null)
 				{
 					host = Host;
@@ -90,7 +90,8 @@ namespace MyFTP.ViewModels
 					port = arg.Port;
 				}
 
-				if (string.IsNullOrWhiteSpace(username) && string.IsNullOrWhiteSpace(password))
+
+				if (string.IsNullOrWhiteSpace(username) && string.IsNullOrWhiteSpace(password)) 
 				{
 					// Anonymous login
 					client = new FtpClient(host);
@@ -111,10 +112,26 @@ namespace MyFTP.ViewModels
 						ftpHostSettings.SavePasswordOnLocker(password);
 				}
 
+				// Load root item
+				var root = await client.GetObjectInfoAsync("/");
+
+				if (root is null)
+				{
+					var d = default(DateTime);
+					root = new FtpListItem("", "/", -1, true, ref d)
+					{
+						FullName = "/",
+						Type = FtpFileSystemObjectType.Directory
+					};
+				}
 				var transferService = App.Current.Services.GetService<ITransferItemService>();
 				var dialogService = App.Current.Services.GetService<IDialogService>();
-				var hostVM = new HostViewModel(client, transferService, dialogService);
-				WeakReferenceMessenger.Default.Send<HostViewModel>(hostVM);
+				
+				// Create FTPItemViewModel
+				var rootViewModel = new FtpListItemViewModel(client, root, null, transferService, dialogService);
+				
+				// Send to view
+				WeakReferenceMessenger.Default.Send<FtpListItemViewModel>(rootViewModel);
 			}
 			finally
 			{

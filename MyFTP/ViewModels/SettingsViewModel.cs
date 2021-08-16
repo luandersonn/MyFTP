@@ -27,7 +27,7 @@ namespace MyFTP.ViewModels
 				Settings.TrySet("AppTheme", value);
 			}
 		}
-		public ObservableCollection<FtpHostSettingsViewModel> FtpServerSettingsList { get; }
+		public ObservableCollection<FtpHostSettingsViewModel> FtpHostSettingsList { get; }
 		#endregion
 
 		#region constructor		
@@ -35,7 +35,7 @@ namespace MyFTP.ViewModels
 		{
 			Settings = settings;
 			UpdateService = updateService;
-			FtpServerSettingsList = new ObservableCollection<FtpHostSettingsViewModel>();
+			FtpHostSettingsList = new ObservableCollection<FtpHostSettingsViewModel>();
 			Task.Run(InitAsync);
 		}
 		#endregion
@@ -49,7 +49,7 @@ namespace MyFTP.ViewModels
 				foreach (var (_, value) in settings)
 				{
 					var folder = await value.GetDefaultSaveLocationAsync();
-					FtpServerSettingsList.Add(new FtpHostSettingsViewModel(value, folder));
+					FtpHostSettingsList.Add(new FtpHostSettingsViewModel(value, folder));
 				}
 			});
 		}

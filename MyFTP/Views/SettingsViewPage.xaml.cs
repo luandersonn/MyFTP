@@ -5,8 +5,10 @@ using MyFTP.ViewModels;
 using System;
 using System.Linq;
 using Windows.Storage.Pickers;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 using muxc = Microsoft.UI.Xaml.Controls;
 
@@ -19,10 +21,28 @@ namespace MyFTP.Views
 		public SettingsViewPage()
 		{
 			InitializeComponent();
-			DataContext = App.Current.Services.GetRequiredService<SettingsViewModel>();
-			Loaded += (sender, args) => WeakReferenceMessenger.Default.Register<RequestOpenFolderMessage>(this, OnOpenFolderRequest);			
-			Unloaded += (sender, args) => WeakReferenceMessenger.Default.Unregister<RequestOpenFolderMessage>(this);
+			DataContext = App.Current.Services.GetRequiredService<SettingsViewModel>();			
+			Loaded += (sender, args) =>
+			{
+				WeakReferenceMessenger.Default.Register<RequestOpenFolderMessage>(this, OnOpenFolderRequest);
+				Window.Current.CoreWindow.PointerPressed += OnCoreWindowPointerPressed;				
+				this.AddKeyboardAccelerator(VirtualKey.Left, VirtualKeyModifiers.Menu, (s, e) => GoBack());				
+			};			
+			Unloaded += (sender, args) =>
+			{
+				WeakReferenceMessenger.Default.Unregister<RequestOpenFolderMessage>(this);
+				Window.Current.CoreWindow.PointerPressed -= OnCoreWindowPointerPressed;
+			};
 		}
+
+		private void OnCoreWindowPointerPressed(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.PointerEventArgs args)
+		{
+			if (args.CurrentPoint.Properties.IsXButton1Pressed && Frame.CanGoBack)
+			{
+				Frame.GoBack();
+				args.Handled = true;
+			}
+		}	
 
 		protected override void OnNavigatedTo(NavigationEventArgs e)
 		{
