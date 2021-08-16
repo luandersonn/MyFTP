@@ -328,7 +328,7 @@ namespace MyFTP.Views
 		{
 			var dialog = new LoginDialog
 			{
-				RequestedTheme = RequestedTheme
+				RequestedTheme = ActualTheme
 			};
 			if (await dialog.ShowAsync() == Windows.UI.Xaml.Controls.ContentDialogResult.Primary)
 			{
