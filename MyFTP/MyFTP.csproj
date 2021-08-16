@@ -125,6 +125,9 @@
     <Compile Include="Controls\DeleteItemDialog.xaml.cs">
       <DependentUpon>DeleteItemDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\LoginDialog.xaml.cs">
+      <DependentUpon>LoginDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\RenameItemDialog.xaml.cs">
       <DependentUpon>RenameItemDialog.xaml</DependentUpon>
     </Compile>
@@ -253,6 +256,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\DeleteItemDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\LoginDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

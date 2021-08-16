@@ -212,6 +212,14 @@
 						<KeyboardAccelerator Key="A" Modifiers="Control" />
 					</AppBarButton.KeyboardAccelerators>
 				</AppBarButton>
+				<AppBarButton Command="{x:Bind ViewModel.DeleteCommand, Mode=OneWay}"
+							  CommandParameter="{x:Bind SelectedItems, Mode=OneWay}"
+							  Icon="Delete"
+							  Label="Delete">
+					<AppBarButton.KeyboardAccelerators>
+						<KeyboardAccelerator Key="Delete" />
+					</AppBarButton.KeyboardAccelerators>
+				</AppBarButton>
 				<AppBarSeparator />
 				<AppBarButton IsEnabled="False" Label="Properties">
 					<AppBarButton.Icon>

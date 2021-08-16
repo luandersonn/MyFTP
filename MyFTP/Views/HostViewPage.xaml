@@ -124,6 +124,15 @@
 						<muxc:SplitButton.Flyout>
 							<MenuBarItemFlyout Placement="Bottom">
 
+								<MenuFlyoutItem Click="{x:Bind NewConnectionAsync}" Text="New connection">
+									<MenuFlyoutItem.Icon>
+										<FontIcon Glyph="&#xE968;" />
+									</MenuFlyoutItem.Icon>
+									<MenuFlyoutItem.KeyboardAccelerators>
+										<KeyboardAccelerator Key="N" Modifiers="Control" />
+									</MenuFlyoutItem.KeyboardAccelerators>
+								</MenuFlyoutItem>
+
 								<MenuFlyoutItem Click="{x:Bind GoToSettings}"
 												Icon="Setting"
 												Text="Settings" />

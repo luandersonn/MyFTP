@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.Messaging;
+using MyFTP.Controls;
 using MyFTP.Utils;
 using MyFTP.ViewModels;
 using System;
@@ -42,6 +43,7 @@ namespace MyFTP.Views
 				this.AddKeyboardAccelerator(VirtualKey.Back, OnAcceleratorRequested);
 				this.AddKeyboardAccelerator(VirtualKey.Left, VirtualKeyModifiers.Menu, OnAcceleratorRequested);
 				this.AddKeyboardAccelerator(VirtualKey.Right, VirtualKeyModifiers.Menu, OnAcceleratorRequested);
+				this.AddKeyboardAccelerator(VirtualKey.N, VirtualKeyModifiers.Control, OnAcceleratorRequested);
 				this.AddKeyboardAccelerator(VirtualKey.O, VirtualKeyModifiers.Control | VirtualKeyModifiers.Shift, OnAcceleratorRequested);
 				this.AddKeyboardAccelerator(VirtualKey.W, VirtualKeyModifiers.Control, OnAcceleratorRequested);
 				this.AddKeyboardAccelerator(VirtualKey.F11, OnAcceleratorRequested);
@@ -172,7 +174,7 @@ namespace MyFTP.Views
 			}
 		}
 
-		private void OnAcceleratorRequested(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
+		private async void OnAcceleratorRequested(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
 		{
 			switch (args.KeyboardAccelerator.Key)
 			{
@@ -194,6 +196,11 @@ namespace MyFTP.Views
 
 				case VirtualKey.Right when args.KeyboardAccelerator.Modifiers == VirtualKeyModifiers.Menu:
 					args.Handled = NavigationHistory.GoForward();
+					break;
+
+				case VirtualKey.N when args.KeyboardAccelerator.Modifiers == VirtualKeyModifiers.Control:
+					args.Handled = true;
+					await NewConnectionAsync();
 					break;
 
 				case VirtualKey.O when args.KeyboardAccelerator.Modifiers == (VirtualKeyModifiers.Control | VirtualKeyModifiers.Shift)
@@ -315,6 +322,26 @@ namespace MyFTP.Views
 		private void OnListViewItemClick(object sender, ItemClickEventArgs e)
 		{
 			treeView.SelectedItem = e.ClickedItem;
+		}
+
+		private async Task NewConnectionAsync()
+		{
+			var dialog = new LoginDialog
+			{
+				RequestedTheme = RequestedTheme
+			};
+			if (await dialog.ShowAsync() == Windows.UI.Xaml.Controls.ContentDialogResult.Primary)
+			{
+				ViewModel.AddItem(dialog.Result);
+				await Task.Delay(200);
+				treeView.SelectedNode = treeView.RootNodes.FirstOrDefault(x => x.Content == dialog.Result);
+			}
+		}
+
+		private void GoBack()
+		{
+			if (Frame.CanGoBack)
+				Frame.GoBack();
 		}
 		private void GoToSettings() => Frame.Navigate(typeof(SettingsViewPage));
 
