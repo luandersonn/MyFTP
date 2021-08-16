@@ -15,6 +15,7 @@ using Windows.Storage.FileProperties;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace MyFTP.Views
@@ -36,11 +37,33 @@ namespace MyFTP.Views
 			Loaded += (sender, args) =>
 			{
 				WeakReferenceMessenger.Default.Register<SelectedItemChangedMessage<FtpListItemViewModel>>(this, OnViewModelChanged);
+
+				this.AddKeyboardAccelerator(VirtualKey.F2, OnAcceleratorRequested);
+				this.AddKeyboardAccelerator(VirtualKey.Delete, OnAcceleratorRequested);
 			};
 			Unloaded += (sender, args) =>
 			{
 				WeakReferenceMessenger.Default.Unregister<SelectedItemChangedMessage<FtpListItemViewModel>>(this);
 			};
+		}
+
+		private void OnAcceleratorRequested(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
+		{
+			switch (args.KeyboardAccelerator.Key)
+			{
+				case VirtualKey.F2 when itemsListView.SelectedItem is FtpListItemViewModel item
+									&& SelectedItems.Count() == 1
+									&& item.OpenRenameDialogCommand.CanExecute(null):
+					item.OpenRenameDialogCommand.Execute(null);
+					args.Handled = true;
+					break;
+
+				case VirtualKey.Delete when itemsListView.SelectedItem is FtpListItemViewModel item
+									&& item.DeleteCommand.CanExecute(SelectedItems):
+					item.DeleteCommand.Execute(SelectedItems);
+					args.Handled = true;
+					break;
+			}
 		}
 
 
@@ -198,13 +221,13 @@ namespace MyFTP.Views
 
 		private void ShowItemDropArea()
 		{
-			fadeIn.Start();			
+			fadeIn.Start();
 			ItemDropArea.IsHitTestVisible = true;
 		}
 
 		private void HideItemDropArea()
 		{
-			fadeOut.Start();			
+			fadeOut.Start();
 			ItemDropArea.IsHitTestVisible = false;
 		}
 	}

@@ -166,13 +166,34 @@
 				</AppBarButton.KeyboardAccelerators>
 			</AppBarButton>
 			<AppBarSeparator />
-			<AppBarButton Command="{x:Bind ViewModel.UploadCommand, Mode=OneWay}"
-						  Icon="Upload"
-						  Label="Upload" />
+			<AppBarButton Icon="Upload" Label="Upload">
+				<AppBarButton.Flyout>
+					<MenuFlyout Placement="Bottom">
+						<MenuFlyoutItem Command="{x:Bind ViewModel.UploadFilesCommand, Mode=OneWay}"
+										Icon="OpenFile"
+										Text="Files">
+							<MenuFlyoutItem.KeyboardAccelerators>
+								<KeyboardAccelerator Key="O" Modifiers="Control" />
+							</MenuFlyoutItem.KeyboardAccelerators>
+						</MenuFlyoutItem>
+						<MenuFlyoutItem Command="{x:Bind ViewModel.UploadFolderCommand, Mode=OneWay}"
+										Icon="NewFolder"
+										Text="Folder">
+							<MenuFlyoutItem.KeyboardAccelerators>
+								<KeyboardAccelerator Key="O" Modifiers="Control,Shift" />
+							</MenuFlyoutItem.KeyboardAccelerators>
+						</MenuFlyoutItem>
+					</MenuFlyout>
+				</AppBarButton.Flyout>
+			</AppBarButton>
 			<AppBarButton Command="{x:Bind ViewModel.DownloadCommand, Mode=OneWay}"
 						  CommandParameter="{x:Bind SelectedItems, Mode=OneWay}"
 						  Icon="Download"
-						  Label="Download" />
+						  Label="Download">
+				<AppBarButton.KeyboardAccelerators>
+					<KeyboardAccelerator Key="S" Modifiers="Control" />
+				</AppBarButton.KeyboardAccelerators>
+			</AppBarButton>
 			<AppBarButton Command="{x:Bind ViewModel.RefreshCommand, Mode=OneWay}"
 						  Icon="Refresh"
 						  Label="Refresh"

@@ -1,7 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.Messaging;
-using MyFTP.Controls;
-using MyFTP.Services;
 using MyFTP.Utils;
 using MyFTP.ViewModels;
 using System;
@@ -13,6 +11,7 @@ using System.Threading.Tasks;
 using Windows.Storage.FileProperties;
 using Windows.Storage.Pickers;
 using Windows.System;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -39,9 +38,14 @@ namespace MyFTP.Views
 				WeakReferenceMessenger.Default.Register<SelectedItemChangedMessage<FtpListItemViewModel>>(this, OnSelectedItemChanged);
 				_onTreeViewSelectedItemChangedToken = treeView.RegisterPropertyChangedCallback(muxc.TreeView.SelectedItemProperty, OnSelectedItemChanged);
 				Window.Current.CoreWindow.PointerPressed += OnCoreWindowPointerPressed;
+				
 				this.AddKeyboardAccelerator(VirtualKey.Back, OnAcceleratorRequested);
 				this.AddKeyboardAccelerator(VirtualKey.Left, VirtualKeyModifiers.Menu, OnAcceleratorRequested);
 				this.AddKeyboardAccelerator(VirtualKey.Right, VirtualKeyModifiers.Menu, OnAcceleratorRequested);
+				this.AddKeyboardAccelerator(VirtualKey.O, VirtualKeyModifiers.Control | VirtualKeyModifiers.Shift, OnAcceleratorRequested);
+				this.AddKeyboardAccelerator(VirtualKey.W, VirtualKeyModifiers.Control, OnAcceleratorRequested);
+				this.AddKeyboardAccelerator(VirtualKey.F11, OnAcceleratorRequested);
+
 				IconRotation.Begin();
 			};
 			Unloaded += (sender, args) =>
@@ -191,8 +195,36 @@ namespace MyFTP.Views
 				case VirtualKey.Right when args.KeyboardAccelerator.Modifiers == VirtualKeyModifiers.Menu:
 					args.Handled = NavigationHistory.GoForward();
 					break;
+
+				case VirtualKey.O when args.KeyboardAccelerator.Modifiers == (VirtualKeyModifiers.Control | VirtualKeyModifiers.Shift)
+												&& treeView.SelectedItem is FtpListItemViewModel dir
+												&& dir.IsDirectory
+												&& dir.UploadFolderCommand.CanExecute(null):
+					dir.UploadFolderCommand.Execute(null);
+					args.Handled = true;
+					break;
+
+				case VirtualKey.W when args.KeyboardAccelerator.Modifiers == VirtualKeyModifiers.Control
+												&& ViewModel.DisconnectCommand.CanExecute(treeView.SelectedItem):
+					ViewModel.DisconnectCommand.Execute(treeView.SelectedItem);
+					args.Handled = true;
+					break;
+
+				case VirtualKey.F11:
+					FullScreenToggle();
+					args.Handled = true;
+					break;
 			}
-		}		
+		}
+
+		private void FullScreenToggle()
+		{
+			var view = ApplicationView.GetForCurrentView();
+			if (view.IsFullScreenMode)
+				view.ExitFullScreenMode();
+			else
+				view.TryEnterFullScreenMode();
+		}
 
 		private void ShowError(string message, Exception e = null)
 		{

@@ -1,57 +1,77 @@
-﻿using System;
+﻿using MyFTP.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using Windows.Storage.FileProperties;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
+using muxc = Microsoft.UI.Xaml.Controls;
 
 namespace MyFTP.Controls
 {
 	public sealed partial class DeleteItemDialog : ContentDialog
 	{
-		public DeleteItemDialog()
-		{
-			this.InitializeComponent();
-			Opened += OnDeleteItemDialogOpened;
-		}
+		public DeleteItemDialog() => InitializeComponent();
+		public IEnumerable<FtpListItemViewModel> Items => DataContext as IEnumerable<FtpListItemViewModel>;
 
-		private async void OnDeleteItemDialogOpened(ContentDialog sender, ContentDialogOpenedEventArgs args)
+		private async void OnListViewContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
 		{
-			try
+			if (args.ItemContainer.ContentTemplateRoot is Grid root
+							&& args.Item is FtpListItemViewModel item
+							&& root.Children.OfType<Image>().FirstOrDefault() is Image image
+							&& root.Children.OfType<muxc.ProgressRing>().FirstOrDefault() is muxc.ProgressRing progress)
 			{
-				if (ViewModel != null)
+
+				if (args.InRecycleQueue)
 				{
-					StorageItemThumbnail thumbnail = null;
-					if (ViewModel.Type == FluentFTP.FtpFileSystemObjectType.File)
+					image.Source = null;
+				}
+				else
+				{
+					args.Handled = true;
+					switch (args.Phase)
 					{
-						var extesion = Path.GetExtension(ViewModel.Name);
-						thumbnail = await Utils.IconHelper.GetFileIconAsync(extesion, 128);
-					}
-					else
-					{
-						thumbnail = await Utils.IconHelper.GetFolderIconAsync(128);
-					}
-					if (thumbnail != null)
-					{
-						thumbnail.Seek(0);
-						var source = new BitmapImage
-						{
-							DecodePixelWidth = 100,
-							DecodePixelHeight = 100,
-							DecodePixelType = DecodePixelType.Logical
-						};
-						image.Source = source;
-						await source.SetSourceAsync(thumbnail);
+						case 0:
+							args.RegisterUpdateCallback(1, OnListViewContainerContentChanging);
+							break;
+
+						case 1:
+
+							var source = new BitmapImage
+							{
+								DecodePixelType = DecodePixelType.Logical
+							};
+							image.Source = source;
+							StorageItemThumbnail thumbnail;
+							try
+							{
+								switch (item.Type)
+								{
+									case FluentFTP.FtpFileSystemObjectType.File:
+										thumbnail = await Utils.IconHelper.GetFileIconAsync(Path.GetExtension(item.Name));
+										break;
+									case FluentFTP.FtpFileSystemObjectType.Directory:
+										thumbnail = await Utils.IconHelper.GetFolderIconAsync();
+										break;
+									default:
+										return;
+								}
+								thumbnail.Seek(0);
+								await source.SetSourceAsync(thumbnail);
+
+								progress.IsActive = false;
+							}
+							catch (Exception e)
+							{
+								Debug.WriteLine(e);
+							}
+							break;
 					}
 				}
 			}
-			finally
-			{
-				progress.IsActive = false;
-			}
 		}
-
-		public ViewModels.FtpListItemViewModel ViewModel => DataContext as ViewModels.FtpListItemViewModel;
-
 		private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
 		{
 		}

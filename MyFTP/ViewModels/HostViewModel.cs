@@ -40,8 +40,8 @@ namespace MyFTP.ViewModels
 				item => IsNotNull(item) && item.RefreshCommand.CanExecute(null));
 
 			UploadCommand = new AsyncRelayCommand<FtpListItemViewModel>
-				(async item => await item.UploadCommand.ExecuteAsync(null),
-				item => IsNotNull(item) && item.UploadCommand.CanExecute(null));
+				(async item => await item.UploadFilesCommand.ExecuteAsync(null),
+				item => IsNotNull(item) && item.UploadFilesCommand.CanExecute(null));
 
 			DownloadCommand = new AsyncRelayCommand<IEnumerable<FtpListItemViewModel>>(DownloadCommandAsync, CanExecuteDownloadCommand);
 
