@@ -60,11 +60,19 @@
 
 						<MenuFlyoutItem Command="{x:Bind DeleteCommand}"
 										Icon="Delete"
-										Text="Delete" />
+										Text="Delete">
+							<MenuFlyoutItem.KeyboardAccelerators>
+								<KeyboardAccelerator Key="Delete" />
+							</MenuFlyoutItem.KeyboardAccelerators>
+						</MenuFlyoutItem>
 
 						<MenuFlyoutItem Command="{x:Bind OpenRenameDialogCommand}"
 										Icon="Rename"
-										Text="Rename" />
+										Text="Rename">
+							<MenuFlyoutItem.KeyboardAccelerators>
+								<KeyboardAccelerator Key="F2" />
+							</MenuFlyoutItem.KeyboardAccelerators>
+						</MenuFlyoutItem>
 						<MenuFlyoutSeparator />
 
 						<MenuFlyoutItem IsEnabled="False" Text="Properties">

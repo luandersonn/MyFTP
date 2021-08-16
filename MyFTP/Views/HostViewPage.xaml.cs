@@ -173,7 +173,14 @@ namespace MyFTP.Views
 			switch (args.KeyboardAccelerator.Key)
 			{
 				case VirtualKey.Back when NavigationHistory.CurrentItem?.Parent != null: // Go up
-					treeView.SelectedItem = NavigationHistory.CurrentItem.Parent;
+					if (NavigationHistory.CurrentItem.Parent.Parent == null) // Root
+					{
+						treeView.SelectedNode = treeView.RootNodes.FirstOrDefault(x => x.Content == NavigationHistory.CurrentItem.Parent);
+					}
+					else
+					{
+						treeView.SelectedItem = NavigationHistory.CurrentItem.Parent;
+					}
 					args.Handled = true;
 					break;
 

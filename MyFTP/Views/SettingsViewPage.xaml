@@ -226,6 +226,463 @@
 					</Grid>
 				</muxc:Expander>
 
+				<muxc:Expander Collapsed="{x:Bind Collapsed}" Expanding="{x:Bind Expanding}">
+					<muxc:Expander.Header>
+						<StackPanel Orientation="Horizontal" Spacing="8">
+							<FontIcon FontSize="14" Glyph="&#xE92E;" />
+							<TextBlock Text="Shortcuts" />
+						</StackPanel>
+					</muxc:Expander.Header>
+					<StackPanel Spacing="8">
+						<StackPanel.Resources>
+							<Style TargetType="TextBlock">
+								<Setter Property="TextWrapping" Value="Wrap" />
+								<Setter Property="VerticalAlignment" Value="Center" />
+								<Setter Property="FontSize" Value="12" />
+							</Style>
+							<Style TargetType="Border">
+								<Setter Property="Padding" Value="{ThemeResource ButtonPadding}" />
+								<Setter Property="Background" Value="{ThemeResource ButtonBackground}" />
+								<Setter Property="BorderBrush" Value="{ThemeResource ButtonBorderBrush}" />
+								<Setter Property="BorderThickness" Value="{ThemeResource ButtonBorderThemeThickness}" />
+								<Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}" />
+								<Setter Property="MinWidth" Value="40" />
+								<Setter Property="VerticalAlignment" Value="Center" />
+							</Style>
+						</StackPanel.Resources>
+
+						<TextBlock FontSize="14"
+								   FontWeight="Bold"
+								   Text="Navigation" />
+
+						<Grid ColumnSpacing="18" RowSpacing="6">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="auto" />
+								<ColumnDefinition Width="2*" />
+							</Grid.ColumnDefinitions>
+							<Grid.RowDefinitions>
+								<RowDefinition Height="30" />
+								<RowDefinition Height="30" />
+								<RowDefinition Height="30" />
+								<RowDefinition Height="30" />
+								<RowDefinition Height="30" />
+							</Grid.RowDefinitions>
+							<!--#region ALT + LEFT ARROW-->
+							<StackPanel Orientation="Horizontal" Spacing="4">
+								<Border ToolTipService.ToolTip="Alt key">
+									<TextBlock FontSize="12" Text="Alt" />
+								</Border>
+								<TextBlock VerticalAlignment="Center" Text="+" />
+								<Border ToolTipService.ToolTip="Left arrow">
+									<FontIcon FontSize="14" Glyph="&#xEC52;" />
+								</Border>
+							</StackPanel>
+
+							<TextBlock Grid.Column="1" Text="View the previous folder" />
+							<!--#endregion-->
+
+							<!--#region ALT + RIGHT ARROW-->
+							<StackPanel Grid.Row="1"
+										Orientation="Horizontal"
+										Spacing="4">
+								<Border ToolTipService.ToolTip="Alt key">
+									<TextBlock FontSize="12" Text="Alt" />
+								</Border>
+								<TextBlock VerticalAlignment="Center" Text="+" />
+								<Border ToolTipService.ToolTip="Right arrow">
+									<FontIcon FontSize="14" Glyph="&#xEBE7;" />
+								</Border>
+							</StackPanel>
+
+							<TextBlock Grid.Row="1"
+									   Grid.Column="1"
+									   Text="View the next folder" />
+							<!--#endregion-->
+
+							<!--#region BACKSPACE-->
+							<StackPanel Grid.Row="2"
+										Orientation="Horizontal"
+										Spacing="4">
+
+								<Border MinWidth="95" ToolTipService.ToolTip="Backspace">
+									<FontIcon FontSize="14" Glyph="&#xE750;" />
+								</Border>
+							</StackPanel>
+
+							<TextBlock Grid.Row="2"
+									   Grid.Column="1"
+									   Text="Navigate up one directory level" />
+							<!--#endregion-->
+
+							<!--#region LEFT ARROW-->
+							<StackPanel Grid.Row="3"
+										Orientation="Horizontal"
+										Spacing="4">
+
+								<Border MinWidth="95" ToolTipService.ToolTip="Left arrow">
+									<FontIcon FontSize="14" Glyph="&#xEC52;" />
+								</Border>
+							</StackPanel>
+
+							<TextBlock Grid.Row="3"
+									   Grid.Column="1"
+									   Text="Collapse the current selection (if it's expanded), or select the folder that the folder was in (TreeView)" />
+							<!--#endregion-->
+
+							<!--#region RIGHT ARROW-->
+							<StackPanel Grid.Row="4"
+										Orientation="Horizontal"
+										Spacing="4">
+
+								<Border MinWidth="95" ToolTipService.ToolTip="Right arrow">
+									<FontIcon FontSize="14" Glyph="&#xEBE7;" />
+								</Border>
+							</StackPanel>
+
+							<TextBlock Grid.Row="4"
+									   Grid.Column="1"
+									   Text="Display the current selection (if it's collapsed), or select the first subfolder (TreeView)" />
+							<!--#endregion-->
+
+						</Grid>
+
+						<TextBlock FontSize="14"
+								   FontWeight="Bold"
+								   Text="Actions" />
+
+						<Grid ColumnSpacing="18" RowSpacing="6">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="auto" />
+								<ColumnDefinition Width="2*" />
+							</Grid.ColumnDefinitions>
+							<Grid.RowDefinitions>
+								<RowDefinition Height="30" />
+								<RowDefinition Height="30" />
+								<RowDefinition Height="30" />
+								<RowDefinition Height="30" />
+								<RowDefinition Height="30" />
+								<RowDefinition Height="30" />
+								<RowDefinition Height="30" />
+								<RowDefinition Height="30" />
+								<RowDefinition Height="30" />
+								<RowDefinition Height="30" />
+							</Grid.RowDefinitions>
+
+							<!--#region Ctrl + N-->
+							<StackPanel Grid.Row="0"
+										Orientation="Horizontal"
+										Spacing="2">
+
+								<Border>
+									<TextBlock HorizontalAlignment="Center"
+											   FontSize="12"
+											   Text="Ctrl" />
+								</Border>
+								<TextBlock Text="+" />
+								<Border>
+									<TextBlock HorizontalAlignment="Center"
+											   FontSize="12"
+											   Text="N" />
+								</Border>
+							</StackPanel>
+
+							<TextBlock Grid.Row="0"
+									   Grid.Column="1"
+									   Text="Create a connection with new Host" />
+							<!--#endregion-->
+
+							<!--#region CTRL + SHIFT + N-->
+							<StackPanel Grid.Row="1"
+										Orientation="Horizontal"
+										Spacing="2">
+
+								<Border>
+									<TextBlock HorizontalAlignment="Center"
+											   FontSize="12"
+											   Text="Ctrl" />
+								</Border>
+								<TextBlock Text="+" />
+								<Border>
+									<TextBlock HorizontalAlignment="Center"
+											   FontSize="12"
+											   Text="Shift" />
+								</Border>
+								<TextBlock Text="+" />
+								<Border ToolTipService.ToolTip="Enter">
+									<TextBlock HorizontalAlignment="Center"
+											   FontSize="12"
+											   Text="N" />
+								</Border>
+							</StackPanel>
+
+							<TextBlock Grid.Row="1"
+									   Grid.Column="1"
+									   Text="Create a new folder in the current directory" />
+							<!--#endregion-->
+
+							<!--#region Ctrl + O-->
+							<StackPanel Grid.Row="2"
+										Orientation="Horizontal"
+										Spacing="2">
+
+								<Border>
+									<TextBlock HorizontalAlignment="Center"
+											   FontSize="12"
+											   Text="Ctrl" />
+								</Border>
+								<TextBlock Text="+" />
+								<Border>
+									<TextBlock HorizontalAlignment="Center"
+											   FontSize="12"
+											   Text="O" />
+								</Border>
+							</StackPanel>
+
+							<TextBlock Grid.Row="2"
+									   Grid.Column="1"
+									   Text="Open file picker to upload files to current directory" />
+							<!--#endregion-->
+
+							<!--#region Ctrl + SHIFT + O-->
+							<StackPanel Grid.Row="3"
+										Orientation="Horizontal"
+										Spacing="2">
+
+								<Border>
+									<TextBlock HorizontalAlignment="Center"
+											   FontSize="12"
+											   Text="Ctrl" />
+								</Border>
+								<TextBlock Text="+" />
+								<Border>
+									<TextBlock HorizontalAlignment="Center"
+											   FontSize="12"
+											   Text="Shift" />
+								</Border>
+								<TextBlock Text="+" />
+								<Border>
+									<TextBlock HorizontalAlignment="Center"
+											   FontSize="12"
+											   Text="O" />
+								</Border>
+							</StackPanel>
+
+							<TextBlock Grid.Row="3"
+									   Grid.Column="1"
+									   Text="Open folder picker to upload a folder to current directory" />
+							<!--#endregion-->
+
+							<!--#region Ctrl + S-->
+							<StackPanel Grid.Row="4"
+										Orientation="Horizontal"
+										Spacing="2">
+
+								<Border>
+									<TextBlock HorizontalAlignment="Center"
+											   FontSize="12"
+											   Text="Ctrl" />
+								</Border>
+								<TextBlock Text="+" />
+								<Border>
+									<TextBlock HorizontalAlignment="Center"
+											   FontSize="12"
+											   Text="S" />
+								</Border>
+							</StackPanel>
+
+							<TextBlock Grid.Row="4"
+									   Grid.Column="1"
+									   Text="Add all selected items to the download queue" />
+							<!--#endregion-->
+
+							<!--#region Ctrl + A-->
+							<StackPanel Grid.Row="5"
+										Orientation="Horizontal"
+										Spacing="2">
+
+								<Border>
+									<TextBlock HorizontalAlignment="Center"
+											   FontSize="12"
+											   Text="Ctrl" />
+								</Border>
+								<TextBlock Text="+" />
+								<Border>
+									<TextBlock HorizontalAlignment="Center"
+											   FontSize="12"
+											   Text="A" />
+								</Border>
+							</StackPanel>
+
+							<TextBlock Grid.Row="5"
+									   Grid.Column="1"
+									   Text="Select/unselect all items in the active directory" />
+							<!--#endregion-->
+
+							<!--#region F5-->
+							<StackPanel Grid.Row="6"
+										Orientation="Horizontal"
+										Spacing="4">
+
+								<Border MinWidth="95">
+									<TextBlock HorizontalAlignment="Center" Text="F5" />
+								</Border>
+							</StackPanel>
+
+							<TextBlock Grid.Row="6"
+									   Grid.Column="1"
+									   Text="Refresh the active directory" />
+							<!--#endregion-->
+
+							<!--#region Delete-->
+							<StackPanel Grid.Row="7"
+										Orientation="Horizontal"
+										Spacing="2">
+
+								<Border Width="95" ToolTipService.ToolTip="Delete key">
+									<TextBlock HorizontalAlignment="Center"
+											   FontSize="12"
+											   Text="Del" />
+								</Border>
+							</StackPanel>
+
+							<TextBlock Grid.Row="7"
+									   Grid.Column="1"
+									   Text="Delete all selected items" />
+							<!--#endregion-->
+
+							<!--#region F2-->
+							<StackPanel Grid.Row="8"
+										Orientation="Horizontal"
+										Spacing="2">
+
+								<Border Width="95">
+									<TextBlock HorizontalAlignment="Center"
+											   FontSize="12"
+											   Text="F2" />
+								</Border>
+							</StackPanel>
+
+							<TextBlock Grid.Row="8"
+									   Grid.Column="1"
+									   Text="Rename the selected item" />
+							<!--#endregion-->
+
+							<!--#region Ctrl + W-->
+							<StackPanel Grid.Row="9"
+										Orientation="Horizontal"
+										Spacing="2">
+
+								<Border>
+									<TextBlock HorizontalAlignment="Center"
+											   FontSize="12"
+											   Text="Ctrl" />
+								</Border>
+								<TextBlock Text="+" />
+								<Border>
+									<TextBlock HorizontalAlignment="Center"
+											   FontSize="12"
+											   Text="W" />
+								</Border>
+							</StackPanel>
+
+							<TextBlock Grid.Row="9"
+									   Grid.Column="1"
+									   Text="Disconnect the active Host" />
+							<!--#endregion-->
+
+						</Grid>
+
+						<TextBlock FontSize="14"
+								   FontWeight="Bold"
+								   Text="Window" />
+
+						<Grid ColumnSpacing="18" RowSpacing="6">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="auto" />
+								<ColumnDefinition Width="2*" />
+							</Grid.ColumnDefinitions>
+							<Grid.RowDefinitions>
+								<RowDefinition Height="30" />
+								<RowDefinition Height="30" />
+								<RowDefinition Height="30" />
+							</Grid.RowDefinitions>
+							<!--#region SHIFT + ALT + ENTER-->
+							<StackPanel Grid.Row="0"
+										Orientation="Horizontal"
+										Spacing="2">
+
+								<Border>
+									<TextBlock HorizontalAlignment="Center"
+											   FontSize="12"
+											   Text="Shift" />
+								</Border>
+								<TextBlock Text="+" />
+								<Border ToolTipService.ToolTip="Windows Key">
+									<Path Width="16"
+										  Height="16"
+										  Margin="-2,0,0,0"
+										  Data="M12 16L3 16 3 23.75 12 24.988zM12 5L3 6.25 3 14 12 14zM14 4.75L14 14 27 14 27 3zM14 16L14 25.25 27 27 27 16z"
+										  Fill="{ThemeResource SystemBaseHighColor}"
+										  Stretch="Uniform" />
+									<!--<Path Width="16"
+										  Height="16"
+										  Data="M 5 4 C 4.448 4 4 4.447 4 5 L 4 24 L 24 24 L 24 4 L 5 4 z M 26 4 L 26 24 L 46 24 L 46 5 C 46 4.447 45.552 4 45 4 L 26 4 z M 4 26 L 4 45 C 4 45.553 4.448 46 5 46 L 24 46 L 24 26 L 4 26 z M 26 26 L 26 46 L 45 46 C 45.552 46 46 45.553 46 45 L 46 26 L 26 26 z"
+										  Fill="{ThemeResource SystemBaseHighColor}"
+										  Stretch="Uniform" />-->
+								</Border>
+								<TextBlock Text="+" />
+								<Border ToolTipService.ToolTip="Enter">
+									<FontIcon FontSize="14" Glyph="&#xE751;" />
+								</Border>
+							</StackPanel>
+
+							<TextBlock Grid.Row="0"
+									   Grid.Column="1"
+									   Text="Enter or exit from Fullscreen mode" />
+							<!--#endregion-->
+
+							<!--#region F11-->
+							<StackPanel Grid.Row="1"
+										Orientation="Horizontal"
+										Spacing="4">
+
+								<Border MinWidth="95">
+									<TextBlock HorizontalAlignment="Center"
+											   FontSize="12"
+											   Text="F11" />
+								</Border>
+							</StackPanel>
+
+							<TextBlock Grid.Row="1"
+									   Grid.Column="1"
+									   Text="Enter or exit from Fullscreen mode" />
+							<!--#endregion-->
+
+							<!--#region ALT + F4-->
+							<StackPanel Grid.Row="2"
+										Orientation="Horizontal"
+										Spacing="4">
+
+								<Border>
+									<TextBlock HorizontalAlignment="Center"
+											   FontSize="12"
+											   Text="Alt" />
+								</Border>
+								<TextBlock Text="+" />
+								<Border>
+									<TextBlock Text="F4" />
+								</Border>
+							</StackPanel>
+
+							<TextBlock Grid.Row="2"
+									   Grid.Column="1"
+									   Text="Exit app" />
+							<!--#endregion-->
+						</Grid>
+					</StackPanel>
+
+				</muxc:Expander>
+
 				<muxc:Expander Collapsed="{x:Bind Collapsed}"
 							   Expanding="{x:Bind Expanding}"
 							   IsExpanded="True">
