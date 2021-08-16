@@ -79,9 +79,13 @@ namespace MyFTP.Utils
 		}
 
 		public static async Task DeleteAsync(string id)
-		{
+		{			
 			var all = await GetAllAsync();
-			all.Remove(id);
+			if (all.ContainsKey(id))
+			{
+				all[id].DeleteCredentialFromLocker();
+				all.Remove(id);
+			}
 			var json = JsonConvert.SerializeObject(all, Formatting.Indented);
 			var folder = ApplicationData.Current.LocalFolder;
 			var localFile = await folder.CreateFileAsync(FileName, CreationCollisionOption.OpenIfExists);
@@ -124,6 +128,16 @@ namespace MyFTP.Utils
 		{
 			var vault = new PasswordVault();			
 			vault.Add(new PasswordCredential(_passwordCredentialResourceName, Id, password));
+		}
+
+		public void DeleteCredentialFromLocker()
+		{
+			var credential = GetCredentialFromLocker();
+			if (credential != null)
+			{
+				var vault = new PasswordVault();
+				vault.Remove(credential);
+			}
 		}
 
 		private void RemoveCredentialFromLocker(PasswordCredential credential)

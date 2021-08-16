@@ -185,41 +185,7 @@ namespace MyFTP.Views
 					args.Handled = NavigationHistory.GoForward();
 					break;
 			}
-		}
-
-		private void OnRadioThemeLoaded(object sender, RoutedEventArgs e)
-		{
-			var radio = (muxc.RadioMenuFlyoutItem)sender;
-			var radioTheme = ((ElementTheme)Enum.Parse(typeof(ElementTheme), radio.Tag.ToString())).ToString();
-			if (Frame.RequestedTheme.ToString() == radioTheme)
-			{
-				radio.IsChecked = true;
-			}
-		}
-
-		private void OnRadioActualThemeChanged(FrameworkElement sender, object args) => OnRadioThemeLoaded(sender, null);
-
-		private void OnRadioThemeClick(object sender, RoutedEventArgs e)
-		{
-			var radio = (muxc.RadioMenuFlyoutItem)sender;
-			var radioTheme = ((ElementTheme)Enum.Parse(typeof(ElementTheme), radio.Tag.ToString()));
-			var settings = App.Current.Services.GetService<ISettings>();
-			if (settings != null)
-				settings.TrySet("AppTheme", radioTheme);
-		}
-
-		private async void OnAboutMenuFlyoutItemClicked(object sender, RoutedEventArgs e)
-		{
-			try
-			{
-				this.IsEnabled = false;
-				await new AboutDialog().ShowAsync();
-			}
-			finally
-			{
-				this.IsEnabled = true;
-			}
-		}
+		}		
 
 		private void ShowError(string message, Exception e = null)
 		{
@@ -233,7 +199,9 @@ namespace MyFTP.Views
 		private void OnButtonUpClicked(object sender, RoutedEventArgs args)
 		{
 			var item = Crumbs.Reverse().Skip(1).FirstOrDefault();
-			if (item.Parent == null) // root #BUG 
+			if (item == null)
+				treeView.SelectedNode = treeView.RootNodes.FirstOrDefault();
+			else if (item.Parent == null) // root #BUG 
 				treeView.SelectedNode = treeView.RootNodes.FirstOrDefault(x => x.Content == item);
 			else
 				treeView.SelectedItem = item;
@@ -309,9 +277,7 @@ namespace MyFTP.Views
 		{
 			treeView.SelectedItem = e.ClickedItem;
 		}
-
 		private void GoToSettings() => Frame.Navigate(typeof(SettingsViewPage));
-
 
 		private void ExitApp() => Application.Current.Exit();
 	}

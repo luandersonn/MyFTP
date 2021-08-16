@@ -138,16 +138,17 @@
 							<muxc:ItemsRepeater ItemsSource="{x:Bind ViewModel.FtpHostSettingsList}">
 								<muxc:ItemsRepeater.ItemTemplate>
 									<DataTemplate x:DataType="viewmodels:FtpHostSettingsViewModel">
-										<StackPanel Padding="16,12" Spacing="8">
+										<StackPanel Padding="16,12"
+													BorderBrush="{ThemeResource SystemBaseLowColor}"
+													BorderThickness="0,1,0,0"
+													DataContext="{x:Bind}">
 
 											<TextBlock FontWeight="SemiBold" TextTrimming="CharacterEllipsis">
 												<Run Text="{x:Bind Host}" /><Run Text=":" /><Run Text="{x:Bind Port}" />
-												<Run FontWeight="Normal"
-													 Foreground="{ThemeResource AccentButtonBackground}"
-													 Text="{x:Bind Username}" />
 											</TextBlock>
-
-											<Grid Background="Transparent" ColumnSpacing="8">
+											<Grid Background="Transparent"
+												  ColumnSpacing="8"
+												  Visibility="Collapsed">
 												<Grid.ColumnDefinitions>
 													<ColumnDefinition Width="auto" />
 													<ColumnDefinition />
@@ -174,25 +175,26 @@
 
 												<HyperlinkButton Grid.Column="1"
 																 VerticalAlignment="Center"
-																 Command="{x:Bind OpenFolderCommand}">
-													<ToolTipService.ToolTip>
-														<StackPanel>
-															<TextBlock FontWeight="SemiBold" Text="{Binding Folder.Name, Mode=OneWay}" />
-															<TextBlock Opacity="0.6"
-																	   Text="{x:Bind Folder.Path, Mode=OneWay}"
-																	   TextWrapping="Wrap" />
-														</StackPanel>
-													</ToolTipService.ToolTip>
-													<TextBlock FontSize="12"
-															   Text="{x:Bind Folder.Path, Mode=OneWay}"
-															   TextTrimming="CharacterEllipsis" />
-												</HyperlinkButton>
+																 Command="{x:Bind OpenFolderCommand}"
+																 Content="{x:Bind Folder.Name, Mode=OneWay}"
+																 ToolTipService.ToolTip="{x:Bind Folder.Path, Mode=OneWay}" />
 
 												<Button Grid.Column="2"
 														VerticalAlignment="Center"
 														Command="{x:Bind ChangeFolderCommand}"
 														Content="Change" />
 											</Grid>
+
+											<StackPanel Visibility="{x:Bind Username, Converter={StaticResource ItemToBoolConverter}}">
+												<TextBlock Opacity="0.6" Text="{x:Bind Username}" />
+												<TextBlock Opacity="0.6" Text="••••••••••••••••" />
+											</StackPanel>
+
+											<Button HorizontalAlignment="Right"
+													Click="OnDeleteHostClicked"
+													Command="{x:Bind DeleteSettingCommand}"
+													Content="Remove"
+													Style="{ThemeResource DestructiveButtonStyle}" />
 										</StackPanel>
 									</DataTemplate>
 								</muxc:ItemsRepeater.ItemTemplate>
@@ -224,7 +226,9 @@
 					</Grid>
 				</muxc:Expander>
 
-				<muxc:Expander Collapsed="{x:Bind Collapsed}" Expanding="{x:Bind Expanding}">
+				<muxc:Expander Collapsed="{x:Bind Collapsed}"
+							   Expanding="{x:Bind Expanding}"
+							   IsExpanded="True">
 					<muxc:Expander.Header>
 						<StackPanel Orientation="Horizontal" Spacing="8">
 							<FontIcon FontSize="14" Glyph="&#xE946;" />
@@ -242,6 +246,7 @@
 							</Style>
 						</Grid.Resources>
 						<Grid.RowDefinitions>
+							<RowDefinition />
 							<RowDefinition />
 							<RowDefinition />
 							<RowDefinition />
@@ -348,8 +353,18 @@
 						<HyperlinkButton Grid.Row="8"
 										 Grid.Column="1"
 										 Padding="0"
-										 Content="Open Microsoft Store"
-										 NavigateUri="ms-windows-store://pdp/?ProductId=9nwzsp0xcmhc" />
+										 Click="OnReviewButtonClicked"
+										 Content="Open Microsoft Store" />
+
+						<TextBlock Grid.Row="9"
+								   Foreground="{ThemeResource SystemBaseMediumColor}"
+								   Text="Contact" />
+
+						<HyperlinkButton Grid.Row="9"
+										 Grid.Column="1"
+										 Padding="0"
+										 Content="E-mail"
+										 NavigateUri="mailto:luan.airton.ss+myftp@gmail.com" />
 
 					</Grid>
 				</muxc:Expander>

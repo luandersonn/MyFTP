@@ -13,6 +13,7 @@ namespace MyFTP.ViewModels
 	{
 		#region fields	
 		private readonly WeakReferenceMessenger _weakMessenger;
+		private readonly StorageFolder _defaultFolder;
 		#endregion
 
 		#region properties
@@ -39,10 +40,11 @@ namespace MyFTP.ViewModels
 			Folder = folder;
 
 			ChangeFolderCommand = new AsyncRelayCommand(ChangeFolderCommandAsync);
-			OpenFolderCommand = new AsyncRelayCommand(OpenFolderCommandAsync);
+			OpenFolderCommand = new AsyncRelayCommand(OpenFolderCommandAsync, () => Folder != null & !Folder.IsEqual(_defaultFolder));
 			ResetFolderCommand = new RelayCommand(ResetFolder);
 			DeleteSettingCommand = new AsyncRelayCommand(DeleteSettingCommandAsync);
-			_weakMessenger = WeakReferenceMessenger.Default;			
+			_weakMessenger = WeakReferenceMessenger.Default;
+			_defaultFolder = ApplicationData.Current.TemporaryFolder;
 		}
 		#endregion
 
@@ -57,6 +59,7 @@ namespace MyFTP.ViewModels
 					Item.SetDefaultSaveLocation(folder);
 					Folder = folder;
 					OnPropertyChanged(nameof(Folder));
+					OpenFolderCommand.NotifyCanExecuteChanged();
 				}
 				catch { }
 			}
@@ -64,13 +67,13 @@ namespace MyFTP.ViewModels
 		private async Task OpenFolderCommandAsync() => await Launcher.LaunchFolderAsync(Folder);
 		private void ResetFolder()
 		{
-			Folder = ApplicationData.Current.TemporaryFolder;
+			Folder = _defaultFolder;
 			if (StorageApplicationPermissions.FutureAccessList.ContainsItem(Id))
 				StorageApplicationPermissions.FutureAccessList.Remove(Id);
 			OnPropertyChanged(nameof(Folder));
 		}
 		private async Task DeleteSettingCommandAsync()
-		{
+		{			
 			await FtpHostSettings.DeleteAsync(Id);
 		}
 		#endregion

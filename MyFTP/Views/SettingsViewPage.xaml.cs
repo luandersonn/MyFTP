@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.Messaging;
+using Microsoft.Toolkit.Uwp.Helpers;
 using MyFTP.Utils;
 using MyFTP.ViewModels;
 using System;
@@ -46,7 +47,7 @@ namespace MyFTP.Views
 
 		protected override void OnNavigatedTo(NavigationEventArgs e)
 		{
-			totalExpanderCount = RootStackPanel.Children.OfType<muxc.Expander>().Count();
+			totalExpanderCount = RootStackPanel.Children.OfType<muxc.Expander>().Count();			
 			UpdateExpanderButtons();
 			if (ViewModel.UpdateService?.CheckForUpdatesCommand.CanExecute(null) == true)
 				ViewModel.UpdateService.CheckForUpdatesCommand.Execute(null);
@@ -100,7 +101,7 @@ namespace MyFTP.Views
 		}
 		#endregion
 
-		#region servers
+		#region Hosts
 		private void OnOpenFolderRequest(object recipient, RequestOpenFolderMessage message)
 		{
 			if (!message.HasReceivedResponse)
@@ -110,6 +111,13 @@ namespace MyFTP.Views
 				message.Reply(picker.PickSingleFolderAsync().AsTask());
 			}
 		}
+
+		private void OnDeleteHostClicked(object sender, RoutedEventArgs e)
+		{
+			var button = (Button)sender;
+			var item = (FtpHostSettingsViewModel)button.DataContext;
+			ViewModel.FtpHostSettingsList.Remove(item);
+		}
 		#endregion
 
 		#region app theme
@@ -118,7 +126,20 @@ namespace MyFTP.Views
 			get => (int)ViewModel.AppTheme;			
 			set => ViewModel.AppTheme = (ElementTheme)value;			
 		}
-		#endregion		
+		#endregion
+
+		private async void OnReviewButtonClicked(object sender, RoutedEventArgs e)
+		{
+			try
+			{
+				IsEnabled = false;
+				await SystemInformation.LaunchStoreForReviewAsync();
+			}
+			finally
+			{
+				IsEnabled = true;
+			}
+		}
 
 		private void GoBack()
 		{

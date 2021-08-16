@@ -120,35 +120,6 @@
 						</StackPanel>
 						<muxc:SplitButton.Flyout>
 							<MenuBarItemFlyout Placement="Bottom">
-								<MenuFlyoutSubItem Text="Theme">
-									<muxc:RadioMenuFlyoutItem ActualThemeChanged="OnRadioActualThemeChanged"
-															  Click="OnRadioThemeClick"
-															  GroupName="Theme"
-															  Loaded="OnRadioThemeLoaded"
-															  Tag="Default"
-															  Text="System" />
-
-									<muxc:RadioMenuFlyoutItem Click="OnRadioThemeClick"
-															  GroupName="Theme"
-															  Loaded="OnRadioThemeLoaded"
-															  Tag="Light"
-															  Text="Light" />
-
-									<muxc:RadioMenuFlyoutItem Click="OnRadioThemeClick"
-															  GroupName="Theme"
-															  Loaded="OnRadioThemeLoaded"
-															  Tag="Dark"
-															  Text="Dark" />
-								</MenuFlyoutSubItem>
-
-								<MenuFlyoutItem Click="OnAboutMenuFlyoutItemClicked" Text="About">
-									<MenuFlyoutItem.KeyboardAccelerators>
-										<KeyboardAccelerator Key="F1" />
-									</MenuFlyoutItem.KeyboardAccelerators>
-									<MenuFlyoutItem.Icon>
-										<FontIcon Glyph="&#xE946;" />
-									</MenuFlyoutItem.Icon>
-								</MenuFlyoutItem>
 
 								<MenuFlyoutItem Click="{x:Bind GoToSettings}"
 												Icon="Setting"
