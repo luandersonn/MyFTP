@@ -92,7 +92,7 @@
 		</Grid.RowDefinitions>
 
 		<controls:TitleBarControl x:Name="titleBar"
-								  Title="{x:Bind ViewModel.Client.Host}"
+								  Title="{x:Bind NavigationHistory.CurrentItem.Name, Mode=OneWay}"
 								  MinHeight="42"
 								  VerticalAlignment="Top"
 								  BorderBrush="{ThemeResource SystemBaseLowColor}"
@@ -113,42 +113,29 @@
 								   HorizontalSpacing="4"
 								   VerticalSpacing="8">
 
-					<muxc:SplitButton Click="OnDisconnectButtonClick">
+					<muxc:SplitButton Command="{x:Bind ViewModel.DisconnectCommand}" CommandParameter="{x:Bind NavigationHistory.CurrentItem, Mode=OneWay}">
+						<muxc:SplitButton.KeyboardAccelerators>
+							<KeyboardAccelerator Key="W" Modifiers="Control" />
+						</muxc:SplitButton.KeyboardAccelerators>
 						<StackPanel Orientation="Horizontal" Spacing="6">
 							<FontIcon FontSize="14" Glyph="&#xE7E8;" />
 							<TextBlock Text="Disconnect" />
 						</StackPanel>
 						<muxc:SplitButton.Flyout>
 							<MenuBarItemFlyout Placement="Bottom">
-								<MenuFlyoutSubItem Text="Theme">
-									<muxc:RadioMenuFlyoutItem ActualThemeChanged="OnRadioActualThemeChanged"
-															  Click="OnRadioThemeClick"
-															  GroupName="Theme"
-															  Loaded="OnRadioThemeLoaded"
-															  Tag="Default"
-															  Text="System" />
 
-									<muxc:RadioMenuFlyoutItem Click="OnRadioThemeClick"
-															  GroupName="Theme"
-															  Loaded="OnRadioThemeLoaded"
-															  Tag="Light"
-															  Text="Light" />
-
-									<muxc:RadioMenuFlyoutItem Click="OnRadioThemeClick"
-															  GroupName="Theme"
-															  Loaded="OnRadioThemeLoaded"
-															  Tag="Dark"
-															  Text="Dark" />
-								</MenuFlyoutSubItem>
-
-								<MenuFlyoutItem Click="OnAboutMenuFlyoutItemClicked" Text="About">
-									<MenuFlyoutItem.KeyboardAccelerators>
-										<KeyboardAccelerator Key="F1" />
-									</MenuFlyoutItem.KeyboardAccelerators>
+								<MenuFlyoutItem Click="{x:Bind NewConnectionAsync}" Text="New connection">
 									<MenuFlyoutItem.Icon>
-										<FontIcon Glyph="&#xE946;" />
+										<FontIcon Glyph="&#xE968;" />
 									</MenuFlyoutItem.Icon>
+									<MenuFlyoutItem.KeyboardAccelerators>
+										<KeyboardAccelerator Key="N" Modifiers="Control" />
+									</MenuFlyoutItem.KeyboardAccelerators>
 								</MenuFlyoutItem>
+
+								<MenuFlyoutItem Click="{x:Bind GoToSettings}"
+												Icon="Setting"
+												Text="Settings" />
 								<MenuFlyoutSeparator />
 
 								<MenuFlyoutItem Click="{x:Bind ExitApp, Mode=OneWay}"
@@ -403,6 +390,7 @@
 						<muxc:FontIconSource Glyph="&#xE968;" />
 					</muxc:TeachingTip.IconSource>
 					<StackPanel Padding="0,8">
+						<!--
 						<TextBlock Opacity="0.6" Text="Host" />
 						<TextBlock FontWeight="SemiBold" Text="{x:Bind ViewModel.Client.Host}" />
 
@@ -434,7 +422,7 @@
 						<TextBlock Margin="0,8,0,0"
 								   Opacity="0.6"
 								   Text="System Type" />
-						<TextBlock FontWeight="SemiBold" Text="{x:Bind ViewModel.Client.SystemType}" />
+						<TextBlock FontWeight="SemiBold" Text="{x:Bind ViewModel.Client.SystemType}" />-->
 					</StackPanel>
 				</muxc:TeachingTip>
 
@@ -572,7 +560,8 @@
 							  BorderThickness="0"
 							  Content="&#xE946;"
 							  FontFamily="Segoe MDL2 Assets"
-							  IsChecked="{x:Bind infoTeachingTip.IsOpen, Mode=TwoWay}" />
+							  IsChecked="{x:Bind infoTeachingTip.IsOpen, Mode=TwoWay}"
+							  Visibility="Collapsed" />
 			</toolkit:WrapPanel>
 
 			<Rectangle Width="1"

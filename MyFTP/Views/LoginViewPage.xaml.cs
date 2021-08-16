@@ -1,11 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.Messaging;
 using MyFTP.ViewModels;
-using System;
-using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-
 
 namespace MyFTP.Views
 {
@@ -15,52 +12,22 @@ namespace MyFTP.Views
 		{
 			InitializeComponent();
 			this.DataContext = App.Current.Services.GetService<LoginViewModel>();
-			WeakReferenceMessenger.Default.Register<HostViewModel>(this, SuccessfulLogin);
+			Loaded += (sender, args) => WeakReferenceMessenger.Default.Register<FtpListItemViewModel>(this, SuccessfulLogin);
+			Unloaded += (sender, args) => WeakReferenceMessenger.Default.Unregister<FtpListItemViewModel>(this);
 		}
 		public LoginViewModel ViewModel => (LoginViewModel)DataContext;
-		private void SuccessfulLogin(object recipient, HostViewModel message)
+		private void SuccessfulLogin(object recipient, FtpListItemViewModel message)
 		{
-			Frame.Navigate(typeof(HostViewPage), message);
-			WeakReferenceMessenger.Default.Unregister<HostViewModel>(this);
+			Frame.Navigate(typeof(HostViewPage), message);			
 		}
 
-		private void OnUsernameTextboxTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
-		{
-			if (args.CheckCurrent() && args.Reason != AutoSuggestionBoxTextChangeReason.SuggestionChosen)
-			{
-				if (string.IsNullOrWhiteSpace(sender.Text))
-					sender.ItemsSource = ViewModel.SavedCredentialsList;
-				else
-					sender.ItemsSource = ViewModel
-								.SavedCredentialsList
-								.Where(credential => credential.StartsWith(sender.Text, StringComparison.InvariantCultureIgnoreCase));
-			}
-		}
-
-		private void AutoSuggestBoxSuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
-		{
-			if (args.SelectedItem is string username)
-			{
-				_ = ViewModel.SelectCredential(username);
-			}
-		}
-
-		private void AutoSuggestBoxLostFocus(object sender, RoutedEventArgs e)
-		{
-			var asb = (AutoSuggestBox)sender;
-			_ = ViewModel.SelectCredential(asb.Text);
-		}
-
-		private void OnCredentialClicked(object sender, ItemClickEventArgs e)
-		{
-			var username = (string)e.ClickedItem;
-			ViewModel.SelectCredential(username);
-		}
-		private void OnDeleteSavedCredentialClicked(object sender, RoutedEventArgs e)
+		private void OnDeleteCredentialClicked(object sender, RoutedEventArgs e)
 		{
 			var button = (Button)sender;
-			var userName = (string)button.DataContext;
-			ViewModel.DeleteCredential(userName);
+			var item = (FtpHostSettingsViewModel)button.DataContext;
+			ViewModel.Delete(item);
 		}
+
+		private void GoToSettings() => Frame.Navigate(typeof(SettingsViewPage));
 	}
 }

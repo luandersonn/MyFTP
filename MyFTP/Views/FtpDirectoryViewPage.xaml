@@ -12,7 +12,7 @@
 	  xmlns:utils="using:MyFTP.Utils"
 	  xmlns:viewmodels="using:MyFTP.ViewModels"
 	  AllowDrop="True"
-	  Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+	  Background="{ThemeResource SystemAltLowColor}"
 	  DragEnter="{x:Bind ShowItemDropArea, Mode=OneTime}"
 	  DragLeave="{x:Bind HideItemDropArea, Mode=OneTime}"
 	  Drop="{x:Bind HideItemDropArea, Mode=OneTime}"
@@ -60,11 +60,19 @@
 
 						<MenuFlyoutItem Command="{x:Bind DeleteCommand}"
 										Icon="Delete"
-										Text="Delete" />
+										Text="Delete">
+							<MenuFlyoutItem.KeyboardAccelerators>
+								<KeyboardAccelerator Key="Delete" />
+							</MenuFlyoutItem.KeyboardAccelerators>
+						</MenuFlyoutItem>
 
 						<MenuFlyoutItem Command="{x:Bind OpenRenameDialogCommand}"
 										Icon="Rename"
-										Text="Rename" />
+										Text="Rename">
+							<MenuFlyoutItem.KeyboardAccelerators>
+								<KeyboardAccelerator Key="F2" />
+							</MenuFlyoutItem.KeyboardAccelerators>
+						</MenuFlyoutItem>
 						<MenuFlyoutSeparator />
 
 						<MenuFlyoutItem IsEnabled="False" Text="Properties">
@@ -126,7 +134,7 @@
 			<RowDefinition />
 		</Grid.RowDefinitions>
 
-		<CommandBar Background="{ThemeResource SystemAltMediumHighColor}" DefaultLabelPosition="Right">
+		<CommandBar Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" DefaultLabelPosition="Right">
 			<AppBarButton Icon="NewFolder"
 						  Label="New folder"
 						  LabelPosition="Collapsed">
@@ -158,13 +166,34 @@
 				</AppBarButton.KeyboardAccelerators>
 			</AppBarButton>
 			<AppBarSeparator />
-			<AppBarButton Command="{x:Bind ViewModel.UploadCommand, Mode=OneWay}"
-						  Icon="Upload"
-						  Label="Upload" />
+			<AppBarButton Icon="Upload" Label="Upload">
+				<AppBarButton.Flyout>
+					<MenuFlyout Placement="Bottom">
+						<MenuFlyoutItem Command="{x:Bind ViewModel.UploadFilesCommand, Mode=OneWay}"
+										Icon="OpenFile"
+										Text="Files">
+							<MenuFlyoutItem.KeyboardAccelerators>
+								<KeyboardAccelerator Key="O" Modifiers="Control" />
+							</MenuFlyoutItem.KeyboardAccelerators>
+						</MenuFlyoutItem>
+						<MenuFlyoutItem Command="{x:Bind ViewModel.UploadFolderCommand, Mode=OneWay}"
+										Icon="NewFolder"
+										Text="Folder">
+							<MenuFlyoutItem.KeyboardAccelerators>
+								<KeyboardAccelerator Key="O" Modifiers="Control,Shift" />
+							</MenuFlyoutItem.KeyboardAccelerators>
+						</MenuFlyoutItem>
+					</MenuFlyout>
+				</AppBarButton.Flyout>
+			</AppBarButton>
 			<AppBarButton Command="{x:Bind ViewModel.DownloadCommand, Mode=OneWay}"
 						  CommandParameter="{x:Bind SelectedItems, Mode=OneWay}"
 						  Icon="Download"
-						  Label="Download" />
+						  Label="Download">
+				<AppBarButton.KeyboardAccelerators>
+					<KeyboardAccelerator Key="S" Modifiers="Control" />
+				</AppBarButton.KeyboardAccelerators>
+			</AppBarButton>
 			<AppBarButton Command="{x:Bind ViewModel.RefreshCommand, Mode=OneWay}"
 						  Icon="Refresh"
 						  Label="Refresh"
@@ -181,6 +210,14 @@
 							  Label="Select all">
 					<AppBarButton.KeyboardAccelerators>
 						<KeyboardAccelerator Key="A" Modifiers="Control" />
+					</AppBarButton.KeyboardAccelerators>
+				</AppBarButton>
+				<AppBarButton Command="{x:Bind ViewModel.DeleteCommand, Mode=OneWay}"
+							  CommandParameter="{x:Bind SelectedItems, Mode=OneWay}"
+							  Icon="Delete"
+							  Label="Delete">
+					<AppBarButton.KeyboardAccelerators>
+						<KeyboardAccelerator Key="Delete" />
 					</AppBarButton.KeyboardAccelerators>
 				</AppBarButton>
 				<AppBarSeparator />
