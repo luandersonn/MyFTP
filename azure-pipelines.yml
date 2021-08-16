@@ -1,6 +1,6 @@
 trigger:
 - main
-
+- dev
 # Do not trigger on pull request
 pr: none
 
