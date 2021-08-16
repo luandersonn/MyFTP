@@ -5,8 +5,18 @@
 	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	  xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+	  xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
+	  xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
+	  xmlns:viewmodels="using:MyFTP.ViewModels"
 	  muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
 	  mc:Ignorable="d">
+
+	<Page.Resources>
+		<TransitionCollection x:Key="DefaultTransitions">
+			<RepositionThemeTransition />
+		</TransitionCollection>
+	</Page.Resources>
+
 	<Grid>
 		<controls:TitleBarControl Height="40"
 								  Padding="12,0"
@@ -58,10 +68,12 @@
 								</Image.Source>
 							</Image>
 
-							<StackPanel Orientation="Horizontal" Spacing="8">
+							<StackPanel Orientation="Horizontal" Spacing="4">
 								<TextBox Width="212"
 										 VerticalAlignment="Center"
 										 Header="Host"
+										 PlaceholderForeground="{ThemeResource SystemBaseLowColor}"
+										 PlaceholderText="ftp.example.com"
 										 Text="{x:Bind ViewModel.Host}" />
 
 								<muxc:NumberBox Width="100"
@@ -70,13 +82,25 @@
 												Value="{x:Bind ViewModel.Port}" />
 							</StackPanel>
 
-							<AutoSuggestBox Header="Username"
-											ItemsSource="{x:Bind ViewModel.SavedCredentialsList, Mode=OneWay}"
-											LostFocus="AutoSuggestBoxLostFocus"
-											SuggestionChosen="AutoSuggestBoxSuggestionChosen"
-											Text="{x:Bind ViewModel.Username, Mode=TwoWay, UpdateSourceTrigger=LostFocus}"
-											TextChanged="OnUsernameTextboxTextChanged" />
+							<TextBox Header="Username"
+									 PlaceholderForeground="{ThemeResource SystemBaseLowColor}"
+									 PlaceholderText="example@example.com"
+									 Text="{x:Bind ViewModel.Username, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
 							<PasswordBox Header="Password" Password="{x:Bind ViewModel.Password}" />
+
+							<Grid Opacity="0.6">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="20" />
+									<ColumnDefinition Width="*" />
+								</Grid.ColumnDefinitions>
+								<FontIcon FontSize="12" Glyph="&#xE946;" />
+								<TextBlock Grid.Column="1"
+										   VerticalAlignment="Center"
+										   FontSize="12"
+										   Text="Leave username/password blank for anonymous login"
+										   TextWrapping="Wrap" />
+							</Grid>
+
 							<CheckBox Content="Save credentials"
 									  IsChecked="{x:Bind ViewModel.SaveCredentials}"
 									  IsEnabled="{x:Bind ViewModel.CanSaveCredentials, Mode=OneTime}" />
@@ -91,7 +115,8 @@
 								</Button.KeyboardAccelerators>
 							</Button>
 
-							<muxc:ProgressBar Background="Transparent"
+							<muxc:ProgressBar d:IsIndeterminate="True"
+											  Background="Transparent"
 											  IsIndeterminate="{x:Bind ViewModel.LoginCommand.IsRunning, Mode=OneWay}"
 											  ShowError="{x:Bind infoBar.IsOpen, Mode=OneWay}" />
 
@@ -107,48 +132,70 @@
 							<HyperlinkButton Content="Privacy policy" NavigateUri="https://myftp.luandersonn.com/privacy" />
 						</StackPanel>
 					</ScrollViewer>
-					<Button Height="32"
-							Margin="16"
-							HorizontalAlignment="Right"
-							VerticalAlignment="Bottom"
-							Content="&#xE136;"
-							FontFamily="Segoe MDL2 Assets"
-							ToolTipService.ToolTip="Saved credentials"
-							Visibility="{x:Bind ViewModel.SavedCredentialsList.Count, Converter={StaticResource ItemToBoolConverter}, Mode=OneWay}">
-						<Button.Flyout>
-							<Flyout>
-								<ListView IsItemClickEnabled="True"
-										  ItemClick="OnCredentialClicked"
-										  ItemsSource="{x:Bind ViewModel.SavedCredentialsList}"
-										  SelectionMode="None">
-									<ListView.ItemTemplate>
-										<DataTemplate>
-											<Grid ColumnSpacing="4">
-												<Grid.ColumnDefinitions>
-													<ColumnDefinition Width="auto" />
-													<ColumnDefinition Width="*" />
-													<ColumnDefinition Width="auto" />
-												</Grid.ColumnDefinitions>
-												<FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE13D;" />
+					<toolkit:WrapPanel Margin="16"
+									   HorizontalAlignment="Right"
+									   VerticalAlignment="Bottom"
+									   ChildrenTransitions="{StaticResource DefaultTransitions}"
+									   HorizontalSpacing="4"
+									   VerticalSpacing="4">
+						<Button Height="32"
+								ToolTipService.ToolTip="Saved credentials"
+								Visibility="{x:Bind ViewModel.SavedCredentialsList.Count, Converter={StaticResource ItemToBoolConverter}, Mode=OneWay}">
+							<Button.Flyout>
+								<Flyout Placement="LeftEdgeAlignedBottom">
+									<ListView ui:ListViewExtensions.Command="{x:Bind ViewModel.LoginCommand}"
+											  IsItemClickEnabled="True"
+											  ItemsSource="{x:Bind ViewModel.SavedCredentialsList}"
+											  SelectionMode="None">
+										<ListViewBase.Header>
+											<muxc:ProgressRing Margin="0,8"
+															   IsActive="{x:Bind ViewModel.LoginCommand.IsRunning, Mode=OneWay}"
+															   Visibility="{x:Bind ViewModel.LoginCommand.IsRunning, Mode=OneWay}" />
+										</ListViewBase.Header>
+										<ListView.ItemTemplate>
+											<DataTemplate x:DataType="viewmodels:FtpHostSettingsViewModel">
+												<Grid Padding="0,8"
+													  ColumnSpacing="12"
+													  ToolTipService.ToolTip="Click to connect">
+													<Grid.ColumnDefinitions>
+														<ColumnDefinition Width="auto" />
+														<ColumnDefinition Width="*" />
+														<ColumnDefinition Width="auto" />
+													</Grid.ColumnDefinitions>
+													<FontIcon FontSize="20" Glyph="&#xE13D;" />
 
-												<TextBlock Grid.Column="1"
-														   VerticalAlignment="Center"
-														   Text="{Binding}"
-														   TextTrimming="CharacterEllipsis" />
+													<StackPanel Grid.Column="1" VerticalAlignment="Center">
+														<TextBlock VerticalAlignment="Bottom" TextTrimming="CharacterEllipsis">
+															<Run Text="{x:Bind Host}" /><Run Text=":" /><Run Text="{x:Bind Port}" />
+														</TextBlock>
 
-												<Button Grid.Column="2"
-														Click="OnDeleteSavedCredentialClicked"
-														Content="&#xE107;"
-														FontFamily="Segoe MDL2 Assets"
-														Style="{ThemeResource DestructiveButtonStyle}"
-														ToolTipService.ToolTip="Delete credential" />
-											</Grid>
-										</DataTemplate>
-									</ListView.ItemTemplate>
-								</ListView>
-							</Flyout>
-						</Button.Flyout>
-					</Button>
+														<TextBlock FontStyle="Italic"
+																   Opacity="0.6"
+																   Text="{x:Bind Username}"
+																   Visibility="{x:Bind Username, Converter={StaticResource ItemToBoolConverter}}" />
+													</StackPanel>
+
+													<Button Grid.Column="2"
+															Click="OnDeleteCredentialClicked"
+															Command="{x:Bind DeleteSettingCommand}"
+															Content="&#xE107;"
+															FontFamily="Segoe MDL2 Assets"
+															Style="{ThemeResource DestructiveButtonStyle}"
+															ToolTipService.ToolTip="Delete credential" />
+												</Grid>
+											</DataTemplate>
+										</ListView.ItemTemplate>
+									</ListView>
+								</Flyout>
+							</Button.Flyout>
+							<FontIcon FontSize="14" Glyph="&#xE136;" />
+						</Button>
+						<Button Height="32"
+								Click="{x:Bind GoToSettings}"
+								ToolTipService.ToolTip="Go to settings">
+							<FontIcon FontSize="14" Glyph="&#xE713;" />
+						</Button>
+					</toolkit:WrapPanel>
 				</Grid>
 			</muxc:TwoPaneView.Pane1>
 			<muxc:TwoPaneView.Pane2>

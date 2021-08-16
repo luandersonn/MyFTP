@@ -1,6 +1,7 @@
 ﻿using Microsoft.Toolkit.Mvvm.Input;
 using MyFTP.ViewModels;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.UI.Xaml;
@@ -14,14 +15,14 @@ namespace MyFTP.Services
 
 		public DialogService(ISettings settings) => _settings = settings;
 
-		public async Task<bool> AskForDeleteAsync(FtpListItemViewModel itemToDelete)
+		public async Task<bool> AskForDeleteAsync(IEnumerable<FtpListItemViewModel> itemsToDelete)
 		{
 			ElementTheme theme = default;
 			_settings?.TryGet<ElementTheme>("AppTheme", out theme);
 
 			var dialog = new Controls.DeleteItemDialog
 			{
-				DataContext = itemToDelete,
+				DataContext = itemsToDelete,
 				RequestedTheme = theme
 			};
 			return await dialog.ShowAsync() == ContentDialogResult.Primary;

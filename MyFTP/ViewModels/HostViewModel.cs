@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Utils.Comparers;
 using Windows.Storage;
@@ -16,8 +17,7 @@ namespace MyFTP.ViewModels
 {
 	public class HostViewModel : BindableItem
 	{
-		private IObservableSortedCollection<FtpListItemViewModel> _items;
-		public IFtpClient Client { get; private set; }
+		private IObservableSortedCollection<FtpListItemViewModel> _root;
 		public ITransferItemService TransferService { get; }
 		public IDialogService DialogService { get; }
 		public ReadOnlyObservableCollection<FtpListItemViewModel> Root { get; }
@@ -25,30 +25,32 @@ namespace MyFTP.ViewModels
 		public IAsyncRelayCommand<FtpListItemViewModel> UploadCommand { get; }
 		public IAsyncRelayCommand<IEnumerable<FtpListItemViewModel>> DownloadCommand { get; }
 		public IAsyncRelayCommand<FtpListItemViewModel> DeleteCommand { get; }
+		public IAsyncRelayCommand<FtpListItemViewModel> DisconnectCommand { get; }
 
-		public HostViewModel(IFtpClient client, ITransferItemService transferService, IDialogService dialogService)
+		public HostViewModel(ITransferItemService transferService, IDialogService dialogService)
 		{
-			Client = client;
 			TransferService = transferService;
 			transferService?.Start();
 			DialogService = dialogService;
-			_items = new ObservableSortedCollection<FtpListItemViewModel>(new FtpListItemComparer());
-			Root = new ReadOnlyObservableCollection<FtpListItemViewModel>((ObservableSortedCollection<FtpListItemViewModel>)_items);
+			_root = new ObservableSortedCollection<FtpListItemViewModel>(new FtpListItemComparer());
+			Root = new ReadOnlyObservableCollection<FtpListItemViewModel>((ObservableSortedCollection<FtpListItemViewModel>)_root);
 
 			RefreshCommand = new AsyncRelayCommand<FtpListItemViewModel>
 				(async item => await item.RefreshCommand.ExecuteAsync(null),
 				item => IsNotNull(item) && item.RefreshCommand.CanExecute(null));
 
 			UploadCommand = new AsyncRelayCommand<FtpListItemViewModel>
-				(async item => await item.UploadCommand.ExecuteAsync(null),
-				item => IsNotNull(item) && item.UploadCommand.CanExecute(null));
+				(async item => await item.UploadFilesCommand.ExecuteAsync(null),
+				item => IsNotNull(item) && item.UploadFilesCommand.CanExecute(null));
 
 			DownloadCommand = new AsyncRelayCommand<IEnumerable<FtpListItemViewModel>>(DownloadCommandAsync, CanExecuteDownloadCommand);
 
 			DeleteCommand = new AsyncRelayCommand<FtpListItemViewModel>(
 				async (item) => await item.DeleteCommand.ExecuteAsync(null),
 				(item) => item.DeleteCommand.CanExecute(item));
-		}
+
+			DisconnectCommand = new AsyncRelayCommand<FtpListItemViewModel>(OnDisconnectCommandAsync, IsNotNull);
+		}		
 
 		private async Task DownloadCommandAsync(IEnumerable<FtpListItemViewModel> items)
 		{
@@ -60,14 +62,30 @@ namespace MyFTP.ViewModels
 					if (item.Type == FtpFileSystemObjectType.Directory)
 					{
 						var newFolder = await folder.CreateFolderAsync(item.Name, CreationCollisionOption.ReplaceExisting);
-						TransferService.EnqueueDownload(Client, item.FullName, newFolder);
+						TransferService.EnqueueDownload(item.Client, item.FullName, newFolder);
 					}
 					else
 					{
 						var file = await folder.CreateFileAsync(item.Name, CreationCollisionOption.GenerateUniqueName);
-						TransferService.EnqueueDownload(Client, item.FullName, file);
+						TransferService.EnqueueDownload(item.Client, item.FullName, file);
 					}
 				}
+			}
+		}
+
+		private async Task OnDisconnectCommandAsync(FtpListItemViewModel arg, CancellationToken token)
+		{
+			var root = arg;
+			try
+			{
+				// Get the root
+				while (root.Parent != null)
+					root = root.Parent;
+				await root.Client.DisconnectAsync(token);
+			}
+			finally
+			{
+				_root.RemoveItem(root);
 			}
 		}
 
@@ -78,26 +96,10 @@ namespace MyFTP.ViewModels
 		}
 		#endregion
 
-		public async Task LoadRootAsync()
+		public void AddItem(FtpListItemViewModel root)
 		{
-			if (!_items.Any())
-			{
-				var item = await Client.GetObjectInfoAsync("/");
-
-				if (item is null)
-				{
-					var d = default(DateTime);
-					item = new FtpListItem("", "/" , -1, true, ref d)
-					{
-						FullName = "/",
-						Type = FtpFileSystemObjectType.Directory						
-					};
-				}
-				_items.AddItem(new FtpListItemViewModel(Client, item, null, TransferService, DialogService));
-			}
+			_root.AddItem(root);
 		}
-
-		public async Task DisconnectAsync() => await Client.DisconnectAsync();
 
 		private bool IsNotNull(FtpListItemViewModel item) => item != null;
 	}

@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.Messaging;
 using MyFTP.Controls;
-using MyFTP.Services;
 using MyFTP.Utils;
 using MyFTP.ViewModels;
 using System;
@@ -9,9 +8,11 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.Storage.FileProperties;
 using Windows.Storage.Pickers;
 using Windows.System;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -26,6 +27,7 @@ namespace MyFTP.Views
 		public HostViewPage()
 		{
 			InitializeComponent();
+			ViewModel = App.Current.Services.GetRequiredService<HostViewModel>();
 			Crumbs = new ObservableCollection<FtpListItemViewModel>();
 			NavigationHistory = new NavigationHistory<FtpListItemViewModel>();
 			Loaded += (sender, args) =>
@@ -37,9 +39,15 @@ namespace MyFTP.Views
 				WeakReferenceMessenger.Default.Register<SelectedItemChangedMessage<FtpListItemViewModel>>(this, OnSelectedItemChanged);
 				_onTreeViewSelectedItemChangedToken = treeView.RegisterPropertyChangedCallback(muxc.TreeView.SelectedItemProperty, OnSelectedItemChanged);
 				Window.Current.CoreWindow.PointerPressed += OnCoreWindowPointerPressed;
+				
 				this.AddKeyboardAccelerator(VirtualKey.Back, OnAcceleratorRequested);
 				this.AddKeyboardAccelerator(VirtualKey.Left, VirtualKeyModifiers.Menu, OnAcceleratorRequested);
 				this.AddKeyboardAccelerator(VirtualKey.Right, VirtualKeyModifiers.Menu, OnAcceleratorRequested);
+				this.AddKeyboardAccelerator(VirtualKey.N, VirtualKeyModifiers.Control, OnAcceleratorRequested);
+				this.AddKeyboardAccelerator(VirtualKey.O, VirtualKeyModifiers.Control | VirtualKeyModifiers.Shift, OnAcceleratorRequested);
+				this.AddKeyboardAccelerator(VirtualKey.W, VirtualKeyModifiers.Control, OnAcceleratorRequested);
+				this.AddKeyboardAccelerator(VirtualKey.F11, OnAcceleratorRequested);
+
 				IconRotation.Begin();
 			};
 			Unloaded += (sender, args) =>
@@ -55,27 +63,29 @@ namespace MyFTP.Views
 			};
 		}
 
-		public HostViewModel ViewModel { get => (HostViewModel)GetValue(ViewModelProperty); set => SetValue(ViewModelProperty, value); }
-		public static readonly DependencyProperty ViewModelProperty = DependencyProperty.Register("ViewModel",
-			typeof(HostViewModel), typeof(HostViewPage), new PropertyMetadata(null));
 
+		public HostViewModel ViewModel { get; }
 		public ObservableCollection<FtpListItemViewModel> Crumbs { get; }
 		public NavigationHistory<FtpListItemViewModel> NavigationHistory { get; }
 
 		protected async override void OnNavigatedTo(NavigationEventArgs args)
 		{
-			try
+			_frame.Navigate(typeof(FtpDirectoryViewPage));
+			if (args.NavigationMode == NavigationMode.New)
 			{
-				_frame.Navigate(typeof(FtpDirectoryViewPage));
-				ViewModel = args.Parameter as HostViewModel;
-				if (ViewModel == null)
-					throw new InvalidOperationException("Invalid param");
-				await ViewModel.LoadRootAsync();
-				treeView.SelectedNode = treeView.RootNodes.FirstOrDefault();
-			}
-			catch (Exception e)
-			{
-				ShowError(e.Message, e);
+				try
+				{
+					var root = args.Parameter as FtpListItemViewModel;
+					if (root == null)
+						throw new InvalidOperationException("Invalid param");
+					ViewModel.AddItem(root);
+					await Task.Delay(500);
+					treeView.SelectedNode = treeView.RootNodes.FirstOrDefault(x => x.Content == root);
+				}
+				catch (Exception e)
+				{
+					ShowError(e.Message, e);
+				}
 			}
 		}
 
@@ -144,6 +154,10 @@ namespace MyFTP.Views
 				} while (crumb != null);
 				WeakReferenceMessenger.Default.Send(new SelectedItemChangedMessage<FtpListItemViewModel>(this, item));
 			}
+			else if (treeView.RootNodes.Count == 0) // No Hosts! Back to login page
+			{
+				Frame.GoBack();
+			}
 		}
 
 		private void OnCoreWindowPointerPressed(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.PointerEventArgs args)
@@ -160,12 +174,19 @@ namespace MyFTP.Views
 			}
 		}
 
-		private void OnAcceleratorRequested(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
+		private async void OnAcceleratorRequested(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
 		{
 			switch (args.KeyboardAccelerator.Key)
 			{
 				case VirtualKey.Back when NavigationHistory.CurrentItem?.Parent != null: // Go up
-					treeView.SelectedItem = NavigationHistory.CurrentItem.Parent;
+					if (NavigationHistory.CurrentItem.Parent.Parent == null) // Root
+					{
+						treeView.SelectedNode = treeView.RootNodes.FirstOrDefault(x => x.Content == NavigationHistory.CurrentItem.Parent);
+					}
+					else
+					{
+						treeView.SelectedItem = NavigationHistory.CurrentItem.Parent;
+					}
 					args.Handled = true;
 					break;
 
@@ -176,53 +197,40 @@ namespace MyFTP.Views
 				case VirtualKey.Right when args.KeyboardAccelerator.Modifiers == VirtualKeyModifiers.Menu:
 					args.Handled = NavigationHistory.GoForward();
 					break;
+
+				case VirtualKey.N when args.KeyboardAccelerator.Modifiers == VirtualKeyModifiers.Control:
+					args.Handled = true;
+					await NewConnectionAsync();
+					break;
+
+				case VirtualKey.O when args.KeyboardAccelerator.Modifiers == (VirtualKeyModifiers.Control | VirtualKeyModifiers.Shift)
+												&& treeView.SelectedItem is FtpListItemViewModel dir
+												&& dir.IsDirectory
+												&& dir.UploadFolderCommand.CanExecute(null):
+					dir.UploadFolderCommand.Execute(null);
+					args.Handled = true;
+					break;
+
+				case VirtualKey.W when args.KeyboardAccelerator.Modifiers == VirtualKeyModifiers.Control
+												&& ViewModel.DisconnectCommand.CanExecute(treeView.SelectedItem):
+					ViewModel.DisconnectCommand.Execute(treeView.SelectedItem);
+					args.Handled = true;
+					break;
+
+				case VirtualKey.F11:
+					FullScreenToggle();
+					args.Handled = true;
+					break;
 			}
 		}
 
-		private async void OnDisconnectButtonClick(muxc.SplitButton sender, muxc.SplitButtonClickEventArgs args)
+		private void FullScreenToggle()
 		{
-			try
-			{
-				await ViewModel.DisconnectAsync();
-			}
-			finally
-			{
-				Frame.GoBack();
-			}
-		}
-
-		private void OnRadioThemeLoaded(object sender, RoutedEventArgs e)
-		{
-			var radio = (muxc.RadioMenuFlyoutItem)sender;
-			var radioTheme = ((ElementTheme)Enum.Parse(typeof(ElementTheme), radio.Tag.ToString())).ToString();
-			if (Frame.RequestedTheme.ToString() == radioTheme)
-			{
-				radio.IsChecked = true;
-			}
-		}
-
-		private void OnRadioActualThemeChanged(FrameworkElement sender, object args) => OnRadioThemeLoaded(sender, null);
-
-		private void OnRadioThemeClick(object sender, RoutedEventArgs e)
-		{
-			var radio = (muxc.RadioMenuFlyoutItem)sender;
-			var radioTheme = ((ElementTheme)Enum.Parse(typeof(ElementTheme), radio.Tag.ToString()));
-			var settings = App.Current.Services.GetService<ISettings>();
-			if (settings != null)
-				settings.TrySet("AppTheme", radioTheme);
-		}
-
-		private async void OnAboutMenuFlyoutItemClicked(object sender, RoutedEventArgs e)
-		{
-			try
-			{
-				this.IsEnabled = false;
-				await new AboutDialog().ShowAsync();
-			}
-			finally
-			{
-				this.IsEnabled = true;
-			}
+			var view = ApplicationView.GetForCurrentView();
+			if (view.IsFullScreenMode)
+				view.ExitFullScreenMode();
+			else
+				view.TryEnterFullScreenMode();
 		}
 
 		private void ShowError(string message, Exception e = null)
@@ -236,14 +244,20 @@ namespace MyFTP.Views
 
 		private void OnButtonUpClicked(object sender, RoutedEventArgs args)
 		{
-			treeView.SelectedItem = Crumbs.Reverse().Skip(1).FirstOrDefault();
+			var item = Crumbs.Reverse().Skip(1).FirstOrDefault();
+			if (item == null)
+				treeView.SelectedNode = treeView.RootNodes.FirstOrDefault();
+			else if (item.Parent == null) // root #BUG 
+				treeView.SelectedNode = treeView.RootNodes.FirstOrDefault(x => x.Content == item);
+			else
+				treeView.SelectedItem = item;
 		}
 		private void OnBreadcrumbBarItemClicked(muxc.BreadcrumbBar sender, muxc.BreadcrumbBarItemClickedEventArgs args)
 		{
 			// #BUG 
 			if (args.Index == 0)
 			{
-				treeView.SelectedNode = treeView.RootNodes.FirstOrDefault();
+				treeView.SelectedNode = treeView.RootNodes.FirstOrDefault(x => x.Content == args.Item);
 			}
 			else
 				treeView.SelectedItem = args.Item;
@@ -309,6 +323,27 @@ namespace MyFTP.Views
 		{
 			treeView.SelectedItem = e.ClickedItem;
 		}
+
+		private async Task NewConnectionAsync()
+		{
+			var dialog = new LoginDialog
+			{
+				RequestedTheme = ActualTheme
+			};
+			if (await dialog.ShowAsync() == Windows.UI.Xaml.Controls.ContentDialogResult.Primary)
+			{
+				ViewModel.AddItem(dialog.Result);
+				await Task.Delay(200);
+				treeView.SelectedNode = treeView.RootNodes.FirstOrDefault(x => x.Content == dialog.Result);
+			}
+		}
+
+		private void GoBack()
+		{
+			if (Frame.CanGoBack)
+				Frame.GoBack();
+		}
+		private void GoToSettings() => Frame.Navigate(typeof(SettingsViewPage));
 
 		private void ExitApp() => Application.Current.Exit();
 	}
