@@ -80,7 +80,7 @@ namespace MyFTP.Views
 						throw new InvalidOperationException("Invalid param");
 					ViewModel.AddItem(root);
 					await Task.Delay(500);
-					treeView.SelectedNode = treeView.RootNodes.FirstOrDefault(x => x.Content == root);
+					ChangeTreeViewSelection(root);
 				}
 				catch (Exception e)
 				{
@@ -128,7 +128,7 @@ namespace MyFTP.Views
 
 		private void OnSelectedItemChanged(object recipient, SelectedItemChangedMessage<FtpListItemViewModel> message)
 		{
-			treeView.SelectedItem = message.Item;
+			ChangeTreeViewSelection(message.Item);
 		}
 
 		private void OnSelectedItemChanged(DependencyObject d, DependencyProperty args)
@@ -181,7 +181,7 @@ namespace MyFTP.Views
 				// Due TreeView bug, you need set the node manually :(
 				if (NavigationHistory.CurrentItem != null && NavigationHistory.CurrentItem.Parent == null) // Root item!
 				{
-					treeView.SelectedNode = treeView.RootNodes.FirstOrDefault(x => x.Content == NavigationHistory.CurrentItem);
+					ChangeTreeViewSelection(NavigationHistory.CurrentItem);
 				}
 			}
 		}
@@ -191,23 +191,18 @@ namespace MyFTP.Views
 			switch (args.KeyboardAccelerator.Key)
 			{
 				case VirtualKey.Back when NavigationHistory.CurrentItem?.Parent != null: // Go up
-					if (NavigationHistory.CurrentItem.Parent.Parent == null) // Root
-					{
-						treeView.SelectedNode = treeView.RootNodes.FirstOrDefault(x => x.Content == NavigationHistory.CurrentItem.Parent);
-					}
-					else
-					{
-						treeView.SelectedItem = NavigationHistory.CurrentItem.Parent;
-					}
+					ChangeTreeViewSelection(NavigationHistory.CurrentItem.Parent);
 					args.Handled = true;
 					break;
 
 				case VirtualKey.Left when args.KeyboardAccelerator.Modifiers == VirtualKeyModifiers.Menu:
 					args.Handled = NavigationHistory.GoBack();
+					ChangeTreeViewSelection(NavigationHistory.CurrentItem);
 					break;
 
 				case VirtualKey.Right when args.KeyboardAccelerator.Modifiers == VirtualKeyModifiers.Menu:
 					args.Handled = NavigationHistory.GoForward();
+					ChangeTreeViewSelection(NavigationHistory.CurrentItem);
 					break;
 
 				case VirtualKey.N when args.KeyboardAccelerator.Modifiers == VirtualKeyModifiers.Control:
@@ -245,6 +240,14 @@ namespace MyFTP.Views
 				view.TryEnterFullScreenMode();
 		}
 
+		private void ChangeTreeViewSelection(FtpListItemViewModel item)
+		{
+			if (item != null && item.Parent == null) // Root item, due TreeView bug, change selection using SelectedNode property			
+				treeView.SelectedNode = treeView.RootNodes.FirstOrDefault(node => node.Content == item);
+			else
+				treeView.SelectedItem = item;
+		}
+
 		private void ShowError(string message, Exception e = null)
 		{
 			infoBar.IsOpen = false;
@@ -257,22 +260,11 @@ namespace MyFTP.Views
 		private void OnButtonUpClicked(object sender, RoutedEventArgs args)
 		{
 			var item = Crumbs.Reverse().Skip(1).FirstOrDefault();
-			if (item == null)
-				treeView.SelectedNode = treeView.RootNodes.FirstOrDefault();
-			else if (item.Parent == null) // root #BUG 
-				treeView.SelectedNode = treeView.RootNodes.FirstOrDefault(x => x.Content == item);
-			else
-				treeView.SelectedItem = item;
+			ChangeTreeViewSelection(item ?? treeView.RootNodes.FirstOrDefault()?.Content as FtpListItemViewModel);
 		}
 		private void OnBreadcrumbBarItemClicked(muxc.BreadcrumbBar sender, muxc.BreadcrumbBarItemClickedEventArgs args)
 		{
-			// #BUG 
-			if (args.Index == 0)
-			{
-				treeView.SelectedNode = treeView.RootNodes.FirstOrDefault(x => x.Content == args.Item);
-			}
-			else
-				treeView.SelectedItem = args.Item;
+			ChangeTreeViewSelection(args.Item as FtpListItemViewModel);
 		}
 
 		private async void OnListViewContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
@@ -333,7 +325,7 @@ namespace MyFTP.Views
 
 		private void OnListViewItemClick(object sender, ItemClickEventArgs e)
 		{
-			treeView.SelectedItem = e.ClickedItem;
+			ChangeTreeViewSelection(e.ClickedItem as FtpListItemViewModel);
 		}
 
 		private async Task NewConnectionAsync()
@@ -346,7 +338,7 @@ namespace MyFTP.Views
 			{
 				ViewModel.AddItem(dialog.Result);
 				await Task.Delay(200);
-				treeView.SelectedNode = treeView.RootNodes.FirstOrDefault(x => x.Content == dialog.Result);
+				ChangeTreeViewSelection(dialog.Result);
 			}
 		}
 
