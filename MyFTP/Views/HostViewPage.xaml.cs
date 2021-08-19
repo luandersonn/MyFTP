@@ -39,7 +39,7 @@ namespace MyFTP.Views
 				WeakReferenceMessenger.Default.Register<SelectedItemChangedMessage<FtpListItemViewModel>>(this, OnSelectedItemChanged);
 				_onTreeViewSelectedItemChangedToken = treeView.RegisterPropertyChangedCallback(muxc.TreeView.SelectedItemProperty, OnSelectedItemChanged);
 				Window.Current.CoreWindow.PointerPressed += OnCoreWindowPointerPressed;
-				
+
 				this.AddKeyboardAccelerator(VirtualKey.Back, OnAcceleratorRequested);
 				this.AddKeyboardAccelerator(VirtualKey.Left, VirtualKeyModifiers.Menu, OnAcceleratorRequested);
 				this.AddKeyboardAccelerator(VirtualKey.Right, VirtualKeyModifiers.Menu, OnAcceleratorRequested);
@@ -165,12 +165,24 @@ namespace MyFTP.Views
 			if (args.CurrentPoint.Properties.IsXButton1Pressed)
 			{
 				// Mouse back button pressed
-				args.Handled = NavigationHistory.GoBack();
+				if (NavigationHistory.GoBack())
+				{
+					args.Handled = true;
+				}
+
 			}
 			else if (args.CurrentPoint.Properties.IsXButton2Pressed)
 			{
 				// Mouse forward button pressed				
 				args.Handled = NavigationHistory.GoForward();
+			}
+			if (args.Handled)
+			{
+				// Due TreeView bug, you need set the node manually :(
+				if (NavigationHistory.CurrentItem != null && NavigationHistory.CurrentItem.Parent == null) // Root item!
+				{
+					treeView.SelectedNode = treeView.RootNodes.FirstOrDefault(x => x.Content == NavigationHistory.CurrentItem);
+				}
 			}
 		}
 
