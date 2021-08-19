@@ -386,7 +386,7 @@
 								  PlacementMargin="10"
 								  PreferredPlacement="Top"
 								  Target="{x:Bind infoButton, Mode=OneTime}"
-								  Visibility="{x:Bind NavigationHistory.CurrentItem, Converter={StaticResource ItemToBoolConverter}, Mode=OneWay}">
+								  >
 					<muxc:TeachingTip.IconSource>
 						<muxc:FontIconSource Glyph="&#xE968;" />
 					</muxc:TeachingTip.IconSource>
@@ -562,7 +562,7 @@
 							  Content="&#xE946;"
 							  FontFamily="Segoe MDL2 Assets"
 							  IsChecked="{x:Bind infoTeachingTip.IsOpen, Mode=TwoWay}"
-							  Visibility="Collapsed" />
+							  Visibility="{x:Bind NavigationHistory.CurrentItem, Converter={StaticResource ItemToBoolConverter}, Mode=OneWay}"/>
 			</toolkit:WrapPanel>
 
 			<Rectangle Width="1"
