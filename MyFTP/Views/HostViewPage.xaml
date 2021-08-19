@@ -391,7 +391,6 @@
 						<muxc:FontIconSource Glyph="&#xE968;" />
 					</muxc:TeachingTip.IconSource>
 					<StackPanel Padding="0,8" x:DefaultBindMode="OneWay">
-
 						<TextBlock Opacity="0.6" Text="Host" />
 						<TextBlock FontWeight="SemiBold" Text="{x:Bind NavigationHistory.CurrentItem.Client.Host}" />
 

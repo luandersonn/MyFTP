@@ -189,7 +189,6 @@
 												<TextBlock Opacity="0.6" Text="{x:Bind Username}" />
 												<TextBlock Opacity="0.6" Text="••••••••••••••••" />
 											</StackPanel>
-
 											<Button HorizontalAlignment="Right" Content="Remove">
 												<Button.Flyout>
 													<Flyout Placement="Top">
