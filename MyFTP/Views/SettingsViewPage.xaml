@@ -69,7 +69,7 @@
 						<Run d:Text="Dowloading:"
 							 FontWeight="SemiBold"
 							 Text="Downloading:" />
-						<Run d:Text="2.2 MB" Text="{x:Bind ViewModel.UpdateService.UpdateInstallProgress.PackageDownloadSizeInBytes, Converter={StaticResource SizeInBytesHumanizeConverter}, Mode=OneWay}" />
+						<Run d:Text="2.2 MB" Text="{x:Bind ViewModel.UpdateService.UpdateInstallProgress.PackageBytesDownloaded, Converter={StaticResource SizeInBytesHumanizeConverter}, Mode=OneWay}" />
 						<Run Text="•" />
 						<Run d:Text="15.5 MB" Text="{x:Bind ViewModel.UpdateService.UpdateInstallProgress.PackageDownloadSizeInBytes, Converter={StaticResource SizeInBytesHumanizeConverter}, Mode=OneWay}" />
 					</TextBlock>
@@ -190,11 +190,20 @@
 												<TextBlock Opacity="0.6" Text="••••••••••••••••" />
 											</StackPanel>
 
-											<Button HorizontalAlignment="Right"
-													Click="OnDeleteHostClicked"
-													Command="{x:Bind DeleteSettingCommand}"
-													Content="Remove"
-													Style="{ThemeResource DestructiveButtonStyle}" />
+											<Button HorizontalAlignment="Right" Content="Remove">
+												<Button.Flyout>
+													<Flyout Placement="Top">
+														<StackPanel Spacing="4">
+															<TextBlock Text="Are you sure?" />
+															<Button HorizontalAlignment="Stretch"
+																	Click="OnDeleteHostClicked"
+																	Command="{x:Bind DeleteSettingCommand}"
+																	Content="Yes, remove settings"
+																	Style="{ThemeResource DestructiveButtonStyle}" />
+														</StackPanel>
+													</Flyout>
+												</Button.Flyout>
+											</Button>
 										</StackPanel>
 									</DataTemplate>
 								</muxc:ItemsRepeater.ItemTemplate>
