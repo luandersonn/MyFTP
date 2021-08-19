@@ -385,44 +385,45 @@
 								  IsLightDismissEnabled="True"
 								  PlacementMargin="10"
 								  PreferredPlacement="Top"
-								  Target="{x:Bind infoButton, Mode=OneTime}">
+								  Target="{x:Bind infoButton, Mode=OneTime}"
+								  Visibility="{x:Bind NavigationHistory.CurrentItem, Converter={StaticResource ItemToBoolConverter}, Mode=OneWay}">
 					<muxc:TeachingTip.IconSource>
 						<muxc:FontIconSource Glyph="&#xE968;" />
 					</muxc:TeachingTip.IconSource>
-					<StackPanel Padding="0,8">
-						<!--
+					<StackPanel Padding="0,8" x:DefaultBindMode="OneWay">
+
 						<TextBlock Opacity="0.6" Text="Host" />
-						<TextBlock FontWeight="SemiBold" Text="{x:Bind ViewModel.Client.Host}" />
+						<TextBlock FontWeight="SemiBold" Text="{x:Bind NavigationHistory.CurrentItem.Client.Host}" />
 
 						<TextBlock Margin="0,8,0,0"
 								   Opacity="0.6"
 								   Text="Username" />
-						<TextBlock FontWeight="SemiBold" Text="{x:Bind ViewModel.Client.Credentials.UserName}" />
+						<TextBlock FontWeight="SemiBold" Text="{x:Bind NavigationHistory.CurrentItem.Client.Credentials.UserName}" />
 
 						<TextBlock Margin="0,8,0,0"
 								   Opacity="0.6"
 								   Text="Port" />
-						<TextBlock FontWeight="SemiBold" Text="{x:Bind ViewModel.Client.Port}" />
+						<TextBlock FontWeight="SemiBold" Text="{x:Bind NavigationHistory.CurrentItem.Client.Port}" />
 
 						<TextBlock Margin="0,8,0,0"
 								   Opacity="0.6"
 								   Text="Connection type" />
-						<TextBlock FontWeight="SemiBold" Text="{x:Bind ViewModel.Client.ConnectionType}" />
+						<TextBlock FontWeight="SemiBold" Text="{x:Bind NavigationHistory.CurrentItem.Client.ConnectionType}" />
 
 						<TextBlock Margin="0,8,0,0"
 								   Opacity="0.6"
 								   Text="Server OS" />
-						<TextBlock FontWeight="SemiBold" Text="{x:Bind ViewModel.Client.ServerOS}" />
+						<TextBlock FontWeight="SemiBold" Text="{x:Bind NavigationHistory.CurrentItem.Client.ServerOS}" />
 
 						<TextBlock Margin="0,8,0,0"
 								   Opacity="0.6"
 								   Text="Server type" />
-						<TextBlock FontWeight="SemiBold" Text="{x:Bind ViewModel.Client.ServerType}" />
+						<TextBlock FontWeight="SemiBold" Text="{x:Bind NavigationHistory.CurrentItem.Client.ServerType}" />
 
 						<TextBlock Margin="0,8,0,0"
 								   Opacity="0.6"
 								   Text="System Type" />
-						<TextBlock FontWeight="SemiBold" Text="{x:Bind ViewModel.Client.SystemType}" />-->
+						<TextBlock FontWeight="SemiBold" Text="{x:Bind NavigationHistory.CurrentItem.Client.SystemType}" />
 					</StackPanel>
 				</muxc:TeachingTip>
 
