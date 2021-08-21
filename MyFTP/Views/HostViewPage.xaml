@@ -14,7 +14,24 @@
 	  mc:Ignorable="d">
 
 	<Page.Resources>
-		<TransitionCollection x:Key="RepositionAnimation">
+
+        <SwipeItems x:Key="left" Mode="Execute">
+            <SwipeItem Text="Back" Background="Gray"
+                       Invoked="SwipeBack">
+                <SwipeItem.IconSource>
+                    <SymbolIconSource Symbol="Back"/>
+                </SwipeItem.IconSource>
+            </SwipeItem>
+        </SwipeItems>
+        <SwipeItems x:Key="right" Mode="Execute">
+            <SwipeItem Text="Forward" Background="Gray">
+                <SwipeItem.IconSource>
+                    <SymbolIconSource Symbol="Forward"/>
+                </SwipeItem.IconSource>
+            </SwipeItem>
+        </SwipeItems>
+
+        <TransitionCollection x:Key="RepositionAnimation">
 			<RepositionThemeTransition />
 		</TransitionCollection>
 
@@ -363,8 +380,12 @@
 				</toolkit:GridSplitter.Resources>
 			</toolkit:GridSplitter>
 
-			<Frame x:Name="_frame" Grid.Column="1" />
-		</Grid>
+            <SwipeControl LeftItems="{StaticResource left}" 
+						  RightItems="{StaticResource right}"
+                          Grid.Column="1" >
+                <Frame x:Name="_frame"/>
+            </SwipeControl>
+        </Grid>
 
 		<Grid Grid.Row="3"
 			  Height="30"
