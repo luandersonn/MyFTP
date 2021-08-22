@@ -15,24 +15,26 @@
 
 	<Page.Resources>
 
-        <SwipeItems x:Key="left" Mode="Execute">
-            <SwipeItem Text="Back" Background="Gray"
-                       Invoked="{x:Bind NavigationHistory.GoBack}">
-                <SwipeItem.IconSource>
-                    <SymbolIconSource Symbol="Back"/>
-                </SwipeItem.IconSource>
-            </SwipeItem>
-        </SwipeItems>
-        <SwipeItems x:Key="right" Mode="Execute">
-            <SwipeItem Text="Forward" Background="Gray"
-                       Invoked="{x:Bind NavigationHistory.GoForward}">
-                <SwipeItem.IconSource>
-                    <SymbolIconSource Symbol="Forward"/>
-                </SwipeItem.IconSource>
-            </SwipeItem>
-        </SwipeItems>
+		<muxc:SwipeItems x:Key="left" Mode="Execute">
+			<muxc:SwipeItem Background="Gray"
+							Invoked="{x:Bind NavigationHistory.GoBack}"
+							Text="Back">
+				<muxc:SwipeItem.IconSource>
+					<muxc:SymbolIconSource Symbol="Back" />
+				</muxc:SwipeItem.IconSource>
+			</muxc:SwipeItem>
+		</muxc:SwipeItems>
+		<muxc:SwipeItems x:Key="right" Mode="Execute">
+			<muxc:SwipeItem Background="Gray"
+							Invoked="{x:Bind NavigationHistory.GoForward}"
+							Text="Forward">
+				<muxc:SwipeItem.IconSource>
+					<muxc:SymbolIconSource Symbol="Forward" />
+				</muxc:SwipeItem.IconSource>
+			</muxc:SwipeItem>
+		</muxc:SwipeItems>
 
-        <TransitionCollection x:Key="RepositionAnimation">
+		<TransitionCollection x:Key="RepositionAnimation">
 			<RepositionThemeTransition />
 		</TransitionCollection>
 
@@ -108,11 +110,6 @@
 			<!--  Status bar  -->
 			<RowDefinition Height="auto" />
 		</Grid.RowDefinitions>
-
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="auto"/>
-        </Grid.ColumnDefinitions>
 
 		<controls:TitleBarControl x:Name="titleBar"
 								  Title="{x:Bind NavigationHistory.CurrentItem.Name, Mode=OneWay}"
@@ -339,8 +336,7 @@
 					  d:Message="Try again in a little bit"
 					  Severity="Error" />
 
-		<Grid Grid.Row="1"
-              Grid.RowSpan="2">
+		<Grid Grid.Row="1" Grid.RowSpan="2">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition x:Name="column"
 								  Width="180"
@@ -387,74 +383,73 @@
 				</toolkit:GridSplitter.Resources>
 			</toolkit:GridSplitter>
 
-            <SwipeControl LeftItems="{StaticResource left}" 
-						  RightItems="{StaticResource right}"
-                          Grid.Column="1" >
-                <Frame x:Name="_frame"/>
-            </SwipeControl>
-        </Grid>
+			<muxc:SwipeControl Grid.Column="1"
+							   LeftItems="{StaticResource left}"
+							   RightItems="{StaticResource right}">
+				<Frame x:Name="_frame" />
+			</muxc:SwipeControl>
+		</Grid>
 
-        <Grid Grid.Row="3"
+		<Grid Grid.Row="3"
 			  Height="30"
 			  BorderBrush="{ThemeResource SystemBaseLowColor}"
 			  BorderThickness="0,1,0,0">
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="{x:Bind column.Width, Mode=TwoWay}"
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="{x:Bind column.Width, Mode=TwoWay}"
 								  MinWidth="{x:Bind column.MinWidth, Mode=TwoWay}"
 								  MaxWidth="{x:Bind column.MaxWidth, Mode=TwoWay}" />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
+				<ColumnDefinition />
+			</Grid.ColumnDefinitions>
 
-            <Grid.Resources>
-                <muxc:TeachingTip x:Name="infoTeachingTip"
+			<Grid.Resources>
+				<muxc:TeachingTip x:Name="infoTeachingTip"
 								  Title="FTP informations"
 								  d:IsOpen="False"
 								  IsLightDismissEnabled="True"
 								  PlacementMargin="10"
 								  PreferredPlacement="Top"
-								  Target="{x:Bind infoButton, Mode=OneTime}"
-								  >
-                    <muxc:TeachingTip.IconSource>
-                        <muxc:FontIconSource Glyph="&#xE968;" />
-                    </muxc:TeachingTip.IconSource>
-                    <StackPanel Padding="0,8" x:DefaultBindMode="OneWay">
-                        <TextBlock Opacity="0.6" Text="Host" />
-                        <TextBlock FontWeight="SemiBold" Text="{x:Bind NavigationHistory.CurrentItem.Client.Host}" />
+								  Target="{x:Bind infoButton, Mode=OneTime}">
+					<muxc:TeachingTip.IconSource>
+						<muxc:FontIconSource Glyph="&#xE968;" />
+					</muxc:TeachingTip.IconSource>
+					<StackPanel Padding="0,8" x:DefaultBindMode="OneWay">
+						<TextBlock Opacity="0.6" Text="Host" />
+						<TextBlock FontWeight="SemiBold" Text="{x:Bind NavigationHistory.CurrentItem.Client.Host}" />
 
-                        <TextBlock Margin="0,8,0,0"
+						<TextBlock Margin="0,8,0,0"
 								   Opacity="0.6"
 								   Text="Username" />
-                        <TextBlock FontWeight="SemiBold" Text="{x:Bind NavigationHistory.CurrentItem.Client.Credentials.UserName}" />
+						<TextBlock FontWeight="SemiBold" Text="{x:Bind NavigationHistory.CurrentItem.Client.Credentials.UserName}" />
 
-                        <TextBlock Margin="0,8,0,0"
+						<TextBlock Margin="0,8,0,0"
 								   Opacity="0.6"
 								   Text="Port" />
-                        <TextBlock FontWeight="SemiBold" Text="{x:Bind NavigationHistory.CurrentItem.Client.Port}" />
+						<TextBlock FontWeight="SemiBold" Text="{x:Bind NavigationHistory.CurrentItem.Client.Port}" />
 
-                        <TextBlock Margin="0,8,0,0"
+						<TextBlock Margin="0,8,0,0"
 								   Opacity="0.6"
 								   Text="Connection type" />
-                        <TextBlock FontWeight="SemiBold" Text="{x:Bind NavigationHistory.CurrentItem.Client.ConnectionType}" />
+						<TextBlock FontWeight="SemiBold" Text="{x:Bind NavigationHistory.CurrentItem.Client.ConnectionType}" />
 
-                        <TextBlock Margin="0,8,0,0"
+						<TextBlock Margin="0,8,0,0"
 								   Opacity="0.6"
 								   Text="Server OS" />
-                        <TextBlock FontWeight="SemiBold" Text="{x:Bind NavigationHistory.CurrentItem.Client.ServerOS}" />
+						<TextBlock FontWeight="SemiBold" Text="{x:Bind NavigationHistory.CurrentItem.Client.ServerOS}" />
 
-                        <TextBlock Margin="0,8,0,0"
+						<TextBlock Margin="0,8,0,0"
 								   Opacity="0.6"
 								   Text="Server type" />
-                        <TextBlock FontWeight="SemiBold" Text="{x:Bind NavigationHistory.CurrentItem.Client.ServerType}" />
+						<TextBlock FontWeight="SemiBold" Text="{x:Bind NavigationHistory.CurrentItem.Client.ServerType}" />
 
-                        <TextBlock Margin="0,8,0,0"
+						<TextBlock Margin="0,8,0,0"
 								   Opacity="0.6"
 								   Text="System Type" />
-                        <TextBlock FontWeight="SemiBold" Text="{x:Bind NavigationHistory.CurrentItem.Client.SystemType}" />
-                    </StackPanel>
-                </muxc:TeachingTip>
+						<TextBlock FontWeight="SemiBold" Text="{x:Bind NavigationHistory.CurrentItem.Client.SystemType}" />
+					</StackPanel>
+				</muxc:TeachingTip>
 
-                <muxc:TeachingTip x:Name="transferTeachingTip"
+				<muxc:TeachingTip x:Name="transferTeachingTip"
 								  Title="Transfer queue"
 								  d:IsOpen="True"
 								  d:Title="Tranfer queue"
@@ -462,58 +457,58 @@
 								  PlacementMargin="10"
 								  PreferredPlacement="Top"
 								  Target="{x:Bind transferButton, Mode=OneTime}">
-                    <muxc:TeachingTip.IconSource>
-                        <muxc:FontIconSource Glyph="&#xE117;" />
-                    </muxc:TeachingTip.IconSource>
-                    <muxc:ItemsRepeater Margin="0,4" ItemsSource="{x:Bind ViewModel.TransferService.TransferQueue, Mode=OneTime}">
-                        <muxc:ItemsRepeater.ItemTemplate>
-                            <DataTemplate x:DataType="services:ITransferItem">
-                                <Grid Margin="0,0,0,4"
+					<muxc:TeachingTip.IconSource>
+						<muxc:FontIconSource Glyph="&#xE117;" />
+					</muxc:TeachingTip.IconSource>
+					<muxc:ItemsRepeater Margin="0,4" ItemsSource="{x:Bind ViewModel.TransferService.TransferQueue, Mode=OneTime}">
+						<muxc:ItemsRepeater.ItemTemplate>
+							<DataTemplate x:DataType="services:ITransferItem">
+								<Grid Margin="0,0,0,4"
 									  Padding="4"
 									  BorderBrush="{ThemeResource TeachingTipBorderBrush}"
 									  BorderThickness="0,0,0,1"
 									  ColumnSpacing="4"
 									  CornerRadius="4"
 									  RowSpacing="2">
-                                    <Grid.Transitions>
-                                        <TransitionCollection>
-                                            <AddDeleteThemeTransition />
-                                        </TransitionCollection>
-                                    </Grid.Transitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition />
-                                        <RowDefinition />
-                                        <RowDefinition />
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="40" />
-                                        <ColumnDefinition />
-                                        <ColumnDefinition Width="40" />
-                                    </Grid.ColumnDefinitions>
+									<Grid.Transitions>
+										<TransitionCollection>
+											<AddDeleteThemeTransition />
+										</TransitionCollection>
+									</Grid.Transitions>
+									<Grid.RowDefinitions>
+										<RowDefinition />
+										<RowDefinition />
+										<RowDefinition />
+									</Grid.RowDefinitions>
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="40" />
+										<ColumnDefinition />
+										<ColumnDefinition Width="40" />
+									</Grid.ColumnDefinitions>
 
-                                    <toolkit:SwitchPresenter Grid.RowSpan="3"
+									<toolkit:SwitchPresenter Grid.RowSpan="3"
 															 HorizontalAlignment="Stretch"
 															 VerticalAlignment="Stretch"
 															 TargetType="x:String"
 															 Value="{x:Bind Type.ToString()}">
-                                        <toolkit:Case Value="Upload">
-                                            <FontIcon HorizontalAlignment="Center"
+										<toolkit:Case Value="Upload">
+											<FontIcon HorizontalAlignment="Center"
 													  VerticalAlignment="Center"
 													  FontSize="15"
 													  Glyph="&#xE11C;"
 													  ToolTipService.ToolTip="Upload" />
-                                        </toolkit:Case>
+										</toolkit:Case>
 
-                                        <toolkit:Case Value="Download">
-                                            <FontIcon HorizontalAlignment="Center"
+										<toolkit:Case Value="Download">
+											<FontIcon HorizontalAlignment="Center"
 													  VerticalAlignment="Center"
 													  FontSize="15"
 													  Glyph="&#xE118;"
 													  ToolTipService.ToolTip="Download" />
-                                        </toolkit:Case>
-                                    </toolkit:SwitchPresenter>
+										</toolkit:Case>
+									</toolkit:SwitchPresenter>
 
-                                    <muxc:ProgressRing Grid.RowSpan="3"
+									<muxc:ProgressRing Grid.RowSpan="3"
 													   Width="40"
 													   Height="40"
 													   HorizontalAlignment="Center"
@@ -523,7 +518,7 @@
 													   Maximum="1"
 													   Value="{x:Bind Progress, Mode=OneWay}" />
 
-                                    <TextBlock x:Name="storageItemTextblock"
+									<TextBlock x:Name="storageItemTextblock"
 											   Grid.Column="1"
 											   FontSize="12"
 											   Text="{x:Bind StorageItem.Name}"
@@ -535,7 +530,7 @@
 										</ToolTipService.ToolTip>
 									</TextBlock>
 
-                                    <TextBlock x:Name="remotePathTextblock"
+									<TextBlock x:Name="remotePathTextblock"
 											   Grid.Row="1"
 											   Grid.Column="1"
 											   FontSize="12"
@@ -549,7 +544,7 @@
 										</ToolTipService.ToolTip>
 									</TextBlock>
 
-                                    <TextBlock Grid.Row="2"
+									<TextBlock Grid.Row="2"
 											   Grid.Column="1"
 											   FontSize="12"
 											   Foreground="{ThemeResource SystemAccentColor}"
@@ -557,7 +552,7 @@
 
 
 
-                                    <Button Grid.RowSpan="2"
+									<Button Grid.RowSpan="2"
 											Grid.Column="2"
 											HorizontalAlignment="Right"
 											VerticalAlignment="Stretch"
@@ -565,39 +560,39 @@
 											Click="{x:Bind Cancel}"
 											Content="&#xE10A;"
 											FontFamily="Segoe MDL2 Assets" />
-                                </Grid>
-                            </DataTemplate>
-                        </muxc:ItemsRepeater.ItemTemplate>
-                    </muxc:ItemsRepeater>
-                </muxc:TeachingTip>
+								</Grid>
+							</DataTemplate>
+						</muxc:ItemsRepeater.ItemTemplate>
+					</muxc:ItemsRepeater>
+				</muxc:TeachingTip>
 
-                <Storyboard x:Name="IconRotation"
+				<Storyboard x:Name="IconRotation"
 							AutoReverse="False"
 							RepeatBehavior="Forever">
-                    <DoubleAnimation Storyboard.TargetName="syncIcon"
+					<DoubleAnimation Storyboard.TargetName="syncIcon"
 									 Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)"
 									 To="360"
 									 Duration="0:0:1" />
-                </Storyboard>
-            </Grid.Resources>
+				</Storyboard>
+			</Grid.Resources>
 
-            <toolkit:WrapPanel Margin="4,0" VerticalAlignment="Center">
+			<toolkit:WrapPanel Margin="4,0" VerticalAlignment="Center">
 
-                <ToggleButton x:Name="infoButton"
+				<ToggleButton x:Name="infoButton"
 							  Background="Transparent"
 							  BorderThickness="0"
 							  Content="&#xE946;"
 							  FontFamily="Segoe MDL2 Assets"
 							  IsChecked="{x:Bind infoTeachingTip.IsOpen, Mode=TwoWay}"
-							  Visibility="{x:Bind NavigationHistory.CurrentItem, Converter={StaticResource ItemToBoolConverter}, Mode=OneWay}"/>
-            </toolkit:WrapPanel>
+							  Visibility="{x:Bind NavigationHistory.CurrentItem, Converter={StaticResource ItemToBoolConverter}, Mode=OneWay}" />
+			</toolkit:WrapPanel>
 
-            <Rectangle Width="1"
+			<Rectangle Width="1"
 					   HorizontalAlignment="Right"
 					   VerticalAlignment="Stretch"
 					   Fill="{ThemeResource SystemBaseLowColor}" />
 
-            <toolkit:GridSplitter Width="4"
+			<toolkit:GridSplitter Width="4"
 								  MinWidth="0"
 								  Margin="0,0,-2,0"
 								  HorizontalAlignment="Right"
@@ -607,19 +602,19 @@
 								  Foreground="Transparent"
 								  ResizeBehavior="BasedOnAlignment"
 								  ResizeDirection="Auto">
-                <toolkit:GridSplitter.Element>
-                    <FontIcon />
-                </toolkit:GridSplitter.Element>
-                <toolkit:GridSplitter.Resources>
-                    <SolidColorBrush x:Key="SystemControlSplitterPointerOver"
+				<toolkit:GridSplitter.Element>
+					<FontIcon />
+				</toolkit:GridSplitter.Element>
+				<toolkit:GridSplitter.Resources>
+					<SolidColorBrush x:Key="SystemControlSplitterPointerOver"
 									 Opacity="0.5"
 									 Color="{ThemeResource SystemBaseLowColor}" />
 
-                    <SolidColorBrush x:Key="SystemControlSplitterPressed" Color="{ThemeResource SystemBaseLowColor}" />
-                </toolkit:GridSplitter.Resources>
-            </toolkit:GridSplitter>
+					<SolidColorBrush x:Key="SystemControlSplitterPressed" Color="{ThemeResource SystemBaseLowColor}" />
+				</toolkit:GridSplitter.Resources>
+			</toolkit:GridSplitter>
 
-            <Button x:Name="transferButton"
+			<Button x:Name="transferButton"
 					Grid.Column="1"
 					Height="25"
 					Margin="4,0"
@@ -629,50 +624,44 @@
 					BorderThickness="0"
 					Click="{x:Bind OpenCloseTransferList, Mode=OneTime}"
 					Visibility="{x:Bind ViewModel.TransferService.CurrentItem, Converter={StaticResource ItemToBoolConverter}}">
-                <StackPanel Orientation="Horizontal" Spacing="8">
-                    <FontIcon x:Name="syncIcon"
+				<StackPanel Orientation="Horizontal" Spacing="8">
+					<FontIcon x:Name="syncIcon"
 							  VerticalAlignment="Center"
 							  FontSize="15"
 							  Glyph="&#xE117;"
 							  RenderTransformOrigin="0.5,0.5">
-                        <FontIcon.RenderTransform>
-                            <CompositeTransform />
-                        </FontIcon.RenderTransform>
-                    </FontIcon>
-                    <StackPanel Width="150"
+						<FontIcon.RenderTransform>
+							<CompositeTransform />
+						</FontIcon.RenderTransform>
+					</FontIcon>
+					<StackPanel Width="150"
 								VerticalAlignment="Center"
 								Orientation="Vertical"
 								Spacing="2">
-                        <TextBlock d:Text="My picture.jpg"
+						<TextBlock d:Text="My picture.jpg"
 								   FontSize="12"
 								   Text="{x:Bind ViewModel.TransferService.CurrentItem.StorageItem.Name}"
 								   TextAlignment="Center"
 								   TextTrimming="CharacterEllipsis" />
 
-                        <muxc:ProgressBar d:Value="0.4"
+						<muxc:ProgressBar d:Value="0.4"
 										  Maximum="1"
 										  Value="{x:Bind ViewModel.TransferService.CurrentItem.Progress}" />
-                    </StackPanel>
-                </StackPanel>
-            </Button>
+					</StackPanel>
+				</StackPanel>
+			</Button>
 
-            <TextBlock Grid.Column="1"
+			<TextBlock Grid.Column="1"
 					   Margin="12,0"
 					   HorizontalAlignment="Right"
 					   VerticalAlignment="Center"
 					   FontSize="12">
 				<Run Foreground="{ThemeResource SystemBaseMediumColor}" Text="Items:" />
 				<Run Text="{x:Bind NavigationHistory.CurrentItem.Items.Count, Mode=OneWay}" />
-            </TextBlock>
-        </Grid>
+			</TextBlock>
+		</Grid>
 
-        <ListView ItemsSource="{x:Bind NavigationHistory.Items}"
-                  SelectedIndex="{x:Bind NavigationHistory.CurrentItemIndex, Mode= TwoWay}"
-                  DisplayMemberPath="Name"
-                  Grid.Row="1"
-                  Grid.Column="1"/>
-
-        <VisualStateManager.VisualStateGroups>
+		<VisualStateManager.VisualStateGroups>
 			<VisualStateGroup>
 				<VisualState>
 					<VisualState.StateTriggers>
