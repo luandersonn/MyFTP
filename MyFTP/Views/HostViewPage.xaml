@@ -178,7 +178,8 @@
 						Content="&#xE110;"
 						FontFamily="Segoe MDL2 Assets"
 						IsEnabled="{x:Bind NavigationHistory.CurrentItem.Parent, Converter={StaticResource ItemToBoolConverter}, Mode=OneWay}"
-						ToolTipService.ToolTip="Navigate up one directory level">
+						ToolTipService.ToolTip="Navigate up one directory level"
+						Visibility="Collapsed">
 					<Button.Resources>
 						<SolidColorBrush x:Key="ButtonBackgroundDisabled" Color="Transparent" />
 					</Button.Resources>

@@ -78,7 +78,7 @@ namespace MyFTP.Views
 
 		protected async override void OnNavigatedTo(NavigationEventArgs args)
 		{
-			_frame.Navigate(typeof(FtpDirectoryViewPage));
+			_frame.Navigate(typeof(FtpDirectoryViewPage), NavigationHistory);
 			if (args.NavigationMode == NavigationMode.New)
 			{
 				try
@@ -243,7 +243,7 @@ namespace MyFTP.Views
 
 		private void OnButtonUpClicked(object sender, RoutedEventArgs args)
 		{
-			var item = Crumbs.Reverse().Skip(1).FirstOrDefault();
+			var item = NavigationHistory.CurrentItem?.Parent;
 			if (item != null)
 				NavigationHistory.NavigateTo(item, NavigationHistory.CurrentItemIndex + 1);
 		}
@@ -319,7 +319,8 @@ namespace MyFTP.Views
 			{
 				RequestedTheme = ActualTheme
 			};
-			if (await dialog.ShowAsync() == Windows.UI.Xaml.Controls.ContentDialogResult.Primary)
+			await dialog.ShowAsync();
+			if(dialog.Result != null)
 			{
 				ViewModel.AddItem(dialog.Result);
 				await Task.Delay(200);

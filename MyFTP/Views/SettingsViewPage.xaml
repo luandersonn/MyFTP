@@ -17,6 +17,16 @@
 		</TransitionCollection>
 
 		<x:Double x:Key="MaxItemWidth">920</x:Double>
+
+
+		<SolidColorBrush x:Key="ExpanderHeaderForeground" Color="{ThemeResource SystemBaseMediumColor}" />
+		<SolidColorBrush x:Key="ExpanderChevronForeground" Color="{ThemeResource SystemBaseMediumColor}" />
+
+
+		<SolidColorBrush x:Key="ExpanderChevronPointerOverBackground" Color="Transparent" />
+		<SolidColorBrush x:Key="ExpanderChevronPressedBackground" Color="Transparent" />
+		<SolidColorBrush x:Key="ExpanderHeaderForegroundPressed" Color="{ThemeResource SystemBaseMediumHighColor}" />
+		<SolidColorBrush x:Key="ExpanderChevronPressedForeground" Color="{ThemeResource SystemBaseMediumHighColor}" />
 	</Page.Resources>
 
 	<Grid>

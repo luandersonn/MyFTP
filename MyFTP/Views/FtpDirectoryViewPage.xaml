@@ -21,7 +21,7 @@
 
 	<Page.Resources>
 
-        <SolidColorBrush x:Key="ListViewItemBackgroundPointerOver" Color="{ThemeResource SystemBaseLowColor}" />
+		<SolidColorBrush x:Key="ListViewItemBackgroundPointerOver" Color="{ThemeResource SystemBaseLowColor}" />
 
 		<SolidColorBrush x:Key="ListViewItemBackgroundSelected"
 						 Opacity="0.4"
@@ -129,108 +129,134 @@
 		</DataTemplate>
 	</Page.Resources>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto" />
-            <RowDefinition />
-        </Grid.RowDefinitions>
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="auto" />
+			<RowDefinition />
+		</Grid.RowDefinitions>
 
-        <CommandBar Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" DefaultLabelPosition="Right">
-            <AppBarButton Icon="NewFolder"
+		<CommandBar Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" DefaultLabelPosition="Right">
+			<CommandBar.Content>
+				<StackPanel Orientation="Horizontal">
+					<AppBarButton Width="40"
+								  Click="{x:Bind NavigationHistory.GoBack}"
+								  Icon="Back"
+								  IsEnabled="{x:Bind NavigationHistory.CanGoBack, Mode=OneWay}"
+								  LabelPosition="Collapsed"
+								  ToolTipService.ToolTip="Go Back" />
+
+					<AppBarButton Width="40"
+								  Click="{x:Bind NavigationHistory.GoForward}"
+								  Icon="Forward"
+								  IsEnabled="{x:Bind NavigationHistory.CanGoForward, Mode=OneWay}"
+								  LabelPosition="Collapsed"
+								  ToolTipService.ToolTip="Go Forward" />
+
+					<AppBarButton Width="40"
+								  Click="AppBarButton_Click"
+								  Icon="Up"
+								  IsEnabled="{x:Bind NavigationHistory.CurrentItem.Parent, Converter={StaticResource ItemToBoolConverter}, Mode=OneWay}"
+								  LabelPosition="Collapsed"
+								  ToolTipService.ToolTip="Navigate up one directory level" />
+
+				</StackPanel>
+			</CommandBar.Content>
+			<AppBarSeparator />
+			<AppBarButton Icon="NewFolder"
 						  Label="New folder"
 						  LabelPosition="Collapsed">
-                <AppBarButton.Flyout>
-                    <Flyout Opened="{x:Bind FocusNewFolderTextBox, Mode=OneTime}"
+				<AppBarButton.Flyout>
+					<Flyout Opened="{x:Bind FocusNewFolderTextBox, Mode=OneTime}"
 							Placement="Bottom"
 							ShouldConstrainToRootBounds="False">
-                        <Grid ColumnSpacing="4">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="200" />
-                                <ColumnDefinition Width="auto" />
-                            </Grid.ColumnDefinitions>
+						<Grid ColumnSpacing="4">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="200" />
+								<ColumnDefinition Width="auto" />
+							</Grid.ColumnDefinitions>
 
-                            <TextBox x:Name="createFolderTextbox"
+							<TextBox x:Name="createFolderTextbox"
 									 VerticalAlignment="Center"
 									 AllowFocusOnInteraction="True"
 									 PlaceholderText="Folder name" />
-                            <Button Grid.Column="1"
+							<Button Grid.Column="1"
 									VerticalAlignment="Center"
 									Command="{x:Bind ViewModel.CreateFolderCommand, Mode=OneWay}"
 									CommandParameter="{x:Bind createFolderTextbox.Text, Mode=OneWay}"
 									Content="Create"
 									Style="{ThemeResource AccentButtonStyle}" />
-                        </Grid>
-                    </Flyout>
-                </AppBarButton.Flyout>
-                <AppBarButton.KeyboardAccelerators>
-                    <KeyboardAccelerator Key="N" Modifiers="Control,Shift" />
-                </AppBarButton.KeyboardAccelerators>
-            </AppBarButton>
-            <AppBarSeparator />
-            <AppBarButton Icon="Upload" Label="Upload">
-                <AppBarButton.Flyout>
-                    <MenuFlyout Placement="Bottom">
-                        <MenuFlyoutItem Command="{x:Bind ViewModel.UploadFilesCommand, Mode=OneWay}"
+						</Grid>
+					</Flyout>
+				</AppBarButton.Flyout>
+				<AppBarButton.KeyboardAccelerators>
+					<KeyboardAccelerator Key="N" Modifiers="Control,Shift" />
+				</AppBarButton.KeyboardAccelerators>
+			</AppBarButton>
+			<AppBarSeparator />
+			<AppBarButton Icon="Upload" Label="Upload">
+				<AppBarButton.Flyout>
+					<MenuFlyout Placement="Bottom">
+						<MenuFlyoutItem Command="{x:Bind ViewModel.UploadFilesCommand, Mode=OneWay}"
 										Icon="OpenFile"
 										Text="Files">
-                            <MenuFlyoutItem.KeyboardAccelerators>
-                                <KeyboardAccelerator Key="O" Modifiers="Control" />
-                            </MenuFlyoutItem.KeyboardAccelerators>
-                        </MenuFlyoutItem>
-                        <MenuFlyoutItem Command="{x:Bind ViewModel.UploadFolderCommand, Mode=OneWay}"
+							<MenuFlyoutItem.KeyboardAccelerators>
+								<KeyboardAccelerator Key="O" Modifiers="Control" />
+							</MenuFlyoutItem.KeyboardAccelerators>
+						</MenuFlyoutItem>
+						<MenuFlyoutItem Command="{x:Bind ViewModel.UploadFolderCommand, Mode=OneWay}"
 										Icon="NewFolder"
 										Text="Folder">
-                            <MenuFlyoutItem.KeyboardAccelerators>
-                                <KeyboardAccelerator Key="O" Modifiers="Control,Shift" />
-                            </MenuFlyoutItem.KeyboardAccelerators>
-                        </MenuFlyoutItem>
-                    </MenuFlyout>
-                </AppBarButton.Flyout>
-            </AppBarButton>
-            <AppBarButton Command="{x:Bind ViewModel.DownloadCommand, Mode=OneWay}"
+							<MenuFlyoutItem.KeyboardAccelerators>
+								<KeyboardAccelerator Key="O" Modifiers="Control,Shift" />
+							</MenuFlyoutItem.KeyboardAccelerators>
+						</MenuFlyoutItem>
+					</MenuFlyout>
+				</AppBarButton.Flyout>
+			</AppBarButton>
+			<AppBarButton Command="{x:Bind ViewModel.DownloadCommand, Mode=OneWay}"
 						  CommandParameter="{x:Bind SelectedItems, Mode=OneWay}"
 						  Icon="Download"
 						  Label="Download">
-                <AppBarButton.KeyboardAccelerators>
-                    <KeyboardAccelerator Key="S" Modifiers="Control" />
-                </AppBarButton.KeyboardAccelerators>
-            </AppBarButton>
-            <AppBarButton Command="{x:Bind ViewModel.RefreshCommand, Mode=OneWay}"
+				<AppBarButton.KeyboardAccelerators>
+					<KeyboardAccelerator Key="S" Modifiers="Control" />
+				</AppBarButton.KeyboardAccelerators>
+			</AppBarButton>
+			<AppBarButton Command="{x:Bind ViewModel.RefreshCommand, Mode=OneWay}"
 						  Icon="Refresh"
 						  Label="Refresh"
 						  LabelPosition="Collapsed">
-                <AppBarButton.KeyboardAccelerators>
-                    <KeyboardAccelerator Key="F5" />
-                </AppBarButton.KeyboardAccelerators>
-            </AppBarButton>
+				<AppBarButton.KeyboardAccelerators>
+					<KeyboardAccelerator Key="F5" />
+				</AppBarButton.KeyboardAccelerators>
+			</AppBarButton>
 
-            <CommandBar.SecondaryCommands>
+			<CommandBar.SecondaryCommands>
 
-                <AppBarButton Click="{x:Bind SelectAll}"
+				<AppBarButton Click="{x:Bind SelectAll}"
 							  Icon="SelectAll"
 							  Label="Select all">
-                    <AppBarButton.KeyboardAccelerators>
-                        <KeyboardAccelerator Key="A" Modifiers="Control" />
-                    </AppBarButton.KeyboardAccelerators>
-                </AppBarButton>
-                <AppBarButton Command="{x:Bind ViewModel.DeleteCommand, Mode=OneWay}"
+					<AppBarButton.KeyboardAccelerators>
+						<KeyboardAccelerator Key="A" Modifiers="Control" />
+					</AppBarButton.KeyboardAccelerators>
+				</AppBarButton>
+				<AppBarButton Command="{x:Bind ViewModel.DeleteCommand, Mode=OneWay}"
 							  CommandParameter="{x:Bind SelectedItems, Mode=OneWay}"
 							  Icon="Delete"
 							  Label="Delete">
-                    <AppBarButton.KeyboardAccelerators>
-                        <KeyboardAccelerator Key="Delete" />
-                    </AppBarButton.KeyboardAccelerators>
-                </AppBarButton>
-                <AppBarSeparator />
-                <AppBarButton IsEnabled="False" Label="Properties">
-                    <AppBarButton.Icon>
-                        <FontIcon Glyph="&#xE946;" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
-            </CommandBar.SecondaryCommands>
-        </CommandBar>
+					<AppBarButton.KeyboardAccelerators>
+						<KeyboardAccelerator Key="Delete" />
+					</AppBarButton.KeyboardAccelerators>
+				</AppBarButton>
+				<AppBarSeparator />
+				<AppBarButton IsEnabled="False" Label="Properties">
+					<AppBarButton.Icon>
+						<FontIcon Glyph="&#xE946;" />
+					</AppBarButton.Icon>
+				</AppBarButton>
+			</CommandBar.SecondaryCommands>
+		</CommandBar>
 
-        <ListView x:Name="itemsListView"
+		<ListView x:Name="itemsListView"
 				  Grid.Row="1"
 				  ui:ListViewExtensions.ItemContainerStretchDirection="Horizontal"
 				  ui:ScrollViewerExtensions.EnableMiddleClickScrolling="True"
@@ -242,111 +268,111 @@
 				  ScrollViewer.HorizontalScrollMode="Auto"
 				  SelectionChanged="OnListViewSelectionChanged"
 				  SelectionMode="Extended">
-            <ListViewBase.ItemContainerStyle>
-                <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
-                    <Setter Property="Padding" Value="0" />
-                    <Setter Property="Margin" Value="4,0" />
-                    <Setter Property="MinHeight" Value="0" />
-                    <Setter Property="MinWidth" Value="0" />
-                </Style>
-            </ListViewBase.ItemContainerStyle>
-            <interactivity:Interaction.Behaviors>
-                <behaviors:StickyHeaderBehavior />
-            </interactivity:Interaction.Behaviors>
+			<ListViewBase.ItemContainerStyle>
+				<Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem">
+					<Setter Property="Padding" Value="0" />
+					<Setter Property="Margin" Value="4,0" />
+					<Setter Property="MinHeight" Value="0" />
+					<Setter Property="MinWidth" Value="0" />
+				</Style>
+			</ListViewBase.ItemContainerStyle>
+			<interactivity:Interaction.Behaviors>
+				<behaviors:StickyHeaderBehavior />
+			</interactivity:Interaction.Behaviors>
 
-            <ListViewBase.Header>
-                <Grid Height="32"
+			<ListViewBase.Header>
+				<Grid Height="32"
 					  Padding="12,0"
 					  Background="{ThemeResource SystemControlAcrylicElementBrush}"
 					  BackgroundSizing="OuterBorderEdge"
 					  BorderBrush="{ThemeResource SystemBaseLowColor}"
 					  BorderThickness="0,1"
 					  ColumnSpacing="8">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="25" />
-                        <ColumnDefinition Width="1.5*" MinWidth="150" />
-                        <ColumnDefinition Width="*" MinWidth="100" />
-                        <ColumnDefinition Width="*" MinWidth="100" />
-                        <ColumnDefinition Width="80" MinWidth="80" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.Resources>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="VerticalAlignment" Value="Center" />
-                        </Style>
-                    </Grid.Resources>
-                    <TextBlock Grid.ColumnSpan="2"
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="25" />
+						<ColumnDefinition Width="1.5*" MinWidth="150" />
+						<ColumnDefinition Width="*" MinWidth="100" />
+						<ColumnDefinition Width="*" MinWidth="100" />
+						<ColumnDefinition Width="80" MinWidth="80" />
+					</Grid.ColumnDefinitions>
+					<Grid.Resources>
+						<Style TargetType="TextBlock">
+							<Setter Property="VerticalAlignment" Value="Center" />
+						</Style>
+					</Grid.Resources>
+					<TextBlock Grid.ColumnSpan="2"
 							   FontSize="12"
 							   Text="Name" />
 
-                    <Rectangle Grid.Column="1"
+					<Rectangle Grid.Column="1"
 							   Width="1"
 							   HorizontalAlignment="Right"
 							   VerticalAlignment="Stretch"
 							   Fill="{ThemeResource SystemBaseLowColor}" />
 
 
-                    <TextBlock Grid.Column="2"
+					<TextBlock Grid.Column="2"
 							   FontSize="12"
 							   Text="Size" />
 
-                    <Rectangle Grid.Column="2"
+					<Rectangle Grid.Column="2"
 							   Width="1"
 							   HorizontalAlignment="Right"
 							   VerticalAlignment="Stretch"
 							   Fill="{ThemeResource SystemBaseLowColor}" />
 
 
-                    <TextBlock Grid.Column="3"
+					<TextBlock Grid.Column="3"
 							   FontSize="12"
 							   Text="Modified" />
 
-                    <Rectangle Grid.Column="3"
+					<Rectangle Grid.Column="3"
 							   Width="1"
 							   HorizontalAlignment="Right"
 							   VerticalAlignment="Stretch"
 							   Fill="{ThemeResource SystemBaseLowColor}" />
 
-                    <TextBlock Grid.Column="4"
+					<TextBlock Grid.Column="4"
 							   FontSize="12"
 							   Text="Permissions" />
-                </Grid>
-            </ListViewBase.Header>
-        </ListView>
+				</Grid>
+			</ListViewBase.Header>
+		</ListView>
 
-        <toolkit:SwitchPresenter Grid.Row="1"
+		<toolkit:SwitchPresenter Grid.Row="1"
 								 TargetType="x:Boolean"
 								 Value="{x:Bind ViewModel.IsDirectory, FallbackValue=False, Mode=OneWay}">
-            <toolkit:Case Value="True">
-                <toolkit:SwitchPresenter TargetType="x:Boolean" Value="{x:Bind ViewModel.IsLoaded, Mode=OneWay}">
-                    <toolkit:Case Value="True">
-                        <toolkit:SwitchPresenter TargetType="x:Int32" Value="{x:Bind ViewModel.Items.Count, Mode=OneWay}">
-                            <toolkit:Case Value="0">
-                                <TextBlock HorizontalAlignment="Center"
+			<toolkit:Case Value="True">
+				<toolkit:SwitchPresenter TargetType="x:Boolean" Value="{x:Bind ViewModel.IsLoaded, Mode=OneWay}">
+					<toolkit:Case Value="True">
+						<toolkit:SwitchPresenter TargetType="x:Int32" Value="{x:Bind ViewModel.Items.Count, Mode=OneWay}">
+							<toolkit:Case Value="0">
+								<TextBlock HorizontalAlignment="Center"
 										   VerticalAlignment="Center"
 										   Text="This folder is empty" />
-                            </toolkit:Case>
-                        </toolkit:SwitchPresenter>
-                    </toolkit:Case>
-                    <toolkit:Case Value="False">
-                        <toolkit:SwitchPresenter TargetType="x:Boolean" Value="{x:Bind ViewModel.IsLoading, Mode=OneWay}">
-                            <toolkit:Case Value="True">
-                                <muxc:ProgressBar Margin="50" IsIndeterminate="True" />
-                            </toolkit:Case>
-                            <toolkit:Case Value="False">
-                                <Button MinWidth="120"
+							</toolkit:Case>
+						</toolkit:SwitchPresenter>
+					</toolkit:Case>
+					<toolkit:Case Value="False">
+						<toolkit:SwitchPresenter TargetType="x:Boolean" Value="{x:Bind ViewModel.IsLoading, Mode=OneWay}">
+							<toolkit:Case Value="True">
+								<muxc:ProgressBar Margin="50" IsIndeterminate="True" />
+							</toolkit:Case>
+							<toolkit:Case Value="False">
+								<Button MinWidth="120"
 										HorizontalAlignment="Center"
 										VerticalAlignment="Center"
 										Command="{x:Bind ViewModel.RefreshCommand, Mode=OneWay}"
 										Content="Load items"
 										Style="{ThemeResource AccentButtonStyle}" />
-                            </toolkit:Case>
-                        </toolkit:SwitchPresenter>
-                    </toolkit:Case>
-                </toolkit:SwitchPresenter>
-            </toolkit:Case>
-        </toolkit:SwitchPresenter>
+							</toolkit:Case>
+						</toolkit:SwitchPresenter>
+					</toolkit:Case>
+				</toolkit:SwitchPresenter>
+			</toolkit:Case>
+		</toolkit:SwitchPresenter>
 
-        <Grid x:Name="ItemDropArea"
+		<Grid x:Name="ItemDropArea"
 			  Grid.Row="1"
 			  Width="300"
 			  Height="150"
@@ -362,51 +388,51 @@
 			  Background="{ThemeResource SystemControlAccentAcrylicElementAccentMediumHighBrush}"
 			  CornerRadius="8"
 			  Visibility="Visible">
-            <Grid.BackgroundTransition>
-                <BrushTransition Duration="0:0:0.300" />
-            </Grid.BackgroundTransition>
+			<Grid.BackgroundTransition>
+				<BrushTransition Duration="0:0:0.300" />
+			</Grid.BackgroundTransition>
 
 
-            <ani:Explicit.Animations>
-                <ani:AnimationSet x:Name="fadeOut">
-                    <ani:OpacityAnimation Delay="0"
+			<ani:Explicit.Animations>
+				<ani:AnimationSet x:Name="fadeOut">
+					<ani:OpacityAnimation Delay="0"
 										  EasingMode="EaseOut"
 										  EasingType="Linear"
 										  To="0"
 										  Duration="0:0:0.300" />
-                    <ani:TranslationAnimation To="0,200,0" Duration="0:0:0.300" />
-                </ani:AnimationSet>
+					<ani:TranslationAnimation To="0,200,0" Duration="0:0:0.300" />
+				</ani:AnimationSet>
 
-                <ani:AnimationSet x:Name="fadeIn">
-                    <ani:OpacityAnimation Delay="0"
+				<ani:AnimationSet x:Name="fadeIn">
+					<ani:OpacityAnimation Delay="0"
 										  EasingMode="EaseOut"
 										  EasingType="Linear"
 										  To="1"
 										  Duration="0:0:0.300" />
-                    <ani:TranslationAnimation To="0,0,0" Duration="0:0:0.300" />
-                </ani:AnimationSet>
-            </ani:Explicit.Animations>
+					<ani:TranslationAnimation To="0,0,0" Duration="0:0:0.300" />
+				</ani:AnimationSet>
+			</ani:Explicit.Animations>
 
-            <Rectangle RadiusX="8"
+			<Rectangle RadiusX="8"
 					   RadiusY="8"
 					   Stroke="{ThemeResource SystemBaseHighColor}"
 					   StrokeDashArray="10,5" />
 
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <FontIcon Margin="15"
+			<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+				<FontIcon Margin="15"
 						  FontSize="30"
 						  Glyph="&#xE11C;" />
 
-                <TextBlock MaxLines="2"
+				<TextBlock MaxLines="2"
 						   Text="Drop here to upload to this folder"
 						   TextAlignment="Center"
 						   TextTrimming="CharacterEllipsis"
 						   TextWrapping="Wrap" />
-                <TextBlock Opacity="0.6"
+				<TextBlock Opacity="0.6"
 						   Text="{x:Bind ViewModel.FullName, Mode=OneWay}"
 						   TextAlignment="Center"
 						   TextTrimming="CharacterEllipsis" />
-            </StackPanel>
-        </Grid>
-    </Grid>
+			</StackPanel>
+		</Grid>
+	</Grid>
 </Page>
