@@ -173,11 +173,7 @@ namespace MyFTP.Views
 			if (args.CurrentPoint.Properties.IsXButton1Pressed)
 			{
 				// Mouse back button pressed
-				if (NavigationHistory.GoBack())
-				{
-					args.Handled = true;
-				}
-
+				args.Handled = NavigationHistory.GoBack();
 			}
 			else if (args.CurrentPoint.Properties.IsXButton2Pressed)
 			{
