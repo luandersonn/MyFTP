@@ -30,6 +30,14 @@ namespace MyFTP.Views
 			ViewModel = App.Current.Services.GetRequiredService<HostViewModel>();
 			Crumbs = new ObservableCollection<FtpListItemViewModel>();
 			NavigationHistory = new NavigationHistory<FtpListItemViewModel>();
+			NavigationHistory.PropertyChanged += (s, args) =>
+			{
+				if (args.PropertyName == nameof(NavigationHistory.CurrentItem))
+				{
+					if (NavigationHistory.CurrentItem != null && NavigationHistory.CurrentItem.Parent == null)
+						treeView.SelectedNode = treeView.RootNodes.FirstOrDefault(x => x.Content == NavigationHistory.CurrentItem);
+				}
+			};
 			Loaded += (sender, args) =>
 			{
 				WeakReferenceMessenger.Default.Register<RequestOpenFilesMessage>(this, OnOpenFileRequest);
@@ -80,7 +88,7 @@ namespace MyFTP.Views
 						throw new InvalidOperationException("Invalid param");
 					ViewModel.AddItem(root);
 					await Task.Delay(500);
-					treeView.SelectedNode = treeView.RootNodes.FirstOrDefault(x => x.Content == root);
+					NavigationHistory.NavigateTo(root);
 				}
 				catch (Exception e)
 				{
@@ -139,10 +147,7 @@ namespace MyFTP.Views
 			{
 				if (item != NavigationHistory.CurrentItem)
 				{
-					if (NavigationHistory.CanGoForward)
-						NavigationHistory.NavigateTo(item, NavigationHistory.CurrentItemIndex + 1);
-					else
-						NavigationHistory.NavigateTo(item);
+					NavigationHistory.NavigateTo(item, NavigationHistory.CurrentItemIndex + 1);
 				}
 				// Update the BreadcrumbBar
 				Crumbs.Clear();
@@ -165,24 +170,12 @@ namespace MyFTP.Views
 			if (args.CurrentPoint.Properties.IsXButton1Pressed)
 			{
 				// Mouse back button pressed
-				if (NavigationHistory.GoBack())
-				{
-					args.Handled = true;
-				}
-
+				args.Handled = NavigationHistory.GoBack();
 			}
 			else if (args.CurrentPoint.Properties.IsXButton2Pressed)
 			{
 				// Mouse forward button pressed				
 				args.Handled = NavigationHistory.GoForward();
-			}
-			if (args.Handled)
-			{
-				// Due TreeView bug, you need set the node manually :(
-				if (NavigationHistory.CurrentItem != null && NavigationHistory.CurrentItem.Parent == null) // Root item!
-				{
-					treeView.SelectedNode = treeView.RootNodes.FirstOrDefault(x => x.Content == NavigationHistory.CurrentItem);
-				}
 			}
 		}
 
@@ -191,14 +184,8 @@ namespace MyFTP.Views
 			switch (args.KeyboardAccelerator.Key)
 			{
 				case VirtualKey.Back when NavigationHistory.CurrentItem?.Parent != null: // Go up
-					if (NavigationHistory.CurrentItem.Parent.Parent == null) // Root
-					{
-						treeView.SelectedNode = treeView.RootNodes.FirstOrDefault(x => x.Content == NavigationHistory.CurrentItem.Parent);
-					}
-					else
-					{
-						treeView.SelectedItem = NavigationHistory.CurrentItem.Parent;
-					}
+					var item = NavigationHistory.CurrentItem.Parent;
+					NavigationHistory.NavigateTo(item, NavigationHistory.CurrentItemIndex + 1);
 					args.Handled = true;
 					break;
 
@@ -257,22 +244,12 @@ namespace MyFTP.Views
 		private void OnButtonUpClicked(object sender, RoutedEventArgs args)
 		{
 			var item = Crumbs.Reverse().Skip(1).FirstOrDefault();
-			if (item == null)
-				treeView.SelectedNode = treeView.RootNodes.FirstOrDefault();
-			else if (item.Parent == null) // root #BUG 
-				treeView.SelectedNode = treeView.RootNodes.FirstOrDefault(x => x.Content == item);
-			else
-				treeView.SelectedItem = item;
+			if (item != null)
+				NavigationHistory.NavigateTo(item, NavigationHistory.CurrentItemIndex + 1);
 		}
 		private void OnBreadcrumbBarItemClicked(muxc.BreadcrumbBar sender, muxc.BreadcrumbBarItemClickedEventArgs args)
 		{
-			// #BUG 
-			if (args.Index == 0)
-			{
-				treeView.SelectedNode = treeView.RootNodes.FirstOrDefault(x => x.Content == args.Item);
-			}
-			else
-				treeView.SelectedItem = args.Item;
+			NavigationHistory.NavigateTo(args.Item as FtpListItemViewModel, NavigationHistory.CurrentItemIndex + 1);
 		}
 
 		private async void OnListViewContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
@@ -333,7 +310,7 @@ namespace MyFTP.Views
 
 		private void OnListViewItemClick(object sender, ItemClickEventArgs e)
 		{
-			treeView.SelectedItem = e.ClickedItem;
+			NavigationHistory.NavigateTo(e.ClickedItem as FtpListItemViewModel, NavigationHistory.CurrentItemIndex + 1);
 		}
 
 		private async Task NewConnectionAsync()
@@ -346,7 +323,7 @@ namespace MyFTP.Views
 			{
 				ViewModel.AddItem(dialog.Result);
 				await Task.Delay(200);
-				treeView.SelectedNode = treeView.RootNodes.FirstOrDefault(x => x.Content == dialog.Result);
+				NavigationHistory.NavigateTo(dialog.Result as FtpListItemViewModel, NavigationHistory.CurrentItemIndex + 1);
 			}
 		}
 

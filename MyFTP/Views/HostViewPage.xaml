@@ -14,6 +14,26 @@
 	  mc:Ignorable="d">
 
 	<Page.Resources>
+
+		<muxc:SwipeItems x:Key="left" Mode="Execute">
+			<muxc:SwipeItem Background="Gray"
+							Invoked="{x:Bind NavigationHistory.GoBack}"
+							Text="Back">
+				<muxc:SwipeItem.IconSource>
+					<muxc:SymbolIconSource Symbol="Back" />
+				</muxc:SwipeItem.IconSource>
+			</muxc:SwipeItem>
+		</muxc:SwipeItems>
+		<muxc:SwipeItems x:Key="right" Mode="Execute">
+			<muxc:SwipeItem Background="Gray"
+							Invoked="{x:Bind NavigationHistory.GoForward}"
+							Text="Forward">
+				<muxc:SwipeItem.IconSource>
+					<muxc:SymbolIconSource Symbol="Forward" />
+				</muxc:SwipeItem.IconSource>
+			</muxc:SwipeItem>
+		</muxc:SwipeItems>
+
 		<TransitionCollection x:Key="RepositionAnimation">
 			<RepositionThemeTransition />
 		</TransitionCollection>
@@ -316,7 +336,9 @@
 					  d:Message="Try again in a little bit"
 					  Severity="Error" />
 
-		<Grid Grid.Row="2">
+		<Grid Grid.Row="2"
+			  Grid.RowSpan="2"
+			  Transitions="{StaticResource RepositionAnimation}">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition x:Name="column"
 								  Width="180"
@@ -363,7 +385,11 @@
 				</toolkit:GridSplitter.Resources>
 			</toolkit:GridSplitter>
 
-			<Frame x:Name="_frame" Grid.Column="1" />
+			<muxc:SwipeControl Grid.Column="1"
+							   LeftItems="{StaticResource left}"
+							   RightItems="{StaticResource right}">
+				<Frame x:Name="_frame" />
+			</muxc:SwipeControl>
 		</Grid>
 
 		<Grid Grid.Row="3"
@@ -385,8 +411,7 @@
 								  IsLightDismissEnabled="True"
 								  PlacementMargin="10"
 								  PreferredPlacement="Top"
-								  Target="{x:Bind infoButton, Mode=OneTime}"
-								  >
+								  Target="{x:Bind infoButton, Mode=OneTime}">
 					<muxc:TeachingTip.IconSource>
 						<muxc:FontIconSource Glyph="&#xE968;" />
 					</muxc:TeachingTip.IconSource>
@@ -561,7 +586,7 @@
 							  Content="&#xE946;"
 							  FontFamily="Segoe MDL2 Assets"
 							  IsChecked="{x:Bind infoTeachingTip.IsOpen, Mode=TwoWay}"
-							  Visibility="{x:Bind NavigationHistory.CurrentItem, Converter={StaticResource ItemToBoolConverter}, Mode=OneWay}"/>
+							  Visibility="{x:Bind NavigationHistory.CurrentItem, Converter={StaticResource ItemToBoolConverter}, Mode=OneWay}" />
 			</toolkit:WrapPanel>
 
 			<Rectangle Width="1"
