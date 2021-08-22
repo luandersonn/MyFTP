@@ -191,7 +191,7 @@ namespace MyFTP.Views
 			switch (args.KeyboardAccelerator.Key)
 			{
 				case VirtualKey.Back when NavigationHistory.CurrentItem?.Parent != null: // Go up
-					treeView.SelectedItem = NavigationHistory.CurrentItem.Parent;
+					NavigationHistory.NavigateTo(NavigationHistory.CurrentItem.Parent);
 					args.Handled = true;
 					break;
 
@@ -249,11 +249,11 @@ namespace MyFTP.Views
 
 		private void OnButtonUpClicked(object sender, RoutedEventArgs args)
 		{
-			treeView.SelectedItem = Crumbs.Reverse().Skip(1).FirstOrDefault();
+			NavigationHistory.NavigateTo(Crumbs.Reverse().Skip(1).FirstOrDefault());
 		}
 		private void OnBreadcrumbBarItemClicked(muxc.BreadcrumbBar sender, muxc.BreadcrumbBarItemClickedEventArgs args)
 		{
-			treeView.SelectedItem = args.Item;
+			NavigationHistory.NavigateTo(args.Item as FtpListItemViewModel);
 		}
 
 		private async void OnListViewContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
@@ -314,7 +314,7 @@ namespace MyFTP.Views
 
 		private void OnListViewItemClick(object sender, ItemClickEventArgs e)
 		{
-			treeView.SelectedItem = e.ClickedItem;
+			NavigationHistory.NavigateTo(e.ClickedItem as FtpListItemViewModel);
 		}
 
 		private async Task NewConnectionAsync()
@@ -327,7 +327,7 @@ namespace MyFTP.Views
 			{
 				ViewModel.AddItem(dialog.Result);
 				await Task.Delay(200);
-				treeView.SelectedItem = dialog.Result;
+				NavigationHistory.NavigateTo(dialog.Result as FtpListItemViewModel);
 			}
 		}
 
@@ -339,5 +339,5 @@ namespace MyFTP.Views
 		private void GoToSettings() => Frame.Navigate(typeof(SettingsViewPage));
 
 		private void ExitApp() => Application.Current.Exit();
-    }
+	}
 }
