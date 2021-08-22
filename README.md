@@ -5,7 +5,7 @@
 A simple, fast, lightweight, and beautiful FTP client
 
 
-![MyFTP screenshot](https://luandersonn.com/images/myftp/screenshots/myftp-light.png)
+![MyFTP screenshot](https://luandersonn.com/images/myftp/myftp-light.png)
 
 MyFTP was built with simplicity in mind, allowing you to manage files on FTP servers in a simple, uncomplicated way.
 Designed with Windows UI Library, MyFTP takes advantage of the new Windows 11 Interface Guidelines and enables a seamless experience.
