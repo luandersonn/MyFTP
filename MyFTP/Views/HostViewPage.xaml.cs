@@ -147,10 +147,7 @@ namespace MyFTP.Views
 			{
 				if (item != NavigationHistory.CurrentItem)
 				{
-					if (NavigationHistory.CanGoForward)
-						NavigationHistory.NavigateTo(item, NavigationHistory.CurrentItemIndex + 1);
-					else
-						NavigationHistory.NavigateTo(item);
+					NavigationHistory.NavigateTo(item, NavigationHistory.CurrentItemIndex + 1);
 				}
 				// Update the BreadcrumbBar
 				Crumbs.Clear();
@@ -187,7 +184,8 @@ namespace MyFTP.Views
 			switch (args.KeyboardAccelerator.Key)
 			{
 				case VirtualKey.Back when NavigationHistory.CurrentItem?.Parent != null: // Go up
-					NavigationHistory.NavigateTo(NavigationHistory.CurrentItem.Parent);
+					var item = NavigationHistory.CurrentItem.Parent;
+					NavigationHistory.NavigateTo(item, NavigationHistory.CurrentItemIndex + 1);
 					args.Handled = true;
 					break;
 
@@ -245,11 +243,13 @@ namespace MyFTP.Views
 
 		private void OnButtonUpClicked(object sender, RoutedEventArgs args)
 		{
-			NavigationHistory.NavigateTo(Crumbs.Reverse().Skip(1).FirstOrDefault());
+			var item = Crumbs.Reverse().Skip(1).FirstOrDefault();
+			if (item != null)
+				NavigationHistory.NavigateTo(item, NavigationHistory.CurrentItemIndex + 1);
 		}
 		private void OnBreadcrumbBarItemClicked(muxc.BreadcrumbBar sender, muxc.BreadcrumbBarItemClickedEventArgs args)
 		{
-			NavigationHistory.NavigateTo(args.Item as FtpListItemViewModel);
+			NavigationHistory.NavigateTo(args.Item as FtpListItemViewModel, NavigationHistory.CurrentItemIndex + 1);
 		}
 
 		private async void OnListViewContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
@@ -310,7 +310,7 @@ namespace MyFTP.Views
 
 		private void OnListViewItemClick(object sender, ItemClickEventArgs e)
 		{
-			NavigationHistory.NavigateTo(e.ClickedItem as FtpListItemViewModel);
+			NavigationHistory.NavigateTo(e.ClickedItem as FtpListItemViewModel, NavigationHistory.CurrentItemIndex + 1);
 		}
 
 		private async Task NewConnectionAsync()
@@ -323,7 +323,7 @@ namespace MyFTP.Views
 			{
 				ViewModel.AddItem(dialog.Result);
 				await Task.Delay(200);
-				NavigationHistory.NavigateTo(dialog.Result as FtpListItemViewModel);
+				NavigationHistory.NavigateTo(dialog.Result as FtpListItemViewModel, NavigationHistory.CurrentItemIndex + 1);
 			}
 		}
 

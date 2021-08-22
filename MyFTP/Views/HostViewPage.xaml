@@ -336,7 +336,9 @@
 					  d:Message="Try again in a little bit"
 					  Severity="Error" />
 
-		<Grid Grid.Row="1" Grid.RowSpan="2">
+		<Grid Grid.Row="2"
+			  Grid.RowSpan="2"
+			  Transitions="{StaticResource RepositionAnimation}">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition x:Name="column"
 								  Width="180"
