@@ -118,84 +118,56 @@
 								  BorderBrush="{ThemeResource SystemBaseLowColor}"
 								  BorderThickness="0,0,0,1"
 								  Canvas.ZIndex="1">
-			<Grid>
+			<Grid Padding="4,4,0,4"
+				  ChildrenTransitions="{StaticResource RepositionAnimation}"
+				  ColumnSpacing="4">
 				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="{x:Bind column.Width, Mode=TwoWay}"
-									  MinWidth="{x:Bind column.MinWidth, Mode=TwoWay}"
-									  MaxWidth="{x:Bind column.MaxWidth, Mode=TwoWay}" />
 					<ColumnDefinition Width="auto" />
-					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="auto" />
+					<ColumnDefinition />
 				</Grid.ColumnDefinitions>
 
-				<toolkit:WrapPanel Margin="4"
-								   VerticalAlignment="Center"
-								   ChildrenTransitions="{StaticResource RepositionAnimation}"
-								   HorizontalSpacing="4"
-								   VerticalSpacing="8">
+				<muxc:SplitButton Grid.Column="0"
+								  Height="30"
+								  Command="{x:Bind ViewModel.DisconnectCommand}"
+								  CommandParameter="{x:Bind NavigationHistory.CurrentItem, Mode=OneWay}">
+					<muxc:SplitButton.KeyboardAccelerators>
+						<KeyboardAccelerator Key="W" Modifiers="Control" />
+					</muxc:SplitButton.KeyboardAccelerators>
+					<StackPanel Orientation="Horizontal">
+						<FontIcon FontSize="14" Glyph="&#xE7E8;" />
+						<TextBlock x:Name="disconnectButtonTextblock"
+								   Margin="4,0,0,0"
+								   Text="Disconnect"
+								   Visibility="Collapsed" />
+					</StackPanel>
+					<muxc:SplitButton.Flyout>
+						<MenuBarItemFlyout Placement="Bottom">
 
-					<muxc:SplitButton Command="{x:Bind ViewModel.DisconnectCommand}" CommandParameter="{x:Bind NavigationHistory.CurrentItem, Mode=OneWay}">
-						<muxc:SplitButton.KeyboardAccelerators>
-							<KeyboardAccelerator Key="W" Modifiers="Control" />
-						</muxc:SplitButton.KeyboardAccelerators>
-						<StackPanel Orientation="Horizontal" Spacing="6">
-							<FontIcon FontSize="14" Glyph="&#xE7E8;" />
-							<TextBlock Text="Disconnect" />
-						</StackPanel>
-						<muxc:SplitButton.Flyout>
-							<MenuBarItemFlyout Placement="Bottom">
+							<MenuFlyoutItem Click="{x:Bind NewConnectionAsync}" Text="New connection">
+								<MenuFlyoutItem.Icon>
+									<FontIcon Glyph="&#xE968;" />
+								</MenuFlyoutItem.Icon>
+								<MenuFlyoutItem.KeyboardAccelerators>
+									<KeyboardAccelerator Key="N" Modifiers="Control" />
+								</MenuFlyoutItem.KeyboardAccelerators>
+							</MenuFlyoutItem>
 
-								<MenuFlyoutItem Click="{x:Bind NewConnectionAsync}" Text="New connection">
-									<MenuFlyoutItem.Icon>
-										<FontIcon Glyph="&#xE968;" />
-									</MenuFlyoutItem.Icon>
-									<MenuFlyoutItem.KeyboardAccelerators>
-										<KeyboardAccelerator Key="N" Modifiers="Control" />
-									</MenuFlyoutItem.KeyboardAccelerators>
-								</MenuFlyoutItem>
+							<MenuFlyoutItem Click="{x:Bind GoToSettings}"
+											Icon="Setting"
+											Text="Settings" />
+							<MenuFlyoutSeparator />
 
-								<MenuFlyoutItem Click="{x:Bind GoToSettings}"
-												Icon="Setting"
-												Text="Settings" />
-								<MenuFlyoutSeparator />
-
-								<MenuFlyoutItem Click="{x:Bind ExitApp, Mode=OneWay}"
-												Icon="Cancel"
-												Text="Exit">
-									<MenuFlyoutItem.KeyboardAccelerators>
-										<KeyboardAccelerator Key="F4" Modifiers="Menu" />
-									</MenuFlyoutItem.KeyboardAccelerators>
-								</MenuFlyoutItem>
-							</MenuBarItemFlyout>
-						</muxc:SplitButton.Flyout>
-					</muxc:SplitButton>
-				</toolkit:WrapPanel>
-
-				<Rectangle Width="1"
-						   HorizontalAlignment="Right"
-						   VerticalAlignment="Stretch"
-						   Fill="{ThemeResource SystemBaseLowColor}" />
-
-				<toolkit:GridSplitter Width="4"
-									  MinWidth="0"
-									  Margin="0,0,-2,0"
-									  HorizontalAlignment="Right"
-									  Background="Transparent"
-									  Canvas.ZIndex="1"
-									  FontSize="13"
-									  Foreground="Transparent"
-									  ResizeBehavior="BasedOnAlignment"
-									  ResizeDirection="Auto">
-					<toolkit:GridSplitter.Element>
-						<FontIcon />
-					</toolkit:GridSplitter.Element>
-					<toolkit:GridSplitter.Resources>
-						<SolidColorBrush x:Key="SystemControlSplitterPointerOver"
-										 Opacity="0.5"
-										 Color="{ThemeResource SystemBaseLowColor}" />
-
-						<SolidColorBrush x:Key="SystemControlSplitterPressed" Color="{ThemeResource SystemBaseLowColor}" />
-					</toolkit:GridSplitter.Resources>
-				</toolkit:GridSplitter>
+							<MenuFlyoutItem Click="{x:Bind ExitApp, Mode=OneWay}"
+											Icon="Cancel"
+											Text="Exit">
+								<MenuFlyoutItem.KeyboardAccelerators>
+									<KeyboardAccelerator Key="F4" Modifiers="Menu" />
+								</MenuFlyoutItem.KeyboardAccelerators>
+							</MenuFlyoutItem>
+						</MenuBarItemFlyout>
+					</muxc:SplitButton.Flyout>
+				</muxc:SplitButton>
 
 				<Button Grid.Column="1"
 						Height="32"
@@ -205,14 +177,14 @@
 						Click="OnButtonUpClicked"
 						Content="&#xE110;"
 						FontFamily="Segoe MDL2 Assets"
-						IsEnabled="{x:Bind NavigationHistory.CurrentItem.Parent, Converter={StaticResource ItemToBoolConverter}, Mode=OneWay}">
+						IsEnabled="{x:Bind NavigationHistory.CurrentItem.Parent, Converter={StaticResource ItemToBoolConverter}, Mode=OneWay}"
+						ToolTipService.ToolTip="Navigate up one directory level">
 					<Button.Resources>
 						<SolidColorBrush x:Key="ButtonBackgroundDisabled" Color="Transparent" />
 					</Button.Resources>
 				</Button>
 
 				<muxc:BreadcrumbBar Grid.Column="2"
-									Margin="2,0,4,0"
 									VerticalAlignment="Center"
 									ItemClicked="OnBreadcrumbBarItemClicked"
 									ItemsSource="{x:Bind Crumbs}">
@@ -336,9 +308,7 @@
 					  d:Message="Try again in a little bit"
 					  Severity="Error" />
 
-		<Grid Grid.Row="2"
-			  Grid.RowSpan="2"
-			  Transitions="{StaticResource RepositionAnimation}">
+		<Grid Grid.Row="2" Transitions="{StaticResource RepositionAnimation}">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition x:Name="column"
 								  Width="180"
@@ -673,10 +643,10 @@
 				</VisualState>
 				<VisualState>
 					<VisualState.StateTriggers>
-						<AdaptiveTrigger MinWindowWidth="720" />
+						<AdaptiveTrigger MinWindowWidth="620" />
 					</VisualState.StateTriggers>
 					<VisualState.Setters>
-						<Setter Target="ItemCommandBar.DefaultLabelPosition" Value="Right" />
+						<Setter Target="disconnectButtonTextblock.Visibility" Value="Visible" />
 					</VisualState.Setters>
 				</VisualState>
 			</VisualStateGroup>
