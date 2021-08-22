@@ -358,16 +358,5 @@ namespace MyFTP.Views
 		private void GoToSettings() => Frame.Navigate(typeof(SettingsViewPage));
 
 		private void ExitApp() => Application.Current.Exit();
-
-        private void SwipeBack(SwipeItem sender, SwipeItemInvokedEventArgs args)
-        {
-			var item = Crumbs.Reverse().Skip(1).FirstOrDefault();
-			if (item == null)
-				treeView.SelectedNode = treeView.RootNodes.FirstOrDefault();
-			else if (item.Parent == null) // root #BUG 
-				treeView.SelectedNode = treeView.RootNodes.FirstOrDefault(x => x.Content == item);
-			else
-				treeView.SelectedItem = item;
-		}
     }
 }
