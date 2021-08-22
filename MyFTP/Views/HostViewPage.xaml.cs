@@ -16,6 +16,7 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using muxc = Microsoft.UI.Xaml.Controls;
@@ -78,22 +79,20 @@ namespace MyFTP.Views
 
 		protected async override void OnNavigatedTo(NavigationEventArgs args)
 		{
-			_frame.Navigate(typeof(FtpDirectoryViewPage), NavigationHistory);
-			if (args.NavigationMode == NavigationMode.New)
+			try
 			{
-				try
-				{
-					var root = args.Parameter as FtpListItemViewModel;
-					if (root == null)
-						throw new InvalidOperationException("Invalid param");
+				_frame.Navigate(typeof(FtpDirectoryViewPage), NavigationHistory);
+				var root = args.Parameter as FtpListItemViewModel;
+				if (root is null)
+					throw new InvalidOperationException("Invalid param");
+				if (args.NavigationMode == NavigationMode.New)
 					ViewModel.AddItem(root);
-					await Task.Delay(500);
-					NavigationHistory.NavigateTo(root);
-				}
-				catch (Exception e)
-				{
-					ShowError(e.Message, e);
-				}
+				await Task.Delay(500);
+				NavigationHistory.NavigateTo(root);
+			}
+			catch (Exception e)
+			{
+				ShowError(e.Message, e);
 			}
 		}
 
@@ -320,7 +319,7 @@ namespace MyFTP.Views
 				RequestedTheme = ActualTheme
 			};
 			await dialog.ShowAsync();
-			if(dialog.Result != null)
+			if (dialog.Result != null)
 			{
 				ViewModel.AddItem(dialog.Result);
 				await Task.Delay(200);
@@ -333,7 +332,7 @@ namespace MyFTP.Views
 			if (Frame.CanGoBack)
 				Frame.GoBack();
 		}
-		private void GoToSettings() => Frame.Navigate(typeof(SettingsViewPage));
+		private void GoToSettings() => Frame.Navigate(typeof(SettingsViewPage), null, new SlideNavigationTransitionInfo { Effect = SlideNavigationTransitionEffect.FromRight });
 
 		private void ExitApp() => Application.Current.Exit();
 	}
