@@ -16,6 +16,7 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using muxc = Microsoft.UI.Xaml.Controls;
@@ -30,6 +31,14 @@ namespace MyFTP.Views
 			ViewModel = App.Current.Services.GetRequiredService<HostViewModel>();
 			Crumbs = new ObservableCollection<FtpListItemViewModel>();
 			NavigationHistory = new NavigationHistory<FtpListItemViewModel>();
+			NavigationHistory.PropertyChanged += (s, args) =>
+			{
+				if (args.PropertyName == nameof(NavigationHistory.CurrentItem))
+				{
+					if (NavigationHistory.CurrentItem != null && NavigationHistory.CurrentItem.Parent == null)
+						treeView.SelectedNode = treeView.RootNodes.FirstOrDefault(x => x.Content == NavigationHistory.CurrentItem);
+				}
+			};
 			Loaded += (sender, args) =>
 			{
 				WeakReferenceMessenger.Default.Register<RequestOpenFilesMessage>(this, OnOpenFileRequest);
@@ -70,22 +79,20 @@ namespace MyFTP.Views
 
 		protected async override void OnNavigatedTo(NavigationEventArgs args)
 		{
-			_frame.Navigate(typeof(FtpDirectoryViewPage));
-			if (args.NavigationMode == NavigationMode.New)
+			try
 			{
-				try
-				{
-					var root = args.Parameter as FtpListItemViewModel;
-					if (root == null)
-						throw new InvalidOperationException("Invalid param");
+				_frame.Navigate(typeof(FtpDirectoryViewPage), NavigationHistory);
+				var root = args.Parameter as FtpListItemViewModel;
+				if (root is null)
+					throw new InvalidOperationException("Invalid param");
+				if (args.NavigationMode == NavigationMode.New)
 					ViewModel.AddItem(root);
-					await Task.Delay(500);
-					treeView.SelectedNode = treeView.RootNodes.FirstOrDefault(x => x.Content == root);
-				}
-				catch (Exception e)
-				{
-					ShowError(e.Message, e);
-				}
+				await Task.Delay(500);
+				NavigationHistory.NavigateTo(root);
+			}
+			catch (Exception e)
+			{
+				ShowError(e.Message, e);
 			}
 		}
 
@@ -139,10 +146,7 @@ namespace MyFTP.Views
 			{
 				if (item != NavigationHistory.CurrentItem)
 				{
-					if (NavigationHistory.CanGoForward)
-						NavigationHistory.NavigateTo(item, NavigationHistory.CurrentItemIndex + 1);
-					else
-						NavigationHistory.NavigateTo(item);
+					NavigationHistory.NavigateTo(item, NavigationHistory.CurrentItemIndex + 1);
 				}
 				// Update the BreadcrumbBar
 				Crumbs.Clear();
@@ -165,24 +169,12 @@ namespace MyFTP.Views
 			if (args.CurrentPoint.Properties.IsXButton1Pressed)
 			{
 				// Mouse back button pressed
-				if (NavigationHistory.GoBack())
-				{
-					args.Handled = true;
-				}
-
+				args.Handled = NavigationHistory.GoBack();
 			}
 			else if (args.CurrentPoint.Properties.IsXButton2Pressed)
 			{
 				// Mouse forward button pressed				
 				args.Handled = NavigationHistory.GoForward();
-			}
-			if (args.Handled)
-			{
-				// Due TreeView bug, you need set the node manually :(
-				if (NavigationHistory.CurrentItem != null && NavigationHistory.CurrentItem.Parent == null) // Root item!
-				{
-					treeView.SelectedNode = treeView.RootNodes.FirstOrDefault(x => x.Content == NavigationHistory.CurrentItem);
-				}
 			}
 		}
 
@@ -191,14 +183,8 @@ namespace MyFTP.Views
 			switch (args.KeyboardAccelerator.Key)
 			{
 				case VirtualKey.Back when NavigationHistory.CurrentItem?.Parent != null: // Go up
-					if (NavigationHistory.CurrentItem.Parent.Parent == null) // Root
-					{
-						treeView.SelectedNode = treeView.RootNodes.FirstOrDefault(x => x.Content == NavigationHistory.CurrentItem.Parent);
-					}
-					else
-					{
-						treeView.SelectedItem = NavigationHistory.CurrentItem.Parent;
-					}
+					var item = NavigationHistory.CurrentItem.Parent;
+					NavigationHistory.NavigateTo(item, NavigationHistory.CurrentItemIndex + 1);
 					args.Handled = true;
 					break;
 
@@ -256,23 +242,13 @@ namespace MyFTP.Views
 
 		private void OnButtonUpClicked(object sender, RoutedEventArgs args)
 		{
-			var item = Crumbs.Reverse().Skip(1).FirstOrDefault();
-			if (item == null)
-				treeView.SelectedNode = treeView.RootNodes.FirstOrDefault();
-			else if (item.Parent == null) // root #BUG 
-				treeView.SelectedNode = treeView.RootNodes.FirstOrDefault(x => x.Content == item);
-			else
-				treeView.SelectedItem = item;
+			var item = NavigationHistory.CurrentItem?.Parent;
+			if (item != null)
+				NavigationHistory.NavigateTo(item, NavigationHistory.CurrentItemIndex + 1);
 		}
 		private void OnBreadcrumbBarItemClicked(muxc.BreadcrumbBar sender, muxc.BreadcrumbBarItemClickedEventArgs args)
 		{
-			// #BUG 
-			if (args.Index == 0)
-			{
-				treeView.SelectedNode = treeView.RootNodes.FirstOrDefault(x => x.Content == args.Item);
-			}
-			else
-				treeView.SelectedItem = args.Item;
+			NavigationHistory.NavigateTo(args.Item as FtpListItemViewModel, NavigationHistory.CurrentItemIndex + 1);
 		}
 
 		private async void OnListViewContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
@@ -333,7 +309,7 @@ namespace MyFTP.Views
 
 		private void OnListViewItemClick(object sender, ItemClickEventArgs e)
 		{
-			treeView.SelectedItem = e.ClickedItem;
+			NavigationHistory.NavigateTo(e.ClickedItem as FtpListItemViewModel, NavigationHistory.CurrentItemIndex + 1);
 		}
 
 		private async Task NewConnectionAsync()
@@ -342,11 +318,12 @@ namespace MyFTP.Views
 			{
 				RequestedTheme = ActualTheme
 			};
-			if (await dialog.ShowAsync() == Windows.UI.Xaml.Controls.ContentDialogResult.Primary)
+			await dialog.ShowAsync();
+			if (dialog.Result != null)
 			{
 				ViewModel.AddItem(dialog.Result);
 				await Task.Delay(200);
-				treeView.SelectedNode = treeView.RootNodes.FirstOrDefault(x => x.Content == dialog.Result);
+				NavigationHistory.NavigateTo(dialog.Result as FtpListItemViewModel, NavigationHistory.CurrentItemIndex + 1);
 			}
 		}
 
@@ -355,7 +332,7 @@ namespace MyFTP.Views
 			if (Frame.CanGoBack)
 				Frame.GoBack();
 		}
-		private void GoToSettings() => Frame.Navigate(typeof(SettingsViewPage));
+		private void GoToSettings() => Frame.Navigate(typeof(SettingsViewPage), null, new SlideNavigationTransitionInfo { Effect = SlideNavigationTransitionEffect.FromRight });
 
 		private void ExitApp() => Application.Current.Exit();
 	}

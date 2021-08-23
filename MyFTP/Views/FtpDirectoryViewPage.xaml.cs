@@ -17,6 +17,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Imaging;
+using Windows.UI.Xaml.Navigation;
 
 namespace MyFTP.Views
 {
@@ -29,6 +30,18 @@ namespace MyFTP.Views
 		public IEnumerable<FtpListItemViewModel> SelectedItems { get => (IEnumerable<FtpListItemViewModel>)GetValue(SelectedItemsProperty); set => SetValue(SelectedItemsProperty, value); }
 		public static readonly DependencyProperty SelectedItemsProperty = DependencyProperty.Register("SelectedItems",
 				typeof(IEnumerable<FtpListItemViewModel>), typeof(FtpDirectoryViewPage), new PropertyMetadata(null));
+
+
+
+		public NavigationHistory<FtpListItemViewModel> NavigationHistory
+		{
+			get => (NavigationHistory<FtpListItemViewModel>)GetValue(NavigationHistoryProperty);
+			set => SetValue(NavigationHistoryProperty, value);
+		}
+		public static readonly DependencyProperty NavigationHistoryProperty = DependencyProperty.Register("NavigationHistory",
+			typeof(NavigationHistory<FtpListItemViewModel> ), typeof(FtpDirectoryViewPage), new PropertyMetadata(null));
+
+
 
 		public FtpDirectoryViewPage()
 		{
@@ -45,6 +58,11 @@ namespace MyFTP.Views
 			{
 				WeakReferenceMessenger.Default.Unregister<SelectedItemChangedMessage<FtpListItemViewModel>>(this);
 			};
+		}
+
+		protected override void OnNavigatedTo(NavigationEventArgs args)
+		{
+			NavigationHistory = args.Parameter as NavigationHistory<FtpListItemViewModel>;
 		}
 
 		private void OnAcceleratorRequested(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
@@ -229,6 +247,13 @@ namespace MyFTP.Views
 		{
 			fadeOut.Start();
 			ItemDropArea.IsHitTestVisible = false;
+		}
+
+		private void AppBarButton_Click(object sender, RoutedEventArgs e)
+		{
+			var item = NavigationHistory.CurrentItem?.Parent;
+			if (item != null)
+				NavigationHistory.NavigateTo(item, NavigationHistory.CurrentItemIndex + 1);
 		}
 	}
 }

@@ -3,11 +3,9 @@
 	  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	  xmlns:controls="using:MyFTP.Controls"
 	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-	  xmlns:local="using:MyFTP.Views"
 	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	  xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	  xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
-	  xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
 	  xmlns:viewmodels="using:MyFTP.ViewModels"
 	  mc:Ignorable="d">
 
@@ -17,6 +15,16 @@
 		</TransitionCollection>
 
 		<x:Double x:Key="MaxItemWidth">920</x:Double>
+
+		<!--
+		<SolidColorBrush x:Key="ExpanderHeaderForeground" Color="{ThemeResource SystemBaseMediumColor}" />
+		<SolidColorBrush x:Key="ExpanderChevronForeground" Color="{ThemeResource SystemBaseMediumColor}" />
+
+
+		<SolidColorBrush x:Key="ExpanderChevronPointerOverBackground" Color="Transparent" />
+		<SolidColorBrush x:Key="ExpanderChevronPressedBackground" Color="Transparent" />
+		<SolidColorBrush x:Key="ExpanderHeaderForegroundPressed" Color="{ThemeResource SystemBaseMediumHighColor}" />
+		<SolidColorBrush x:Key="ExpanderChevronPressedForeground" Color="{ThemeResource SystemBaseMediumHighColor}" />-->
 	</Page.Resources>
 
 	<Grid>
@@ -117,7 +125,7 @@
 						<Setter Property="HorizontalAlignment" Value="Stretch" />
 						<Setter Property="HorizontalContentAlignment" Value="Stretch" />
 						<Setter Property="MaxWidth" Value="{StaticResource MaxItemWidth}" />
-						<d:Setter Property="IsExpanded" Value="True" />
+						<d:Setter Property="IsExpanded" Value="False" />
 					</Style>
 				</StackPanel.Resources>
 
@@ -721,6 +729,7 @@
 							<RowDefinition />
 							<RowDefinition />
 							<RowDefinition />
+							<RowDefinition />
 						</Grid.RowDefinitions>
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="*" MinWidth="100" />
@@ -830,6 +839,12 @@
 										 Padding="0"
 										 Content="E-mail"
 										 NavigateUri="mailto:luan.airton.ss+myftp@gmail.com" />
+
+						<HyperlinkButton Grid.Row="10"
+										 Grid.ColumnSpan="2"
+										 HorizontalAlignment="Center"
+										 Content="Luandersonn"
+										 NavigateUri="https://luandersonn.com" />
 
 					</Grid>
 				</muxc:Expander>

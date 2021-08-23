@@ -20,6 +20,7 @@
 	  mc:Ignorable="d">
 
 	<Page.Resources>
+
 		<SolidColorBrush x:Key="ListViewItemBackgroundPointerOver" Color="{ThemeResource SystemBaseLowColor}" />
 
 		<SolidColorBrush x:Key="ListViewItemBackgroundSelected"
@@ -135,6 +136,32 @@
 		</Grid.RowDefinitions>
 
 		<CommandBar Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" DefaultLabelPosition="Right">
+			<CommandBar.Content>
+				<StackPanel Orientation="Horizontal">
+					<AppBarButton Width="40"
+								  Click="{x:Bind NavigationHistory.GoBack}"
+								  Icon="Back"
+								  IsEnabled="{x:Bind NavigationHistory.CanGoBack, Mode=OneWay}"
+								  LabelPosition="Collapsed"
+								  ToolTipService.ToolTip="Go Back" />
+
+					<AppBarButton Width="40"
+								  Click="{x:Bind NavigationHistory.GoForward}"
+								  Icon="Forward"
+								  IsEnabled="{x:Bind NavigationHistory.CanGoForward, Mode=OneWay}"
+								  LabelPosition="Collapsed"
+								  ToolTipService.ToolTip="Go Forward" />
+
+					<AppBarButton Width="40"
+								  Click="AppBarButton_Click"
+								  Icon="Up"
+								  IsEnabled="{x:Bind NavigationHistory.CurrentItem.Parent, Converter={StaticResource ItemToBoolConverter}, Mode=OneWay}"
+								  LabelPosition="Collapsed"
+								  ToolTipService.ToolTip="Navigate up one directory level" />
+
+				</StackPanel>
+			</CommandBar.Content>
+			<AppBarSeparator />
 			<AppBarButton Icon="NewFolder"
 						  Label="New folder"
 						  LabelPosition="Collapsed">

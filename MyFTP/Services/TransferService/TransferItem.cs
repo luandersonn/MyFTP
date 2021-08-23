@@ -127,12 +127,7 @@ namespace MyFTP.Services
 					case FtpStatus.Skipped:
 						throw new FtpException("Upload skipped");
 				}
-			}
-			catch (OperationCanceledException)
-			{
-				_client.DeleteFile(RemotePath);
-				throw;
-			}
+			}			
 			finally
 			{
 				await tempFile.DeleteAsync(StorageDeleteOption.PermanentDelete);
