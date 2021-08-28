@@ -8,6 +8,8 @@
 	  xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
 	  xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
 	  xmlns:viewmodels="using:MyFTP.ViewModels"
+	  d:Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+	  d:RequestedTheme="Light"
 	  muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
 	  mc:Ignorable="d">
 
@@ -35,11 +37,11 @@
 									 UriSource="/Assets/Square44x44Logo.png" />
 					</Image.Source>
 				</Image>
-				<TextBlock VerticalAlignment="Center"
+				<TextBlock x:Uid="AppName"
+						   VerticalAlignment="Center"
 						   d:Text="MyFTP"
 						   FontSize="14"
-						   FontWeight="SemiBold"
-						   Text="MyFTP" />
+						   FontWeight="SemiBold" />
 				<TextBlock VerticalAlignment="Center"
 						   FontSize="12"
 						   Text="Preview" />
@@ -68,25 +70,41 @@
 								</Image.Source>
 							</Image>
 
+							<muxc:InfoBar x:Name="infoBar"
+										  x:Uid="/LoginViewPage/LoginErrorInfoBar"
+										  d:IsOpen="True"
+										  d:Message="Erro ao fazer login"
+										  d:Title="Login error"
+										  IsClosable="False"
+										  IsOpen="{x:Bind ViewModel.LoginCommand.ExecutionTask.IsFaulted, Mode=OneWay}"
+										  Message="{x:Bind ViewModel.LoginCommand.ExecutionTask.Exception.InnerException.Message, Mode=OneWay}"
+										  Severity="Error" />
+
 							<StackPanel Orientation="Horizontal" Spacing="4">
-								<TextBox Width="212"
+								<TextBox x:Uid="/LoginViewPage/HostTextBox"
+										 Width="212"
 										 VerticalAlignment="Center"
-										 Header="Host"
-										 PlaceholderForeground="{ThemeResource SystemBaseLowColor}"
-										 PlaceholderText="ftp.example.com"
+										 d:Header="Host"
+										 d:PlaceholderText="ftp.example.com"
 										 Text="{x:Bind ViewModel.Host}" />
 
-								<muxc:NumberBox Width="100"
+								<muxc:NumberBox x:Uid="/LoginViewPage/PortTextBox"
+												Width="100"
 												VerticalAlignment="Bottom"
-												Header="Port"
+												d:Header="Port"
+												d:PlaceholderText="21"
 												Value="{x:Bind ViewModel.Port}" />
 							</StackPanel>
 
-							<TextBox Header="Username"
-									 PlaceholderForeground="{ThemeResource SystemBaseLowColor}"
-									 PlaceholderText="example@example.com"
+							<TextBox x:Uid="/LoginViewPage/UsernameTextBox"
+									 d:Header="Username"
+									 d:PlaceholderText="example@example.com"
 									 Text="{x:Bind ViewModel.Username, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
-							<PasswordBox Header="Password" Password="{x:Bind ViewModel.Password}" />
+
+							<PasswordBox x:Uid="/LoginViewPage/PasswordTextBox"
+										 d:Header="Password"
+										 Password="{x:Bind ViewModel.Password}"
+										 PlaceholderText="••••••••••••••" />
 
 							<Grid Opacity="0.6">
 								<Grid.ColumnDefinitions>
@@ -94,21 +112,24 @@
 									<ColumnDefinition Width="*" />
 								</Grid.ColumnDefinitions>
 								<FontIcon FontSize="12" Glyph="&#xE946;" />
-								<TextBlock Grid.Column="1"
+								<TextBlock x:Uid="/LoginViewPage/AnonymousLoginInfo"
+										   Grid.Column="1"
 										   VerticalAlignment="Center"
+										   d:Text="Leave username/password blank for anonymous login"
 										   FontSize="12"
-										   Text="Leave username/password blank for anonymous login"
 										   TextWrapping="Wrap" />
 							</Grid>
 
-							<CheckBox Content="Save credentials"
+							<CheckBox x:Uid="/LoginViewPage/SaveFtpCredentialsCheckbox"
+									  d:Content="Save credentials"
 									  IsChecked="{x:Bind ViewModel.SaveCredentials}"
 									  IsEnabled="{x:Bind ViewModel.CanSaveCredentials, Mode=OneTime}" />
 
-							<Button Width="320"
+							<Button x:Uid="/LoginViewPage/LoginButton"
+									Width="320"
 									Margin="0,8,0,0"
+									d:Content="Login"
 									Command="{x:Bind ViewModel.LoginCommand, Mode=OneTime}"
-									Content="Login"
 									Style="{ThemeResource AccentButtonStyle}">
 								<Button.KeyboardAccelerators>
 									<KeyboardAccelerator Key="Enter" />
@@ -120,16 +141,9 @@
 											  IsIndeterminate="{x:Bind ViewModel.LoginCommand.IsRunning, Mode=OneWay}"
 											  ShowError="{x:Bind infoBar.IsOpen, Mode=OneWay}" />
 
-							<muxc:InfoBar x:Name="infoBar"
-										  Title="Login error"
-										  d:IsOpen="True"
-										  d:Message="Erro ao fazer login"
-										  d:Title="Login error"
-										  IsClosable="False"
-										  IsOpen="{x:Bind ViewModel.LoginCommand.ExecutionTask.IsFaulted, Mode=OneWay}"
-										  Message="{x:Bind ViewModel.LoginCommand.ExecutionTask.Exception.InnerException.Message, Mode=OneWay}"
-										  Severity="Error" />
-							<HyperlinkButton Content="Privacy policy" NavigateUri="https://myftp.luandersonn.com/privacy" />
+							<HyperlinkButton x:Uid="/LoginViewPage/PrivacyPolicyHyperlink"
+											 d:Content="Privacy policy"
+											 NavigateUri="https://myftp.luandersonn.com/privacy" />
 						</StackPanel>
 					</ScrollViewer>
 					<toolkit:WrapPanel Margin="16"
@@ -138,8 +152,8 @@
 									   ChildrenTransitions="{StaticResource DefaultTransitions}"
 									   HorizontalSpacing="4"
 									   VerticalSpacing="4">
-						<Button Height="32"
-								ToolTipService.ToolTip="Saved credentials"
+						<Button x:Uid="/LoginViewPage/SavedCredentialsListButton"
+								Height="32"
 								Visibility="{x:Bind ViewModel.SavedCredentialsList.Count, Converter={StaticResource ItemToBoolConverter}, Mode=OneWay}">
 							<Button.Flyout>
 								<Flyout Placement="LeftEdgeAlignedBottom">
@@ -155,8 +169,9 @@
 										<ListView.ItemTemplate>
 											<DataTemplate x:DataType="viewmodels:FtpHostSettingsViewModel">
 												<Grid Padding="0,8"
-													  ColumnSpacing="12"
-													  ToolTipService.ToolTip="Click to connect">
+													  AutomationProperties.AccessibilityView="Raw"
+													  AutomationProperties.Name="{x:Bind Item.Host}"
+													  ColumnSpacing="12">
 													<Grid.ColumnDefinitions>
 														<ColumnDefinition Width="auto" />
 														<ColumnDefinition Width="*" />
@@ -175,7 +190,8 @@
 																   Visibility="{x:Bind Username, Converter={StaticResource ItemToBoolConverter}}" />
 													</StackPanel>
 
-													<Button Grid.Column="2"
+													<Button x:Uid="/LoginViewPage/FtpHostSettingsViewModelDeleteButton"
+															Grid.Column="2"
 															Click="OnDeleteCredentialClicked"
 															Command="{x:Bind DeleteSettingCommand}"
 															Content="&#xE107;"
@@ -190,9 +206,10 @@
 							</Button.Flyout>
 							<FontIcon FontSize="14" Glyph="&#xE136;" />
 						</Button>
-						<Button Height="32"
-								Click="{x:Bind GoToSettings}"
-								ToolTipService.ToolTip="Go to settings">
+
+						<Button x:Uid="/LoginViewPage/SettingsButton"
+								Height="32"
+								Click="{x:Bind GoToSettings}">
 							<FontIcon FontSize="14" Glyph="&#xE713;" />
 						</Button>
 					</toolkit:WrapPanel>
@@ -214,7 +231,8 @@
 							   Fill="{ThemeResource SystemAltHighColor}"
 							   Opacity="0.2" />
 
-					<Button Height="32"
+					<Button x:Uid="/LoginViewPage/BackgroundInfoButton"
+							Height="32"
 							Margin="18"
 							VerticalAlignment="Bottom"
 							Content="&#xE946;"
