@@ -36,6 +36,7 @@
 		</Grid.RowDefinitions>
 
 		<controls:TitleBarControl x:Name="titleBar"
+                                  x:Uid="/SettingsViewPage/TitleBarControl"
 								  Title="Settings"
 								  Height="42"
 								  Background="{ThemeResource SystemAltLowColor}"
@@ -47,7 +48,7 @@
 						   FontSize="20"
 						   IsHitTestVisible="False"
 						   Style="{ThemeResource BaseTextBlockStyle}"
-						   Text="Settings"
+						   Text="{x:Bind titleBar.Content}"
 						   Transitions="{StaticResource DefaultTransitions}" />
 			</controls:TitleBarControl.InnerContent>
 			<StackPanel Orientation="Horizontal" Spacing="8">
@@ -59,17 +60,19 @@
 			</StackPanel>
 		</controls:TitleBarControl>
 
-		<muxc:InfoBar Title="New version available"
+        <muxc:InfoBar x:Uid="/SettingsViewPage/InfoBar"
+					  Title="New version available"
 					  Grid.Row="1"
 					  MaxWidth="{StaticResource MaxItemWidth}"
 					  Margin="18,8"
 					  d:IsOpen="True"
 					  IsClosable="True"
 					  IsOpen="{x:Bind ViewModel.UpdateService.IsUpdateAvailable, Mode=OneWay}"
-					  Message="A new version of MyFTP is available for download"
 					  Transitions="{StaticResource DefaultTransitions}">
 			<muxc:InfoBar.ActionButton>
-				<Button Command="{x:Bind ViewModel.UpdateService.InstallUpdatesCommand}" Content="Download" />
+				<Button x:Name="DownloadButton" 
+                        x:Uid="/SettingsViewPage/DownloadButton"
+                        Command="{x:Bind ViewModel.UpdateService.InstallUpdatesCommand}"  />
 			</muxc:InfoBar.ActionButton>
 			<muxc:InfoBar.Content>
 				<StackPanel Margin="0,0,12,12" Visibility="{x:Bind ViewModel.UpdateService.UpdateInstallProgress, Converter={StaticResource ItemToBoolConverter}, Mode=OneWay}">
@@ -92,11 +95,14 @@
 			  MaxWidth="{StaticResource MaxItemWidth}"
 			  Margin="18,0,18,8"
 			  Transitions="{StaticResource DefaultTransitions}">
-			<Button x:Name="ExpandAllButton" Click="{x:Bind ExpandAll}">
+            <Button x:Name="ExpandAllButton"
+					x:Uid="/SettingsViewPage/ExpandAllButton" 
+                    Click="{x:Bind ExpandAll}">
 				<Button.Content>
 					<StackPanel Orientation="Horizontal" Spacing="8">
 						<FontIcon FontSize="14" Glyph="&#xE109;" />
-						<TextBlock VerticalAlignment="Center" Text="Expand all" />
+                        <TextBlock 
+								   VerticalAlignment="Center"/>
 					</StackPanel>
 				</Button.Content>
 			</Button>
@@ -106,7 +112,9 @@
 					Click="{x:Bind CollapseAll}">
 				<StackPanel Orientation="Horizontal" Spacing="8">
 					<FontIcon FontSize="14" Glyph="&#xE108;" />
-					<TextBlock VerticalAlignment="Center" Text="Collapse all" />
+					<TextBlock x:Name="CollapseAllText" 
+                               x:Uid="/SettingsViewPage/CollapseAllText"
+                               VerticalAlignment="Center"/>
 				</StackPanel>
 			</Button>
 		</Grid>
@@ -135,12 +143,15 @@
 					<muxc:Expander.Header>
 						<StackPanel Orientation="Horizontal" Spacing="8">
 							<FontIcon FontSize="14" Glyph="&#xE17B;" />
-							<TextBlock Text="Hosts" />
+							<TextBlock x:Name="Hosts"
+                                       x:Uid="/SettingsViewPage/Hosts" />
 						</StackPanel>
 					</muxc:Expander.Header>
 					<toolkit:SwitchPresenter TargetType="x:Int32" Value="{x:Bind ViewModel.FtpHostSettingsList.Count, Mode=OneWay}">
 						<toolkit:Case Value="0">
-							<TextBlock HorizontalAlignment="Center" Text="No saved hosts" />
+							<TextBlock x:Name="NoSavedHostsCase" 
+                                       x:Uid="/SettingsViewPage/NoSavedHostsCase" 
+                                       HorizontalAlignment="Center"/>
 						</toolkit:Case>
 						<toolkit:Case IsDefault="True">
 							<muxc:ItemsRepeater ItemsSource="{x:Bind ViewModel.FtpHostSettingsList}">
@@ -169,7 +180,9 @@
 
 												<Grid.ContextFlyout>
 													<MenuFlyout>
-														<MenuFlyoutItem Command="{x:Bind ResetFolderCommand}" Text="Restore default folder">
+														<MenuFlyoutItem x:Name="RestoreDefaultFolder"
+                                                                        x:Uid="/SettingsViewPage/RestoreDefaultFolder" 
+																		Command="{x:Bind ResetFolderCommand}">
 															<MenuFlyoutItem.Icon>
 																<FontIcon Glyph="&#xEBC4;" />
 															</MenuFlyoutItem.Icon>
@@ -177,9 +190,10 @@
 													</MenuFlyout>
 												</Grid.ContextFlyout>
 
-												<TextBlock VerticalAlignment="Center"
-														   Foreground="{ThemeResource SystemBaseMediumColor}"
-														   Text="Default save folder" />
+												<TextBlock x:Name="DefaultSaveFolder"
+                                                           x:Uid="/SettingsViewPage/DefaultSaveFolder" 
+														   VerticalAlignment="Center"
+														   Foreground="{ThemeResource SystemBaseMediumColor}"/>
 
 												<HyperlinkButton Grid.Column="1"
 																 VerticalAlignment="Center"
@@ -201,11 +215,13 @@
 												<Button.Flyout>
 													<Flyout Placement="Top">
 														<StackPanel Spacing="4">
-															<TextBlock Text="Are you sure?" />
-															<Button HorizontalAlignment="Stretch"
+															<TextBlock x:Name="ConfirmText"
+                                                                       x:Uid="/SettingsViewPage/ConfirmText" />
+															<Button x:Name="RemoveSettingsButton"
+                                                                    x:Uid="/SettingsViewPage/RemoveSettingsButton" 
+																	HorizontalAlignment="Stretch"
 																	Click="OnDeleteHostClicked"
 																	Command="{x:Bind DeleteSettingCommand}"
-																	Content="Yes, remove settings"
 																	Style="{ThemeResource DestructiveButtonStyle}" />
 														</StackPanel>
 													</Flyout>
@@ -223,7 +239,8 @@
 					<muxc:Expander.Header>
 						<StackPanel Orientation="Horizontal" Spacing="8">
 							<FontIcon FontSize="14" Glyph="&#xE790;" />
-							<TextBlock Text="Personalization" />
+                            <TextBlock x:Name="Personalization"
+                                       x:Uid="/SettingsViewPage/Personalization" />
 						</StackPanel>
 					</muxc:Expander.Header>
 					<Grid>
@@ -246,7 +263,8 @@
 					<muxc:Expander.Header>
 						<StackPanel Orientation="Horizontal" Spacing="8">
 							<FontIcon FontSize="14" Glyph="&#xE92E;" />
-							<TextBlock Text="Keyboard Shortcuts" />
+							<TextBlock x:Name="KeyboardShortcuts" 
+                                       x:Uid="/SettingsViewPage/KeyboardShortcuts" />
 						</StackPanel>
 					</muxc:Expander.Header>
 					<StackPanel Spacing="8">
@@ -294,7 +312,8 @@
 								</Border>
 							</StackPanel>
 
-							<TextBlock Grid.Column="1" Text="View the previous folder" />
+							<TextBlock x:Name="ViewPreviousFolder" 
+                                       Grid.Column="1"/>
 							<!--#endregion-->
 
 							<!--#region ALT + RIGHT ARROW-->
@@ -310,9 +329,9 @@
 								</Border>
 							</StackPanel>
 
-							<TextBlock Grid.Row="1"
-									   Grid.Column="1"
-									   Text="View the next folder" />
+							<TextBlock x:Name="ViewNextFolder" 
+                                       Grid.Row="1"
+									   Grid.Column="1" />
 							<!--#endregion-->
 
 							<!--#region BACKSPACE-->
@@ -325,9 +344,9 @@
 								</Border>
 							</StackPanel>
 
-							<TextBlock Grid.Row="2"
-									   Grid.Column="1"
-									   Text="Navigate up one directory level" />
+                            <TextBlock x:Name="NavigateUpOneDirectoryLevel"
+									   Grid.Row="2"
+									   Grid.Column="1" />
 							<!--#endregion-->
 
 							<!--#region LEFT ARROW-->
@@ -340,9 +359,9 @@
 								</Border>
 							</StackPanel>
 
-							<TextBlock Grid.Row="3"
-									   Grid.Column="1"
-									   Text="Collapse the current selection (if it's expanded), or select the folder that the folder was in (TreeView)" />
+                            <TextBlock x:Name="CollapseCurrentSelection" 
+									   Grid.Row="3"
+									   Grid.Column="1" />
 							<!--#endregion-->
 
 							<!--#region RIGHT ARROW-->
