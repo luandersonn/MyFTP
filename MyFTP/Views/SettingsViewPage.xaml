@@ -53,7 +53,8 @@
 						   Transitions="{StaticResource DefaultTransitions}" />
 			</controls:TitleBarControl.InnerContent>
 			<StackPanel Orientation="Horizontal" Spacing="8">
-				<Button VerticalAlignment="Stretch"
+				<Button x:Uid="/SettingsViewPage/BackButton"
+						VerticalAlignment="Stretch"
 						Click="{x:Bind GoBack}"
 						CornerRadius="0"
 						Style="{ThemeResource NavigationBackButtonNormalStyle}"
@@ -61,17 +62,18 @@
 			</StackPanel>
 		</controls:TitleBarControl>
 
-		<muxc:InfoBar x:Uid="/SettingsViewPage/InfoBar"
+		<muxc:InfoBar x:Uid="/SettingsViewPage/InfoBarUpdate"
 					  Grid.Row="1"
 					  MaxWidth="{StaticResource MaxItemWidth}"
 					  Margin="18,8"
 					  d:IsOpen="True"
-					  d:Title="New version available"
+					  d:Message="The app will restart when the update completes"
+					  d:Title="A new version of MyFTP is available for download"
 					  IsClosable="True"
 					  IsOpen="{x:Bind ViewModel.UpdateService.IsUpdateAvailable, Mode=OneWay}"
 					  Transitions="{StaticResource DefaultTransitions}">
 			<muxc:InfoBar.ActionButton>
-				<Button x:Uid="/SettingsViewPage/DownloadButton"
+				<Button x:Uid="/SettingsViewPage/DownloadUpdateButton"
 						d:Content="Download"
 						Command="{x:Bind ViewModel.UpdateService.InstallUpdatesCommand}" />
 			</muxc:InfoBar.ActionButton>
@@ -96,7 +98,9 @@
 			  MaxWidth="{StaticResource MaxItemWidth}"
 			  Margin="18,0,18,8"
 			  Transitions="{StaticResource DefaultTransitions}">
-			<Button x:Name="ExpandAllButton" Click="{x:Bind ExpandAll}">
+			<Button x:Name="ExpandAllButton"
+					x:Uid="/SettingsViewPage/ExpandAllButton"
+					Click="{x:Bind ExpandAll}">
 				<Button.Content>
 					<StackPanel Orientation="Horizontal" Spacing="8">
 						<FontIcon FontSize="14" Glyph="&#xE109;" />
@@ -108,6 +112,7 @@
 			</Button>
 
 			<Button x:Name="CollapseAllButton"
+					x:Uid="/SettingsViewPage/CollapseAllButton"
 					HorizontalAlignment="Right"
 					Click="{x:Bind CollapseAll}">
 				<StackPanel Orientation="Horizontal" Spacing="8">
@@ -239,9 +244,12 @@
 							<ColumnDefinition />
 							<ColumnDefinition Width="180" />
 						</Grid.ColumnDefinitions>
-						<TextBlock VerticalAlignment="Center" Text="App theme" />
+						<TextBlock x:Name="AppThemeTextBlock"
+								   VerticalAlignment="Center"
+								   Text="App theme" />
 						<ComboBox Grid.Column="1"
 								  HorizontalAlignment="Stretch"
+								  AutomationProperties.LabeledBy="{x:Bind AppThemeTextBlock}"
 								  SelectedIndex="{x:Bind ThemeIndex, Mode=TwoWay}">
 							<x:String>Windows Default</x:String>
 							<x:String>Light</x:String>
@@ -807,7 +815,8 @@
 								   d:Text="X64"
 								   Text="{x:Bind ViewModel.SystemInformation.OperatingSystemArchitecture}" />
 
-						<TextBlock Grid.Row="6"
+						<TextBlock x:Name="sourceCodeTextBlock"
+								   Grid.Row="6"
 								   VerticalAlignment="Center"
 								   Foreground="{ThemeResource SystemBaseMediumColor}"
 								   Text="Source code" />
@@ -815,6 +824,7 @@
 						<HyperlinkButton Grid.Row="6"
 										 Grid.Column="1"
 										 Padding="0"
+										 AutomationProperties.LabeledBy="{x:Bind sourceCodeTextBlock}"
 										 Content="GitHub"
 										 NavigateUri="https://github.com/luandersonn/MyFTP" />
 

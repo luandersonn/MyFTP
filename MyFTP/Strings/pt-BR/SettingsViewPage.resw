@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="CollapseAllButtonText.Text" xml:space="preserve">
+    <value>Recolher tudo</value>
+  </data>
+  <data name="CollapseCurrentSelection.Text" xml:space="preserve">
+    <value>Recolhe a seleção atual (se estiver expandida), ou seleciona a pasta em que a pasta selecionada está localizada (TreeView)</value>
+  </data>
+  <data name="ConfirmText.Text" xml:space="preserve">
+    <value>Você tem certeza?</value>
+  </data>
+  <data name="DefaultSaveFolder.Text" xml:space="preserve">
+    <value>Pasta de salvamento padrão</value>
+  </data>
+  <data name="ExpandAllButtonText.Text" xml:space="preserve">
+    <value>Expandir tudo</value>
+  </data>
+  <data name="Hosts.Text" xml:space="preserve">
+    <value>Servidores</value>
+  </data>
+  <data name="KeyboardShortcuts.Text" xml:space="preserve">
+    <value>Atalhos do teclado</value>
+  </data>
+  <data name="NavigateUpOneDirectoryLevel.Text" xml:space="preserve">
+    <value>Navegue um nível de diretório para cima</value>
+  </data>
+  <data name="NoSavedHostsCase.Text" xml:space="preserve">
+    <value>Nenhum servidor salvo</value>
+  </data>
+  <data name="Personalization.Text" xml:space="preserve">
+    <value>Personalização</value>
+  </data>
+  <data name="RemoveSettingsButton.Content" xml:space="preserve">
+    <value>Sim, remover configurações</value>
+  </data>
+  <data name="RestoreDefaultFolder.Text" xml:space="preserve">
+    <value>Restaurar a pasta de salvamento padrão</value>
+  </data>
+  <data name="TitleBarControl.Title" xml:space="preserve">
+    <value>Configurações</value>
+  </data>
+  <data name="ViewNextFolder.Text" xml:space="preserve">
+    <value>Exibir a próxima pasta</value>
+  </data>
+  <data name="ViewPreviousFolder.Text" xml:space="preserve">
+    <value>Exibir a pasta anterior</value>
+  </data>
+</root>

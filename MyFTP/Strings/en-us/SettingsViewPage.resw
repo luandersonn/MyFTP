@@ -117,6 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BackButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="BackButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="CollapseAllButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Collapse all sections</value>
+  </data>
   <data name="CollapseAllButtonText.Text" xml:space="preserve">
     <value>Collapse all</value>
   </data>
@@ -124,13 +133,19 @@
     <value>Collapse the current selection (if it's expanded), or select the folder that the folder was in (TreeView)</value>
   </data>
   <data name="ConfirmText.Text" xml:space="preserve">
-    <value>Are you sure ?</value>
+    <value>Are you sure?</value>
   </data>
   <data name="DefaultSaveFolder.Text" xml:space="preserve">
     <value>Default save folder</value>
   </data>
-  <data name="DownloadButton.Content" xml:space="preserve">
+  <data name="DownloadUpdateButton.Content" xml:space="preserve">
     <value>Download</value>
+  </data>
+  <data name="DownloadUpdateButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Download update</value>
+  </data>
+  <data name="ExpandAllButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Expand all sections</value>
   </data>
   <data name="ExpandAllButtonText.Text" xml:space="preserve">
     <value>Expand all</value>
@@ -138,7 +153,10 @@
   <data name="Hosts.Text" xml:space="preserve">
     <value>Hosts</value>
   </data>
-  <data name="InfoBar.Message" xml:space="preserve">
+  <data name="InfoBarUpdate.Message" xml:space="preserve">
+    <value>The app will restart when the update completes</value>
+  </data>
+  <data name="InfoBarUpdate.Title" xml:space="preserve">
     <value>A new version of MyFTP is available for download</value>
   </data>
   <data name="KeyboardShortcuts.Text" xml:space="preserve">
