@@ -7,6 +7,7 @@
 	  xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	  xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
 	  xmlns:viewmodels="using:MyFTP.ViewModels"
+	  d:Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	  mc:Ignorable="d">
 
 	<Page.Resources>
@@ -36,9 +37,9 @@
 		</Grid.RowDefinitions>
 
 		<controls:TitleBarControl x:Name="titleBar"
-                                  x:Uid="/SettingsViewPage/TitleBarControl"
-								  Title="Settings"
+								  x:Uid="/SettingsViewPage/TitleBarControl"
 								  Height="42"
+								  d:Title="Settings"
 								  Background="{ThemeResource SystemAltLowColor}"
 								  BorderBrush="{ThemeResource SystemBaseLowColor}"
 								  BorderThickness="0,0,0,1">
@@ -48,7 +49,7 @@
 						   FontSize="20"
 						   IsHitTestVisible="False"
 						   Style="{ThemeResource BaseTextBlockStyle}"
-						   Text="{x:Bind titleBar.Content}"
+						   Text="{x:Bind titleBar.Title}"
 						   Transitions="{StaticResource DefaultTransitions}" />
 			</controls:TitleBarControl.InnerContent>
 			<StackPanel Orientation="Horizontal" Spacing="8">
@@ -60,19 +61,19 @@
 			</StackPanel>
 		</controls:TitleBarControl>
 
-        <muxc:InfoBar x:Uid="/SettingsViewPage/InfoBar"
-					  Title="New version available"
+		<muxc:InfoBar x:Uid="/SettingsViewPage/InfoBar"
 					  Grid.Row="1"
 					  MaxWidth="{StaticResource MaxItemWidth}"
 					  Margin="18,8"
 					  d:IsOpen="True"
+					  d:Title="New version available"
 					  IsClosable="True"
 					  IsOpen="{x:Bind ViewModel.UpdateService.IsUpdateAvailable, Mode=OneWay}"
 					  Transitions="{StaticResource DefaultTransitions}">
 			<muxc:InfoBar.ActionButton>
-				<Button x:Name="DownloadButton" 
-                        x:Uid="/SettingsViewPage/DownloadButton"
-                        Command="{x:Bind ViewModel.UpdateService.InstallUpdatesCommand}"  />
+				<Button x:Uid="/SettingsViewPage/DownloadButton"
+						d:Content="Download"
+						Command="{x:Bind ViewModel.UpdateService.InstallUpdatesCommand}" />
 			</muxc:InfoBar.ActionButton>
 			<muxc:InfoBar.Content>
 				<StackPanel Margin="0,0,12,12" Visibility="{x:Bind ViewModel.UpdateService.UpdateInstallProgress, Converter={StaticResource ItemToBoolConverter}, Mode=OneWay}">
@@ -95,14 +96,13 @@
 			  MaxWidth="{StaticResource MaxItemWidth}"
 			  Margin="18,0,18,8"
 			  Transitions="{StaticResource DefaultTransitions}">
-            <Button x:Name="ExpandAllButton"
-					x:Uid="/SettingsViewPage/ExpandAllButton" 
-                    Click="{x:Bind ExpandAll}">
+			<Button x:Name="ExpandAllButton" Click="{x:Bind ExpandAll}">
 				<Button.Content>
 					<StackPanel Orientation="Horizontal" Spacing="8">
 						<FontIcon FontSize="14" Glyph="&#xE109;" />
-                        <TextBlock 
-								   VerticalAlignment="Center"/>
+						<TextBlock x:Uid="/SettingsViewPage/ExpandAllButtonText"
+								   VerticalAlignment="Center"
+								   d:Text="Expand all" />
 					</StackPanel>
 				</Button.Content>
 			</Button>
@@ -112,9 +112,9 @@
 					Click="{x:Bind CollapseAll}">
 				<StackPanel Orientation="Horizontal" Spacing="8">
 					<FontIcon FontSize="14" Glyph="&#xE108;" />
-					<TextBlock x:Name="CollapseAllText" 
-                               x:Uid="/SettingsViewPage/CollapseAllText"
-                               VerticalAlignment="Center"/>
+					<TextBlock x:Uid="/SettingsViewPage/CollapseAllButtonText"
+							   VerticalAlignment="Center"
+							   d:Text="Collapse all" />
 				</StackPanel>
 			</Button>
 		</Grid>
@@ -143,15 +143,12 @@
 					<muxc:Expander.Header>
 						<StackPanel Orientation="Horizontal" Spacing="8">
 							<FontIcon FontSize="14" Glyph="&#xE17B;" />
-							<TextBlock x:Name="Hosts"
-                                       x:Uid="/SettingsViewPage/Hosts" />
+							<TextBlock x:Uid="/SettingsViewPage/Hosts" d:Text="Hosts" />
 						</StackPanel>
 					</muxc:Expander.Header>
 					<toolkit:SwitchPresenter TargetType="x:Int32" Value="{x:Bind ViewModel.FtpHostSettingsList.Count, Mode=OneWay}">
 						<toolkit:Case Value="0">
-							<TextBlock x:Name="NoSavedHostsCase" 
-                                       x:Uid="/SettingsViewPage/NoSavedHostsCase" 
-                                       HorizontalAlignment="Center"/>
+							<TextBlock x:Uid="/SettingsViewPage/NoSavedHostsCase" HorizontalAlignment="Center" />
 						</toolkit:Case>
 						<toolkit:Case IsDefault="True">
 							<muxc:ItemsRepeater ItemsSource="{x:Bind ViewModel.FtpHostSettingsList}">
@@ -180,9 +177,7 @@
 
 												<Grid.ContextFlyout>
 													<MenuFlyout>
-														<MenuFlyoutItem x:Name="RestoreDefaultFolder"
-                                                                        x:Uid="/SettingsViewPage/RestoreDefaultFolder" 
-																		Command="{x:Bind ResetFolderCommand}">
+														<MenuFlyoutItem x:Uid="/SettingsViewPage/RestoreDefaultFolder" Command="{x:Bind ResetFolderCommand}">
 															<MenuFlyoutItem.Icon>
 																<FontIcon Glyph="&#xEBC4;" />
 															</MenuFlyoutItem.Icon>
@@ -190,10 +185,9 @@
 													</MenuFlyout>
 												</Grid.ContextFlyout>
 
-												<TextBlock x:Name="DefaultSaveFolder"
-                                                           x:Uid="/SettingsViewPage/DefaultSaveFolder" 
+												<TextBlock x:Uid="/SettingsViewPage/DefaultSaveFolder"
 														   VerticalAlignment="Center"
-														   Foreground="{ThemeResource SystemBaseMediumColor}"/>
+														   Foreground="{ThemeResource SystemBaseMediumColor}" />
 
 												<HyperlinkButton Grid.Column="1"
 																 VerticalAlignment="Center"
@@ -215,10 +209,8 @@
 												<Button.Flyout>
 													<Flyout Placement="Top">
 														<StackPanel Spacing="4">
-															<TextBlock x:Name="ConfirmText"
-                                                                       x:Uid="/SettingsViewPage/ConfirmText" />
-															<Button x:Name="RemoveSettingsButton"
-                                                                    x:Uid="/SettingsViewPage/RemoveSettingsButton" 
+															<TextBlock x:Uid="/SettingsViewPage/ConfirmText" />
+															<Button x:Uid="/SettingsViewPage/RemoveSettingsButton"
 																	HorizontalAlignment="Stretch"
 																	Click="OnDeleteHostClicked"
 																	Command="{x:Bind DeleteSettingCommand}"
@@ -239,8 +231,7 @@
 					<muxc:Expander.Header>
 						<StackPanel Orientation="Horizontal" Spacing="8">
 							<FontIcon FontSize="14" Glyph="&#xE790;" />
-                            <TextBlock x:Name="Personalization"
-                                       x:Uid="/SettingsViewPage/Personalization" />
+							<TextBlock x:Uid="/SettingsViewPage/Personalization" />
 						</StackPanel>
 					</muxc:Expander.Header>
 					<Grid>
@@ -263,8 +254,7 @@
 					<muxc:Expander.Header>
 						<StackPanel Orientation="Horizontal" Spacing="8">
 							<FontIcon FontSize="14" Glyph="&#xE92E;" />
-							<TextBlock x:Name="KeyboardShortcuts" 
-                                       x:Uid="/SettingsViewPage/KeyboardShortcuts" />
+							<TextBlock x:Uid="/SettingsViewPage/KeyboardShortcuts" />
 						</StackPanel>
 					</muxc:Expander.Header>
 					<StackPanel Spacing="8">
@@ -312,8 +302,7 @@
 								</Border>
 							</StackPanel>
 
-							<TextBlock x:Name="ViewPreviousFolder" 
-                                       Grid.Column="1"/>
+							<TextBlock x:Uid="/SettingsViewPage/ViewPreviousFolder" Grid.Column="1" />
 							<!--#endregion-->
 
 							<!--#region ALT + RIGHT ARROW-->
@@ -329,8 +318,8 @@
 								</Border>
 							</StackPanel>
 
-							<TextBlock x:Name="ViewNextFolder" 
-                                       Grid.Row="1"
+							<TextBlock x:Uid="/SettingsViewPage/ViewNextFolder"
+									   Grid.Row="1"
 									   Grid.Column="1" />
 							<!--#endregion-->
 
@@ -344,7 +333,7 @@
 								</Border>
 							</StackPanel>
 
-                            <TextBlock x:Name="NavigateUpOneDirectoryLevel"
+							<TextBlock x:Uid="/SettingsViewPage/NavigateUpOneDirectoryLevel"
 									   Grid.Row="2"
 									   Grid.Column="1" />
 							<!--#endregion-->
@@ -359,7 +348,7 @@
 								</Border>
 							</StackPanel>
 
-                            <TextBlock x:Name="CollapseCurrentSelection" 
+							<TextBlock x:Uid="/SettingsViewPage/CollapseCurrentSelection"
 									   Grid.Row="3"
 									   Grid.Column="1" />
 							<!--#endregion-->
@@ -866,6 +855,33 @@
 										 NavigateUri="https://luandersonn.com" />
 
 					</Grid>
+				</muxc:Expander>
+
+				<muxc:Expander x:Name="DebugExpander"
+							   d:IsExpanded="True"
+							   d:Visibility="Visible"
+							   Collapsed="{x:Bind Collapsed}"
+							   Expanding="{x:Bind Expanding}"
+							   Visibility="Collapsed">
+					<muxc:Expander.Header>
+						<StackPanel Orientation="Horizontal" Spacing="8">
+							<FontIcon FontSize="14" Glyph="&#xEBE8;" />
+							<TextBlock Text="Debug" />
+						</StackPanel>
+					</muxc:Expander.Header>
+					<StackPanel>
+						<Grid>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition />
+								<ColumnDefinition Width="180" />
+							</Grid.ColumnDefinitions>
+							<TextBlock VerticalAlignment="Center" Text="Languages" />
+							<ComboBox Grid.Column="1"
+									  HorizontalAlignment="Stretch"
+									  Loaded="ComboBox_Loaded"
+									  SelectionChanged="ComboBox_SelectionChanged" />
+						</Grid>
+					</StackPanel>
 				</muxc:Expander>
 
 				<Rectangle Height="20" />

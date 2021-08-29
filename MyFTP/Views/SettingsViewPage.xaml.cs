@@ -1,10 +1,12 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.Messaging;
 using Microsoft.Toolkit.Uwp.Helpers;
+using MyFTP.Services;
 using MyFTP.Utils;
 using MyFTP.ViewModels;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.Storage.Pickers;
 using Windows.System;
 using Windows.UI.Xaml;
@@ -19,10 +21,13 @@ namespace MyFTP.Views
 	{
 		private int totalExpanderCount;
 		private int expandedCount;
+
+		public AppCenterService AppCenterService { get; }
 		public SettingsViewPage()
 		{
 			InitializeComponent();
-			DataContext = App.Current.Services.GetRequiredService<SettingsViewModel>();			
+			DataContext = App.Current.Services.GetRequiredService<SettingsViewModel>();
+			AppCenterService = App.Current.Services.GetService<AppCenterService>();
 			Loaded += (sender, args) =>
 			{
 				WeakReferenceMessenger.Default.Register<RequestOpenFolderMessage>(this, OnOpenFolderRequest);
@@ -51,6 +56,10 @@ namespace MyFTP.Views
 			UpdateExpanderButtons();
 			if (ViewModel.UpdateService?.CheckForUpdatesCommand.CanExecute(null) == true)
 				ViewModel.UpdateService.CheckForUpdatesCommand.Execute(null);
+
+#if DEBUG
+			DebugExpander.Visibility = Visibility.Visible;
+#endif
 		}
 
 		public SettingsViewModel ViewModel => DataContext as SettingsViewModel;
@@ -134,6 +143,7 @@ namespace MyFTP.Views
 			{
 				IsEnabled = false;
 				await SystemInformation.LaunchStoreForReviewAsync();
+				AppCenterService?.TrackEvent("LaunchStoreForReviewAsync");
 			}
 			finally
 			{
@@ -145,6 +155,26 @@ namespace MyFTP.Views
 		{
 			if (Frame.CanGoBack)
 				Frame.GoBack();
-		}		
+		}
+		#region DEBUG		
+		private async void ComboBox_Loaded(object sender, RoutedEventArgs e)
+		{
+			var comboBox = (ComboBox)sender;
+			comboBox.ItemsSource = Windows.Globalization.ApplicationLanguages.ManifestLanguages.Prepend("Default");
+			// give time to comboBox load items
+			await Task.Delay(TimeSpan.FromMilliseconds(200));
+			var lang = Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride;
+			if (lang == "")
+				lang = "Default";
+			comboBox.SelectedItem = lang;
+		}
+		private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			var item = e.AddedItems[0].ToString();
+			if (item == "Default")
+				item = "";
+			Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride = item;
+		}
+		#endregion
 	}
 }

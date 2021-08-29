@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CollapseAllText.Text" xml:space="preserve">
+  <data name="CollapseAllButtonText.Text" xml:space="preserve">
     <value>Collapse all</value>
   </data>
   <data name="CollapseCurrentSelection.Text" xml:space="preserve">
@@ -132,7 +132,7 @@
   <data name="DownloadButton.Content" xml:space="preserve">
     <value>Download</value>
   </data>
-  <data name="ExpandAllButton.Content" xml:space="preserve">
+  <data name="ExpandAllButtonText.Text" xml:space="preserve">
     <value>Expand all</value>
   </data>
   <data name="Hosts.Text" xml:space="preserve">
