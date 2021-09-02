@@ -147,6 +147,9 @@
   <data name="PasswordTextBox.Header" xml:space="preserve">
     <value>Mật khẩu</value>
   </data>
+  <data name="PortTextBox.Header" xml:space="preserve">
+    <value>Cổng</value>
+  </data>
   <data name="PrivacyPolicyHyperlink.Content" xml:space="preserve">
     <value>Thông tin quyền riêng tư</value>
   </data>
