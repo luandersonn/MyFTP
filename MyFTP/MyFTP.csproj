@@ -351,6 +351,9 @@
     <None Include="..\.editorconfig">
       <Link>.editorconfig</Link>
     </None>
+    <PRIResource Include="Strings\fr-fr\LoginViewPage.resw" />
+    <PRIResource Include="Strings\fr-fr\Resources.resw" />
+    <PRIResource Include="Strings\fr-fr\SettingsViewPage.resw" />
     <PRIResource Include="Strings\vi-VN\SettingsViewPage.resw" />
     <PRIResource Include="Strings\vi-VN\Resources.resw" />
     <PRIResource Include="Strings\vi-VN\LoginViewPage.resw" />
