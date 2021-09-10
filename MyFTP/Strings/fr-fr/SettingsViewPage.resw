@@ -154,11 +154,9 @@
     <value>Hôtes</value>
   </data>
   <data name="InfoBarUpdate.Message" xml:space="preserve">
-    <value>The app will restart when the update completes</value>
     <value>L'application va redémarrer et se mettre à jour</value>
   </data>
   <data name="InfoBarUpdate.Title" xml:space="preserve">
-    <value>A new version of MyFTP is available for download</value>
     <value>Une nouvelle version de  MyFTP est disponible pour le téléchargement</value>
   </data>
   <data name="KeyboardShortcuts.Text" xml:space="preserve">
