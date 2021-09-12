@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="BackButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>[B88C7][!!_Ъãċќ_!!]</value>
+  </data>
+  <data name="BackButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>[8D990][!!_ßâčĸ_!!]</value>
+  </data>
+  <data name="CollapseAllButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>[C7DBB][!!_Čòĺłáþšé àļł śęčţìòήś_!!]</value>
+  </data>
+  <data name="CollapseAllButtonText.Text" xml:space="preserve">
+    <value>[DD013][!!_Ċõľĺàþŝè áłĺ_!!]</value>
+  </data>
+  <data name="CollapseCurrentSelection.Text" xml:space="preserve">
+    <value>[BCE7F][!!_Ċõļļáρšè ţнè ćùŗŗêήт šéľęċтįòη (îƒ įţ'ŝ ę×рàηďêď), òŗ şêļęċţ ţђê ƒôļđèř ťнãť ţĥê ƒôłďęŗ ŵáş įή (ТѓęèVíéŵ)_!!]</value>
+  </data>
+  <data name="ConfirmText.Text" xml:space="preserve">
+    <value>[D0643][!!_Áŕę ÿóù šµŗê?_!!]</value>
+  </data>
+  <data name="DefaultSaveFolder.Text" xml:space="preserve">
+    <value>[39267][!!_Ðêƒáµĺţ šâνê ƒòłđêѓ_!!]</value>
+  </data>
+  <data name="DownloadUpdateButton.Content" xml:space="preserve">
+    <value>[5FC8D][!!_Ðòẅиłóàď_!!]</value>
+  </data>
+  <data name="DownloadUpdateButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>[9EDB0][!!_Ďóẅηľôãď ùρðáţê_!!]</value>
+  </data>
+  <data name="ExpandAllButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>[0FB32][!!_É×ρáйð àĺł šèćťìòиš_!!]</value>
+  </data>
+  <data name="ExpandAllButtonText.Text" xml:space="preserve">
+    <value>[C3FDC][!!_Ê×рáиð áļļ_!!]</value>
+  </data>
+  <data name="Hosts.Text" xml:space="preserve">
+    <value>[A31C8][!!_Ħóŝτś_!!]</value>
+  </data>
+  <data name="InfoBarUpdate.Message" xml:space="preserve">
+    <value>[2F35D][!!_Ťĥę ãþþ ẃìłł ŕèšтãŗτ ẅĥèи τħè ùрđáτę ĉõmрĺęţéś_!!]</value>
+  </data>
+  <data name="InfoBarUpdate.Title" xml:space="preserve">
+    <value>[DAAFE][!!_Á ήęẃ νéѓŝįòή õƒ ΜУ₣ŤР îš âνáìļáБĺè ƒòѓ đõŵйļóàð_!!]</value>
+  </data>
+  <data name="KeyboardShortcuts.Text" xml:space="preserve">
+    <value>[FD40D][!!_ĶêŷБóãѓđ Ŝћôŕţćûтš_!!]</value>
+  </data>
+  <data name="NavigateUpOneDirectoryLevel.Text" xml:space="preserve">
+    <value>[B1CF3][!!_Ńàνîĝàτè úρ óйę ďįřèĉťóѓŷ łêνéł_!!]</value>
+  </data>
+  <data name="NoSavedHostsCase.Text" xml:space="preserve">
+    <value>[184B0][!!_Ñô şãνéđ ĥóşţş_!!]</value>
+  </data>
+  <data name="Personalization.Text" xml:space="preserve">
+    <value>[ECBB4][!!_Ρéѓšõйâľìżàţîõη_!!]</value>
+  </data>
+  <data name="RemoveSettingsButton.Content" xml:space="preserve">
+    <value>[980ED][!!_Ỳęš, ŕémôνê şêťţįиğŝ_!!]</value>
+  </data>
+  <data name="RestoreDefaultFolder.Text" xml:space="preserve">
+    <value>[67E73][!!_Ѓéśτòřé ďêƒàµĺť ƒóľđęŗ_!!]</value>
+  </data>
+  <data name="TitleBarControl.Title" xml:space="preserve">
+    <value>[D97F0][!!_Şèţτįήġš_!!]</value>
+  </data>
+  <data name="ViewNextFolder.Text" xml:space="preserve">
+    <value>[EE856][!!_Víęẅ тћé ηęхť ƒóĺđèř_!!]</value>
+  </data>
+  <data name="ViewPreviousFolder.Text" xml:space="preserve">
+    <value>[F7BC0][!!_Vįèẃ ťĥè ρŗéνîõµš ƒôļďêř_!!]</value>
+  </data>
+</root>

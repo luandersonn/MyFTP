@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AnonymousLoginInfo.Text" xml:space="preserve">
+    <value>[98C2A][!!_Ĺéàνę úśęѓηàмé/ρàşşŵóѓđ ьłâйķ ƒòŗ àήóйŷмõùş ľõĝîη_!!]</value>
+  </data>
+  <data name="BackgroundInfoButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>[4FF7D][!!_Ŝêę įηƒõ áъõµť ţђé ъâċĸĝřôùήđ íмãġé_!!]</value>
+  </data>
+  <data name="FtpHostSettingsViewModelDeleteButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>[FCB40][!!_Đéłèţè čřèðèйτíàļ_!!]</value>
+  </data>
+  <data name="FtpHostSettingsViewModelDeleteButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>[29DBD][!!_Ďèľéťè ċŕéðêйτįâļ_!!]</value>
+  </data>
+  <data name="FtpHostSettingsViewModelGrid.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>[0648B][!!_Ĉľîĉк ţó ċóήηęčţ_!!]</value>
+  </data>
+  <data name="HostTextBox.Header" xml:space="preserve">
+    <value>[712D7][!!_Ĥòśţ_!!]</value>
+  </data>
+  <data name="HostTextBox.PlaceholderText" xml:space="preserve">
+    <value>[4A00E][!!_ƒťр.ę×ãmþĺé.ċòм_!!]</value>
+  </data>
+  <data name="LoginButton.Content" xml:space="preserve">
+    <value>[C8B79][!!_Ĺôģìй_!!]</value>
+  </data>
+  <data name="LoginErrorInfoBar.Title" xml:space="preserve">
+    <value>[A0C00][!!_Ļóģîи êѓŗòŗ_!!]</value>
+  </data>
+  <data name="PasswordTextBox.Header" xml:space="preserve">
+    <value>[BA11A][!!_Þãšşẃóřð_!!]</value>
+  </data>
+  <data name="PortTextBox.Header" xml:space="preserve">
+    <value>[673EA][!!_Рòѓτ_!!]</value>
+  </data>
+  <data name="PortTextBox.PlaceholderText" xml:space="preserve">
+    <value>[3FB42][!!_21_!!]</value>
+  </data>
+  <data name="PrivacyPolicyHyperlink.Content" xml:space="preserve">
+    <value>[5E875][!!_Ρŗíνâċў þòłíċÿ_!!]</value>
+  </data>
+  <data name="SavedCredentialsListButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>[AAAAA][!!_Šáνèđ čѓêđêηťîáłŝ_!!]</value>
+    <comment>Save credentails button (Automation)</comment>
+  </data>
+  <data name="SavedCredentialsListButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>[261E3][!!_Šãνèð ćŕêđêήτíáłş_!!]</value>
+    <comment>Saved credentials button Tooltip (Login View Page)</comment>
+  </data>
+  <data name="SaveFtpCredentialsCheckbox.Content" xml:space="preserve">
+    <value>[FF537][!!_Šáνè ċŕęðéητîàľş_!!]</value>
+    <comment>Save credentials checkbox (Login View Page)</comment>
+  </data>
+  <data name="SettingsButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>[9C99D][!!_Śêťţìиġş_!!]</value>
+  </data>
+  <data name="SettingsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>[B1FCA][!!_Şèτťìήģŝ_!!]</value>
+    <comment>Settings button Tooltip (Login View Page)</comment>
+  </data>
+  <data name="UsernameTextBox.Header" xml:space="preserve">
+    <value>[0EA1E][!!_Ûşêřηáмę_!!]</value>
+    <comment>Username textbox Header (Login View Page)</comment>
+  </data>
+  <data name="UsernameTextBox.PlaceholderText" xml:space="preserve">
+    <value>[35BEC][!!_è×âмρļę@è×àmρľę.ĉõm_!!]</value>
+  </data>
+</root>

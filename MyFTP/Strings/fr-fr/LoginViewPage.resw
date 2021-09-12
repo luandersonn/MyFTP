@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AnonymousLoginInfo.Text" xml:space="preserve">
+    <value>Laisser Nom d'utilisateur et mot de passe vide pour une connexion anonyme</value>
+  </data>
+  <data name="BackgroundInfoButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Regarder les infos du fond d'écran</value>
+  </data>
+  <data name="FtpHostSettingsViewModelDeleteButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Supprimer les informations</value>
+  </data>
+  <data name="FtpHostSettingsViewModelDeleteButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Supprimer les informations</value>
+  </data>
+  <data name="FtpHostSettingsViewModelGrid.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Cliquer pour se connecter</value>
+  </data>
+  <data name="HostTextBox.Header" xml:space="preserve">
+    <value>Hôte</value>
+  </data>
+  <data name="HostTextBox.PlaceholderText" xml:space="preserve">
+    <value>ftp.example.com</value>
+  </data>
+  <data name="LoginButton.Content" xml:space="preserve">
+    <value>Connexion</value>
+  </data>
+  <data name="LoginErrorInfoBar.Title" xml:space="preserve">
+    <value>Erreur sur les identifiants</value>
+  </data>
+  <data name="PasswordTextBox.Header" xml:space="preserve">
+    <value>Mot de passe</value>
+  </data>
+  <data name="PortTextBox.Header" xml:space="preserve">
+    <value>Port</value>
+  </data>
+  <data name="PortTextBox.PlaceholderText" xml:space="preserve">
+    <value>21</value>
+  </data>
+  <data name="PrivacyPolicyHyperlink.Content" xml:space="preserve">
+    <value>Politique de vie privée</value>
+  </data>
+  <data name="SavedCredentialsListButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Informations de connexions sauvegardées</value>
+    <comment>Save credentails button (Automation)</comment>
+  </data>
+  <data name="SavedCredentialsListButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Informations de connexions sauvegardées</value>
+    <comment>Saved credentials button Tooltip (Login View Page)</comment>
+  </data>
+  <data name="SaveFtpCredentialsCheckbox.Content" xml:space="preserve">
+    <value>Sauvegarde des informations de connexion</value>
+    <comment>Save credentials checkbox (Login View Page)</comment>
+  </data>
+  <data name="SettingsButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Paramètres</value>
+  </data>
+  <data name="SettingsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Paramètres</value>
+    <comment>Settings button Tooltip (Login View Page)</comment>
+  </data>
+  <data name="UsernameTextBox.Header" xml:space="preserve">
+    <value>Nom d'utilisateur</value>
+    <comment>Username textbox Header (Login View Page)</comment>
+  </data>
+  <data name="UsernameTextBox.PlaceholderText" xml:space="preserve">
+    <value>exemple@exemple.com</value>
+  </data>
+</root>
