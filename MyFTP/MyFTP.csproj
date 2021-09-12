@@ -351,6 +351,9 @@
     <None Include="..\.editorconfig">
       <Link>.editorconfig</Link>
     </None>
+    <PRIResource Include="Strings\vi-VN\FtpDirectoryViewPage.resw" />
+    <PRIResource Include="Strings\pt-BR\FtpDirectoryViewPage.resw" />
+    <PRIResource Include="Strings\fr-fr\FtpDirectoryViewPage.resw" />
     <PRIResource Include="Strings\vi-VN\Dialogs.resw" />
     <PRIResource Include="Strings\pt-BR\Dialogs.resw" />
     <PRIResource Include="Strings\fr-fr\Dialogs.resw" />
@@ -378,9 +381,7 @@
     <PRIResource Include="Strings\en-us\Resources.resw" />
     <PRIResource Include="appsettings.resw" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Strings\qps-ploc\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <XliffResource Include="MultilingualResources\MyFTP.fr-FR.xlf" />
     <XliffResource Include="MultilingualResources\MyFTP.pt-BR.xlf" />

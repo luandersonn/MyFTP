@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="NavigationForwardButton.Label" xml:space="preserve">
+    <value>Avançar navegação</value>
+  </data>
+  <data name="NavigationBackButton.Label" xml:space="preserve">
+    <value>Voltar navegação</value>
+  </data>
+  <data name="NavigationUpButton.Label" xml:space="preserve">
+    <value>Navegar um nível de diretório para cima</value>
+  </data>
+  <data name="DeleteButton.Label" xml:space="preserve">
+    <value>Excluir</value>
+  </data>
+  <data name="DownloadButton.Label" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="NewFolderButton.Label" xml:space="preserve">
+    <value>Nova pasta</value>
+  </data>
+  <data name="PropertiesButton.Label" xml:space="preserve">
+    <value>Propriedades</value>
+  </data>
+  <data name="RefreshButton.Label" xml:space="preserve">
+    <value>Atualizar</value>
+  </data>
+  <data name="SelectAllButton.Label" xml:space="preserve">
+    <value>Selecionar tudo</value>
+  </data>
+  <data name="UploadButton.Label" xml:space="preserve">
+    <value>Upload</value>
+  </data>
+  <data name="CreateFolderButton.Content" xml:space="preserve">
+    <value>Criar</value>
+  </data>
+  <data name="CreateFolderTextbox.PlaceholderText" xml:space="preserve">
+    <value>Nome da pasta</value>
+  </data>
+  <data name="UploadFileFlyout.Text" xml:space="preserve">
+    <value>Arquivos</value>
+  </data>
+  <data name="UploadFolderFlyout.Text" xml:space="preserve">
+    <value>Pasta</value>
+  </data>
+  <data name="DragAndDropArea.Text" xml:space="preserve">
+    <value>Solte aqui para fazer upload para esta pasta</value>
+  </data>
+  <data name="EmptyFolderMessage.Text" xml:space="preserve">
+    <value>Pasta vazia</value>
+  </data>
+  <data name="LoadItemsButton.Content" xml:space="preserve">
+    <value>Carregar itens</value>
+  </data>
+  <data name="ListViewHeaderModified.Text" xml:space="preserve">
+    <value>Modificado</value>
+  </data>
+  <data name="ListViewHeaderName.Text" xml:space="preserve">
+    <value>Nome</value>
+  </data>
+  <data name="ListViewHeaderPermissions.Text" xml:space="preserve">
+    <value>Permissões</value>
+  </data>
+  <data name="ListViewHeaderSize.Text" xml:space="preserve">
+    <value>Tamanho</value>
+  </data>
+</root>
