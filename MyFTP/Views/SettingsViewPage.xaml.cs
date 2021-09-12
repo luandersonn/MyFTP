@@ -31,7 +31,7 @@ namespace MyFTP.Views
 			{
 				WeakReferenceMessenger.Default.Register<RequestOpenFolderMessage>(this, OnOpenFolderRequest);
 				Window.Current.CoreWindow.PointerPressed += OnCoreWindowPointerPressed;
-				this.AddKeyboardAccelerator(VirtualKey.Left, VirtualKeyModifiers.Menu, (s, e) => GoBack());
+				this.AddKeyboardAccelerator(VirtualKey.Left, VirtualKeyModifiers.Menu, (s, e) => e.Handled = GoBack());
 			};
 			Unloaded += (sender, args) =>
 			{
@@ -150,10 +150,14 @@ namespace MyFTP.Views
 			}
 		}
 
-		private void GoBack()
+		private bool GoBack()
 		{
 			if (Frame.CanGoBack)
+			{
 				Frame.GoBack();
+				return true;
+			}
+			return false;
 		}
 		#region DEBUG		
 		private async void ComboBox_Loaded(object sender, RoutedEventArgs e)

@@ -24,12 +24,6 @@
   <data name="CollapseAllButtonText.Text" xml:space="preserve">
     <value>Réduire tout</value>
   </data>
-  <data name="CollapseCurrentSelection.Text" xml:space="preserve">
-    <value>Réduire la sélection (si développé), ou selectionner le dossier dans lequel le dossier se trouvait (Arborescence)</value>
-  </data>
-  <data name="ConfirmText.Text" xml:space="preserve">
-    <value>Vous êtes sûr ?</value>
-  </data>
   <data name="DefaultSaveFolder.Text" xml:space="preserve">
     <value>Dossier de sauvegarde par défaut</value>
   </data>
@@ -45,29 +39,14 @@
   <data name="ExpandAllButtonText.Text" xml:space="preserve">
     <value>Développer tout</value>
   </data>
-  <data name="Hosts.Text" xml:space="preserve">
-    <value>Hôtes</value>
-  </data>
   <data name="InfoBarUpdate.Message" xml:space="preserve">
     <value>L'application va redémarrer et se mettre à jour</value>
   </data>
   <data name="InfoBarUpdate.Title" xml:space="preserve">
     <value>Une nouvelle version de  MyFTP est disponible pour le téléchargement</value>
   </data>
-  <data name="KeyboardShortcuts.Text" xml:space="preserve">
-    <value>Raccourci claviers</value>
-  </data>
-  <data name="NavigateUpOneDirectoryLevel.Text" xml:space="preserve">
-    <value>Remonter dans le dossier supérieur</value>
-  </data>
   <data name="NoSavedHostsCase.Text" xml:space="preserve">
     <value>Pas d'hôtes sauvegardés</value>
-  </data>
-  <data name="Personalization.Text" xml:space="preserve">
-    <value>Personalisation</value>
-  </data>
-  <data name="RemoveSettingsButton.Content" xml:space="preserve">
-    <value>Oui, supprimer les paramètres</value>
   </data>
   <data name="RestoreDefaultFolder.Text" xml:space="preserve">
     <value>Restaurer le fichier par défaut</value>
@@ -75,10 +54,19 @@
   <data name="TitleBarControl.Title" xml:space="preserve">
     <value>Paramètres</value>
   </data>
-  <data name="ViewNextFolder.Text" xml:space="preserve">
-    <value>Voir le fichier suivant</value>
+  <data name="HostsExpanderHeader.Text" xml:space="preserve">
+    <value>Hôtes</value>
   </data>
-  <data name="ViewPreviousFolder.Text" xml:space="preserve">
-    <value>Voir le fichier précédent</value>
+  <data name="RemoveHostSettingsConfirmButton.Content" xml:space="preserve">
+    <value>Oui, supprimer les paramètres</value>
+  </data>
+  <data name="RemoveHostSettingsConfirmText.Text" xml:space="preserve">
+    <value>Vous êtes sûr ?</value>
+  </data>
+  <data name="PersonalizationExpanderHeader.Text" xml:space="preserve">
+    <value>Personalisation</value>
+  </data>
+  <data name="KeyboardShortcutsExpanderHeader.Text" xml:space="preserve">
+    <value>Raccourci claviers</value>
   </data>
 </root>

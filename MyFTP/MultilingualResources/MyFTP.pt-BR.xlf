@@ -1,23 +1,14 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
   <file datatype="xml" source-language="en-US" target-language="pt-BR" original="MYFTP/STRINGS/EN-US/SETTINGSVIEWPAGE.RESW" tool-id="MultilingualAppToolkit" product-name="n/a" product-version="n/a" build-num="n/a">
     <header>
-      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="4.0.6918.0" tool-company="Microsoft" />
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="4.0.6918.0" tool-company="Microsoft"/>
     </header>
     <body>
       <group id="MYFTP/STRINGS/EN-US/SETTINGSVIEWPAGE.RESW" datatype="resx">
         <trans-unit id="CollapseAllButtonText.Text" translate="yes" xml:space="preserve">
           <source>Collapse all</source>
           <target state="translated">Recolher tudo</target>
-        </trans-unit>
-        <trans-unit id="CollapseCurrentSelection.Text" translate="yes" xml:space="preserve">
-          <source>Collapse the current selection (if it's expanded), or select the folder that the folder was in (TreeView)</source>
-          <target state="translated">Recolhe a seleção atual (se estiver expandida), ou seleciona a pasta em que a pasta selecionada está localizada (TreeView)</target>
-        </trans-unit>
-        <trans-unit id="ConfirmText.Text" translate="yes" xml:space="preserve">
-          <source>Are you sure?</source>
-          <target state="translated">Você tem certeza?</target>
-          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
         </trans-unit>
         <trans-unit id="DefaultSaveFolder.Text" translate="yes" xml:space="preserve">
           <source>Default save folder</source>
@@ -27,29 +18,9 @@
           <source>Expand all</source>
           <target state="translated">Expandir tudo</target>
         </trans-unit>
-        <trans-unit id="Hosts.Text" translate="yes" xml:space="preserve">
-          <source>Hosts</source>
-          <target state="translated">Servidores</target>
-        </trans-unit>
-        <trans-unit id="KeyboardShortcuts.Text" translate="yes" xml:space="preserve">
-          <source>Keyboard Shortcuts</source>
-          <target state="translated">Atalhos do teclado</target>
-        </trans-unit>
-        <trans-unit id="NavigateUpOneDirectoryLevel.Text" translate="yes" xml:space="preserve">
-          <source>Navigate up one directory level</source>
-          <target state="translated">Navegue um nível de diretório para cima</target>
-        </trans-unit>
         <trans-unit id="NoSavedHostsCase.Text" translate="yes" xml:space="preserve">
           <source>No saved hosts</source>
           <target state="translated">Nenhum servidor salvo</target>
-        </trans-unit>
-        <trans-unit id="Personalization.Text" translate="yes" xml:space="preserve">
-          <source>Personalization</source>
-          <target state="translated">Personalização</target>
-        </trans-unit>
-        <trans-unit id="RemoveSettingsButton.Content" translate="yes" xml:space="preserve">
-          <source>Yes, remove settings</source>
-          <target state="translated">Sim, remover configurações</target>
         </trans-unit>
         <trans-unit id="RestoreDefaultFolder.Text" translate="yes" xml:space="preserve">
           <source>Restore default folder</source>
@@ -59,52 +30,220 @@
           <source>Settings</source>
           <target state="translated">Configurações</target>
         </trans-unit>
-        <trans-unit id="ViewNextFolder.Text" translate="yes" xml:space="preserve">
-          <source>View the next folder</source>
-          <target state="translated">Exibir a próxima pasta</target>
-        </trans-unit>
-        <trans-unit id="ViewPreviousFolder.Text" translate="yes" xml:space="preserve">
-          <source>View the previous folder</source>
-          <target state="translated">Exibir a pasta anterior</target>
-        </trans-unit>
         <trans-unit id="BackButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
           <source>Back</source>
-          <target state="new">Back</target>
+          <target state="translated">Voltar</target>
         </trans-unit>
         <trans-unit id="BackButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" translate="yes" xml:space="preserve">
           <source>Back</source>
-          <target state="new">Back</target>
+          <target state="translated">Voltar</target>
         </trans-unit>
         <trans-unit id="DownloadUpdateButton.Content" translate="yes" xml:space="preserve">
           <source>Download</source>
-          <target state="new">Download</target>
+          <target state="translated">Download</target>
         </trans-unit>
         <trans-unit id="InfoBarUpdate.Message" translate="yes" xml:space="preserve">
           <source>The app will restart when the update completes</source>
-          <target state="new">The app will restart when the update completes</target>
+          <target state="translated">O aplicativo irá reiniciar quando a atualização for concluída</target>
         </trans-unit>
         <trans-unit id="InfoBarUpdate.Title" translate="yes" xml:space="preserve">
           <source>A new version of MyFTP is available for download</source>
-          <target state="new">A new version of MyFTP is available for download</target>
+          <target state="translated">Uma nova versão do MyFTP está disponível para download</target>
         </trans-unit>
         <trans-unit id="CollapseAllButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
           <source>Collapse all sections</source>
-          <target state="new">Collapse all sections</target>
+          <target state="translated">Recolher todas as seções</target>
         </trans-unit>
         <trans-unit id="DownloadUpdateButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
           <source>Download update</source>
-          <target state="new">Download update</target>
+          <target state="translated">Baixar atualização</target>
         </trans-unit>
         <trans-unit id="ExpandAllButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
           <source>Expand all sections</source>
-          <target state="new">Expand all sections</target>
+          <target state="translated">Expandir todas as seções</target>
+        </trans-unit>
+        <trans-unit id="HostsExpanderHeader.Text" translate="yes" xml:space="preserve">
+          <source>Hosts</source>
+          <target state="translated">Servidores</target>
+        </trans-unit>
+        <trans-unit id="RemoveHostSettingsButton.Content" translate="yes" xml:space="preserve">
+          <source>Remove</source>
+          <target state="translated">Remover</target>
+        </trans-unit>
+        <trans-unit id="RemoveHostSettingsConfirmButton.Content" translate="yes" xml:space="preserve">
+          <source>Yes, remove settings</source>
+          <target state="translated">Sim, remover configurações</target>
+        </trans-unit>
+        <trans-unit id="RemoveHostSettingsConfirmText.Text" translate="yes" xml:space="preserve">
+          <source>Are you sure?</source>
+          <target state="translated">Você tem certeza?</target>
+        </trans-unit>
+        <trans-unit id="AppThemeLabel.Text" translate="yes" xml:space="preserve">
+          <source>App theme</source>
+          <target state="translated">Tema do aplicativo</target>
+        </trans-unit>
+        <trans-unit id="PersonalizationExpanderHeader.Text" translate="yes" xml:space="preserve">
+          <source>Personalization</source>
+          <target state="translated">Personalização</target>
+        </trans-unit>
+        <trans-unit id="AppThemeDark.Text" translate="yes" xml:space="preserve">
+          <source>Dark</source>
+          <target state="translated">Escuro</target>
+        </trans-unit>
+        <trans-unit id="AppThemeDefault.Text" translate="yes" xml:space="preserve">
+          <source>Windows Default</source>
+          <target state="translated">Padrão do Windows</target>
+        </trans-unit>
+        <trans-unit id="AppThemeLight.Text" translate="yes" xml:space="preserve">
+          <source>Light</source>
+          <target state="translated">Claro</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsExpanderHeader.Text" translate="yes" xml:space="preserve">
+          <source>Keyboard Shortcuts</source>
+          <target state="translated">Atalhos do teclado</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsSectionActions.Text" translate="yes" xml:space="preserve">
+          <source>Actions</source>
+          <target state="translated">Ações</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsSectionNavigation.Text" translate="yes" xml:space="preserve">
+          <source>Navigation</source>
+          <target state="translated">Navegação</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsSectionWindow.Text" translate="yes" xml:space="preserve">
+          <source>Window</source>
+          <target state="translated">Janela</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsAltKey.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Alt key</source>
+          <target state="translated">Tecla Alt</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsBackspaceKey.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Backspace key</source>
+          <target state="translated">Tecla Backspace</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsDeleteKey.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Delete key</source>
+          <target state="translated">Tecla Delete</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsEnterKey.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Enter key</source>
+          <target state="translated">Tecla Enter</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsLeftArrowKey.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Left arrow key</source>
+          <target state="translated">Seta para esquerda</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsRightArrowKey.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Right arrow key</source>
+          <target state="translated">Seta para direita</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsWindowsKey.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Windows key</source>
+          <target state="translated">Tecla Windows</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsDescriptionAlt+LeftArrow.Text" translate="yes" xml:space="preserve">
+          <source>View the previous folder</source>
+          <target state="translated">Exibir a pasta anterior</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsDescriptionAlt+RightArrow.Text" translate="yes" xml:space="preserve">
+          <source>View the next folder</source>
+          <target state="translated">Exibir a próxima pasta</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsDescriptionBackspace.Text" translate="yes" xml:space="preserve">
+          <source>Navigate up one directory level</source>
+          <target state="translated">Navegar um nível de diretório para cima</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsDescriptionCtrl+N.Text" translate="yes" xml:space="preserve">
+          <source>Create a connection with new Host</source>
+          <target state="translated">Criar uma conexão com um novo servidor</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsDescriptionLeftArrow.Text" translate="yes" xml:space="preserve">
+          <source>Collapse the current selection (if it's expanded), or select the folder that the folder was in (TreeView)</source>
+          <target state="translated">Recolher a seleção atual (se estiver expandida), ou seleciona a pasta em que a pasta selecionada está localizada (TreeView)</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsDescriptionRightArrow.Text" translate="yes" xml:space="preserve">
+          <source>Display the current selection (if it's collapsed), or select the first subfolder (TreeView)</source>
+          <target state="translated">Mostrar a seleção atual (se estiver recolhida) ou selecionar a primeira subpasta (Exibição em árvore)</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsDescriptionCtrl+Shift+N.Text" translate="yes" xml:space="preserve">
+          <source>Create a new folder in the current directory</source>
+          <target state="translated">Criar uma nova pasta no diretório atual</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsDescriptionCtrl+O.Text" translate="yes" xml:space="preserve">
+          <source>Open file picker to upload files to current directory</source>
+          <target state="translated">Fazer upload de arquivos para o diretório atual</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsDescriptionCtrl+Shift+O.Text" translate="yes" xml:space="preserve">
+          <source>Open folder picker to upload a folder to current directory</source>
+          <target state="translated">Fazer upload de uma pasta para o diretório atual</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsDescriptionCtrl+A.Text" translate="yes" xml:space="preserve">
+          <source>Select/unselect all items in the active directory</source>
+          <target state="translated">Selecionar/desselecionar todos os itens do diretório atual</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsDescriptionCtrl+S.Text" translate="yes" xml:space="preserve">
+          <source>Add all selected items to the download queue</source>
+          <target state="translated">Adicionar todos os itens selecionados à fila de download</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsDescriptionCtrl+W.Text" translate="yes" xml:space="preserve">
+          <source>Disconnect the active Host</source>
+          <target state="translated">Desconectar o host atual</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsDescriptionDelete.Text" translate="yes" xml:space="preserve">
+          <source>Delete all selected items</source>
+          <target state="translated">Excluir todos os itens selecionados</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsDescriptionF2.Text" translate="yes" xml:space="preserve">
+          <source>Rename the selected item</source>
+          <target state="translated">Renomear o arquivo selecionado</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsDescriptionF5.Text" translate="yes" xml:space="preserve">
+          <source>Refresh the active directory</source>
+          <target state="translated">Atualizar o diretório atual</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsDescriptionAlt+F4.Text" translate="yes" xml:space="preserve">
+          <source>Exit app</source>
+          <target state="translated">Fechar aplicativo</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsDescriptionF11.Text" translate="yes" xml:space="preserve">
+          <source>Enter or exit from Fullscreen mode</source>
+          <target state="translated">Entrar ou sair do modo tela cheia</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsDescriptionShift+Win+Enter.Text" translate="yes" xml:space="preserve">
+          <source>Enter or exit from Fullscreen mode</source>
+          <target state="translated">Entrar ou sair do modo tela cheia</target>
+        </trans-unit>
+        <trans-unit id="AboutAppVersionLabel.Text" translate="yes" xml:space="preserve">
+          <source>Version</source>
+          <target state="translated">Versão</target>
+        </trans-unit>
+        <trans-unit id="AboutContactLabel.Text" translate="yes" xml:space="preserve">
+          <source>Contact</source>
+          <target state="translated">Contato</target>
+        </trans-unit>
+        <trans-unit id="AboutExpanderHeader.Text" translate="yes" xml:space="preserve">
+          <source>About</source>
+          <target state="translated">Sobre</target>
+        </trans-unit>
+        <trans-unit id="AboutReviewLabel.Text" translate="yes" xml:space="preserve">
+          <source>Review</source>
+          <target state="translated">Review</target>
+        </trans-unit>
+        <trans-unit id="AboutSourceCodeLabel.Text" translate="yes" xml:space="preserve">
+          <source>Source code</source>
+          <target state="translated">Código fonte</target>
+        </trans-unit>
+        <trans-unit id="AboutSupportTheDevLabel.Text" translate="yes" xml:space="preserve">
+          <source>Support the dev</source>
+          <target state="translated">Ajudar o desenvolvedor</target>
         </trans-unit>
       </group>
     </body>
   </file>
   <file datatype="xml" source-language="en-US" target-language="pt-BR" original="MYFTP/STRINGS/EN-US/RESOURCES.RESW" tool-id="MultilingualAppToolkit" product-name="n/a" product-version="n/a" build-num="n/a">
     <header>
-      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="4.0.6918.0" tool-company="Microsoft" />
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="4.0.6918.0" tool-company="Microsoft"/>
     </header>
     <body>
       <group id="MYFTP/STRINGS/EN-US/RESOURCES.RESW" datatype="resx">
@@ -121,7 +260,7 @@
   </file>
   <file datatype="xml" source-language="en-US" target-language="pt-BR" original="MYFTP/STRINGS/EN-US/LOGINVIEWPAGE.RESW" tool-id="MultilingualAppToolkit" product-name="n/a" product-version="n/a" build-num="n/a">
     <header>
-      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="4.0.6918.0" tool-company="Microsoft" />
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="4.0.6918.0" tool-company="Microsoft"/>
     </header>
     <body>
       <group id="MYFTP/STRINGS/EN-US/LOGINVIEWPAGE.RESW" datatype="resx">
@@ -176,7 +315,7 @@
         <trans-unit id="SavedCredentialsListButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
           <source>Saved credentials</source>
           <target state="translated">Credenciais salvas</target>
-          <note from="MultilingualBuild" annotates="source" priority="2">Save credentails button (Automation)</note>
+          <note from="MultilingualBuild" annotates="source" priority="2">Save credentials button (Automation)</note>
         </trans-unit>
         <trans-unit id="SavedCredentialsListButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" translate="yes" xml:space="preserve">
           <source>Saved credentials</source>

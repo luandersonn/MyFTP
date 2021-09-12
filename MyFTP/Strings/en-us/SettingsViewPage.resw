@@ -117,6 +117,36 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AboutAppVersionLabel.Text" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="AboutContactLabel.Text" xml:space="preserve">
+    <value>Contact</value>
+  </data>
+  <data name="AboutExpanderHeader.Text" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="AboutReviewLabel.Text" xml:space="preserve">
+    <value>Review</value>
+  </data>
+  <data name="AboutSourceCodeLabel.Text" xml:space="preserve">
+    <value>Source code</value>
+  </data>
+  <data name="AboutSupportTheDevLabel.Text" xml:space="preserve">
+    <value>Support the dev</value>
+  </data>
+  <data name="AppThemeDark.Text" xml:space="preserve">
+    <value>Dark</value>
+  </data>
+  <data name="AppThemeDefault.Text" xml:space="preserve">
+    <value>Windows Default</value>
+  </data>
+  <data name="AppThemeLabel.Text" xml:space="preserve">
+    <value>App theme</value>
+  </data>
+  <data name="AppThemeLight.Text" xml:space="preserve">
+    <value>Light</value>
+  </data>
   <data name="BackButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
     <value>Back</value>
   </data>
@@ -128,12 +158,6 @@
   </data>
   <data name="CollapseAllButtonText.Text" xml:space="preserve">
     <value>Collapse all</value>
-  </data>
-  <data name="CollapseCurrentSelection.Text" xml:space="preserve">
-    <value>Collapse the current selection (if it's expanded), or select the folder that the folder was in (TreeView)</value>
-  </data>
-  <data name="ConfirmText.Text" xml:space="preserve">
-    <value>Are you sure?</value>
   </data>
   <data name="DefaultSaveFolder.Text" xml:space="preserve">
     <value>Default save folder</value>
@@ -150,7 +174,7 @@
   <data name="ExpandAllButtonText.Text" xml:space="preserve">
     <value>Expand all</value>
   </data>
-  <data name="Hosts.Text" xml:space="preserve">
+  <data name="HostsExpanderHeader.Text" xml:space="preserve">
     <value>Hosts</value>
   </data>
   <data name="InfoBarUpdate.Message" xml:space="preserve">
@@ -159,31 +183,112 @@
   <data name="InfoBarUpdate.Title" xml:space="preserve">
     <value>A new version of MyFTP is available for download</value>
   </data>
-  <data name="KeyboardShortcuts.Text" xml:space="preserve">
+  <data name="KeyboardShortcutsAltKey.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Alt key</value>
+  </data>
+  <data name="KeyboardShortcutsBackspaceKey.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Backspace key</value>
+  </data>
+  <data name="KeyboardShortcutsDeleteKey.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Delete key</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionAlt+F4.Text" xml:space="preserve">
+    <value>Exit app</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionAlt+LeftArrow.Text" xml:space="preserve">
+    <value>View the previous folder</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionAlt+RightArrow.Text" xml:space="preserve">
+    <value>View the next folder</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionBackspace.Text" xml:space="preserve">
+    <value>Navigate up one directory level</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionCtrl+A.Text" xml:space="preserve">
+    <value>Select/unselect all items in the active directory</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionCtrl+N.Text" xml:space="preserve">
+    <value>Create a connection with new Host</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionCtrl+O.Text" xml:space="preserve">
+    <value>Open file picker to upload files to current directory</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionCtrl+S.Text" xml:space="preserve">
+    <value>Add all selected items to the download queue</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionCtrl+Shift+N.Text" xml:space="preserve">
+    <value>Create a new folder in the current directory</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionCtrl+Shift+O.Text" xml:space="preserve">
+    <value>Open folder picker to upload a folder to current directory</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionCtrl+W.Text" xml:space="preserve">
+    <value>Disconnect the active Host</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionDelete.Text" xml:space="preserve">
+    <value>Delete all selected items</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionF11.Text" xml:space="preserve">
+    <value>Enter or exit from Fullscreen mode</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionF2.Text" xml:space="preserve">
+    <value>Rename the selected item</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionF5.Text" xml:space="preserve">
+    <value>Refresh the active directory</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionLeftArrow.Text" xml:space="preserve">
+    <value>Collapse the current selection (if it's expanded), or select the folder that the folder was in (TreeView)</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionRightArrow.Text" xml:space="preserve">
+    <value>Display the current selection (if it's collapsed), or select the first subfolder (TreeView)</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionShift+Win+Enter.Text" xml:space="preserve">
+    <value>Enter or exit from Fullscreen mode</value>
+  </data>
+  <data name="KeyboardShortcutsEnterKey.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Enter key</value>
+  </data>
+  <data name="KeyboardShortcutsExpanderHeader.Text" xml:space="preserve">
     <value>Keyboard Shortcuts</value>
   </data>
-  <data name="NavigateUpOneDirectoryLevel.Text" xml:space="preserve">
-    <value>Navigate up one directory level</value>
+  <data name="KeyboardShortcutsLeftArrowKey.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Left arrow key</value>
+  </data>
+  <data name="KeyboardShortcutsRightArrowKey.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Right arrow key</value>
+  </data>
+  <data name="KeyboardShortcutsSectionActions.Text" xml:space="preserve">
+    <value>Actions</value>
+  </data>
+  <data name="KeyboardShortcutsSectionNavigation.Text" xml:space="preserve">
+    <value>Navigation</value>
+  </data>
+  <data name="KeyboardShortcutsSectionWindow.Text" xml:space="preserve">
+    <value>Window</value>
+  </data>
+  <data name="KeyboardShortcutsWindowsKey.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Windows key</value>
   </data>
   <data name="NoSavedHostsCase.Text" xml:space="preserve">
     <value>No saved hosts</value>
   </data>
-  <data name="Personalization.Text" xml:space="preserve">
+  <data name="PersonalizationExpanderHeader.Text" xml:space="preserve">
     <value>Personalization</value>
   </data>
-  <data name="RemoveSettingsButton.Content" xml:space="preserve">
+  <data name="RemoveHostSettingsButton.Content" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="RemoveHostSettingsConfirmButton.Content" xml:space="preserve">
     <value>Yes, remove settings</value>
+  </data>
+  <data name="RemoveHostSettingsConfirmText.Text" xml:space="preserve">
+    <value>Are you sure?</value>
   </data>
   <data name="RestoreDefaultFolder.Text" xml:space="preserve">
     <value>Restore default folder</value>
   </data>
   <data name="TitleBarControl.Title" xml:space="preserve">
     <value>Settings</value>
-  </data>
-  <data name="ViewNextFolder.Text" xml:space="preserve">
-    <value>View the next folder</value>
-  </data>
-  <data name="ViewPreviousFolder.Text" xml:space="preserve">
-    <value>View the previous folder</value>
   </data>
 </root>

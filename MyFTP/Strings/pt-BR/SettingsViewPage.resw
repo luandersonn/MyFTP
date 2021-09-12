@@ -15,35 +15,14 @@
   <data name="CollapseAllButtonText.Text" xml:space="preserve">
     <value>Recolher tudo</value>
   </data>
-  <data name="CollapseCurrentSelection.Text" xml:space="preserve">
-    <value>Recolhe a seleção atual (se estiver expandida), ou seleciona a pasta em que a pasta selecionada está localizada (TreeView)</value>
-  </data>
-  <data name="ConfirmText.Text" xml:space="preserve">
-    <value>Você tem certeza?</value>
-  </data>
   <data name="DefaultSaveFolder.Text" xml:space="preserve">
     <value>Pasta de salvamento padrão</value>
   </data>
   <data name="ExpandAllButtonText.Text" xml:space="preserve">
     <value>Expandir tudo</value>
   </data>
-  <data name="Hosts.Text" xml:space="preserve">
-    <value>Servidores</value>
-  </data>
-  <data name="KeyboardShortcuts.Text" xml:space="preserve">
-    <value>Atalhos do teclado</value>
-  </data>
-  <data name="NavigateUpOneDirectoryLevel.Text" xml:space="preserve">
-    <value>Navegue um nível de diretório para cima</value>
-  </data>
   <data name="NoSavedHostsCase.Text" xml:space="preserve">
     <value>Nenhum servidor salvo</value>
-  </data>
-  <data name="Personalization.Text" xml:space="preserve">
-    <value>Personalização</value>
-  </data>
-  <data name="RemoveSettingsButton.Content" xml:space="preserve">
-    <value>Sim, remover configurações</value>
   </data>
   <data name="RestoreDefaultFolder.Text" xml:space="preserve">
     <value>Restaurar a pasta de salvamento padrão</value>
@@ -51,10 +30,160 @@
   <data name="TitleBarControl.Title" xml:space="preserve">
     <value>Configurações</value>
   </data>
-  <data name="ViewNextFolder.Text" xml:space="preserve">
+  <data name="BackButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Voltar</value>
+  </data>
+  <data name="BackButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Voltar</value>
+  </data>
+  <data name="DownloadUpdateButton.Content" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="InfoBarUpdate.Message" xml:space="preserve">
+    <value>O aplicativo irá reiniciar quando a atualização for concluída</value>
+  </data>
+  <data name="InfoBarUpdate.Title" xml:space="preserve">
+    <value>Uma nova versão do MyFTP está disponível para download</value>
+  </data>
+  <data name="CollapseAllButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Recolher todas as seções</value>
+  </data>
+  <data name="DownloadUpdateButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Baixar atualização</value>
+  </data>
+  <data name="ExpandAllButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Expandir todas as seções</value>
+  </data>
+  <data name="HostsExpanderHeader.Text" xml:space="preserve">
+    <value>Servidores</value>
+  </data>
+  <data name="RemoveHostSettingsButton.Content" xml:space="preserve">
+    <value>Remover</value>
+  </data>
+  <data name="RemoveHostSettingsConfirmButton.Content" xml:space="preserve">
+    <value>Sim, remover configurações</value>
+  </data>
+  <data name="RemoveHostSettingsConfirmText.Text" xml:space="preserve">
+    <value>Você tem certeza?</value>
+  </data>
+  <data name="AppThemeLabel.Text" xml:space="preserve">
+    <value>Tema do aplicativo</value>
+  </data>
+  <data name="PersonalizationExpanderHeader.Text" xml:space="preserve">
+    <value>Personalização</value>
+  </data>
+  <data name="AppThemeDark.Text" xml:space="preserve">
+    <value>Escuro</value>
+  </data>
+  <data name="AppThemeDefault.Text" xml:space="preserve">
+    <value>Padrão do Windows</value>
+  </data>
+  <data name="AppThemeLight.Text" xml:space="preserve">
+    <value>Claro</value>
+  </data>
+  <data name="KeyboardShortcutsExpanderHeader.Text" xml:space="preserve">
+    <value>Atalhos do teclado</value>
+  </data>
+  <data name="KeyboardShortcutsSectionActions.Text" xml:space="preserve">
+    <value>Ações</value>
+  </data>
+  <data name="KeyboardShortcutsSectionNavigation.Text" xml:space="preserve">
+    <value>Navegação</value>
+  </data>
+  <data name="KeyboardShortcutsSectionWindow.Text" xml:space="preserve">
+    <value>Janela</value>
+  </data>
+  <data name="KeyboardShortcutsAltKey.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Tecla Alt</value>
+  </data>
+  <data name="KeyboardShortcutsBackspaceKey.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Tecla Backspace</value>
+  </data>
+  <data name="KeyboardShortcutsDeleteKey.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Tecla Delete</value>
+  </data>
+  <data name="KeyboardShortcutsEnterKey.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Tecla Enter</value>
+  </data>
+  <data name="KeyboardShortcutsLeftArrowKey.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Seta para esquerda</value>
+  </data>
+  <data name="KeyboardShortcutsRightArrowKey.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Seta para direita</value>
+  </data>
+  <data name="KeyboardShortcutsWindowsKey.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Tecla Windows</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionAlt+LeftArrow.Text" xml:space="preserve">
+    <value>Exibir a pasta anterior</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionAlt+RightArrow.Text" xml:space="preserve">
     <value>Exibir a próxima pasta</value>
   </data>
-  <data name="ViewPreviousFolder.Text" xml:space="preserve">
-    <value>Exibir a pasta anterior</value>
+  <data name="KeyboardShortcutsDescriptionBackspace.Text" xml:space="preserve">
+    <value>Navegar um nível de diretório para cima</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionCtrl+N.Text" xml:space="preserve">
+    <value>Criar uma conexão com um novo servidor</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionLeftArrow.Text" xml:space="preserve">
+    <value>Recolher a seleção atual (se estiver expandida), ou seleciona a pasta em que a pasta selecionada está localizada (TreeView)</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionRightArrow.Text" xml:space="preserve">
+    <value>Mostrar a seleção atual (se estiver recolhida) ou selecionar a primeira subpasta (Exibição em árvore)</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionCtrl+Shift+N.Text" xml:space="preserve">
+    <value>Criar uma nova pasta no diretório atual</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionCtrl+O.Text" xml:space="preserve">
+    <value>Fazer upload de arquivos para o diretório atual</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionCtrl+Shift+O.Text" xml:space="preserve">
+    <value>Fazer upload de uma pasta para o diretório atual</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionCtrl+A.Text" xml:space="preserve">
+    <value>Selecionar/desselecionar todos os itens do diretório atual</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionCtrl+S.Text" xml:space="preserve">
+    <value>Adicionar todos os itens selecionados à fila de download</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionCtrl+W.Text" xml:space="preserve">
+    <value>Desconectar o host atual</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionDelete.Text" xml:space="preserve">
+    <value>Excluir todos os itens selecionados</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionF2.Text" xml:space="preserve">
+    <value>Renomear o arquivo selecionado</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionF5.Text" xml:space="preserve">
+    <value>Atualizar o diretório atual</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionAlt+F4.Text" xml:space="preserve">
+    <value>Fechar aplicativo</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionF11.Text" xml:space="preserve">
+    <value>Entrar ou sair do modo tela cheia</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionShift+Win+Enter.Text" xml:space="preserve">
+    <value>Entrar ou sair do modo tela cheia</value>
+  </data>
+  <data name="AboutAppVersionLabel.Text" xml:space="preserve">
+    <value>Versão</value>
+  </data>
+  <data name="AboutContactLabel.Text" xml:space="preserve">
+    <value>Contato</value>
+  </data>
+  <data name="AboutExpanderHeader.Text" xml:space="preserve">
+    <value>Sobre</value>
+  </data>
+  <data name="AboutReviewLabel.Text" xml:space="preserve">
+    <value>Review</value>
+  </data>
+  <data name="AboutSourceCodeLabel.Text" xml:space="preserve">
+    <value>Código fonte</value>
+  </data>
+  <data name="AboutSupportTheDevLabel.Text" xml:space="preserve">
+    <value>Ajudar o desenvolvedor</value>
   </data>
 </root>

@@ -27,14 +27,6 @@
           <source>Collapse all</source>
           <target state="new">Collapse all</target>
         </trans-unit>
-        <trans-unit id="CollapseCurrentSelection.Text" translate="yes" xml:space="preserve">
-          <source>Collapse the current selection (if it's expanded), or select the folder that the folder was in (TreeView)</source>
-          <target state="new">Collapse the current selection (if it's expanded), or select the folder that the folder was in (TreeView)</target>
-        </trans-unit>
-        <trans-unit id="ConfirmText.Text" translate="yes" xml:space="preserve">
-          <source>Are you sure?</source>
-          <target state="new">Are you sure?</target>
-        </trans-unit>
         <trans-unit id="DefaultSaveFolder.Text" translate="yes" xml:space="preserve">
           <source>Default save folder</source>
           <target state="new">Default save folder</target>
@@ -43,29 +35,9 @@
           <source>Expand all</source>
           <target state="new">Expand all</target>
         </trans-unit>
-        <trans-unit id="Hosts.Text" translate="yes" xml:space="preserve">
-          <source>Hosts</source>
-          <target state="new">Hosts</target>
-        </trans-unit>
-        <trans-unit id="KeyboardShortcuts.Text" translate="yes" xml:space="preserve">
-          <source>Keyboard Shortcuts</source>
-          <target state="new">Keyboard Shortcuts</target>
-        </trans-unit>
-        <trans-unit id="NavigateUpOneDirectoryLevel.Text" translate="yes" xml:space="preserve">
-          <source>Navigate up one directory level</source>
-          <target state="new">Navigate up one directory level</target>
-        </trans-unit>
         <trans-unit id="NoSavedHostsCase.Text" translate="yes" xml:space="preserve">
           <source>No saved hosts</source>
           <target state="new">No saved hosts</target>
-        </trans-unit>
-        <trans-unit id="Personalization.Text" translate="yes" xml:space="preserve">
-          <source>Personalization</source>
-          <target state="new">Personalization</target>
-        </trans-unit>
-        <trans-unit id="RemoveSettingsButton.Content" translate="yes" xml:space="preserve">
-          <source>Yes, remove settings</source>
-          <target state="new">Yes, remove settings</target>
         </trans-unit>
         <trans-unit id="RestoreDefaultFolder.Text" translate="yes" xml:space="preserve">
           <source>Restore default folder</source>
@@ -74,14 +46,6 @@
         <trans-unit id="TitleBarControl.Title" translate="yes" xml:space="preserve">
           <source>Settings</source>
           <target state="new">Settings</target>
-        </trans-unit>
-        <trans-unit id="ViewNextFolder.Text" translate="yes" xml:space="preserve">
-          <source>View the next folder</source>
-          <target state="new">View the next folder</target>
-        </trans-unit>
-        <trans-unit id="ViewPreviousFolder.Text" translate="yes" xml:space="preserve">
-          <source>View the previous folder</source>
-          <target state="new">View the previous folder</target>
         </trans-unit>
         <trans-unit id="BackButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
           <source>Back</source>
@@ -114,6 +78,182 @@
         <trans-unit id="ExpandAllButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
           <source>Expand all sections</source>
           <target state="new">Expand all sections</target>
+        </trans-unit>
+        <trans-unit id="HostsExpanderHeader.Text" translate="yes" xml:space="preserve">
+          <source>Hosts</source>
+          <target state="new">Hosts</target>
+        </trans-unit>
+        <trans-unit id="RemoveHostSettingsButton.Content" translate="yes" xml:space="preserve">
+          <source>Remove</source>
+          <target state="new">Remove</target>
+        </trans-unit>
+        <trans-unit id="RemoveHostSettingsConfirmButton.Content" translate="yes" xml:space="preserve">
+          <source>Yes, remove settings</source>
+          <target state="translated">Cài đặt</target>
+        </trans-unit>
+        <trans-unit id="RemoveHostSettingsConfirmText.Text" translate="yes" xml:space="preserve">
+          <source>Are you sure?</source>
+          <target state="new">Are you sure?</target>
+        </trans-unit>
+        <trans-unit id="AppThemeLabel.Text" translate="yes" xml:space="preserve">
+          <source>App theme</source>
+          <target state="new">App theme</target>
+        </trans-unit>
+        <trans-unit id="PersonalizationExpanderHeader.Text" translate="yes" xml:space="preserve">
+          <source>Personalization</source>
+          <target state="new">Personalization</target>
+        </trans-unit>
+        <trans-unit id="AppThemeDark.Text" translate="yes" xml:space="preserve">
+          <source>Dark</source>
+          <target state="new">Dark</target>
+        </trans-unit>
+        <trans-unit id="AppThemeDefault.Text" translate="yes" xml:space="preserve">
+          <source>Windows Default</source>
+          <target state="new">Windows Default</target>
+        </trans-unit>
+        <trans-unit id="AppThemeLight.Text" translate="yes" xml:space="preserve">
+          <source>Light</source>
+          <target state="new">Light</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsExpanderHeader.Text" translate="yes" xml:space="preserve">
+          <source>Keyboard Shortcuts</source>
+          <target state="new">Keyboard Shortcuts</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsSectionActions.Text" translate="yes" xml:space="preserve">
+          <source>Actions</source>
+          <target state="new">Actions</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsSectionNavigation.Text" translate="yes" xml:space="preserve">
+          <source>Navigation</source>
+          <target state="new">Navigation</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsSectionWindow.Text" translate="yes" xml:space="preserve">
+          <source>Window</source>
+          <target state="new">Window</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsAltKey.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Alt key</source>
+          <target state="new">Alt key</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsBackspaceKey.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Backspace key</source>
+          <target state="new">Backspace key</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsDeleteKey.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Delete key</source>
+          <target state="new">Delete key</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsEnterKey.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Enter key</source>
+          <target state="new">Enter key</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsLeftArrowKey.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Left arrow key</source>
+          <target state="new">Left arrow key</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsRightArrowKey.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Right arrow key</source>
+          <target state="new">Right arrow key</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsWindowsKey.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Windows key</source>
+          <target state="new">Windows key</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsDescriptionAlt+LeftArrow.Text" translate="yes" xml:space="preserve">
+          <source>View the previous folder</source>
+          <target state="new">View the previous folder</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsDescriptionAlt+RightArrow.Text" translate="yes" xml:space="preserve">
+          <source>View the next folder</source>
+          <target state="new">View the next folder</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsDescriptionBackspace.Text" translate="yes" xml:space="preserve">
+          <source>Navigate up one directory level</source>
+          <target state="new">Navigate up one directory level</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsDescriptionCtrl+N.Text" translate="yes" xml:space="preserve">
+          <source>Create a connection with new Host</source>
+          <target state="new">Create a connection with new Host</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsDescriptionLeftArrow.Text" translate="yes" xml:space="preserve">
+          <source>Collapse the current selection (if it's expanded), or select the folder that the folder was in (TreeView)</source>
+          <target state="new">Collapse the current selection (if it's expanded), or select the folder that the folder was in (TreeView)</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsDescriptionRightArrow.Text" translate="yes" xml:space="preserve">
+          <source>Display the current selection (if it's collapsed), or select the first subfolder (TreeView)</source>
+          <target state="new">Display the current selection (if it's collapsed), or select the first subfolder (TreeView)</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsDescriptionCtrl+Shift+N.Text" translate="yes" xml:space="preserve">
+          <source>Create a new folder in the current directory</source>
+          <target state="new">Create a new folder in the current directory</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsDescriptionCtrl+O.Text" translate="yes" xml:space="preserve">
+          <source>Open file picker to upload files to current directory</source>
+          <target state="new">Open file picker to upload files to current directory</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsDescriptionCtrl+Shift+O.Text" translate="yes" xml:space="preserve">
+          <source>Open folder picker to upload a folder to current directory</source>
+          <target state="new">Open folder picker to upload a folder to current directory</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsDescriptionCtrl+A.Text" translate="yes" xml:space="preserve">
+          <source>Select/unselect all items in the active directory</source>
+          <target state="new">Select/unselect all items in the active directory</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsDescriptionCtrl+S.Text" translate="yes" xml:space="preserve">
+          <source>Add all selected items to the download queue</source>
+          <target state="new">Add all selected items to the download queue</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsDescriptionCtrl+W.Text" translate="yes" xml:space="preserve">
+          <source>Disconnect the active Host</source>
+          <target state="new">Disconnect the active Host</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsDescriptionDelete.Text" translate="yes" xml:space="preserve">
+          <source>Delete all selected items</source>
+          <target state="new">Delete all selected items</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsDescriptionF2.Text" translate="yes" xml:space="preserve">
+          <source>Rename the selected item</source>
+          <target state="new">Rename the selected item</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsDescriptionF5.Text" translate="yes" xml:space="preserve">
+          <source>Refresh the active directory</source>
+          <target state="new">Refresh the active directory</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsDescriptionAlt+F4.Text" translate="yes" xml:space="preserve">
+          <source>Exit app</source>
+          <target state="new">Exit app</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsDescriptionF11.Text" translate="yes" xml:space="preserve">
+          <source>Enter or exit from Fullscreen mode</source>
+          <target state="new">Enter or exit from Fullscreen mode</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsDescriptionShift+Win+Enter.Text" translate="yes" xml:space="preserve">
+          <source>Enter or exit from Fullscreen mode</source>
+          <target state="new">Enter or exit from Fullscreen mode</target>
+        </trans-unit>
+        <trans-unit id="AboutAppVersionLabel.Text" translate="yes" xml:space="preserve">
+          <source>Version</source>
+          <target state="new">Version</target>
+        </trans-unit>
+        <trans-unit id="AboutContactLabel.Text" translate="yes" xml:space="preserve">
+          <source>Contact</source>
+          <target state="new">Contact</target>
+        </trans-unit>
+        <trans-unit id="AboutExpanderHeader.Text" translate="yes" xml:space="preserve">
+          <source>About</source>
+          <target state="new">About</target>
+        </trans-unit>
+        <trans-unit id="AboutReviewLabel.Text" translate="yes" xml:space="preserve">
+          <source>Review</source>
+          <target state="new">Review</target>
+        </trans-unit>
+        <trans-unit id="AboutSourceCodeLabel.Text" translate="yes" xml:space="preserve">
+          <source>Source code</source>
+          <target state="new">Source code</target>
+        </trans-unit>
+        <trans-unit id="AboutSupportTheDevLabel.Text" translate="yes" xml:space="preserve">
+          <source>Support the dev</source>
+          <target state="new">Support the dev</target>
         </trans-unit>
       </group>
     </body>
@@ -175,7 +315,7 @@
         <trans-unit id="SavedCredentialsListButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
           <source>Saved credentials</source>
           <target state="translated">Lưu chứng chỉ</target>
-          <note from="MultilingualBuild" annotates="source" priority="2">Save credentails button (Automation)</note>
+          <note from="MultilingualBuild" annotates="source" priority="2">Save credentials button (Automation)</note>
         </trans-unit>
         <trans-unit id="SavedCredentialsListButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" translate="yes" xml:space="preserve">
           <source>Saved credentials</source>
