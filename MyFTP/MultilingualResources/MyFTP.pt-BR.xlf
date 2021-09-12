@@ -238,6 +238,14 @@
           <source>Support the dev</source>
           <target state="translated">Ajudar o desenvolvedor</target>
         </trans-unit>
+        <trans-unit id="KeyboardShortcutsDescriptionAlt+UpArrow.Text" translate="yes" xml:space="preserve">
+          <source>Navigate up one directory level</source>
+          <target state="translated">Navegar um nível de diretório para cima</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsUpArrowKey.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Up arrow key</source>
+          <target state="translated">Seta para cima</target>
+        </trans-unit>
       </group>
     </body>
   </file>

@@ -201,6 +201,9 @@
   <data name="KeyboardShortcutsDescriptionAlt+RightArrow.Text" xml:space="preserve">
     <value>View the next folder</value>
   </data>
+  <data name="KeyboardShortcutsDescriptionAlt+UpArrow.Text" xml:space="preserve">
+    <value>Navigate up one directory level</value>
+  </data>
   <data name="KeyboardShortcutsDescriptionBackspace.Text" xml:space="preserve">
     <value>Navigate up one directory level</value>
   </data>
@@ -266,6 +269,9 @@
   </data>
   <data name="KeyboardShortcutsSectionWindow.Text" xml:space="preserve">
     <value>Window</value>
+  </data>
+  <data name="KeyboardShortcutsUpArrowKey.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Up arrow key</value>
   </data>
   <data name="KeyboardShortcutsWindowsKey.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
     <value>Windows key</value>

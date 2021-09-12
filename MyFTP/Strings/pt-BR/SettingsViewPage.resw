@@ -186,4 +186,10 @@
   <data name="AboutSupportTheDevLabel.Text" xml:space="preserve">
     <value>Ajudar o desenvolvedor</value>
   </data>
+  <data name="KeyboardShortcutsDescriptionAlt+UpArrow.Text" xml:space="preserve">
+    <value>Navegar um nível de diretório para cima</value>
+  </data>
+  <data name="KeyboardShortcutsUpArrowKey.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Seta para cima</value>
+  </data>
 </root>

@@ -348,6 +348,14 @@
           <source>Support the dev</source>
           <target state="new">Support the dev</target>
         </trans-unit>
+        <trans-unit id="KeyboardShortcutsDescriptionAlt+UpArrow.Text" translate="yes" xml:space="preserve">
+          <source>Navigate up one directory level</source>
+          <target state="new">Navigate up one directory level</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcutsUpArrowKey.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Up arrow key</source>
+          <target state="new">Up arrow key</target>
+        </trans-unit>
       </group>
     </body>
   </file>

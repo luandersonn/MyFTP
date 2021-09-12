@@ -331,6 +331,7 @@
 								<RowDefinition />
 								<RowDefinition />
 								<RowDefinition />
+								<RowDefinition />
 							</Grid.RowDefinitions>
 							<!--#region ALT + LEFT ARROW-->
 							<StackPanel Orientation="Horizontal" Spacing="4">
@@ -368,8 +369,28 @@
 									   Grid.Column="1" />
 							<!--#endregion-->
 
-							<!--#region BACKSPACE-->
+							<!--#region ALT + UP ARROW-->
 							<StackPanel Grid.Row="2"
+										Orientation="Horizontal"
+										Spacing="4">
+								<Border x:Uid="/SettingsViewPage/KeyboardShortcutsAltKey">
+									<TextBlock HorizontalAlignment="Center"
+											   FontSize="12"
+											   Text="Alt" />
+								</Border>
+								<TextBlock VerticalAlignment="Center" Text="+" />
+								<Border x:Uid="/SettingsViewPage/KeyboardShortcutsUpArrowKey">
+									<FontIcon FontSize="14" Glyph="&#xE110;" />
+								</Border>
+							</StackPanel>
+
+							<TextBlock x:Uid="/SettingsViewPage/KeyboardShortcutsDescriptionAlt+UpArrow"
+									   Grid.Row="2"
+									   Grid.Column="1" />
+							<!--#endregion-->
+
+							<!--#region BACKSPACE-->
+							<StackPanel Grid.Row="3"
 										Orientation="Horizontal"
 										Spacing="4">
 
@@ -379,12 +400,12 @@
 							</StackPanel>
 
 							<TextBlock x:Uid="/SettingsViewPage/KeyboardShortcutsDescriptionBackspace"
-									   Grid.Row="2"
+									   Grid.Row="3"
 									   Grid.Column="1" />
 							<!--#endregion-->
 
 							<!--#region LEFT ARROW-->
-							<StackPanel Grid.Row="3"
+							<StackPanel Grid.Row="4"
 										Orientation="Horizontal"
 										Spacing="4">
 
@@ -394,12 +415,12 @@
 							</StackPanel>
 
 							<TextBlock x:Uid="/SettingsViewPage/KeyboardShortcutsDescriptionLeftArrow"
-									   Grid.Row="3"
+									   Grid.Row="4"
 									   Grid.Column="1" />
 							<!--#endregion-->
 
 							<!--#region RIGHT ARROW-->
-							<StackPanel Grid.Row="4"
+							<StackPanel Grid.Row="5"
 										Orientation="Horizontal"
 										Spacing="4">
 
@@ -409,7 +430,7 @@
 							</StackPanel>
 
 							<TextBlock x:Uid="/SettingsViewPage/KeyboardShortcutsDescriptionRightArrow"
-									   Grid.Row="4"
+									   Grid.Row="5"
 									   Grid.Column="1" />
 							<!--#endregion-->
 						</Grid>
