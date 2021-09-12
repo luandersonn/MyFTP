@@ -354,26 +354,16 @@
     <PRIResource Include="Strings\vi-VN\Dialogs.resw" />
     <PRIResource Include="Strings\pt-BR\Dialogs.resw" />
     <PRIResource Include="Strings\fr-fr\Dialogs.resw" />
-    <PRIResource Include="Strings\qps-ploc\Dialogs.resw" />
     <PRIResource Include="Strings\en-us\Dialogs.resw" />
     <PRIResource Include="Strings\vi-VN\Messages.resw" />
     <PRIResource Include="Strings\pt-BR\Messages.resw" />
     <PRIResource Include="Strings\fr-fr\Messages.resw" />
-    <PRIResource Include="Strings\qps-ploc\Messages.resw" />
     <PRIResource Include="Strings\en-us\Messages.resw" />
-    <PRIResource Include="Strings\vi-VN\FtpDirectoryViewPage.resw" />
-    <PRIResource Include="Strings\pt-BR\FtpDirectoryViewPage.resw" />
-    <PRIResource Include="Strings\fr-fr\FtpDirectoryViewPage.resw" />
-    <PRIResource Include="Strings\qps-ploc\FtpDirectoryViewPage.resw" />
     <PRIResource Include="Strings\en-us\FtpDirectoryViewPage.resw" />
     <PRIResource Include="Strings\vi-VN\HostViewPage.resw" />
     <PRIResource Include="Strings\pt-BR\HostViewPage.resw" />
     <PRIResource Include="Strings\fr-fr\HostViewPage.resw" />
-    <PRIResource Include="Strings\qps-ploc\HostViewPage.resw" />
     <PRIResource Include="Strings\en-us\HostViewPage.resw" />
-    <PRIResource Include="Strings\qps-ploc\SettingsViewPage.resw" />
-    <PRIResource Include="Strings\qps-ploc\Resources.resw" />
-    <PRIResource Include="Strings\qps-ploc\LoginViewPage.resw" />
     <PRIResource Include="Strings\fr-fr\LoginViewPage.resw" />
     <PRIResource Include="Strings\fr-fr\Resources.resw" />
     <PRIResource Include="Strings\fr-fr\SettingsViewPage.resw" />
@@ -388,11 +378,12 @@
     <PRIResource Include="Strings\en-us\Resources.resw" />
     <PRIResource Include="appsettings.resw" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Strings\qps-ploc\" />
+  </ItemGroup>
   <ItemGroup>
     <XliffResource Include="MultilingualResources\MyFTP.fr-FR.xlf" />
     <XliffResource Include="MultilingualResources\MyFTP.pt-BR.xlf" />
-    <XliffResource Include="MultilingualResources\MyFTP.qps-ploc.xlf" />
     <XliffResource Include="MultilingualResources\MyFTP.vi-VN.xlf" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
