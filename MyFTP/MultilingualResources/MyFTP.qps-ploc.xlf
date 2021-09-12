@@ -547,4 +547,73 @@
       </group>
     </body>
   </file>
+  <file datatype="xml" source-language="en-US" target-language="qps-ploc" original="MYFTP/STRINGS/EN-US/DIALOGS.RESW" tool-id="MultilingualAppToolkit" product-name="n/a" product-version="n/a" build-num="n/a">
+    <header>
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="4.0.6919.0" tool-company="Microsoft" />
+    </header>
+    <body>
+      <group id="MYFTP/STRINGS/EN-US/DIALOGS.RESW" datatype="resx">
+        <trans-unit id="DeleteDialog.CloseButtonText" translate="yes" xml:space="preserve">
+          <source>Cancel</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[54EE8][!!_Ċáйćéľ_!!]</target>
+        </trans-unit>
+        <trans-unit id="DeleteDialog.PrimaryButtonText" translate="yes" xml:space="preserve">
+          <source>Delete</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[A9D1C][!!_Ðéłèτę_!!]</target>
+        </trans-unit>
+        <trans-unit id="DeleteDialog.Title" translate="yes" xml:space="preserve">
+          <source>Delete items permanently?</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[B8DB5][!!_Ďêļèтê íτęмś þèŕmàήèйţľУ?_!!]</target>
+        </trans-unit>
+        <trans-unit id="LoginDialog.CloseButtonText" translate="yes" xml:space="preserve">
+          <source>Cancel</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[0E2B7][!!_Ĉàήćèľ_!!]</target>
+        </trans-unit>
+        <trans-unit id="LoginDialog.PrimaryButtonText" translate="yes" xml:space="preserve">
+          <source>Login</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[EDB7F][!!_Ĺòġìή_!!]</target>
+        </trans-unit>
+        <trans-unit id="LoginDialog.Title" translate="yes" xml:space="preserve">
+          <source>New connection</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[F7E41][!!_Ńêẁ ĉóηйêćţìóй_!!]</target>
+        </trans-unit>
+        <trans-unit id="RenameDialog.CloseButtonText" translate="yes" xml:space="preserve">
+          <source>Close</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[166EE][!!_Ćļóŝé_!!]</target>
+        </trans-unit>
+        <trans-unit id="RenameDialog.PrimaryButtonText" translate="yes" xml:space="preserve">
+          <source>Rename</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[81443][!!_Ѓêиâмé_!!]</target>
+        </trans-unit>
+        <trans-unit id="RenameDialog.Title" translate="yes" xml:space="preserve">
+          <source>Rename item</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[05B84][!!_Řęиámé îτéм_!!]</target>
+        </trans-unit>
+        <trans-unit id="ReplaceDialog.CloseButtonText" translate="yes" xml:space="preserve">
+          <source>Skip file</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[4BE16][!!_Ŝĸîρ ƒíľê_!!]</target>
+        </trans-unit>
+        <trans-unit id="ReplaceDialog.PrimaryButtonText" translate="yes" xml:space="preserve">
+          <source>Replace</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[3F42F][!!_Ŕèρļáčę_!!]</target>
+        </trans-unit>
+        <trans-unit id="ReplaceDialog.Title" translate="yes" xml:space="preserve">
+          <source>There is already a file with the same name in this location</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[00AE9][!!_Ţĥêřè ìš ãĺŗêáďŷ ã ƒįĺè ẅįťħ тђé śâмê йãмé íй τнìś łòċáţîòή_!!]</target>
+        </trans-unit>
+        <trans-unit id="ReplaceDialogCurrentFileLabel.Text" translate="yes" xml:space="preserve">
+          <source>Current file</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[94A2E][!!_Ċûŕŕęήτ ƒįĺę_!!]</target>
+        </trans-unit>
+        <trans-unit id="ReplaceDialogDontAskAgainCheckbox.Content" translate="yes" xml:space="preserve">
+          <source>Don't ask again</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[C54BC][!!_Ðõή'τ âśќ áğâįη_!!]</target>
+        </trans-unit>
+        <trans-unit id="ReplaceDialogNewFileLabel.Text" translate="yes" xml:space="preserve">
+          <source>New file</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[7168E][!!_Ñêŵ ƒîľê_!!]</target>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
 </xliff>

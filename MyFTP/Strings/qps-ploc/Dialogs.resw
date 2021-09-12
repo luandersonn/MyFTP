@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="DeleteDialog.CloseButtonText" xml:space="preserve">
+    <value>[54EE8][!!_Ċáйćéľ_!!]</value>
+  </data>
+  <data name="DeleteDialog.PrimaryButtonText" xml:space="preserve">
+    <value>[A9D1C][!!_Ðéłèτę_!!]</value>
+  </data>
+  <data name="DeleteDialog.Title" xml:space="preserve">
+    <value>[B8DB5][!!_Ďêļèтê íτęмś þèŕmàήèйţľУ?_!!]</value>
+  </data>
+  <data name="LoginDialog.CloseButtonText" xml:space="preserve">
+    <value>[0E2B7][!!_Ĉàήćèľ_!!]</value>
+  </data>
+  <data name="LoginDialog.PrimaryButtonText" xml:space="preserve">
+    <value>[EDB7F][!!_Ĺòġìή_!!]</value>
+  </data>
+  <data name="LoginDialog.Title" xml:space="preserve">
+    <value>[F7E41][!!_Ńêẁ ĉóηйêćţìóй_!!]</value>
+  </data>
+  <data name="RenameDialog.CloseButtonText" xml:space="preserve">
+    <value>[166EE][!!_Ćļóŝé_!!]</value>
+  </data>
+  <data name="RenameDialog.PrimaryButtonText" xml:space="preserve">
+    <value>[81443][!!_Ѓêиâмé_!!]</value>
+  </data>
+  <data name="RenameDialog.Title" xml:space="preserve">
+    <value>[05B84][!!_Řęиámé îτéм_!!]</value>
+  </data>
+  <data name="ReplaceDialog.CloseButtonText" xml:space="preserve">
+    <value>[4BE16][!!_Ŝĸîρ ƒíľê_!!]</value>
+  </data>
+  <data name="ReplaceDialog.PrimaryButtonText" xml:space="preserve">
+    <value>[3F42F][!!_Ŕèρļáčę_!!]</value>
+  </data>
+  <data name="ReplaceDialog.Title" xml:space="preserve">
+    <value>[00AE9][!!_Ţĥêřè ìš ãĺŗêáďŷ ã ƒįĺè ẅįťħ тђé śâмê йãмé íй τнìś łòċáţîòή_!!]</value>
+  </data>
+  <data name="ReplaceDialogCurrentFileLabel.Text" xml:space="preserve">
+    <value>[94A2E][!!_Ċûŕŕęήτ ƒįĺę_!!]</value>
+  </data>
+  <data name="ReplaceDialogDontAskAgainCheckbox.Content" xml:space="preserve">
+    <value>[C54BC][!!_Ðõή'τ âśќ áğâįη_!!]</value>
+  </data>
+  <data name="ReplaceDialogNewFileLabel.Text" xml:space="preserve">
+    <value>[7168E][!!_Ñêŵ ƒîľê_!!]</value>
+  </data>
+</root>

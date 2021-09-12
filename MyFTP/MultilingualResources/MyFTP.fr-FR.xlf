@@ -550,4 +550,73 @@
       </group>
     </body>
   </file>
+  <file datatype="xml" source-language="en-US" target-language="fr-FR" original="MYFTP/STRINGS/EN-US/DIALOGS.RESW" tool-id="MultilingualAppToolkit" product-name="n/a" product-version="n/a" build-num="n/a">
+    <header>
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="4.0.6919.0" tool-company="Microsoft" />
+    </header>
+    <body>
+      <group id="MYFTP/STRINGS/EN-US/DIALOGS.RESW" datatype="resx">
+        <trans-unit id="DeleteDialog.CloseButtonText" translate="yes" xml:space="preserve">
+          <source>Cancel</source>
+          <target state="new">Cancel</target>
+        </trans-unit>
+        <trans-unit id="DeleteDialog.PrimaryButtonText" translate="yes" xml:space="preserve">
+          <source>Delete</source>
+          <target state="new">Delete</target>
+        </trans-unit>
+        <trans-unit id="DeleteDialog.Title" translate="yes" xml:space="preserve">
+          <source>Delete items permanently?</source>
+          <target state="new">Delete items permanently?</target>
+        </trans-unit>
+        <trans-unit id="LoginDialog.CloseButtonText" translate="yes" xml:space="preserve">
+          <source>Cancel</source>
+          <target state="new">Cancel</target>
+        </trans-unit>
+        <trans-unit id="LoginDialog.PrimaryButtonText" translate="yes" xml:space="preserve">
+          <source>Login</source>
+          <target state="new">Login</target>
+        </trans-unit>
+        <trans-unit id="LoginDialog.Title" translate="yes" xml:space="preserve">
+          <source>New connection</source>
+          <target state="new">New connection</target>
+        </trans-unit>
+        <trans-unit id="RenameDialog.CloseButtonText" translate="yes" xml:space="preserve">
+          <source>Close</source>
+          <target state="new">Close</target>
+        </trans-unit>
+        <trans-unit id="RenameDialog.PrimaryButtonText" translate="yes" xml:space="preserve">
+          <source>Rename</source>
+          <target state="new">Rename</target>
+        </trans-unit>
+        <trans-unit id="RenameDialog.Title" translate="yes" xml:space="preserve">
+          <source>Rename item</source>
+          <target state="new">Rename item</target>
+        </trans-unit>
+        <trans-unit id="ReplaceDialog.CloseButtonText" translate="yes" xml:space="preserve">
+          <source>Skip file</source>
+          <target state="new">Skip file</target>
+        </trans-unit>
+        <trans-unit id="ReplaceDialog.PrimaryButtonText" translate="yes" xml:space="preserve">
+          <source>Replace</source>
+          <target state="new">Replace</target>
+        </trans-unit>
+        <trans-unit id="ReplaceDialog.Title" translate="yes" xml:space="preserve">
+          <source>There is already a file with the same name in this location</source>
+          <target state="new">There is already a file with the same name in this location</target>
+        </trans-unit>
+        <trans-unit id="ReplaceDialogCurrentFileLabel.Text" translate="yes" xml:space="preserve">
+          <source>Current file</source>
+          <target state="new">Current file</target>
+        </trans-unit>
+        <trans-unit id="ReplaceDialogDontAskAgainCheckbox.Content" translate="yes" xml:space="preserve">
+          <source>Don't ask again</source>
+          <target state="new">Don't ask again</target>
+        </trans-unit>
+        <trans-unit id="ReplaceDialogNewFileLabel.Text" translate="yes" xml:space="preserve">
+          <source>New file</source>
+          <target state="new">New file</target>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
 </xliff>
