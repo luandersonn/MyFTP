@@ -15,4 +15,42 @@
   <data name="LoginButton.Content" xml:space="preserve">
     <value>ĐĂNG NHẬP</value>
   </data>
+  <data name="LoginErrorInfoBar.Title" xml:space="preserve">
+    <value>Đăng nhập lỗi</value>
+  </data>
+  <data name="PasswordTextBox.Header" xml:space="preserve">
+    <value>Mật khẩu</value>
+  </data>
+  <data name="PortTextBox.Header" xml:space="preserve">
+    <value>Cổng</value>
+  </data>
+  <data name="PrivacyPolicyHyperlink.Content" xml:space="preserve">
+    <value>Thông tin quyền riêng tư</value>
+  </data>
+  <data name="SavedCredentialsListButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Lưu chứng chỉ</value>
+    <comment>Save credentails button (Automation)</comment>
+  </data>
+  <data name="SavedCredentialsListButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Lưu chứng chỉ</value>
+    <comment>Saved credentials button Tooltip (Login View Page)</comment>
+  </data>
+  <data name="SaveFtpCredentialsCheckbox.Content" xml:space="preserve">
+    <value>Lưu chứng chỉ</value>
+    <comment>Save credentials checkbox (Login View Page)</comment>
+  </data>
+  <data name="SettingsButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Cài đặt</value>
+  </data>
+  <data name="SettingsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Cài đặt</value>
+    <comment>Settings button Tooltip (Login View Page)</comment>
+  </data>
+  <data name="UsernameTextBox.Header" xml:space="preserve">
+    <value>Tên đăng nhập</value>
+    <comment>Username textbox Header (Login View Page)</comment>
+  </data>
+  <data name="UsernameTextBox.PlaceholderText" xml:space="preserve">
+    <value>example@example.com</value>
+  </data>
 </root>

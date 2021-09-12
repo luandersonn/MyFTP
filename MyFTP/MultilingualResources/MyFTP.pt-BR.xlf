@@ -169,10 +169,6 @@
           <source>Port</source>
           <target state="translated">Porta</target>
         </trans-unit>
-        <trans-unit id="PortTextBox.PlaceholderText" translate="yes" xml:space="preserve">
-          <source>21</source>
-          <target state="translated">21</target>
-        </trans-unit>
         <trans-unit id="PrivacyPolicyHyperlink.Content" translate="yes" xml:space="preserve">
           <source>Privacy policy</source>
           <target state="translated">Política de Privacidade</target>

@@ -126,31 +126,31 @@
       <group id="MYFTP/STRINGS/EN-US/LOGINVIEWPAGE.RESW" datatype="resx">
         <trans-unit id="AnonymousLoginInfo.Text" translate="yes" xml:space="preserve">
           <source>Leave username/password blank for anonymous login</source>
-          <target state="new">Leave username/password blank for anonymous login</target>
+          <target state="translated">Hãy để trống tên đăng nhập và mật khẩu khi đăng nhập ẩn danh</target>
         </trans-unit>
         <trans-unit id="BackgroundInfoButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
           <source>See info about the background image</source>
-          <target state="new">See info about the background image</target>
+          <target state="translated">Xem thông tin ảnh nền</target>
         </trans-unit>
         <trans-unit id="FtpHostSettingsViewModelDeleteButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
           <source>Delete credential</source>
-          <target state="new">Delete credential</target>
+          <target state="translated">Xóa chứng chỉ</target>
         </trans-unit>
         <trans-unit id="FtpHostSettingsViewModelDeleteButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" translate="yes" xml:space="preserve">
           <source>Delete credential</source>
-          <target state="new">Delete credential</target>
+          <target state="translated">Xóa chứng chỉ</target>
         </trans-unit>
         <trans-unit id="FtpHostSettingsViewModelGrid.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" translate="yes" xml:space="preserve">
           <source>Click to connect</source>
-          <target state="new">Click to connect</target>
+          <target state="translated">Nhấn để kết nối</target>
         </trans-unit>
         <trans-unit id="HostTextBox.Header" translate="yes" xml:space="preserve">
           <source>Host</source>
-          <target state="new">Host</target>
+          <target state="translated">Tên miền</target>
         </trans-unit>
         <trans-unit id="HostTextBox.PlaceholderText" translate="yes" xml:space="preserve">
           <source>ftp.example.com</source>
-          <target state="new">ftp.example.com</target>
+          <target state="translated">ftp.example.com</target>
         </trans-unit>
         <trans-unit id="LoginButton.Content" translate="yes" xml:space="preserve">
           <source>Login</source>
@@ -158,56 +158,52 @@
         </trans-unit>
         <trans-unit id="LoginErrorInfoBar.Title" translate="yes" xml:space="preserve">
           <source>Login error</source>
-          <target state="new">Login error</target>
+          <target state="translated">Đăng nhập lỗi</target>
         </trans-unit>
         <trans-unit id="PasswordTextBox.Header" translate="yes" xml:space="preserve">
           <source>Password</source>
-          <target state="new">Password</target>
+          <target state="translated">Mật khẩu</target>
         </trans-unit>
         <trans-unit id="PortTextBox.Header" translate="yes" xml:space="preserve">
           <source>Port</source>
-          <target state="new">Port</target>
-        </trans-unit>
-        <trans-unit id="PortTextBox.PlaceholderText" translate="yes" xml:space="preserve">
-          <source>21</source>
-          <target state="new">21</target>
+          <target state="translated">Cổng</target>
         </trans-unit>
         <trans-unit id="PrivacyPolicyHyperlink.Content" translate="yes" xml:space="preserve">
           <source>Privacy policy</source>
-          <target state="new">Privacy policy</target>
+          <target state="translated">Thông tin quyền riêng tư</target>
         </trans-unit>
         <trans-unit id="SavedCredentialsListButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
           <source>Saved credentials</source>
-          <target state="new">Saved credentials</target>
+          <target state="translated">Lưu chứng chỉ</target>
           <note from="MultilingualBuild" annotates="source" priority="2">Save credentails button (Automation)</note>
         </trans-unit>
         <trans-unit id="SavedCredentialsListButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" translate="yes" xml:space="preserve">
           <source>Saved credentials</source>
-          <target state="new">Saved credentials</target>
+          <target state="translated">Lưu chứng chỉ</target>
           <note from="MultilingualBuild" annotates="source" priority="2">Saved credentials button Tooltip (Login View Page)</note>
         </trans-unit>
         <trans-unit id="SaveFtpCredentialsCheckbox.Content" translate="yes" xml:space="preserve">
           <source>Save credentials</source>
-          <target state="new">Save credentials</target>
+          <target state="translated">Lưu chứng chỉ</target>
           <note from="MultilingualBuild" annotates="source" priority="2">Save credentials checkbox (Login View Page)</note>
         </trans-unit>
         <trans-unit id="SettingsButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
           <source>Settings</source>
-          <target state="new">Settings</target>
+          <target state="translated">Cài đặt</target>
         </trans-unit>
         <trans-unit id="SettingsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" translate="yes" xml:space="preserve">
           <source>Settings</source>
-          <target state="new">Settings</target>
+          <target state="translated">Cài đặt</target>
           <note from="MultilingualBuild" annotates="source" priority="2">Settings button Tooltip (Login View Page)</note>
         </trans-unit>
         <trans-unit id="UsernameTextBox.Header" translate="yes" xml:space="preserve">
           <source>Username</source>
-          <target state="new">Username</target>
+          <target state="translated">Tên đăng nhập</target>
           <note from="MultilingualBuild" annotates="source" priority="2">Username textbox Header (Login View Page)</note>
         </trans-unit>
         <trans-unit id="UsernameTextBox.PlaceholderText" translate="yes" xml:space="preserve">
           <source>example@example.com</source>
-          <target state="new">example@example.com</target>
+          <target state="translated">example@example.com</target>
         </trans-unit>
       </group>
     </body>

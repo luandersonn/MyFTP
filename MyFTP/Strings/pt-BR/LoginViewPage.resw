@@ -45,9 +45,6 @@
   <data name="PortTextBox.Header" xml:space="preserve">
     <value>Porta</value>
   </data>
-  <data name="PortTextBox.PlaceholderText" xml:space="preserve">
-    <value>21</value>
-  </data>
   <data name="PrivacyPolicyHyperlink.Content" xml:space="preserve">
     <value>Política de Privacidade</value>
   </data>
