@@ -115,6 +115,12 @@
   <PropertyGroup>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
+  <PropertyGroup Label="MultilingualAppToolkit">
+    <MultilingualAppToolkitVersion>4.0</MultilingualAppToolkitVersion>
+    <MultilingualFallbackLanguage>en-US</MultilingualFallbackLanguage>
+    <TranslationReport Condition="'$(Configuration)' == 'Release'">true</TranslationReport>
+    <SuppressPseudoWarning Condition="'$(Configuration)' == 'Debug'">true</SuppressPseudoWarning>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
@@ -302,7 +308,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="FluentFTP">
-      <Version>34.0.2</Version>
+      <Version>35.0.4</Version>
     </PackageReference>
     <PackageReference Include="Humanizer.Core">
       <Version>2.11.10</Version>
@@ -335,7 +341,7 @@
       <Version>7.0.2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.UI.Xaml">
-      <Version>2.6.1</Version>
+      <Version>2.6.2</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
@@ -345,12 +351,49 @@
     <None Include="..\.editorconfig">
       <Link>.editorconfig</Link>
     </None>
+    <PRIResource Include="Strings\vi-VN\Dialogs.resw" />
+    <PRIResource Include="Strings\pt-BR\Dialogs.resw" />
+    <PRIResource Include="Strings\fr-fr\Dialogs.resw" />
+    <PRIResource Include="Strings\en-us\Dialogs.resw" />
+    <PRIResource Include="Strings\vi-VN\Messages.resw" />
+    <PRIResource Include="Strings\pt-BR\Messages.resw" />
+    <PRIResource Include="Strings\fr-fr\Messages.resw" />
+    <PRIResource Include="Strings\en-us\Messages.resw" />
+    <PRIResource Include="Strings\en-us\FtpDirectoryViewPage.resw" />
+    <PRIResource Include="Strings\vi-VN\HostViewPage.resw" />
+    <PRIResource Include="Strings\pt-BR\HostViewPage.resw" />
+    <PRIResource Include="Strings\fr-fr\HostViewPage.resw" />
+    <PRIResource Include="Strings\en-us\HostViewPage.resw" />
+    <PRIResource Include="Strings\fr-fr\LoginViewPage.resw" />
+    <PRIResource Include="Strings\fr-fr\Resources.resw" />
+    <PRIResource Include="Strings\fr-fr\SettingsViewPage.resw" />
+    <PRIResource Include="Strings\vi-VN\SettingsViewPage.resw" />
+    <PRIResource Include="Strings\vi-VN\Resources.resw" />
+    <PRIResource Include="Strings\vi-VN\LoginViewPage.resw" />
+    <PRIResource Include="Strings\pt-BR\SettingsViewPage.resw" />
+    <PRIResource Include="Strings\pt-BR\Resources.resw" />
+    <PRIResource Include="Strings\pt-BR\LoginViewPage.resw" />
+    <PRIResource Include="Strings\en-us\SettingsViewPage.resw" />
+    <PRIResource Include="Strings\en-us\LoginViewPage.resw" />
+    <PRIResource Include="Strings\en-us\Resources.resw" />
     <PRIResource Include="appsettings.resw" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Strings\qps-ploc\" />
+  </ItemGroup>
+  <ItemGroup>
+    <XliffResource Include="MultilingualResources\MyFTP.fr-FR.xlf" />
+    <XliffResource Include="MultilingualResources\MyFTP.pt-BR.xlf" />
+    <XliffResource Include="MultilingualResources\MyFTP.vi-VN.xlf" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Multilingual App Toolkit\Microsoft.Multilingual.PriResources.targets" Label="MultilingualAppToolkit" Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\Multilingual App Toolkit\v$(MultilingualAppToolkitVersion)\Microsoft.Multilingual.PriResources.targets')" />
+  <Target Name="MATPrerequisite" BeforeTargets="PrepareForBuild" Condition="!Exists('$(MSBuildExtensionsPath)\Microsoft\Multilingual App Toolkit\Microsoft.Multilingual.PriResources.targets')" Label="MultilingualAppToolkit">
+    <Warning Text="$(MSBuildProjectFile) is Multilingual build enabled, but the Multilingual App Toolkit is unavailable during the build. If building with Visual Studio, please check to ensure that toolkit is properly installed." />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

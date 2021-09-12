@@ -41,16 +41,7 @@ namespace MyFTP.Controls
 			}
 
 			NewFileProperties = await NewFile.GetBasicPropertiesAsync();
-
-			if (NewFileProperties != null)
-			{
-				if (NewFileProperties.DateModified > ItemToReplace.Modified)
-					Title = "There is a older file with the same name in this location";
-				else
-					Title = "There is an newer file with the same name in this location";
-			}
-
-
+			
 			var extesion = Path.GetExtension(ItemToReplace.Name);
 			thumbnail = await Utils.IconHelper.GetFileIconAsync(extesion, 64);
 

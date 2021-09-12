@@ -16,18 +16,20 @@
 	<Page.Resources>
 
 		<muxc:SwipeItems x:Key="left" Mode="Execute">
-			<muxc:SwipeItem Background="Gray"
-							Invoked="{x:Bind NavigationHistory.GoBack}"
-							Text="Back">
+			<muxc:SwipeItem x:Uid="/HostViewPage/SwipeLeft"
+							d:Text="Back"
+							Background="Gray"
+							Invoked="{x:Bind NavigationHistory.GoBack}">
 				<muxc:SwipeItem.IconSource>
 					<muxc:SymbolIconSource Symbol="Back" />
 				</muxc:SwipeItem.IconSource>
 			</muxc:SwipeItem>
 		</muxc:SwipeItems>
 		<muxc:SwipeItems x:Key="right" Mode="Execute">
-			<muxc:SwipeItem Background="Gray"
-							Invoked="{x:Bind NavigationHistory.GoForward}"
-							Text="Forward">
+			<muxc:SwipeItem x:Uid="/HostViewPage/SwipeRight"
+							d:Text="Forward"
+							Background="Gray"
+							Invoked="{x:Bind NavigationHistory.GoForward}">
 				<muxc:SwipeItem.IconSource>
 					<muxc:SymbolIconSource Symbol="Forward" />
 				</muxc:SwipeItem.IconSource>
@@ -129,6 +131,7 @@
 
 				<muxc:SplitButton Grid.Column="0"
 								  Height="30"
+								  AccessKey="W"
 								  Command="{x:Bind ViewModel.DisconnectCommand}"
 								  CommandParameter="{x:Bind NavigationHistory.CurrentItem, Mode=OneWay}">
 					<muxc:SplitButton.KeyboardAccelerators>
@@ -137,14 +140,17 @@
 					<StackPanel Orientation="Horizontal">
 						<FontIcon FontSize="14" Glyph="&#xE7E8;" />
 						<TextBlock x:Name="disconnectButtonTextblock"
+								   x:Uid="/HostViewPage/DisconnecHostButton"
 								   Margin="4,0,0,0"
-								   Text="Disconnect"
+								   d:Text="Disconnect"
 								   Visibility="Collapsed" />
 					</StackPanel>
 					<muxc:SplitButton.Flyout>
 						<MenuBarItemFlyout Placement="Bottom">
 
-							<MenuFlyoutItem Click="{x:Bind NewConnectionAsync}" Text="New connection">
+							<MenuFlyoutItem x:Uid="/HostViewPage/NewConnectionFlyout"
+											d:Text="New connection"
+											Click="{x:Bind NewConnectionAsync}">
 								<MenuFlyoutItem.Icon>
 									<FontIcon Glyph="&#xE968;" />
 								</MenuFlyoutItem.Icon>
@@ -153,14 +159,16 @@
 								</MenuFlyoutItem.KeyboardAccelerators>
 							</MenuFlyoutItem>
 
-							<MenuFlyoutItem Click="{x:Bind GoToSettings}"
-											Icon="Setting"
-											Text="Settings" />
+							<MenuFlyoutItem x:Uid="/HostViewPage/SettingsFlyout"
+											d:Text="Settings"
+											Click="{x:Bind GoToSettings}"
+											Icon="Setting" />
 							<MenuFlyoutSeparator />
 
-							<MenuFlyoutItem Click="{x:Bind ExitApp, Mode=OneWay}"
-											Icon="Cancel"
-											Text="Exit">
+							<MenuFlyoutItem x:Uid="/HostViewPage/ExitFlyout"
+											d:Text="Exit app"
+											Click="{x:Bind ExitApp, Mode=OneWay}"
+											Icon="Cancel">
 								<MenuFlyoutItem.KeyboardAccelerators>
 									<KeyboardAccelerator Key="F4" Modifiers="Menu" />
 								</MenuFlyoutItem.KeyboardAccelerators>
@@ -281,11 +289,12 @@
 													   FontSize="12"
 													   Text="{x:Bind Modified}" />
 
-											<TextBlock Grid.Row="2"
+											<TextBlock x:Uid="/HostViewPage/DirectoryItemsCountLabel"
+													   Grid.Row="2"
 													   Grid.Column="0"
+													   d:Text="Items:"
 													   FontSize="12"
-													   Opacity="0.6"
-													   Text="Items:" />
+													   Opacity="0.6" />
 
 											<TextBlock Grid.Row="2"
 													   Grid.Column="1"
@@ -303,10 +312,11 @@
 		</controls:TitleBarControl>
 
 		<muxc:InfoBar x:Name="infoBar"
-					  Title="Something went wrong"
+					  x:Uid="/HostViewPage/InfoBarError"
 					  Grid.Row="1"
 					  d:IsOpen="True"
 					  d:Message="Try again in a little bit"
+					  d:Title="Something went wrong"
 					  Severity="Error" />
 
 		<Grid Grid.Row="2" Transitions="{StaticResource RepositionAnimation}">
@@ -377,8 +387,9 @@
 
 			<Grid.Resources>
 				<muxc:TeachingTip x:Name="infoTeachingTip"
-								  Title="FTP informations"
+								  x:Uid="/HostViewPage/TeachingTipHostInfo"
 								  d:IsOpen="False"
+								  d:Title="FTP informations"
 								  IsLightDismissEnabled="True"
 								  PlacementMargin="10"
 								  PreferredPlacement="Top"
@@ -387,37 +398,46 @@
 						<muxc:FontIconSource Glyph="&#xE968;" />
 					</muxc:TeachingTip.IconSource>
 					<StackPanel Padding="0,8" x:DefaultBindMode="OneWay">
-						<TextBlock Opacity="0.6" Text="Host" />
+
+						<TextBlock x:Uid="/HostViewPage/TeachingTipHostInfoHostLabel"
+								   d:Text="Host"
+								   Opacity="0.6" />
 						<TextBlock FontWeight="SemiBold" Text="{x:Bind NavigationHistory.CurrentItem.Client.Host}" />
 
-						<TextBlock Margin="0,8,0,0"
-								   Opacity="0.6"
-								   Text="Username" />
+						<TextBlock x:Uid="/HostViewPage/TeachingTipHostInfoUsernameLabel"
+								   Margin="0,8,0,0"
+								   d:Text="Username"
+								   Opacity="0.6" />
 						<TextBlock FontWeight="SemiBold" Text="{x:Bind NavigationHistory.CurrentItem.Client.Credentials.UserName}" />
 
-						<TextBlock Margin="0,8,0,0"
-								   Opacity="0.6"
-								   Text="Port" />
+						<TextBlock x:Uid="/HostViewPage/TeachingTipHostInfoPortLabel"
+								   Margin="0,8,0,0"
+								   d:Text="Port"
+								   Opacity="0.6" />
 						<TextBlock FontWeight="SemiBold" Text="{x:Bind NavigationHistory.CurrentItem.Client.Port}" />
 
-						<TextBlock Margin="0,8,0,0"
-								   Opacity="0.6"
-								   Text="Connection type" />
+						<TextBlock x:Uid="/HostViewPage/TeachingTipHostInfoConnectionTypeLabel"
+								   Margin="0,8,0,0"
+								   d:Text="Connection type"
+								   Opacity="0.6" />
 						<TextBlock FontWeight="SemiBold" Text="{x:Bind NavigationHistory.CurrentItem.Client.ConnectionType}" />
 
-						<TextBlock Margin="0,8,0,0"
-								   Opacity="0.6"
-								   Text="Server OS" />
+						<TextBlock x:Uid="/HostViewPage/TeachingTipHostInfoServerOSLabel"
+								   Margin="0,8,0,0"
+								   d:Text="Server OS"
+								   Opacity="0.6" />
 						<TextBlock FontWeight="SemiBold" Text="{x:Bind NavigationHistory.CurrentItem.Client.ServerOS}" />
 
-						<TextBlock Margin="0,8,0,0"
-								   Opacity="0.6"
-								   Text="Server type" />
+						<TextBlock x:Uid="/HostViewPage/TeachingTipHostInfoServerTypeLabel"
+								   Margin="0,8,0,0"
+								   d:Text="Server type"
+								   Opacity="0.6" />
 						<TextBlock FontWeight="SemiBold" Text="{x:Bind NavigationHistory.CurrentItem.Client.ServerType}" />
 
-						<TextBlock Margin="0,8,0,0"
-								   Opacity="0.6"
-								   Text="System Type" />
+						<TextBlock x:Uid="/HostViewPage/TeachingTipHostInfoSystemTypeLabel"
+								   Margin="0,8,0,0"
+								   d:Text="System Type"
+								   Opacity="0.6" />
 						<TextBlock FontWeight="SemiBold" Text="{x:Bind NavigationHistory.CurrentItem.Client.SystemType}" />
 					</StackPanel>
 				</muxc:TeachingTip>
@@ -552,11 +572,14 @@
 			<toolkit:WrapPanel Margin="4,0" VerticalAlignment="Center">
 
 				<ToggleButton x:Name="infoButton"
+							  x:Uid="/HostViewPage/CurrentHostInfoButton"
+							  AccessKey="I"
 							  Background="Transparent"
 							  BorderThickness="0"
 							  Content="&#xE946;"
 							  FontFamily="Segoe MDL2 Assets"
 							  IsChecked="{x:Bind infoTeachingTip.IsOpen, Mode=TwoWay}"
+							  KeyTipPlacementMode="Top"
 							  Visibility="{x:Bind NavigationHistory.CurrentItem, Converter={StaticResource ItemToBoolConverter}, Mode=OneWay}" />
 			</toolkit:WrapPanel>
 
@@ -629,7 +652,9 @@
 					   HorizontalAlignment="Right"
 					   VerticalAlignment="Center"
 					   FontSize="12">
-				<Run Foreground="{ThemeResource SystemBaseMediumColor}" Text="Items:" />
+				<Run x:Uid="/HostViewPage/DirectoryItemsCountLabel"
+					 d:Text="Items:"
+					 Foreground="{ThemeResource SystemBaseMediumColor}" />
 				<Run Text="{x:Bind NavigationHistory.CurrentItem.Items.Count, Mode=OneWay}" />
 			</TextBlock>
 		</Grid>

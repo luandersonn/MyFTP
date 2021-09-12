@@ -5,13 +5,15 @@
 			   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			   xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 			   xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
-			   Title="Rename item"
-			   CloseButtonText="Close"
+			   x:Uid="/Dialogs/RenameDialog"
+			   d:CloseButtonText="Close"
+			   d:PrimaryButtonText="Rename"
+			   d:Title="Rename item"
+			   Background="{ThemeResource TeachingTipTransientBackground}"
 			   DefaultButton="Primary"
 			   IsPrimaryButtonEnabled="False"
 			   PrimaryButtonClick="OnPrimaryButtonClick"
 			   PrimaryButtonCommand="{x:Bind RenameCommand}"
-			   PrimaryButtonText="Rename"
 			   Style="{StaticResource DefaultContentDialogStyle}"
 			   mc:Ignorable="d">
 

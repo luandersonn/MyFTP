@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AnonymousLoginInfo.Text" xml:space="preserve">
+    <value>Hãy để trống tên đăng nhập và mật khẩu khi đăng nhập ẩn danh</value>
+  </data>
+  <data name="BackgroundInfoButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Xem thông tin ảnh nền</value>
+  </data>
+  <data name="FtpHostSettingsViewModelDeleteButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Xóa chứng chỉ</value>
+  </data>
+  <data name="FtpHostSettingsViewModelDeleteButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Xóa chứng chỉ</value>
+  </data>
+  <data name="FtpHostSettingsViewModelGrid.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Nhấn để kết nối</value>
+  </data>
+  <data name="HostTextBox.Header" xml:space="preserve">
+    <value>Tên miền</value>
+  </data>
+  <data name="HostTextBox.PlaceholderText" xml:space="preserve">
+    <value>ftp.example.com</value>
+  </data>
+  <data name="LoginButton.Content" xml:space="preserve">
+    <value>ĐĂNG NHẬP</value>
+  </data>
+  <data name="LoginErrorInfoBar.Title" xml:space="preserve">
+    <value>Đăng nhập lỗi</value>
+  </data>
+  <data name="PasswordTextBox.Header" xml:space="preserve">
+    <value>Mật khẩu</value>
+  </data>
+  <data name="PortTextBox.Header" xml:space="preserve">
+    <value>Cổng</value>
+  </data>
+  <data name="PrivacyPolicyHyperlink.Content" xml:space="preserve">
+    <value>Thông tin quyền riêng tư</value>
+  </data>
+  <data name="SavedCredentialsListButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Lưu chứng chỉ</value>
+    <comment>Save credentials button (Automation)</comment>
+  </data>
+  <data name="SavedCredentialsListButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Lưu chứng chỉ</value>
+    <comment>Saved credentials button Tooltip (Login View Page)</comment>
+  </data>
+  <data name="SaveFtpCredentialsCheckbox.Content" xml:space="preserve">
+    <value>Lưu chứng chỉ</value>
+    <comment>Save credentials checkbox (Login View Page)</comment>
+  </data>
+  <data name="SettingsButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Cài đặt</value>
+  </data>
+  <data name="SettingsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Cài đặt</value>
+    <comment>Settings button Tooltip (Login View Page)</comment>
+  </data>
+  <data name="UsernameTextBox.Header" xml:space="preserve">
+    <value>Tên đăng nhập</value>
+    <comment>Username textbox Header (Login View Page)</comment>
+  </data>
+  <data name="UsernameTextBox.PlaceholderText" xml:space="preserve">
+    <value>example@example.com</value>
+  </data>
+</root>

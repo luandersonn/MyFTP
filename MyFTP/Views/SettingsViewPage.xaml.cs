@@ -1,15 +1,16 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.Messaging;
 using Microsoft.Toolkit.Uwp.Helpers;
+using MyFTP.Services;
 using MyFTP.Utils;
 using MyFTP.ViewModels;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.Storage.Pickers;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 using muxc = Microsoft.UI.Xaml.Controls;
 
@@ -19,16 +20,19 @@ namespace MyFTP.Views
 	{
 		private int totalExpanderCount;
 		private int expandedCount;
+
+		public AppCenterService AppCenterService { get; }
 		public SettingsViewPage()
 		{
 			InitializeComponent();
-			DataContext = App.Current.Services.GetRequiredService<SettingsViewModel>();			
+			DataContext = App.Current.Services.GetRequiredService<SettingsViewModel>();
+			AppCenterService = App.Current.Services.GetService<AppCenterService>();
 			Loaded += (sender, args) =>
 			{
 				WeakReferenceMessenger.Default.Register<RequestOpenFolderMessage>(this, OnOpenFolderRequest);
-				Window.Current.CoreWindow.PointerPressed += OnCoreWindowPointerPressed;				
-				this.AddKeyboardAccelerator(VirtualKey.Left, VirtualKeyModifiers.Menu, (s, e) => GoBack());				
-			};			
+				Window.Current.CoreWindow.PointerPressed += OnCoreWindowPointerPressed;
+				this.AddKeyboardAccelerator(VirtualKey.Left, VirtualKeyModifiers.Menu, (s, e) => e.Handled = GoBack());
+			};
 			Unloaded += (sender, args) =>
 			{
 				WeakReferenceMessenger.Default.Unregister<RequestOpenFolderMessage>(this);
@@ -43,14 +47,18 @@ namespace MyFTP.Views
 				Frame.GoBack();
 				args.Handled = true;
 			}
-		}	
+		}
 
 		protected override void OnNavigatedTo(NavigationEventArgs e)
 		{
-			totalExpanderCount = RootStackPanel.Children.OfType<muxc.Expander>().Count();			
+			totalExpanderCount = RootStackPanel.Children.OfType<muxc.Expander>().Count();
 			UpdateExpanderButtons();
 			if (ViewModel.UpdateService?.CheckForUpdatesCommand.CanExecute(null) == true)
 				ViewModel.UpdateService.CheckForUpdatesCommand.Execute(null);
+
+#if DEBUG
+			FindName(nameof(DebugExpander));//.Visibility = Visibility.Visible;
+#endif
 		}
 
 		public SettingsViewModel ViewModel => DataContext as SettingsViewModel;
@@ -123,8 +131,8 @@ namespace MyFTP.Views
 		#region app theme
 		public int ThemeIndex
 		{
-			get => (int)ViewModel.AppTheme;			
-			set => ViewModel.AppTheme = (ElementTheme)value;			
+			get => (int)ViewModel.AppTheme;
+			set => ViewModel.AppTheme = (ElementTheme)value;
 		}
 		#endregion
 
@@ -134,6 +142,7 @@ namespace MyFTP.Views
 			{
 				IsEnabled = false;
 				await SystemInformation.LaunchStoreForReviewAsync();
+				AppCenterService?.TrackEvent("LaunchStoreForReviewAsync");
 			}
 			finally
 			{
@@ -141,10 +150,34 @@ namespace MyFTP.Views
 			}
 		}
 
-		private void GoBack()
+		private bool GoBack()
 		{
 			if (Frame.CanGoBack)
+			{
 				Frame.GoBack();
-		}		
+				return true;
+			}
+			return false;
+		}
+		#region DEBUG		
+		private async void ComboBox_Loaded(object sender, RoutedEventArgs e)
+		{
+			var comboBox = (ComboBox)sender;
+			comboBox.ItemsSource = Windows.Globalization.ApplicationLanguages.ManifestLanguages.Prepend("Default");
+			// give time to comboBox load items
+			await Task.Delay(TimeSpan.FromMilliseconds(200));
+			var lang = Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride;
+			if (lang == "")
+				lang = "Default";
+			comboBox.SelectedItem = lang;
+		}
+		private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			var item = e.AddedItems[0].ToString();
+			if (item == "Default")
+				item = "";
+			Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride = item;
+		}
+		#endregion
 	}
 }

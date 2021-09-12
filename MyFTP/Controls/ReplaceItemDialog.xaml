@@ -3,11 +3,13 @@
 			   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 			   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-			   Title="There is already a file with the same name in this location"
+			   x:Uid="/Dialogs/ReplaceDialog"
+			   d:CloseButtonText="Skip file"
+			   d:PrimaryButtonText="Replace"
+			   d:Title="There is already a file with the same name in this location"
 			   d:Width="420"
-			   CloseButtonText="Skip file"
+			   Background="{ThemeResource TeachingTipTransientBackground}"
 			   PrimaryButtonStyle="{StaticResource AccentButtonStyle}"
-			   PrimaryButtonText="Replace"
 			   Style="{StaticResource DefaultContentDialogStyle}"
 			   mc:Ignorable="d">
 
@@ -29,7 +31,7 @@
 			<RowDefinition Height="15" />
 			<RowDefinition Height="15" />
 			<RowDefinition Height="15" />
-			<RowDefinition Height="30" />
+			<RowDefinition Height="auto" />
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="50" />
@@ -39,11 +41,11 @@
 			<ColumnDefinition />
 		</Grid.ColumnDefinitions>
 
-		<TextBlock Grid.Row="0"
+		<TextBlock x:Uid="/Dialogs/ReplaceDialogCurrentFileLabel"
+				   Grid.Row="0"
 				   Grid.ColumnSpan="2"
-				   FontWeight="Bold"
+				   d:Text="Current file"
 				   Opacity="1"
-				   Text="Current file"
 				   TextWrapping="Wrap" />
 
 		<Image x:Name="itemToReplaceImage"
@@ -59,11 +61,17 @@
 				   Opacity="1"
 				   Text="{x:Bind ItemToReplace.Name}" />
 
-		<TextBlock Grid.Row="2"
+		<TextBlock x:Name="ItemToReplaceDateTextBlock"
+				   Grid.Row="2"
 				   Grid.Column="1"
 				   d:Text="Jun 21, 2021"
 				   FontSize="12"
-				   Text="{x:Bind ItemToReplace.Modified.ToLongDateString(), Mode=OneWay}" />
+				   Text="{x:Bind ItemToReplace.Modified.ToLongDateString(), Mode=OneWay}"
+				   TextTrimming="CharacterEllipsis">
+			<ToolTipService.ToolTip>
+				<ToolTip Content="{x:Bind ItemToReplace.Modified.ToLongDateString()}" Visibility="{x:Bind ItemToReplaceDateTextBlock.IsTextTrimmed, Mode=OneWay}" />
+			</ToolTipService.ToolTip>
+		</TextBlock>
 
 		<TextBlock Grid.Row="3"
 				   Grid.Column="1"
@@ -86,12 +94,13 @@
 				  Glyph="&#xE76C;" />
 
 
-		<TextBlock Grid.Row="0"
+		<TextBlock x:Uid="/Dialogs/ReplaceDialogNewFileLabel"
+				   Grid.Row="0"
 				   Grid.Column="3"
 				   Grid.ColumnSpan="2"
+				   d:Text="New file"
 				   FontWeight="Bold"
 				   Opacity="1"
-				   Text="New file"
 				   TextWrapping="Wrap" />
 
 		<Image x:Name="newFileImage"
@@ -108,12 +117,17 @@
 				   Opacity="1"
 				   Text="{x:Bind NewFile.Name}" />
 
-		<TextBlock Grid.Row="2"
+		<TextBlock x:Name="NewFileDateTextBlock"
+				   Grid.Row="2"
 				   Grid.Column="4"
 				   d:Text="Jun 21, 2021"
 				   FontSize="12"
 				   MaxLines="2"
-				   Text="{x:Bind NewFileProperties.DateModified.Date.ToLongDateString(), Mode=OneWay}" />
+				   Text="{x:Bind NewFileProperties.DateModified.Date.ToLongDateString(), Mode=OneWay}">
+			<ToolTipService.ToolTip>
+				<ToolTip Content="{x:Bind NewFileProperties.DateModified.Date.ToLongDateString(), Mode=OneWay}" Visibility="{x:Bind NewFileDateTextBlock.IsTextTrimmed, Mode=OneWay}" />
+			</ToolTipService.ToolTip>
+		</TextBlock>
 
 		<TextBlock Grid.Row="3"
 				   Grid.Column="4"
@@ -128,10 +142,12 @@
 				   FontSize="12"
 				   Text="{x:Bind NewFileProperties.Size, Converter={StaticResource SizeInBytesHumanizeConverter}, Mode=OneWay}" />
 
-		<CheckBox Grid.Row="5"
+		<CheckBox x:Uid="/Dialogs/ReplaceDialogDontAskAgainCheckbox"
+				  Grid.Row="5"
 				  Grid.ColumnSpan="5"
+				  Margin="0,8"
 				  VerticalAlignment="Bottom"
-				  Content="Don't ask again"
+				  d:Content="Don't ask again"
 				  IsEnabled="False" />
 
 	</Grid>
