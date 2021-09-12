@@ -36,4 +36,10 @@
   <data name="DirectoryItemsCountLabel.Text" xml:space="preserve">
     <value>Itens:</value>
   </data>
+  <data name="SwipeLeft.Text" xml:space="preserve">
+    <value>Voltar</value>
+  </data>
+  <data name="SwipeRight.Text" xml:space="preserve">
+    <value>Avançar</value>
+  </data>
 </root>

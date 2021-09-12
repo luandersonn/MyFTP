@@ -7,6 +7,7 @@
 			   xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
 			   xmlns:viewmodels="using:MyFTP.ViewModels"
 			   Title="Delete items permanently?"
+			   Background="{ThemeResource TeachingTipTransientBackground}"
 			   CloseButtonText="Cancel"
 			   PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
 			   PrimaryButtonStyle="{StaticResource DestructiveButtonStyle}"

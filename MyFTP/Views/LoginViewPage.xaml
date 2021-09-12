@@ -93,6 +93,7 @@
 
 								<muxc:NumberBox x:Uid="/LoginViewPage/PortTextBox"
 												Grid.Column="1"
+												MaxWidth="150"
 												VerticalAlignment="Bottom"
 												d:Header="Port"
 												PlaceholderText="21"

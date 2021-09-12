@@ -20,6 +20,7 @@ namespace MyFTP.Controls
 		private void SuccessfulLogin(object recipient, FtpListItemViewModel message)
 		{
 			Result = message;
+			Hide();
 		}
 
 		public FtpListItemViewModel Result { get; private set; }

@@ -46,6 +46,7 @@ namespace MyFTP.ViewModels
 			SavedCredentialsList = new ReadOnlyObservableCollection<FtpHostSettingsViewModel>(_savedCredentialsList);
 
 			_saveCredentials = true;
+			Port = 21;
 
 			LoginCommand = new AsyncRelayCommand<FtpHostSettingsViewModel>(LoginCommandAsync, CanLogin);
 

@@ -5,6 +5,7 @@
 			   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			   Title="There is already a file with the same name in this location"
 			   d:Width="420"
+			   Background="{ThemeResource TeachingTipTransientBackground}"
 			   CloseButtonText="Skip file"
 			   PrimaryButtonStyle="{StaticResource AccentButtonStyle}"
 			   PrimaryButtonText="Replace"
