@@ -12,6 +12,27 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AnonymousLoginInfo.Text" xml:space="preserve">
+    <value>Hãy để trống tên đăng nhập và mật khẩu khi đăng nhập ẩn danh</value>
+  </data>
+  <data name="BackgroundInfoButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Xem thông tin ảnh nền</value>
+  </data>
+  <data name="FtpHostSettingsViewModelDeleteButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Xóa chứng chỉ</value>
+  </data>
+  <data name="FtpHostSettingsViewModelDeleteButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Xóa chứng chỉ</value>
+  </data>
+  <data name="FtpHostSettingsViewModelGrid.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Nhấn để kết nối</value>
+  </data>
+  <data name="HostTextBox.Header" xml:space="preserve">
+    <value>Tên miền</value>
+  </data>
+  <data name="HostTextBox.PlaceholderText" xml:space="preserve">
+    <value>ftp.example.com</value>
+  </data>
   <data name="LoginButton.Content" xml:space="preserve">
     <value>ĐĂNG NHẬP</value>
   </data>
