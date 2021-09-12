@@ -70,11 +70,6 @@
           <target state="needs-review-translation">Port</target>
           <note from="MultilingualUpdate" priority="2">When the XLIFF file support was added via MAT, existing resources were found and auto-imported.  This source and target string contained the same value so the resource was marked as 'Needs review' to ensure the translation could be easily reviewed.</note>
         </trans-unit>
-        <trans-unit id="PortTextBox.PlaceholderText" translate="yes" xml:space="preserve">
-          <source>21</source>
-          <target state="needs-review-translation">21</target>
-          <note from="MultilingualUpdate" priority="2">When the XLIFF file support was added via MAT, existing resources were found and auto-imported.  This source and target string contained the same value so the resource was marked as 'Needs review' to ensure the translation could be easily reviewed.</note>
-        </trans-unit>
         <trans-unit id="PrivacyPolicyHyperlink.Content" translate="yes" xml:space="preserve">
           <source>Privacy policy</source>
           <target state="translated">Politique de vie privée</target>

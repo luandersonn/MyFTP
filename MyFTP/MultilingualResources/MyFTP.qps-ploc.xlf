@@ -151,10 +151,6 @@
           <source>Port</source>
           <target state="needs-review-translation" state-qualifier="mt-suggestion">[673EA][!!_Рòѓτ_!!]</target>
         </trans-unit>
-        <trans-unit id="PortTextBox.PlaceholderText" translate="yes" xml:space="preserve">
-          <source>21</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">[3FB42][!!_21_!!]</target>
-        </trans-unit>
         <trans-unit id="PrivacyPolicyHyperlink.Content" translate="yes" xml:space="preserve">
           <source>Privacy policy</source>
           <target state="needs-review-translation" state-qualifier="mt-suggestion">[5E875][!!_Ρŗíνâċў þòłíċÿ_!!]</target>
