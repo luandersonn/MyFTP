@@ -131,6 +131,7 @@
 
 				<muxc:SplitButton Grid.Column="0"
 								  Height="30"
+								  AccessKey="W"
 								  Command="{x:Bind ViewModel.DisconnectCommand}"
 								  CommandParameter="{x:Bind NavigationHistory.CurrentItem, Mode=OneWay}">
 					<muxc:SplitButton.KeyboardAccelerators>
@@ -572,11 +573,13 @@
 
 				<ToggleButton x:Name="infoButton"
 							  x:Uid="/HostViewPage/CurrentHostInfoButton"
+							  AccessKey="I"
 							  Background="Transparent"
 							  BorderThickness="0"
 							  Content="&#xE946;"
 							  FontFamily="Segoe MDL2 Assets"
 							  IsChecked="{x:Bind infoTeachingTip.IsOpen, Mode=TwoWay}"
+							  KeyTipPlacementMode="Top"
 							  Visibility="{x:Bind NavigationHistory.CurrentItem, Converter={StaticResource ItemToBoolConverter}, Mode=OneWay}" />
 			</toolkit:WrapPanel>
 

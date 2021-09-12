@@ -429,4 +429,97 @@
       </group>
     </body>
   </file>
+  <file datatype="xml" source-language="en-US" target-language="qps-ploc" original="MYFTP/STRINGS/EN-US/FTPDIRECTORYVIEWPAGE.RESW" tool-id="MultilingualAppToolkit" product-name="n/a" product-version="n/a" build-num="n/a">
+    <header>
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="4.0.6919.0" tool-company="Microsoft" />
+    </header>
+    <body>
+      <group id="MYFTP/STRINGS/EN-US/FTPDIRECTORYVIEWPAGE.RESW" datatype="resx">
+        <trans-unit id="NavigationForwardButton.Label" translate="yes" xml:space="preserve">
+          <source>Navigate Forward</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[658D8][!!_Ňáνîġàťê ₣ôřẅâřð_!!]</target>
+        </trans-unit>
+        <trans-unit id="NavigationBackButton.Label" translate="yes" xml:space="preserve">
+          <source>Navigate Back</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[3B8DA][!!_Ñàνìğâťę Вâćк_!!]</target>
+        </trans-unit>
+        <trans-unit id="NavigationUpButton.Label" translate="yes" xml:space="preserve">
+          <source>Navigate Up</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[FC273][!!_Ñãνìģàтê Úр_!!]</target>
+        </trans-unit>
+        <trans-unit id="DeleteButton.Label" translate="yes" xml:space="preserve">
+          <source>Delete</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[F8065][!!_Ðęľêţê_!!]</target>
+        </trans-unit>
+        <trans-unit id="DownloadButton.Label" translate="yes" xml:space="preserve">
+          <source>Download</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[D62D8][!!_Đõẁиľôáð_!!]</target>
+        </trans-unit>
+        <trans-unit id="NewFolderButton.Label" translate="yes" xml:space="preserve">
+          <source>New folder</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[AA8D0][!!_Ņèẅ ƒòľďéŕ_!!]</target>
+        </trans-unit>
+        <trans-unit id="PropertiesButton.Label" translate="yes" xml:space="preserve">
+          <source>Properties</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[6FD17][!!_Þřôþêŕťįéŝ_!!]</target>
+        </trans-unit>
+        <trans-unit id="RefreshButton.Label" translate="yes" xml:space="preserve">
+          <source>Refresh</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[67CC9][!!_Ŕêƒŕéŝђ_!!]</target>
+        </trans-unit>
+        <trans-unit id="SelectAllButton.Label" translate="yes" xml:space="preserve">
+          <source>Select all</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[374DD][!!_Şèĺèċт áľľ_!!]</target>
+        </trans-unit>
+        <trans-unit id="UploadButton.Label" translate="yes" xml:space="preserve">
+          <source>Upload</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[5D4C9][!!_Úрĺóáđ_!!]</target>
+        </trans-unit>
+        <trans-unit id="CreateFolderButton.Content" translate="yes" xml:space="preserve">
+          <source>Create</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[63044][!!_Ċѓêàťé_!!]</target>
+        </trans-unit>
+        <trans-unit id="CreateFolderTextbox.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>Folder name</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[4499A][!!_₣óľðêŕ йáмę_!!]</target>
+        </trans-unit>
+        <trans-unit id="UploadFileFlyout.Text" translate="yes" xml:space="preserve">
+          <source>Files</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[06B37][!!_₣îĺèś_!!]</target>
+        </trans-unit>
+        <trans-unit id="UploadFolderFlyout.Text" translate="yes" xml:space="preserve">
+          <source>Folder</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[C6409][!!_₣ôłďèŕ_!!]</target>
+        </trans-unit>
+        <trans-unit id="DragAndDropArea.Text" translate="yes" xml:space="preserve">
+          <source>Drop here to upload to this folder</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[774B6][!!_Ðŗõρ ђęѓé тó ûρłòàď τõ тћîš ƒółďęř_!!]</target>
+        </trans-unit>
+        <trans-unit id="EmptyFolderMessage.Text" translate="yes" xml:space="preserve">
+          <source>This folder is empty</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[21E6D][!!_Ţђįś ƒòļďèŗ íś èмрťŷ_!!]</target>
+        </trans-unit>
+        <trans-unit id="LoadItemsButton.Content" translate="yes" xml:space="preserve">
+          <source>Load items</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[5AAA9][!!_Ŀóãð ìτémş_!!]</target>
+        </trans-unit>
+        <trans-unit id="ListViewHeaderModified.Text" translate="yes" xml:space="preserve">
+          <source>Modified</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[35D12][!!_Мõďíƒìèď_!!]</target>
+        </trans-unit>
+        <trans-unit id="ListViewHeaderName.Text" translate="yes" xml:space="preserve">
+          <source>Name</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[D3B12][!!_Ñãmê_!!]</target>
+        </trans-unit>
+        <trans-unit id="ListViewHeaderPermissions.Text" translate="yes" xml:space="preserve">
+          <source>Permissions</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[639C4][!!_Рéŗмįššíôηš_!!]</target>
+        </trans-unit>
+        <trans-unit id="ListViewHeaderSize.Text" translate="yes" xml:space="preserve">
+          <source>Size</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[0CCA1][!!_Šîžê_!!]</target>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
 </xliff>

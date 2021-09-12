@@ -249,7 +249,7 @@ namespace MyFTP.Views
 			ItemDropArea.IsHitTestVisible = false;
 		}
 
-		private void AppBarButton_Click(object sender, RoutedEventArgs e)
+		private void OnNavigateUp()
 		{
 			var item = NavigationHistory.CurrentItem?.Parent;
 			if (item != null)

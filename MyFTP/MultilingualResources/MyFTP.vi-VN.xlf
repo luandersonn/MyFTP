@@ -429,4 +429,97 @@
       </group>
     </body>
   </file>
+  <file datatype="xml" source-language="en-US" target-language="vi-VN" original="MYFTP/STRINGS/EN-US/FTPDIRECTORYVIEWPAGE.RESW" tool-id="MultilingualAppToolkit" product-name="n/a" product-version="n/a" build-num="n/a">
+    <header>
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="4.0.6919.0" tool-company="Microsoft" />
+    </header>
+    <body>
+      <group id="MYFTP/STRINGS/EN-US/FTPDIRECTORYVIEWPAGE.RESW" datatype="resx">
+        <trans-unit id="NavigationForwardButton.Label" translate="yes" xml:space="preserve">
+          <source>Navigate Forward</source>
+          <target state="new">Navigate Forward</target>
+        </trans-unit>
+        <trans-unit id="NavigationBackButton.Label" translate="yes" xml:space="preserve">
+          <source>Navigate Back</source>
+          <target state="new">Navigate Back</target>
+        </trans-unit>
+        <trans-unit id="NavigationUpButton.Label" translate="yes" xml:space="preserve">
+          <source>Navigate Up</source>
+          <target state="new">Navigate Up</target>
+        </trans-unit>
+        <trans-unit id="DeleteButton.Label" translate="yes" xml:space="preserve">
+          <source>Delete</source>
+          <target state="new">Delete</target>
+        </trans-unit>
+        <trans-unit id="DownloadButton.Label" translate="yes" xml:space="preserve">
+          <source>Download</source>
+          <target state="new">Download</target>
+        </trans-unit>
+        <trans-unit id="NewFolderButton.Label" translate="yes" xml:space="preserve">
+          <source>New folder</source>
+          <target state="new">New folder</target>
+        </trans-unit>
+        <trans-unit id="PropertiesButton.Label" translate="yes" xml:space="preserve">
+          <source>Properties</source>
+          <target state="new">Properties</target>
+        </trans-unit>
+        <trans-unit id="RefreshButton.Label" translate="yes" xml:space="preserve">
+          <source>Refresh</source>
+          <target state="new">Refresh</target>
+        </trans-unit>
+        <trans-unit id="SelectAllButton.Label" translate="yes" xml:space="preserve">
+          <source>Select all</source>
+          <target state="new">Select all</target>
+        </trans-unit>
+        <trans-unit id="UploadButton.Label" translate="yes" xml:space="preserve">
+          <source>Upload</source>
+          <target state="new">Upload</target>
+        </trans-unit>
+        <trans-unit id="CreateFolderButton.Content" translate="yes" xml:space="preserve">
+          <source>Create</source>
+          <target state="new">Create</target>
+        </trans-unit>
+        <trans-unit id="CreateFolderTextbox.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>Folder name</source>
+          <target state="new">Folder name</target>
+        </trans-unit>
+        <trans-unit id="UploadFileFlyout.Text" translate="yes" xml:space="preserve">
+          <source>Files</source>
+          <target state="new">Files</target>
+        </trans-unit>
+        <trans-unit id="UploadFolderFlyout.Text" translate="yes" xml:space="preserve">
+          <source>Folder</source>
+          <target state="new">Folder</target>
+        </trans-unit>
+        <trans-unit id="DragAndDropArea.Text" translate="yes" xml:space="preserve">
+          <source>Drop here to upload to this folder</source>
+          <target state="new">Drop here to upload to this folder</target>
+        </trans-unit>
+        <trans-unit id="EmptyFolderMessage.Text" translate="yes" xml:space="preserve">
+          <source>This folder is empty</source>
+          <target state="new">This folder is empty</target>
+        </trans-unit>
+        <trans-unit id="LoadItemsButton.Content" translate="yes" xml:space="preserve">
+          <source>Load items</source>
+          <target state="new">Load items</target>
+        </trans-unit>
+        <trans-unit id="ListViewHeaderModified.Text" translate="yes" xml:space="preserve">
+          <source>Modified</source>
+          <target state="new">Modified</target>
+        </trans-unit>
+        <trans-unit id="ListViewHeaderName.Text" translate="yes" xml:space="preserve">
+          <source>Name</source>
+          <target state="new">Name</target>
+        </trans-unit>
+        <trans-unit id="ListViewHeaderPermissions.Text" translate="yes" xml:space="preserve">
+          <source>Permissions</source>
+          <target state="new">Permissions</target>
+        </trans-unit>
+        <trans-unit id="ListViewHeaderSize.Text" translate="yes" xml:space="preserve">
+          <source>Size</source>
+          <target state="new">Size</target>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
 </xliff>

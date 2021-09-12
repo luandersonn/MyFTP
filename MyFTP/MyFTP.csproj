@@ -351,6 +351,11 @@
     <None Include="..\.editorconfig">
       <Link>.editorconfig</Link>
     </None>
+    <PRIResource Include="Strings\vi-VN\FtpDirectoryViewPage.resw" />
+    <PRIResource Include="Strings\pt-BR\FtpDirectoryViewPage.resw" />
+    <PRIResource Include="Strings\fr-fr\FtpDirectoryViewPage.resw" />
+    <PRIResource Include="Strings\qps-ploc\FtpDirectoryViewPage.resw" />
+    <PRIResource Include="Strings\en-us\FtpDirectoryViewPage.resw" />
     <PRIResource Include="Strings\vi-VN\HostViewPage.resw" />
     <PRIResource Include="Strings\pt-BR\HostViewPage.resw" />
     <PRIResource Include="Strings\fr-fr\HostViewPage.resw" />

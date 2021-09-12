@@ -429,4 +429,97 @@
       </group>
     </body>
   </file>
+  <file datatype="xml" source-language="en-US" target-language="pt-BR" original="MYFTP/STRINGS/EN-US/FTPDIRECTORYVIEWPAGE.RESW" tool-id="MultilingualAppToolkit" product-name="n/a" product-version="n/a" build-num="n/a">
+    <header>
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="4.0.6919.0" tool-company="Microsoft"/>
+    </header>
+    <body>
+      <group id="MYFTP/STRINGS/EN-US/FTPDIRECTORYVIEWPAGE.RESW" datatype="resx">
+        <trans-unit id="NavigationForwardButton.Label" translate="yes" xml:space="preserve">
+          <source>Navigate Forward</source>
+          <target state="translated">Avançar navegação</target>
+        </trans-unit>
+        <trans-unit id="NavigationBackButton.Label" translate="yes" xml:space="preserve">
+          <source>Navigate Back</source>
+          <target state="translated">Voltar navegação</target>
+        </trans-unit>
+        <trans-unit id="NavigationUpButton.Label" translate="yes" xml:space="preserve">
+          <source>Navigate Up</source>
+          <target state="translated">Navegar um nível de diretório para cima</target>
+        </trans-unit>
+        <trans-unit id="DeleteButton.Label" translate="yes" xml:space="preserve">
+          <source>Delete</source>
+          <target state="translated">Excluir</target>
+        </trans-unit>
+        <trans-unit id="DownloadButton.Label" translate="yes" xml:space="preserve">
+          <source>Download</source>
+          <target state="translated">Baixar</target>
+        </trans-unit>
+        <trans-unit id="NewFolderButton.Label" translate="yes" xml:space="preserve">
+          <source>New folder</source>
+          <target state="translated">Nova pasta</target>
+        </trans-unit>
+        <trans-unit id="PropertiesButton.Label" translate="yes" xml:space="preserve">
+          <source>Properties</source>
+          <target state="translated">Propriedades</target>
+        </trans-unit>
+        <trans-unit id="RefreshButton.Label" translate="yes" xml:space="preserve">
+          <source>Refresh</source>
+          <target state="translated">Atualizar</target>
+        </trans-unit>
+        <trans-unit id="SelectAllButton.Label" translate="yes" xml:space="preserve">
+          <source>Select all</source>
+          <target state="translated">Selecionar tudo</target>
+        </trans-unit>
+        <trans-unit id="UploadButton.Label" translate="yes" xml:space="preserve">
+          <source>Upload</source>
+          <target state="translated">Upload</target>
+        </trans-unit>
+        <trans-unit id="CreateFolderButton.Content" translate="yes" xml:space="preserve">
+          <source>Create</source>
+          <target state="translated">Criar</target>
+        </trans-unit>
+        <trans-unit id="CreateFolderTextbox.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>Folder name</source>
+          <target state="translated">Nome da pasta</target>
+        </trans-unit>
+        <trans-unit id="UploadFileFlyout.Text" translate="yes" xml:space="preserve">
+          <source>Files</source>
+          <target state="translated">Arquivos</target>
+        </trans-unit>
+        <trans-unit id="UploadFolderFlyout.Text" translate="yes" xml:space="preserve">
+          <source>Folder</source>
+          <target state="translated">Pasta</target>
+        </trans-unit>
+        <trans-unit id="DragAndDropArea.Text" translate="yes" xml:space="preserve">
+          <source>Drop here to upload to this folder</source>
+          <target state="translated">Solte aqui para fazer upload para esta pasta</target>
+        </trans-unit>
+        <trans-unit id="EmptyFolderMessage.Text" translate="yes" xml:space="preserve">
+          <source>This folder is empty</source>
+          <target state="translated">Pasta vazia</target>
+        </trans-unit>
+        <trans-unit id="LoadItemsButton.Content" translate="yes" xml:space="preserve">
+          <source>Load items</source>
+          <target state="translated">Carregar itens</target>
+        </trans-unit>
+        <trans-unit id="ListViewHeaderModified.Text" translate="yes" xml:space="preserve">
+          <source>Modified</source>
+          <target state="translated">Modificado</target>
+        </trans-unit>
+        <trans-unit id="ListViewHeaderName.Text" translate="yes" xml:space="preserve">
+          <source>Name</source>
+          <target state="translated">Nome</target>
+        </trans-unit>
+        <trans-unit id="ListViewHeaderPermissions.Text" translate="yes" xml:space="preserve">
+          <source>Permissions</source>
+          <target state="translated">Permissões</target>
+        </trans-unit>
+        <trans-unit id="ListViewHeaderSize.Text" translate="yes" xml:space="preserve">
+          <source>Size</source>
+          <target state="translated">Tamanho</target>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
 </xliff>
