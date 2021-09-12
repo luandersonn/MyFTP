@@ -11,7 +11,6 @@ using Windows.Storage.Pickers;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
 using muxc = Microsoft.UI.Xaml.Controls;
 
@@ -31,9 +30,9 @@ namespace MyFTP.Views
 			Loaded += (sender, args) =>
 			{
 				WeakReferenceMessenger.Default.Register<RequestOpenFolderMessage>(this, OnOpenFolderRequest);
-				Window.Current.CoreWindow.PointerPressed += OnCoreWindowPointerPressed;				
-				this.AddKeyboardAccelerator(VirtualKey.Left, VirtualKeyModifiers.Menu, (s, e) => GoBack());				
-			};			
+				Window.Current.CoreWindow.PointerPressed += OnCoreWindowPointerPressed;
+				this.AddKeyboardAccelerator(VirtualKey.Left, VirtualKeyModifiers.Menu, (s, e) => GoBack());
+			};
 			Unloaded += (sender, args) =>
 			{
 				WeakReferenceMessenger.Default.Unregister<RequestOpenFolderMessage>(this);
@@ -48,17 +47,17 @@ namespace MyFTP.Views
 				Frame.GoBack();
 				args.Handled = true;
 			}
-		}	
+		}
 
 		protected override void OnNavigatedTo(NavigationEventArgs e)
 		{
-			totalExpanderCount = RootStackPanel.Children.OfType<muxc.Expander>().Count();			
+			totalExpanderCount = RootStackPanel.Children.OfType<muxc.Expander>().Count();
 			UpdateExpanderButtons();
 			if (ViewModel.UpdateService?.CheckForUpdatesCommand.CanExecute(null) == true)
 				ViewModel.UpdateService.CheckForUpdatesCommand.Execute(null);
 
 #if DEBUG
-			DebugExpander.Visibility = Visibility.Visible;
+			FindName(nameof(DebugExpander));//.Visibility = Visibility.Visible;
 #endif
 		}
 
@@ -132,8 +131,8 @@ namespace MyFTP.Views
 		#region app theme
 		public int ThemeIndex
 		{
-			get => (int)ViewModel.AppTheme;			
-			set => ViewModel.AppTheme = (ElementTheme)value;			
+			get => (int)ViewModel.AppTheme;
+			set => ViewModel.AppTheme = (ElementTheme)value;
 		}
 		#endregion
 

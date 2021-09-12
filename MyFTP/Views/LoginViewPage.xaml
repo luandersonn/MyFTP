@@ -80,21 +80,24 @@
 										  Message="{x:Bind ViewModel.LoginCommand.ExecutionTask.Exception.InnerException.Message, Mode=OneWay}"
 										  Severity="Error" />
 
-							<StackPanel Orientation="Horizontal" Spacing="4">
+							<Grid ColumnSpacing="4">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition />
+									<ColumnDefinition Width="auto" MinWidth="100" />
+								</Grid.ColumnDefinitions>
 								<TextBox x:Uid="/LoginViewPage/HostTextBox"
-										 Width="212"
 										 VerticalAlignment="Center"
 										 d:Header="Host"
 										 d:PlaceholderText="ftp.example.com"
 										 Text="{x:Bind ViewModel.Host}" />
 
 								<muxc:NumberBox x:Uid="/LoginViewPage/PortTextBox"
-												Width="100"
+												Grid.Column="1"
 												VerticalAlignment="Bottom"
 												d:Header="Port"
-												d:PlaceholderText="21"
+												PlaceholderText="21"
 												Value="{x:Bind ViewModel.Port}" />
-							</StackPanel>
+							</Grid>
 
 							<TextBox x:Uid="/LoginViewPage/UsernameTextBox"
 									 d:Header="Username"

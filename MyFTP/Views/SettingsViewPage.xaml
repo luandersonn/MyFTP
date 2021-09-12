@@ -98,6 +98,11 @@
 			  MaxWidth="{StaticResource MaxItemWidth}"
 			  Margin="18,0,18,8"
 			  Transitions="{StaticResource DefaultTransitions}">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition />
+				<ColumnDefinition />
+			</Grid.ColumnDefinitions>
+
 			<Button x:Name="ExpandAllButton"
 					x:Uid="/SettingsViewPage/ExpandAllButton"
 					Click="{x:Bind ExpandAll}">
@@ -113,6 +118,7 @@
 
 			<Button x:Name="CollapseAllButton"
 					x:Uid="/SettingsViewPage/CollapseAllButton"
+					Grid.Column="1"
 					HorizontalAlignment="Right"
 					Click="{x:Bind CollapseAll}">
 				<StackPanel Orientation="Horizontal" Spacing="8">
@@ -278,7 +284,7 @@
 								<Setter Property="BorderBrush" Value="{ThemeResource ButtonBorderBrush}" />
 								<Setter Property="BorderThickness" Value="{ThemeResource ButtonBorderThemeThickness}" />
 								<Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}" />
-								<Setter Property="MinWidth" Value="40" />
+								<Setter Property="MinWidth" Value="48" />
 								<Setter Property="VerticalAlignment" Value="Center" />
 							</Style>
 						</StackPanel.Resources>
@@ -293,16 +299,18 @@
 								<ColumnDefinition Width="2*" />
 							</Grid.ColumnDefinitions>
 							<Grid.RowDefinitions>
-								<RowDefinition Height="30" />
-								<RowDefinition Height="30" />
-								<RowDefinition Height="30" />
-								<RowDefinition Height="30" />
-								<RowDefinition Height="30" />
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
 							</Grid.RowDefinitions>
 							<!--#region ALT + LEFT ARROW-->
 							<StackPanel Orientation="Horizontal" Spacing="4">
 								<Border ToolTipService.ToolTip="Alt key">
-									<TextBlock FontSize="12" Text="Alt" />
+									<TextBlock HorizontalAlignment="Center"
+											   FontSize="12"
+											   Text="Alt" />
 								</Border>
 								<TextBlock VerticalAlignment="Center" Text="+" />
 								<Border ToolTipService.ToolTip="Left arrow">
@@ -318,7 +326,9 @@
 										Orientation="Horizontal"
 										Spacing="4">
 								<Border ToolTipService.ToolTip="Alt key">
-									<TextBlock FontSize="12" Text="Alt" />
+									<TextBlock HorizontalAlignment="Center"
+											   FontSize="12"
+											   Text="Alt" />
 								</Border>
 								<TextBlock VerticalAlignment="Center" Text="+" />
 								<Border ToolTipService.ToolTip="Right arrow">
@@ -336,7 +346,7 @@
 										Orientation="Horizontal"
 										Spacing="4">
 
-								<Border MinWidth="95" ToolTipService.ToolTip="Backspace">
+								<Border MinWidth="114" ToolTipService.ToolTip="Backspace">
 									<FontIcon FontSize="14" Glyph="&#xE750;" />
 								</Border>
 							</StackPanel>
@@ -351,7 +361,7 @@
 										Orientation="Horizontal"
 										Spacing="4">
 
-								<Border MinWidth="95" ToolTipService.ToolTip="Left arrow">
+								<Border MinWidth="114" ToolTipService.ToolTip="Left arrow">
 									<FontIcon FontSize="14" Glyph="&#xEC52;" />
 								</Border>
 							</StackPanel>
@@ -366,7 +376,7 @@
 										Orientation="Horizontal"
 										Spacing="4">
 
-								<Border MinWidth="95" ToolTipService.ToolTip="Right arrow">
+								<Border MinWidth="114" ToolTipService.ToolTip="Right arrow">
 									<FontIcon FontSize="14" Glyph="&#xEBE7;" />
 								</Border>
 							</StackPanel>
@@ -375,7 +385,6 @@
 									   Grid.Column="1"
 									   Text="Display the current selection (if it's collapsed), or select the first subfolder (TreeView)" />
 							<!--#endregion-->
-
 						</Grid>
 
 						<TextBlock FontSize="14"
@@ -388,22 +397,22 @@
 								<ColumnDefinition Width="2*" />
 							</Grid.ColumnDefinitions>
 							<Grid.RowDefinitions>
-								<RowDefinition Height="30" />
-								<RowDefinition Height="30" />
-								<RowDefinition Height="30" />
-								<RowDefinition Height="30" />
-								<RowDefinition Height="30" />
-								<RowDefinition Height="30" />
-								<RowDefinition Height="30" />
-								<RowDefinition Height="30" />
-								<RowDefinition Height="30" />
-								<RowDefinition Height="30" />
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
 							</Grid.RowDefinitions>
 
 							<!--#region Ctrl + N-->
 							<StackPanel Grid.Row="0"
 										Orientation="Horizontal"
-										Spacing="2">
+										Spacing="4">
 
 								<Border>
 									<TextBlock HorizontalAlignment="Center"
@@ -426,7 +435,7 @@
 							<!--#region CTRL + SHIFT + N-->
 							<StackPanel Grid.Row="1"
 										Orientation="Horizontal"
-										Spacing="2">
+										Spacing="4">
 
 								<Border>
 									<TextBlock HorizontalAlignment="Center"
@@ -455,7 +464,7 @@
 							<!--#region Ctrl + O-->
 							<StackPanel Grid.Row="2"
 										Orientation="Horizontal"
-										Spacing="2">
+										Spacing="4">
 
 								<Border>
 									<TextBlock HorizontalAlignment="Center"
@@ -478,7 +487,7 @@
 							<!--#region Ctrl + SHIFT + O-->
 							<StackPanel Grid.Row="3"
 										Orientation="Horizontal"
-										Spacing="2">
+										Spacing="4">
 
 								<Border>
 									<TextBlock HorizontalAlignment="Center"
@@ -507,7 +516,7 @@
 							<!--#region Ctrl + S-->
 							<StackPanel Grid.Row="4"
 										Orientation="Horizontal"
-										Spacing="2">
+										Spacing="4">
 
 								<Border>
 									<TextBlock HorizontalAlignment="Center"
@@ -530,7 +539,7 @@
 							<!--#region Ctrl + A-->
 							<StackPanel Grid.Row="5"
 										Orientation="Horizontal"
-										Spacing="2">
+										Spacing="4">
 
 								<Border>
 									<TextBlock HorizontalAlignment="Center"
@@ -555,7 +564,7 @@
 										Orientation="Horizontal"
 										Spacing="4">
 
-								<Border MinWidth="95">
+								<Border MinWidth="114">
 									<TextBlock HorizontalAlignment="Center" Text="F5" />
 								</Border>
 							</StackPanel>
@@ -568,9 +577,9 @@
 							<!--#region Delete-->
 							<StackPanel Grid.Row="7"
 										Orientation="Horizontal"
-										Spacing="2">
+										Spacing="4">
 
-								<Border Width="95" ToolTipService.ToolTip="Delete key">
+								<Border Width="114" ToolTipService.ToolTip="Delete key">
 									<TextBlock HorizontalAlignment="Center"
 											   FontSize="12"
 											   Text="Del" />
@@ -585,9 +594,9 @@
 							<!--#region F2-->
 							<StackPanel Grid.Row="8"
 										Orientation="Horizontal"
-										Spacing="2">
+										Spacing="4">
 
-								<Border Width="95">
+								<Border Width="114">
 									<TextBlock HorizontalAlignment="Center"
 											   FontSize="12"
 											   Text="F2" />
@@ -602,7 +611,7 @@
 							<!--#region Ctrl + W-->
 							<StackPanel Grid.Row="9"
 										Orientation="Horizontal"
-										Spacing="2">
+										Spacing="4">
 
 								<Border>
 									<TextBlock HorizontalAlignment="Center"
@@ -641,7 +650,7 @@
 							<!--#region SHIFT + ALT + ENTER-->
 							<StackPanel Grid.Row="0"
 										Orientation="Horizontal"
-										Spacing="2">
+										Spacing="4">
 
 								<Border>
 									<TextBlock HorizontalAlignment="Center"
@@ -678,7 +687,7 @@
 										Orientation="Horizontal"
 										Spacing="4">
 
-								<Border MinWidth="95">
+								<Border MinWidth="114">
 									<TextBlock HorizontalAlignment="Center"
 											   FontSize="12"
 											   Text="F11" />
@@ -702,7 +711,7 @@
 								</Border>
 								<TextBlock Text="+" />
 								<Border>
-									<TextBlock Text="F4" />
+									<TextBlock HorizontalAlignment="Center" Text="F4" />
 								</Border>
 							</StackPanel>
 
@@ -735,7 +744,6 @@
 							</Style>
 						</Grid.Resources>
 						<Grid.RowDefinitions>
-							<RowDefinition />
 							<RowDefinition />
 							<RowDefinition />
 							<RowDefinition />
@@ -858,21 +866,14 @@
 										 Content="E-mail"
 										 NavigateUri="mailto:luan.airton.ss+myftp@gmail.com" />
 
-						<HyperlinkButton Grid.Row="10"
-										 Grid.ColumnSpan="2"
-										 HorizontalAlignment="Center"
-										 Content="Luandersonn"
-										 NavigateUri="https://luandersonn.com" />
-
 					</Grid>
 				</muxc:Expander>
 
-				<muxc:Expander x:Name="DebugExpander"
+				<muxc:Expander x:Name="DebugExpander" x:Load="False"
 							   d:IsExpanded="True"
 							   d:Visibility="Visible"
 							   Collapsed="{x:Bind Collapsed}"
-							   Expanding="{x:Bind Expanding}"
-							   Visibility="Collapsed">
+							   Expanding="{x:Bind Expanding}">
 					<muxc:Expander.Header>
 						<StackPanel Orientation="Horizontal" Spacing="8">
 							<FontIcon FontSize="14" Glyph="&#xEBE8;" />
@@ -893,7 +894,11 @@
 						</Grid>
 					</StackPanel>
 				</muxc:Expander>
-
+				<HyperlinkButton MaxWidth="{StaticResource MaxItemWidth}"
+								 Margin="12,0"
+								 HorizontalAlignment="Center"
+								 Content="Made with ❤ by Luandersonn Airton"
+								 NavigateUri="https://luandersonn.com" />
 				<Rectangle Height="20" />
 			</StackPanel>
 		</ScrollViewer>
