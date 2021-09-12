@@ -351,6 +351,9 @@
     <None Include="..\.editorconfig">
       <Link>.editorconfig</Link>
     </None>
+    <PRIResource Include="Strings\qps-ploc\SettingsViewPage.resw" />
+    <PRIResource Include="Strings\qps-ploc\Resources.resw" />
+    <PRIResource Include="Strings\qps-ploc\LoginViewPage.resw" />
     <PRIResource Include="Strings\fr-fr\LoginViewPage.resw" />
     <PRIResource Include="Strings\fr-fr\Resources.resw" />
     <PRIResource Include="Strings\fr-fr\SettingsViewPage.resw" />
@@ -367,7 +370,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <XliffResource Include="MultilingualResources\MyFTP.fr-FR.xlf" />
     <XliffResource Include="MultilingualResources\MyFTP.pt-BR.xlf" />
+    <XliffResource Include="MultilingualResources\MyFTP.qps-ploc.xlf" />
     <XliffResource Include="MultilingualResources\MyFTP.vi-VN.xlf" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

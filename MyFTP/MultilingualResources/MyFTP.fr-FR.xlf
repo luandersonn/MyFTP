@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en-US" target-language="fr-FR" original="MYFTP/STRINGS/EN-US/RESOURCES.RESW" tool-id="MultilingualAppToolkit" product-name="n/a" product-version="n/a" build-num="n/a">
+    <header>
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="4.0.6919.0" tool-company="Microsoft" />
+    </header>
+    <body>
+      <group id="MYFTP/STRINGS/EN-US/RESOURCES.RESW" datatype="resx">
+        <trans-unit id="AppDescription.Text" translate="yes" xml:space="preserve">
+          <source>A simple, fast, lightweight, beautiful and free FTP client</source>
+          <target state="translated">Un Client ftp opensrouce, simple, léger et beau</target>
+        </trans-unit>
+        <trans-unit id="AppName.Text" translate="yes" xml:space="preserve">
+          <source>MyFTP Client</source>
+          <target state="needs-review-translation">MyFTP Client</target>
+          <note from="MultilingualUpdate" priority="2">When the XLIFF file support was added via MAT, existing resources were found and auto-imported.  This source and target string contained the same value so the resource was marked as 'Needs review' to ensure the translation could be easily reviewed.</note>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
+  <file datatype="xml" source-language="en-US" target-language="fr-FR" original="MYFTP/STRINGS/EN-US/LOGINVIEWPAGE.RESW" tool-id="MultilingualAppToolkit" product-name="n/a" product-version="n/a" build-num="n/a">
+    <header>
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="4.0.6919.0" tool-company="Microsoft" />
+    </header>
+    <body>
+      <group id="MYFTP/STRINGS/EN-US/LOGINVIEWPAGE.RESW" datatype="resx">
+        <trans-unit id="AnonymousLoginInfo.Text" translate="yes" xml:space="preserve">
+          <source>Leave username/password blank for anonymous login</source>
+          <target state="translated">Laisser Nom d'utilisateur et mot de passe vide pour une connexion anonyme</target>
+        </trans-unit>
+        <trans-unit id="BackgroundInfoButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>See info about the background image</source>
+          <target state="translated">Regarder les infos du fond d'écran</target>
+        </trans-unit>
+        <trans-unit id="FtpHostSettingsViewModelDeleteButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Delete credential</source>
+          <target state="translated">Supprimer les informations</target>
+        </trans-unit>
+        <trans-unit id="FtpHostSettingsViewModelDeleteButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Delete credential</source>
+          <target state="translated">Supprimer les informations</target>
+        </trans-unit>
+        <trans-unit id="FtpHostSettingsViewModelGrid.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Click to connect</source>
+          <target state="translated">Cliquer pour se connecter</target>
+        </trans-unit>
+        <trans-unit id="HostTextBox.Header" translate="yes" xml:space="preserve">
+          <source>Host</source>
+          <target state="translated">Hôte</target>
+        </trans-unit>
+        <trans-unit id="HostTextBox.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>ftp.example.com</source>
+          <target state="needs-review-translation">ftp.example.com</target>
+          <note from="MultilingualUpdate" priority="2">When the XLIFF file support was added via MAT, existing resources were found and auto-imported.  This source and target string contained the same value so the resource was marked as 'Needs review' to ensure the translation could be easily reviewed.</note>
+        </trans-unit>
+        <trans-unit id="LoginButton.Content" translate="yes" xml:space="preserve">
+          <source>Login</source>
+          <target state="translated">Connexion</target>
+        </trans-unit>
+        <trans-unit id="LoginErrorInfoBar.Title" translate="yes" xml:space="preserve">
+          <source>Login error</source>
+          <target state="translated">Erreur sur les identifiants</target>
+        </trans-unit>
+        <trans-unit id="PasswordTextBox.Header" translate="yes" xml:space="preserve">
+          <source>Password</source>
+          <target state="translated">Mot de passe</target>
+        </trans-unit>
+        <trans-unit id="PortTextBox.Header" translate="yes" xml:space="preserve">
+          <source>Port</source>
+          <target state="needs-review-translation">Port</target>
+          <note from="MultilingualUpdate" priority="2">When the XLIFF file support was added via MAT, existing resources were found and auto-imported.  This source and target string contained the same value so the resource was marked as 'Needs review' to ensure the translation could be easily reviewed.</note>
+        </trans-unit>
+        <trans-unit id="PortTextBox.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>21</source>
+          <target state="needs-review-translation">21</target>
+          <note from="MultilingualUpdate" priority="2">When the XLIFF file support was added via MAT, existing resources were found and auto-imported.  This source and target string contained the same value so the resource was marked as 'Needs review' to ensure the translation could be easily reviewed.</note>
+        </trans-unit>
+        <trans-unit id="PrivacyPolicyHyperlink.Content" translate="yes" xml:space="preserve">
+          <source>Privacy policy</source>
+          <target state="translated">Politique de vie privée</target>
+        </trans-unit>
+        <trans-unit id="SavedCredentialsListButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Saved credentials</source>
+          <target state="translated">Informations de connexions sauvegardées</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Save credentails button (Automation)</note>
+        </trans-unit>
+        <trans-unit id="SavedCredentialsListButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Saved credentials</source>
+          <target state="translated">Informations de connexions sauvegardées</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Saved credentials button Tooltip (Login View Page)</note>
+        </trans-unit>
+        <trans-unit id="SaveFtpCredentialsCheckbox.Content" translate="yes" xml:space="preserve">
+          <source>Save credentials</source>
+          <target state="translated">Sauvegarde des informations de connexion</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Save credentials checkbox (Login View Page)</note>
+        </trans-unit>
+        <trans-unit id="SettingsButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Settings</source>
+          <target state="translated">Paramètres</target>
+        </trans-unit>
+        <trans-unit id="SettingsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Settings</source>
+          <target state="translated">Paramètres</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Settings button Tooltip (Login View Page)</note>
+        </trans-unit>
+        <trans-unit id="UsernameTextBox.Header" translate="yes" xml:space="preserve">
+          <source>Username</source>
+          <target state="translated">Nom d'utilisateur</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Username textbox Header (Login View Page)</note>
+        </trans-unit>
+        <trans-unit id="UsernameTextBox.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>example@example.com</source>
+          <target state="translated">exemple@exemple.com</target>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
+  <file datatype="xml" source-language="en-US" target-language="fr-FR" original="MYFTP/STRINGS/EN-US/SETTINGSVIEWPAGE.RESW" tool-id="MultilingualAppToolkit" product-name="n/a" product-version="n/a" build-num="n/a">
+    <header>
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="4.0.6919.0" tool-company="Microsoft" />
+    </header>
+    <body>
+      <group id="MYFTP/STRINGS/EN-US/SETTINGSVIEWPAGE.RESW" datatype="resx">
+        <trans-unit id="BackButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Back</source>
+          <target state="translated">Retour</target>
+        </trans-unit>
+        <trans-unit id="BackButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Back</source>
+          <target state="translated">Retour</target>
+        </trans-unit>
+        <trans-unit id="CollapseAllButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Collapse all sections</source>
+          <target state="translated">Réduire toute les sections</target>
+        </trans-unit>
+        <trans-unit id="CollapseAllButtonText.Text" translate="yes" xml:space="preserve">
+          <source>Collapse all</source>
+          <target state="translated">Réduire tout</target>
+        </trans-unit>
+        <trans-unit id="CollapseCurrentSelection.Text" translate="yes" xml:space="preserve">
+          <source>Collapse the current selection (if it's expanded), or select the folder that the folder was in (TreeView)</source>
+          <target state="translated">Réduire la sélection (si développé), ou selectionner le dossier dans lequel le dossier se trouvait (Arborescence)</target>
+        </trans-unit>
+        <trans-unit id="ConfirmText.Text" translate="yes" xml:space="preserve">
+          <source>Are you sure?</source>
+          <target state="translated">Vous êtes sûr ?</target>
+        </trans-unit>
+        <trans-unit id="DefaultSaveFolder.Text" translate="yes" xml:space="preserve">
+          <source>Default save folder</source>
+          <target state="translated">Dossier de sauvegarde par défaut</target>
+        </trans-unit>
+        <trans-unit id="DownloadUpdateButton.Content" translate="yes" xml:space="preserve">
+          <source>Download</source>
+          <target state="translated">Télécharger</target>
+        </trans-unit>
+        <trans-unit id="DownloadUpdateButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Download update</source>
+          <target state="translated">Télécharger la mise à jour</target>
+        </trans-unit>
+        <trans-unit id="ExpandAllButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Expand all sections</source>
+          <target state="translated">Développer toutes les sections</target>
+        </trans-unit>
+        <trans-unit id="ExpandAllButtonText.Text" translate="yes" xml:space="preserve">
+          <source>Expand all</source>
+          <target state="translated">Développer tout</target>
+        </trans-unit>
+        <trans-unit id="Hosts.Text" translate="yes" xml:space="preserve">
+          <source>Hosts</source>
+          <target state="translated">Hôtes</target>
+        </trans-unit>
+        <trans-unit id="InfoBarUpdate.Message" translate="yes" xml:space="preserve">
+          <source>The app will restart when the update completes</source>
+          <target state="translated">L'application va redémarrer et se mettre à jour</target>
+        </trans-unit>
+        <trans-unit id="InfoBarUpdate.Title" translate="yes" xml:space="preserve">
+          <source>A new version of MyFTP is available for download</source>
+          <target state="translated">Une nouvelle version de  MyFTP est disponible pour le téléchargement</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcuts.Text" translate="yes" xml:space="preserve">
+          <source>Keyboard Shortcuts</source>
+          <target state="translated">Raccourci claviers</target>
+        </trans-unit>
+        <trans-unit id="NavigateUpOneDirectoryLevel.Text" translate="yes" xml:space="preserve">
+          <source>Navigate up one directory level</source>
+          <target state="translated">Remonter dans le dossier supérieur</target>
+        </trans-unit>
+        <trans-unit id="NoSavedHostsCase.Text" translate="yes" xml:space="preserve">
+          <source>No saved hosts</source>
+          <target state="translated">Pas d'hôtes sauvegardés</target>
+        </trans-unit>
+        <trans-unit id="Personalization.Text" translate="yes" xml:space="preserve">
+          <source>Personalization</source>
+          <target state="translated">Personalisation</target>
+        </trans-unit>
+        <trans-unit id="RemoveSettingsButton.Content" translate="yes" xml:space="preserve">
+          <source>Yes, remove settings</source>
+          <target state="translated">Oui, supprimer les paramètres</target>
+        </trans-unit>
+        <trans-unit id="RestoreDefaultFolder.Text" translate="yes" xml:space="preserve">
+          <source>Restore default folder</source>
+          <target state="translated">Restaurer le fichier par défaut</target>
+        </trans-unit>
+        <trans-unit id="TitleBarControl.Title" translate="yes" xml:space="preserve">
+          <source>Settings</source>
+          <target state="translated">Paramètres</target>
+        </trans-unit>
+        <trans-unit id="ViewNextFolder.Text" translate="yes" xml:space="preserve">
+          <source>View the next folder</source>
+          <target state="translated">Voir le fichier suivant</target>
+        </trans-unit>
+        <trans-unit id="ViewPreviousFolder.Text" translate="yes" xml:space="preserve">
+          <source>View the previous folder</source>
+          <target state="translated">Voir le fichier précédent</target>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
+</xliff>

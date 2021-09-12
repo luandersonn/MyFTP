@@ -1,0 +1,215 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en-US" target-language="qps-ploc" original="MYFTP/STRINGS/EN-US/SETTINGSVIEWPAGE.RESW" tool-id="MultilingualAppToolkit" product-name="n/a" product-version="n/a" build-num="n/a">
+    <header>
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="4.0.6919.0" tool-company="Microsoft" />
+    </header>
+    <body>
+      <group id="MYFTP/STRINGS/EN-US/SETTINGSVIEWPAGE.RESW" datatype="resx">
+        <trans-unit id="BackButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Back</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[B88C7][!!_Ъãċќ_!!]</target>
+        </trans-unit>
+        <trans-unit id="BackButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Back</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[8D990][!!_ßâčĸ_!!]</target>
+        </trans-unit>
+        <trans-unit id="CollapseAllButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Collapse all sections</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[C7DBB][!!_Čòĺłáþšé àļł śęčţìòήś_!!]</target>
+        </trans-unit>
+        <trans-unit id="CollapseAllButtonText.Text" translate="yes" xml:space="preserve">
+          <source>Collapse all</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[DD013][!!_Ċõľĺàþŝè áłĺ_!!]</target>
+        </trans-unit>
+        <trans-unit id="CollapseCurrentSelection.Text" translate="yes" xml:space="preserve">
+          <source>Collapse the current selection (if it's expanded), or select the folder that the folder was in (TreeView)</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[BCE7F][!!_Ċõļļáρšè ţнè ćùŗŗêήт šéľęċтįòη (îƒ įţ'ŝ ę×рàηďêď), òŗ şêļęċţ ţђê ƒôļđèř ťнãť ţĥê ƒôłďęŗ ŵáş įή (ТѓęèVíéŵ)_!!]</target>
+        </trans-unit>
+        <trans-unit id="ConfirmText.Text" translate="yes" xml:space="preserve">
+          <source>Are you sure?</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[D0643][!!_Áŕę ÿóù šµŗê?_!!]</target>
+        </trans-unit>
+        <trans-unit id="DefaultSaveFolder.Text" translate="yes" xml:space="preserve">
+          <source>Default save folder</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[39267][!!_Ðêƒáµĺţ šâνê ƒòłđêѓ_!!]</target>
+        </trans-unit>
+        <trans-unit id="DownloadUpdateButton.Content" translate="yes" xml:space="preserve">
+          <source>Download</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[5FC8D][!!_Ðòẅиłóàď_!!]</target>
+        </trans-unit>
+        <trans-unit id="DownloadUpdateButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Download update</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[9EDB0][!!_Ďóẅηľôãď ùρðáţê_!!]</target>
+        </trans-unit>
+        <trans-unit id="ExpandAllButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Expand all sections</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[0FB32][!!_É×ρáйð àĺł šèćťìòиš_!!]</target>
+        </trans-unit>
+        <trans-unit id="ExpandAllButtonText.Text" translate="yes" xml:space="preserve">
+          <source>Expand all</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[C3FDC][!!_Ê×рáиð áļļ_!!]</target>
+        </trans-unit>
+        <trans-unit id="Hosts.Text" translate="yes" xml:space="preserve">
+          <source>Hosts</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[A31C8][!!_Ħóŝτś_!!]</target>
+        </trans-unit>
+        <trans-unit id="InfoBarUpdate.Message" translate="yes" xml:space="preserve">
+          <source>The app will restart when the update completes</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[2F35D][!!_Ťĥę ãþþ ẃìłł ŕèšтãŗτ ẅĥèи τħè ùрđáτę ĉõmрĺęţéś_!!]</target>
+        </trans-unit>
+        <trans-unit id="InfoBarUpdate.Title" translate="yes" xml:space="preserve">
+          <source>A new version of MyFTP is available for download</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[DAAFE][!!_Á ήęẃ νéѓŝįòή õƒ ΜУ₣ŤР îš âνáìļáБĺè ƒòѓ đõŵйļóàð_!!]</target>
+        </trans-unit>
+        <trans-unit id="KeyboardShortcuts.Text" translate="yes" xml:space="preserve">
+          <source>Keyboard Shortcuts</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[FD40D][!!_ĶêŷБóãѓđ Ŝћôŕţćûтš_!!]</target>
+        </trans-unit>
+        <trans-unit id="NavigateUpOneDirectoryLevel.Text" translate="yes" xml:space="preserve">
+          <source>Navigate up one directory level</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[B1CF3][!!_Ńàνîĝàτè úρ óйę ďįřèĉťóѓŷ łêνéł_!!]</target>
+        </trans-unit>
+        <trans-unit id="NoSavedHostsCase.Text" translate="yes" xml:space="preserve">
+          <source>No saved hosts</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[184B0][!!_Ñô şãνéđ ĥóşţş_!!]</target>
+        </trans-unit>
+        <trans-unit id="Personalization.Text" translate="yes" xml:space="preserve">
+          <source>Personalization</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[ECBB4][!!_Ρéѓšõйâľìżàţîõη_!!]</target>
+        </trans-unit>
+        <trans-unit id="RemoveSettingsButton.Content" translate="yes" xml:space="preserve">
+          <source>Yes, remove settings</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[980ED][!!_Ỳęš, ŕémôνê şêťţįиğŝ_!!]</target>
+        </trans-unit>
+        <trans-unit id="RestoreDefaultFolder.Text" translate="yes" xml:space="preserve">
+          <source>Restore default folder</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[67E73][!!_Ѓéśτòřé ďêƒàµĺť ƒóľđęŗ_!!]</target>
+        </trans-unit>
+        <trans-unit id="TitleBarControl.Title" translate="yes" xml:space="preserve">
+          <source>Settings</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[D97F0][!!_Şèţτįήġš_!!]</target>
+        </trans-unit>
+        <trans-unit id="ViewNextFolder.Text" translate="yes" xml:space="preserve">
+          <source>View the next folder</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[EE856][!!_Víęẅ тћé ηęхť ƒóĺđèř_!!]</target>
+        </trans-unit>
+        <trans-unit id="ViewPreviousFolder.Text" translate="yes" xml:space="preserve">
+          <source>View the previous folder</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[F7BC0][!!_Vįèẃ ťĥè ρŗéνîõµš ƒôļďêř_!!]</target>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
+  <file datatype="xml" source-language="en-US" target-language="qps-ploc" original="MYFTP/STRINGS/EN-US/LOGINVIEWPAGE.RESW" tool-id="MultilingualAppToolkit" product-name="n/a" product-version="n/a" build-num="n/a">
+    <header>
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="4.0.6919.0" tool-company="Microsoft" />
+    </header>
+    <body>
+      <group id="MYFTP/STRINGS/EN-US/LOGINVIEWPAGE.RESW" datatype="resx">
+        <trans-unit id="AnonymousLoginInfo.Text" translate="yes" xml:space="preserve">
+          <source>Leave username/password blank for anonymous login</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[98C2A][!!_Ĺéàνę úśęѓηàмé/ρàşşŵóѓđ ьłâйķ ƒòŗ àήóйŷмõùş ľõĝîη_!!]</target>
+        </trans-unit>
+        <trans-unit id="BackgroundInfoButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>See info about the background image</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[4FF7D][!!_Ŝêę įηƒõ áъõµť ţђé ъâċĸĝřôùήđ íмãġé_!!]</target>
+        </trans-unit>
+        <trans-unit id="FtpHostSettingsViewModelDeleteButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Delete credential</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[FCB40][!!_Đéłèţè čřèðèйτíàļ_!!]</target>
+        </trans-unit>
+        <trans-unit id="FtpHostSettingsViewModelDeleteButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Delete credential</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[29DBD][!!_Ďèľéťè ċŕéðêйτįâļ_!!]</target>
+        </trans-unit>
+        <trans-unit id="FtpHostSettingsViewModelGrid.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Click to connect</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[0648B][!!_Ĉľîĉк ţó ċóήηęčţ_!!]</target>
+        </trans-unit>
+        <trans-unit id="HostTextBox.Header" translate="yes" xml:space="preserve">
+          <source>Host</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[712D7][!!_Ĥòśţ_!!]</target>
+        </trans-unit>
+        <trans-unit id="HostTextBox.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>ftp.example.com</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[4A00E][!!_ƒťр.ę×ãmþĺé.ċòм_!!]</target>
+        </trans-unit>
+        <trans-unit id="LoginButton.Content" translate="yes" xml:space="preserve">
+          <source>Login</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[C8B79][!!_Ĺôģìй_!!]</target>
+        </trans-unit>
+        <trans-unit id="LoginErrorInfoBar.Title" translate="yes" xml:space="preserve">
+          <source>Login error</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[A0C00][!!_Ļóģîи êѓŗòŗ_!!]</target>
+        </trans-unit>
+        <trans-unit id="PasswordTextBox.Header" translate="yes" xml:space="preserve">
+          <source>Password</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[BA11A][!!_Þãšşẃóřð_!!]</target>
+        </trans-unit>
+        <trans-unit id="PortTextBox.Header" translate="yes" xml:space="preserve">
+          <source>Port</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[673EA][!!_Рòѓτ_!!]</target>
+        </trans-unit>
+        <trans-unit id="PortTextBox.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>21</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[3FB42][!!_21_!!]</target>
+        </trans-unit>
+        <trans-unit id="PrivacyPolicyHyperlink.Content" translate="yes" xml:space="preserve">
+          <source>Privacy policy</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[5E875][!!_Ρŗíνâċў þòłíċÿ_!!]</target>
+        </trans-unit>
+        <trans-unit id="SavedCredentialsListButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Saved credentials</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[AAAAA][!!_Šáνèđ čѓêđêηťîáłŝ_!!]</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Save credentails button (Automation)</note>
+        </trans-unit>
+        <trans-unit id="SavedCredentialsListButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Saved credentials</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[261E3][!!_Šãνèð ćŕêđêήτíáłş_!!]</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Saved credentials button Tooltip (Login View Page)</note>
+        </trans-unit>
+        <trans-unit id="SaveFtpCredentialsCheckbox.Content" translate="yes" xml:space="preserve">
+          <source>Save credentials</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[FF537][!!_Šáνè ċŕęðéητîàľş_!!]</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Save credentials checkbox (Login View Page)</note>
+        </trans-unit>
+        <trans-unit id="SettingsButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>Settings</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[9C99D][!!_Śêťţìиġş_!!]</target>
+        </trans-unit>
+        <trans-unit id="SettingsButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Settings</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[B1FCA][!!_Şèτťìήģŝ_!!]</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Settings button Tooltip (Login View Page)</note>
+        </trans-unit>
+        <trans-unit id="UsernameTextBox.Header" translate="yes" xml:space="preserve">
+          <source>Username</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[0EA1E][!!_Ûşêřηáмę_!!]</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">Username textbox Header (Login View Page)</note>
+        </trans-unit>
+        <trans-unit id="UsernameTextBox.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>example@example.com</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[35BEC][!!_è×âмρļę@è×àmρľę.ĉõm_!!]</target>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
+  <file datatype="xml" source-language="en-US" target-language="qps-ploc" original="MYFTP/STRINGS/EN-US/RESOURCES.RESW" tool-id="MultilingualAppToolkit" product-name="n/a" product-version="n/a" build-num="n/a">
+    <header>
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="4.0.6919.0" tool-company="Microsoft" />
+    </header>
+    <body>
+      <group id="MYFTP/STRINGS/EN-US/RESOURCES.RESW" datatype="resx">
+        <trans-unit id="AppDescription.Text" translate="yes" xml:space="preserve">
+          <source>A simple, fast, lightweight, beautiful and free FTP client</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[6AC86][!!_Ã şìмрļè, ƒášт, łíĝђţŵêîĝћţ, ъéãùτíƒµł áήđ ƒѓéê ₣ŢР ćłįéηť_!!]</target>
+        </trans-unit>
+        <trans-unit id="AppName.Text" translate="yes" xml:space="preserve">
+          <source>MyFTP Client</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[4E457][!!_Мÿ₣ŤР Ćłíéиţ_!!]</target>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
+</xliff>
