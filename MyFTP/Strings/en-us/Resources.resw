@@ -123,4 +123,19 @@
   <data name="AppName.Text" xml:space="preserve">
     <value>MyFTP Client</value>
   </data>
+  <data name="Delete.Text" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Download.Text" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="Open.Text" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="Properties.Text" xml:space="preserve">
+    <value>Properties</value>
+  </data>
+  <data name="Rename.Text" xml:space="preserve">
+    <value>Rename</value>
+  </data>
 </root>

@@ -48,35 +48,42 @@
 				</Grid.BackgroundTransition>
 				<Grid.ContextFlyout>
 					<MenuFlyout>
-						<MenuFlyoutItem Click="MenuFlyoutItem_Click" Text="Open">
+						<MenuFlyoutItem x:Uid="Open"
+										d:Text="Open"
+										Click="MenuFlyoutItem_Click">
 							<MenuFlyoutItem.Icon>
 								<FontIcon Glyph="&#xE143;" />
 							</MenuFlyoutItem.Icon>
 						</MenuFlyoutItem>
-						<MenuFlyoutItem Command="{x:Bind DownloadCommand}"
-										Icon="Download"
-										Text="Download" />
+						<MenuFlyoutItem x:Uid="Download"
+										d:Text="Download"
+										Command="{x:Bind DownloadCommand}"
+										Icon="Download" />
 
 						<MenuFlyoutSeparator />
 
-						<MenuFlyoutItem Command="{x:Bind DeleteCommand}"
-										Icon="Delete"
-										Text="Delete">
+						<MenuFlyoutItem x:Uid="Delete"
+										d:Text="Delete"
+										Command="{x:Bind DeleteCommand}"
+										Icon="Delete">
 							<MenuFlyoutItem.KeyboardAccelerators>
 								<KeyboardAccelerator Key="Delete" />
 							</MenuFlyoutItem.KeyboardAccelerators>
 						</MenuFlyoutItem>
 
-						<MenuFlyoutItem Command="{x:Bind OpenRenameDialogCommand}"
-										Icon="Rename"
-										Text="Rename">
+						<MenuFlyoutItem x:Uid="Rename"
+										d:Text="Rename"
+										Command="{x:Bind OpenRenameDialogCommand}"
+										Icon="Rename">
 							<MenuFlyoutItem.KeyboardAccelerators>
 								<KeyboardAccelerator Key="F2" />
 							</MenuFlyoutItem.KeyboardAccelerators>
 						</MenuFlyoutItem>
 						<MenuFlyoutSeparator />
 
-						<MenuFlyoutItem IsEnabled="False" Text="Properties">
+						<MenuFlyoutItem x:Uid="Properties"
+										d:Text="Properties"
+										IsEnabled="False">
 							<MenuFlyoutItem.Icon>
 								<FontIcon Glyph="&#xE946;" />
 							</MenuFlyoutItem.Icon>
@@ -114,7 +121,8 @@
 						   FontSize="12"
 						   Foreground="{ThemeResource SystemBaseMediumColor}"
 						   Text="{x:Bind Modified, Converter={StaticResource DateTimeHumanizeConverter}}"
-						   TextTrimming="CharacterEllipsis" />
+						   TextTrimming="CharacterEllipsis"
+						   ToolTipService.ToolTip="{x:Bind Modified.ToLongDateString()}" />
 
 				<TextBlock Grid.Column="4"
 						   VerticalAlignment="Center"

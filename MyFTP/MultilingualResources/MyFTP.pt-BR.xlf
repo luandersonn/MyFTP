@@ -263,6 +263,26 @@
           <source>MyFTP Client</source>
           <target state="translated">MyFTP Client</target>
         </trans-unit>
+        <trans-unit id="Delete.Text" translate="yes" xml:space="preserve">
+          <source>Delete</source>
+          <target state="translated">Excluir</target>
+        </trans-unit>
+        <trans-unit id="Download.Text" translate="yes" xml:space="preserve">
+          <source>Download</source>
+          <target state="translated">Download</target>
+        </trans-unit>
+        <trans-unit id="Open.Text" translate="yes" xml:space="preserve">
+          <source>Open</source>
+          <target state="translated">Abrir</target>
+        </trans-unit>
+        <trans-unit id="Properties.Text" translate="yes" xml:space="preserve">
+          <source>Properties</source>
+          <target state="translated">Propriedades</target>
+        </trans-unit>
+        <trans-unit id="Rename.Text" translate="yes" xml:space="preserve">
+          <source>Rename</source>
+          <target state="translated">Renomear</target>
+        </trans-unit>
       </group>
     </body>
   </file>
@@ -461,7 +481,7 @@
         </trans-unit>
         <trans-unit id="DownloadButton.Label" translate="yes" xml:space="preserve">
           <source>Download</source>
-          <target state="translated">Baixar</target>
+          <target state="translated">Download</target>
         </trans-unit>
         <trans-unit id="NewFolderButton.Label" translate="yes" xml:space="preserve">
           <source>New folder</source>

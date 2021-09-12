@@ -186,4 +186,10 @@
   <data name="AboutSupportTheDevLabel.Text" xml:space="preserve">
     <value>[9B60A][!!_Ŝûрρôŕţ ťђę ďéν_!!]</value>
   </data>
+  <data name="KeyboardShortcutsDescriptionAlt+UpArrow.Text" xml:space="preserve">
+    <value>[4A385][!!_Ñãνìģáтè ûр ôйé đíŕęćтóŕў ĺèνęł_!!]</value>
+  </data>
+  <data name="KeyboardShortcutsUpArrowKey.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>[88A11][!!_Ùр àřřóŵ ќéУ_!!]</value>
+  </data>
 </root>

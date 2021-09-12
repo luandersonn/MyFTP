@@ -25,7 +25,7 @@
     <value>Excluir</value>
   </data>
   <data name="DownloadButton.Label" xml:space="preserve">
-    <value>Baixar</value>
+    <value>Download</value>
   </data>
   <data name="NewFolderButton.Label" xml:space="preserve">
     <value>Nova pasta</value>

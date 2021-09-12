@@ -18,4 +18,19 @@
   <data name="AppName.Text" xml:space="preserve">
     <value>[4E457][!!_Мÿ₣ŤР Ćłíéиţ_!!]</value>
   </data>
+  <data name="Delete.Text" xml:space="preserve">
+    <value>[0DF5E][!!_Ďéłèтę_!!]</value>
+  </data>
+  <data name="Download.Text" xml:space="preserve">
+    <value>[72BDC][!!_Ďôŵηłôãð_!!]</value>
+  </data>
+  <data name="Open.Text" xml:space="preserve">
+    <value>[936C6][!!_Óρęη_!!]</value>
+  </data>
+  <data name="Properties.Text" xml:space="preserve">
+    <value>[21B49][!!_Þѓõрęŗτìęş_!!]</value>
+  </data>
+  <data name="Rename.Text" xml:space="preserve">
+    <value>[20780][!!_Ѓêηàmè_!!]</value>
+  </data>
 </root>

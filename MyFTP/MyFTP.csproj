@@ -308,7 +308,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="FluentFTP">
-      <Version>34.0.2</Version>
+      <Version>35.0.4</Version>
     </PackageReference>
     <PackageReference Include="Humanizer.Core">
       <Version>2.11.10</Version>
@@ -341,7 +341,7 @@
       <Version>7.0.2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.UI.Xaml">
-      <Version>2.6.1</Version>
+      <Version>2.6.2</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
