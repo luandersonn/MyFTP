@@ -16,18 +16,20 @@
 	<Page.Resources>
 
 		<muxc:SwipeItems x:Key="left" Mode="Execute">
-			<muxc:SwipeItem Background="Gray"
-							Invoked="{x:Bind NavigationHistory.GoBack}"
-							Text="Back">
+			<muxc:SwipeItem x:Uid="/HostViewPage/SwipeLeft"
+							d:Text="Back"
+							Background="Gray"
+							Invoked="{x:Bind NavigationHistory.GoBack}">
 				<muxc:SwipeItem.IconSource>
 					<muxc:SymbolIconSource Symbol="Back" />
 				</muxc:SwipeItem.IconSource>
 			</muxc:SwipeItem>
 		</muxc:SwipeItems>
 		<muxc:SwipeItems x:Key="right" Mode="Execute">
-			<muxc:SwipeItem Background="Gray"
-							Invoked="{x:Bind NavigationHistory.GoForward}"
-							Text="Forward">
+			<muxc:SwipeItem x:Uid="/HostViewPage/SwipeRight"
+							d:Text="Forward"
+							Background="Gray"
+							Invoked="{x:Bind NavigationHistory.GoForward}">
 				<muxc:SwipeItem.IconSource>
 					<muxc:SymbolIconSource Symbol="Forward" />
 				</muxc:SwipeItem.IconSource>
@@ -137,14 +139,17 @@
 					<StackPanel Orientation="Horizontal">
 						<FontIcon FontSize="14" Glyph="&#xE7E8;" />
 						<TextBlock x:Name="disconnectButtonTextblock"
+								   x:Uid="/HostViewPage/DisconnecHostButton"
 								   Margin="4,0,0,0"
-								   Text="Disconnect"
+								   d:Text="Disconnect"
 								   Visibility="Collapsed" />
 					</StackPanel>
 					<muxc:SplitButton.Flyout>
 						<MenuBarItemFlyout Placement="Bottom">
 
-							<MenuFlyoutItem Click="{x:Bind NewConnectionAsync}" Text="New connection">
+							<MenuFlyoutItem x:Uid="/HostViewPage/NewConnectionFlyout"
+											d:Text="New connection"
+											Click="{x:Bind NewConnectionAsync}">
 								<MenuFlyoutItem.Icon>
 									<FontIcon Glyph="&#xE968;" />
 								</MenuFlyoutItem.Icon>
@@ -153,14 +158,16 @@
 								</MenuFlyoutItem.KeyboardAccelerators>
 							</MenuFlyoutItem>
 
-							<MenuFlyoutItem Click="{x:Bind GoToSettings}"
-											Icon="Setting"
-											Text="Settings" />
+							<MenuFlyoutItem x:Uid="/HostViewPage/SettingsFlyout"
+											d:Text="Settings"
+											Click="{x:Bind GoToSettings}"
+											Icon="Setting" />
 							<MenuFlyoutSeparator />
 
-							<MenuFlyoutItem Click="{x:Bind ExitApp, Mode=OneWay}"
-											Icon="Cancel"
-											Text="Exit">
+							<MenuFlyoutItem x:Uid="/HostViewPage/ExitFlyout"
+											d:Text="Exit app"
+											Click="{x:Bind ExitApp, Mode=OneWay}"
+											Icon="Cancel">
 								<MenuFlyoutItem.KeyboardAccelerators>
 									<KeyboardAccelerator Key="F4" Modifiers="Menu" />
 								</MenuFlyoutItem.KeyboardAccelerators>
@@ -281,11 +288,12 @@
 													   FontSize="12"
 													   Text="{x:Bind Modified}" />
 
-											<TextBlock Grid.Row="2"
+											<TextBlock x:Uid="/HostViewPage/DirectoryItemsCountLabel"
+													   Grid.Row="2"
 													   Grid.Column="0"
+													   d:Text="Items:"
 													   FontSize="12"
-													   Opacity="0.6"
-													   Text="Items:" />
+													   Opacity="0.6" />
 
 											<TextBlock Grid.Row="2"
 													   Grid.Column="1"
@@ -303,10 +311,11 @@
 		</controls:TitleBarControl>
 
 		<muxc:InfoBar x:Name="infoBar"
-					  Title="Something went wrong"
+					  x:Uid="/HostViewPage/InfoBarError"
 					  Grid.Row="1"
 					  d:IsOpen="True"
 					  d:Message="Try again in a little bit"
+					  d:Title="Something went wrong"
 					  Severity="Error" />
 
 		<Grid Grid.Row="2" Transitions="{StaticResource RepositionAnimation}">
@@ -552,6 +561,7 @@
 			<toolkit:WrapPanel Margin="4,0" VerticalAlignment="Center">
 
 				<ToggleButton x:Name="infoButton"
+							  x:Uid="/HostViewPage/CurrentHostInfoButton"
 							  Background="Transparent"
 							  BorderThickness="0"
 							  Content="&#xE946;"
@@ -629,7 +639,9 @@
 					   HorizontalAlignment="Right"
 					   VerticalAlignment="Center"
 					   FontSize="12">
-				<Run Foreground="{ThemeResource SystemBaseMediumColor}" Text="Items:" />
+				<Run x:Uid="/HostViewPage/DirectoryItemsCountLabel"
+					 d:Text="Items:"
+					 Foreground="{ThemeResource SystemBaseMediumColor}" />
 				<Run Text="{x:Bind NavigationHistory.CurrentItem.Items.Count, Mode=OneWay}" />
 			</TextBlock>
 		</Grid>

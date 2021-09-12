@@ -351,4 +351,53 @@
       </group>
     </body>
   </file>
+  <file datatype="xml" source-language="en-US" target-language="fr-FR" original="MYFTP/STRINGS/EN-US/HOSTVIEWPAGE.RESW" tool-id="MultilingualAppToolkit" product-name="n/a" product-version="n/a" build-num="n/a">
+    <header>
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="4.0.6919.0" tool-company="Microsoft" />
+    </header>
+    <body>
+      <group id="MYFTP/STRINGS/EN-US/HOSTVIEWPAGE.RESW" datatype="resx">
+        <trans-unit id="DisconnecHostButton.Text" translate="yes" xml:space="preserve">
+          <source>Disconnect</source>
+          <target state="new">Disconnect</target>
+        </trans-unit>
+        <trans-unit id="ExitFlyout.Text" translate="yes" xml:space="preserve">
+          <source>Exit app</source>
+          <target state="new">Exit app</target>
+        </trans-unit>
+        <trans-unit id="InfoBarError.Title" translate="yes" xml:space="preserve">
+          <source>Something went wrong</source>
+          <target state="new">Something went wrong</target>
+        </trans-unit>
+        <trans-unit id="NewConnectionFlyout.Text" translate="yes" xml:space="preserve">
+          <source>New connection</source>
+          <target state="new">New connection</target>
+        </trans-unit>
+        <trans-unit id="SettingsFlyout.Text" translate="yes" xml:space="preserve">
+          <source>Settings</source>
+          <target state="new">Settings</target>
+        </trans-unit>
+        <trans-unit id="CurrentHostInfoButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" translate="yes" xml:space="preserve">
+          <source>See informations about the current host</source>
+          <target state="new">See informations about the current host</target>
+        </trans-unit>
+        <trans-unit id="CurrentHostInfoButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Host info</source>
+          <target state="new">Host info</target>
+        </trans-unit>
+        <trans-unit id="DirectoryItemsCountLabel.Text" translate="yes" xml:space="preserve">
+          <source>Items:</source>
+          <target state="new">Items:</target>
+        </trans-unit>
+        <trans-unit id="SwipeLeft.Text" translate="yes" xml:space="preserve">
+          <source>Back</source>
+          <target state="new">Back</target>
+        </trans-unit>
+        <trans-unit id="SwipeRight.Text" translate="yes" xml:space="preserve">
+          <source>Forward</source>
+          <target state="new">Forward</target>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
 </xliff>

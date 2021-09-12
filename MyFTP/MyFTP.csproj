@@ -351,6 +351,11 @@
     <None Include="..\.editorconfig">
       <Link>.editorconfig</Link>
     </None>
+    <PRIResource Include="Strings\vi-VN\HostViewPage.resw" />
+    <PRIResource Include="Strings\pt-BR\HostViewPage.resw" />
+    <PRIResource Include="Strings\fr-fr\HostViewPage.resw" />
+    <PRIResource Include="Strings\qps-ploc\HostViewPage.resw" />
+    <PRIResource Include="Strings\en-us\HostViewPage.resw" />
     <PRIResource Include="Strings\qps-ploc\SettingsViewPage.resw" />
     <PRIResource Include="Strings\qps-ploc\Resources.resw" />
     <PRIResource Include="Strings\qps-ploc\LoginViewPage.resw" />
