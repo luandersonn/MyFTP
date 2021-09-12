@@ -397,6 +397,38 @@
           <source>Forward</source>
           <target state="new">Forward</target>
         </trans-unit>
+        <trans-unit id="TeachingTipHostInfo.Title" translate="yes" xml:space="preserve">
+          <source>Host informations</source>
+          <target state="new">Host informations</target>
+        </trans-unit>
+        <trans-unit id="TeachingTipHostInfoConnectionTypeLabel.Text" translate="yes" xml:space="preserve">
+          <source>Connection type</source>
+          <target state="new">Connection type</target>
+        </trans-unit>
+        <trans-unit id="TeachingTipHostInfoHostLabel.Text" translate="yes" xml:space="preserve">
+          <source>Host</source>
+          <target state="new">Host</target>
+        </trans-unit>
+        <trans-unit id="TeachingTipHostInfoPortLabel.Text" translate="yes" xml:space="preserve">
+          <source>Port</source>
+          <target state="new">Port</target>
+        </trans-unit>
+        <trans-unit id="TeachingTipHostInfoServerOSLabel.Text" translate="yes" xml:space="preserve">
+          <source>Server OS</source>
+          <target state="new">Server OS</target>
+        </trans-unit>
+        <trans-unit id="TeachingTipHostInfoServerTypeLabel.Text" translate="yes" xml:space="preserve">
+          <source>Server type</source>
+          <target state="new">Server type</target>
+        </trans-unit>
+        <trans-unit id="TeachingTipHostInfoSystemTypeLabel.Text" translate="yes" xml:space="preserve">
+          <source>System type</source>
+          <target state="new">System type</target>
+        </trans-unit>
+        <trans-unit id="TeachingTipHostInfoUsernameLabel.Text" translate="yes" xml:space="preserve">
+          <source>Username</source>
+          <target state="new">Username</target>
+        </trans-unit>
       </group>
     </body>
   </file>

@@ -394,6 +394,38 @@
           <source>Forward</source>
           <target state="translated">Avançar</target>
         </trans-unit>
+        <trans-unit id="TeachingTipHostInfo.Title" translate="yes" xml:space="preserve">
+          <source>Host informations</source>
+          <target state="translated">Informações do Host</target>
+        </trans-unit>
+        <trans-unit id="TeachingTipHostInfoConnectionTypeLabel.Text" translate="yes" xml:space="preserve">
+          <source>Connection type</source>
+          <target state="translated">Tipo de conexão</target>
+        </trans-unit>
+        <trans-unit id="TeachingTipHostInfoHostLabel.Text" translate="yes" xml:space="preserve">
+          <source>Host</source>
+          <target state="translated">Servidor</target>
+        </trans-unit>
+        <trans-unit id="TeachingTipHostInfoPortLabel.Text" translate="yes" xml:space="preserve">
+          <source>Port</source>
+          <target state="translated">Porta</target>
+        </trans-unit>
+        <trans-unit id="TeachingTipHostInfoServerOSLabel.Text" translate="yes" xml:space="preserve">
+          <source>Server OS</source>
+          <target state="translated">SO do servidor</target>
+        </trans-unit>
+        <trans-unit id="TeachingTipHostInfoServerTypeLabel.Text" translate="yes" xml:space="preserve">
+          <source>Server type</source>
+          <target state="translated">Tipo de servidor</target>
+        </trans-unit>
+        <trans-unit id="TeachingTipHostInfoSystemTypeLabel.Text" translate="yes" xml:space="preserve">
+          <source>System type</source>
+          <target state="translated">Tipo de sistema</target>
+        </trans-unit>
+        <trans-unit id="TeachingTipHostInfoUsernameLabel.Text" translate="yes" xml:space="preserve">
+          <source>Username</source>
+          <target state="translated">Usuário</target>
+        </trans-unit>
       </group>
     </body>
   </file>

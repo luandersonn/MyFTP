@@ -147,4 +147,28 @@
   <data name="SwipeRight.Text" xml:space="preserve">
     <value>Forward</value>
   </data>
+  <data name="TeachingTipHostInfo.Title" xml:space="preserve">
+    <value>Host informations</value>
+  </data>
+  <data name="TeachingTipHostInfoConnectionTypeLabel.Text" xml:space="preserve">
+    <value>Connection type</value>
+  </data>
+  <data name="TeachingTipHostInfoHostLabel.Text" xml:space="preserve">
+    <value>Host</value>
+  </data>
+  <data name="TeachingTipHostInfoPortLabel.Text" xml:space="preserve">
+    <value>Port</value>
+  </data>
+  <data name="TeachingTipHostInfoServerOSLabel.Text" xml:space="preserve">
+    <value>Server OS</value>
+  </data>
+  <data name="TeachingTipHostInfoServerTypeLabel.Text" xml:space="preserve">
+    <value>Server type</value>
+  </data>
+  <data name="TeachingTipHostInfoSystemTypeLabel.Text" xml:space="preserve">
+    <value>System type</value>
+  </data>
+  <data name="TeachingTipHostInfoUsernameLabel.Text" xml:space="preserve">
+    <value>Username</value>
+  </data>
 </root>

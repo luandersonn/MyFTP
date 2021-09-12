@@ -42,4 +42,28 @@
   <data name="SwipeRight.Text" xml:space="preserve">
     <value>Avançar</value>
   </data>
+  <data name="TeachingTipHostInfo.Title" xml:space="preserve">
+    <value>Informações do Host</value>
+  </data>
+  <data name="TeachingTipHostInfoConnectionTypeLabel.Text" xml:space="preserve">
+    <value>Tipo de conexão</value>
+  </data>
+  <data name="TeachingTipHostInfoHostLabel.Text" xml:space="preserve">
+    <value>Servidor</value>
+  </data>
+  <data name="TeachingTipHostInfoPortLabel.Text" xml:space="preserve">
+    <value>Porta</value>
+  </data>
+  <data name="TeachingTipHostInfoServerOSLabel.Text" xml:space="preserve">
+    <value>SO do servidor</value>
+  </data>
+  <data name="TeachingTipHostInfoServerTypeLabel.Text" xml:space="preserve">
+    <value>Tipo de servidor</value>
+  </data>
+  <data name="TeachingTipHostInfoSystemTypeLabel.Text" xml:space="preserve">
+    <value>Tipo de sistema</value>
+  </data>
+  <data name="TeachingTipHostInfoUsernameLabel.Text" xml:space="preserve">
+    <value>Usuário</value>
+  </data>
 </root>
