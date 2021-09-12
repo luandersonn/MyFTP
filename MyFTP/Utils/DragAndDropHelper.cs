@@ -1,4 +1,6 @@
-﻿using Microsoft.Toolkit;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Toolkit;
+using MyFTP.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +15,7 @@ namespace MyFTP.Utils
 {
 	public class DragAndDropHelper
 	{
-		#region enabled drag items from app
+		#region enabled drag items from app		
 		public static string DragItemsFormatId { get; } = "DragItemsFormatId";
 		public static bool GetIsDragItemsEnabled(UIElement element) => (bool)element.GetValue(IsDragItemsEnabledProperty);
 		public static void SetIsDragItemsEnabled(UIElement element, bool value)
@@ -107,7 +109,8 @@ namespace MyFTP.Utils
 							&& value is IList<object> list) // dragging items from app
 			{
 				args.AcceptedOperation = DataPackageOperation.Move;
-				args.DragUIOverride.Caption = string.Format("Move to: {0}", target.Name.Truncate(80, true));
+				var message = GetLocalized("MoveItemTo");
+				args.DragUIOverride.Caption = string.Format("{0} {1}", message, target.Name.Truncate(80, true));
 				if (element is Panel panel && GetDragOverBackground(panel) is Brush brush)
 				{
 					panel.Background = brush;
@@ -117,7 +120,8 @@ namespace MyFTP.Utils
 			else if (args.DataView.Contains(StandardDataFormats.StorageItems)) // dragging files from system
 			{
 				args.AcceptedOperation = DataPackageOperation.Copy;
-				args.DragUIOverride.Caption = string.Format("Upload to: {0}", target.Name.Truncate(80, true));
+				var message = GetLocalized("UploadItemTo");
+				args.DragUIOverride.Caption = string.Format("{0} {1}", message, target.Name.Truncate(80, true));
 				if (element is Panel panel && GetDragOverBackground(panel) is Brush brush)
 				{
 					panel.Background = brush;
@@ -168,6 +172,14 @@ namespace MyFTP.Utils
 		public static IDropTarget GetDropTarget(UIElement obj) => (IDropTarget)obj.GetValue(DropTargetProperty);
 		public static void SetDropTarget(UIElement obj, IDropTarget value) => obj.SetValue(DropTargetProperty, value);
 		public static readonly DependencyProperty DropTargetProperty = DependencyProperty.RegisterAttached("DropTarget", typeof(IDropTarget), typeof(DragAndDropHelper), new PropertyMetadata(null));
+
+		private static string GetLocalized(string resourceName)
+		{
+			var settings = App.Current.Services.GetService<ISettings>();
+			if (settings == null)
+				return "[Error: No ISettings service]";
+			return settings.GetStringFromResource(resourceName, "Messages");
+		}
 		#endregion
 
 		#region Set Background

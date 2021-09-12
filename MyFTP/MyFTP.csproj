@@ -351,6 +351,11 @@
     <None Include="..\.editorconfig">
       <Link>.editorconfig</Link>
     </None>
+    <PRIResource Include="Strings\vi-VN\Messages.resw" />
+    <PRIResource Include="Strings\pt-BR\Messages.resw" />
+    <PRIResource Include="Strings\fr-fr\Messages.resw" />
+    <PRIResource Include="Strings\qps-ploc\Messages.resw" />
+    <PRIResource Include="Strings\en-us\Messages.resw" />
     <PRIResource Include="Strings\vi-VN\FtpDirectoryViewPage.resw" />
     <PRIResource Include="Strings\pt-BR\FtpDirectoryViewPage.resw" />
     <PRIResource Include="Strings\fr-fr\FtpDirectoryViewPage.resw" />

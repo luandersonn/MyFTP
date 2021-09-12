@@ -522,4 +522,29 @@
       </group>
     </body>
   </file>
+  <file datatype="xml" source-language="en-US" target-language="pt-BR" original="MYFTP/STRINGS/EN-US/MESSAGES.RESW" tool-id="MultilingualAppToolkit" product-name="n/a" product-version="n/a" build-num="n/a">
+    <header>
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="4.0.6919.0" tool-company="Microsoft"/>
+    </header>
+    <body>
+      <group id="MYFTP/STRINGS/EN-US/MESSAGES.RESW" datatype="resx">
+        <trans-unit id="MoveItemTo" translate="yes" xml:space="preserve">
+          <source>Move to:</source>
+          <target state="translated">Mover para:</target>
+        </trans-unit>
+        <trans-unit id="UploadItemTo" translate="yes" xml:space="preserve">
+          <source>Upload to:</source>
+          <target state="translated">Fazer upload para:</target>
+        </trans-unit>
+        <trans-unit id="ItemsCannotBeMoved" translate="yes" xml:space="preserve">
+          <source>Items cannot be moved</source>
+          <target state="translated">Items não podem ser movidos</target>
+        </trans-unit>
+        <trans-unit id="NameAlreadyUsed" translate="yes" xml:space="preserve">
+          <source>This name is already used by a directory or file</source>
+          <target state="translated">Este nome já está sendo usado por um diretório ou arquivo</target>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
 </xliff>

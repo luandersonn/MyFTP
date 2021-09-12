@@ -522,4 +522,29 @@
       </group>
     </body>
   </file>
+  <file datatype="xml" source-language="en-US" target-language="qps-ploc" original="MYFTP/STRINGS/EN-US/MESSAGES.RESW" tool-id="MultilingualAppToolkit" product-name="n/a" product-version="n/a" build-num="n/a">
+    <header>
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="4.0.6919.0" tool-company="Microsoft" />
+    </header>
+    <body>
+      <group id="MYFTP/STRINGS/EN-US/MESSAGES.RESW" datatype="resx">
+        <trans-unit id="MoveItemTo" translate="yes" xml:space="preserve">
+          <source>Move to:</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[E9635][!!_Мõνé тõ:_!!]</target>
+        </trans-unit>
+        <trans-unit id="UploadItemTo" translate="yes" xml:space="preserve">
+          <source>Upload to:</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[84B8C][!!_Ùρľòàď τô:_!!]</target>
+        </trans-unit>
+        <trans-unit id="ItemsCannotBeMoved" translate="yes" xml:space="preserve">
+          <source>Items cannot be moved</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[711B2][!!_Įţémş ĉàииôτ вè mòνéđ_!!]</target>
+        </trans-unit>
+        <trans-unit id="NameAlreadyUsed" translate="yes" xml:space="preserve">
+          <source>This name is already used by a directory or file</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">[71A2A][!!_Тħįš иâмę íś ãľŗęáđÿ ûŝéð ъУ á ďíѓęćťòѓŷ òŕ ƒįłę_!!]</target>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
 </xliff>
