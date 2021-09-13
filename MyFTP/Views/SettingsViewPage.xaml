@@ -388,12 +388,11 @@
 									   Grid.Row="2"
 									   Grid.Column="1" />
 							<!--#endregion-->
-
+              
 							<!--#region BACKSPACE-->
 							<StackPanel Grid.Row="3"
 										Orientation="Horizontal"
 										Spacing="4">
-
 								<Border x:Uid="/SettingsViewPage/KeyboardShortcutsBackspaceKey" MinWidth="114">
 									<FontIcon FontSize="14" Glyph="&#xE750;" />
 								</Border>
@@ -875,7 +874,6 @@
 										 AutomationProperties.LabeledBy="{x:Bind reviewTextBlock}"
 										 Click="OnReviewButtonClicked"
 										 Content="Microsoft Store" />
-
 						<TextBlock x:Name="contactTextBlock"
 								   x:Uid="/SettingsViewPage/AboutContactLabel"
 								   Grid.Row="5"
