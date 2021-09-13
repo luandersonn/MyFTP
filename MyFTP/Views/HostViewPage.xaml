@@ -150,7 +150,7 @@
               
 							<MenuFlyoutItem x:Uid="/HostViewPage/NewConnectionFlyout"
 											d:Text="New connection"
-											Click="{x:Bind NewConnectionAsync}">
+											Click="OnNewConnectionMenuFlyoutClick">
 								<MenuFlyoutItem.Icon>
 									<FontIcon Glyph="&#xE968;" />
 								</MenuFlyoutItem.Icon>
