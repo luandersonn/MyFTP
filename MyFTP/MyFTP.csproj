@@ -169,6 +169,7 @@
     <Compile Include="Utils\IconHelper.cs" />
     <Compile Include="Utils\NavigationHistory.cs" />
     <Compile Include="Utils\FtpHostSettings.cs" />
+    <Compile Include="Utils\WindowHelper.cs" />
     <Compile Include="ViewModels\FtpHostSettingsViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="Utils\Comparers\FtpListItemComparer.cs" />
@@ -181,6 +182,9 @@
     <Compile Include="ViewModels\UpdateServiceViewModel.cs" />
     <Compile Include="Views\FtpDirectoryViewPage.xaml.cs">
       <DependentUpon>FtpDirectoryViewPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ItemPropertiesViewPage.xaml.cs">
+      <DependentUpon>ItemPropertiesViewPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LoginViewPage.xaml.cs">
       <DependentUpon>LoginViewPage.xaml</DependentUpon>
@@ -293,6 +297,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\ItemPropertiesViewPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\LoginViewPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -351,6 +359,9 @@
     <None Include="..\.editorconfig">
       <Link>.editorconfig</Link>
     </None>
+    <PRIResource Include="Strings\vi-VN\FtpDirectoryViewPage.resw" />
+    <PRIResource Include="Strings\pt-BR\FtpDirectoryViewPage.resw" />
+    <PRIResource Include="Strings\fr-fr\FtpDirectoryViewPage.resw" />
     <PRIResource Include="Strings\vi-VN\Dialogs.resw" />
     <PRIResource Include="Strings\pt-BR\Dialogs.resw" />
     <PRIResource Include="Strings\fr-fr\Dialogs.resw" />
@@ -378,9 +389,7 @@
     <PRIResource Include="Strings\en-us\Resources.resw" />
     <PRIResource Include="appsettings.resw" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Strings\qps-ploc\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <XliffResource Include="MultilingualResources\MyFTP.fr-FR.xlf" />
     <XliffResource Include="MultilingualResources\MyFTP.pt-BR.xlf" />

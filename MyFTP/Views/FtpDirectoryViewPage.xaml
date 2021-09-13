@@ -83,7 +83,7 @@
 
 						<MenuFlyoutItem x:Uid="Properties"
 										d:Text="Properties"
-										IsEnabled="False">
+										Click="OnOpenProperties">
 							<MenuFlyoutItem.Icon>
 								<FontIcon Glyph="&#xE946;" />
 							</MenuFlyoutItem.Icon>

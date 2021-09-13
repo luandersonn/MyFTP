@@ -39,7 +39,7 @@ namespace MyFTP.Views
 			set => SetValue(NavigationHistoryProperty, value);
 		}
 		public static readonly DependencyProperty NavigationHistoryProperty = DependencyProperty.Register("NavigationHistory",
-			typeof(NavigationHistory<FtpListItemViewModel> ), typeof(FtpDirectoryViewPage), new PropertyMetadata(null));
+			typeof(NavigationHistory<FtpListItemViewModel>), typeof(FtpDirectoryViewPage), new PropertyMetadata(null));
 
 
 
@@ -254,6 +254,13 @@ namespace MyFTP.Views
 			var item = NavigationHistory.CurrentItem?.Parent;
 			if (item != null)
 				NavigationHistory.NavigateTo(item, NavigationHistory.CurrentItemIndex + 1);
+		}
+
+		private async void OnOpenProperties(object sender, RoutedEventArgs e)
+		{
+			var element = (FrameworkElement)sender;
+			var item = (FtpListItemViewModel)element.DataContext;
+			await Utils.WindowHelper.OpenInNewAppWindowAsync<ItemPropertiesViewPage>(item, title: item.Name);
 		}
 	}
 }

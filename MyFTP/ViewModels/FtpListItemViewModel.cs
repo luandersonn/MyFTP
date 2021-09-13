@@ -27,6 +27,8 @@ namespace MyFTP.ViewModels
 		private bool _isRenameDialogOpen;
 		private bool _isRenaming;
 		private FtpPermission _ownerPermissions;
+		private FtpPermission _groupPermissions;
+		private FtpPermission _othersPermissions;
 		private string _name;
 		private FtpListItemViewModel _parent;
 		private readonly FtpListItem _ftpItem;
@@ -79,6 +81,8 @@ namespace MyFTP.ViewModels
 			Size = item.Size;
 			Modified = item.Modified;
 			OwnerPermissions = item.OwnerPermissions;
+			GroupPermissions = item.GroupPermissions;
+			OthersPermissions = item.OthersPermissions;
 		}
 		#endregion
 
@@ -96,6 +100,8 @@ namespace MyFTP.ViewModels
 			}
 		}
 		public FtpPermission OwnerPermissions { get => _ownerPermissions; private set => Set(ref _ownerPermissions, value); }
+		public FtpPermission GroupPermissions { get => _groupPermissions; private set => Set(ref _groupPermissions, value); }
+		public FtpPermission OthersPermissions { get => _othersPermissions; private set => Set(ref _othersPermissions, value); }
 		public FtpListItemViewModel Parent { get => _parent; private set => Set(ref _parent, value); }
 		public FtpFileSystemObjectType Type { get; }
 		public FtpFileSystemObjectSubType SubType { get; }
@@ -241,7 +247,7 @@ namespace MyFTP.ViewModels
 				if (arg != null && arg.Any())
 				{
 					arg = arg.ToList(); // Force linq execution
-					// Delete collection of items
+										// Delete collection of items
 					if (await _dialogService.AskForDeleteAsync(arg))
 					{
 						foreach (var item in arg)
@@ -255,7 +261,7 @@ namespace MyFTP.ViewModels
 								if (item.Parent != null)
 									item.Parent._items.RemoveItem(item);
 							}
-							catch(Exception e)
+							catch (Exception e)
 							{
 								_weakMessenger.Send<ErrorMessage>(new ErrorMessage(e));
 							}
