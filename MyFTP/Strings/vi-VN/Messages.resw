@@ -12,4 +12,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="MoveItemTo" xml:space="preserve">
+    <value>Di chuyển đến:</value>
+  </data>
+  <data name="UploadItemTo" xml:space="preserve">
+    <value>Tải lên đến:</value>
+  </data>
+  <data name="ItemsCannotBeMoved" xml:space="preserve">
+    <value>Dữ liệu không thể di chuyển</value>
+  </data>
+  <data name="NameAlreadyUsed" xml:space="preserve">
+    <value>Tên này đã bị lấy bởi nhánh hoặc tên file</value>
+  </data>
 </root>

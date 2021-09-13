@@ -12,4 +12,58 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="DisconnecHostButton.Text" xml:space="preserve">
+    <value>Ngắt kết nối</value>
+  </data>
+  <data name="ExitFlyout.Text" xml:space="preserve">
+    <value>Thoát ứng dụng</value>
+  </data>
+  <data name="InfoBarError.Title" xml:space="preserve">
+    <value>Đã có vấn đề</value>
+  </data>
+  <data name="NewConnectionFlyout.Text" xml:space="preserve">
+    <value>Kết nối mới</value>
+  </data>
+  <data name="SettingsFlyout.Text" xml:space="preserve">
+    <value>Các cài đặt</value>
+  </data>
+  <data name="CurrentHostInfoButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Xem thông tin của host hiện tại</value>
+  </data>
+  <data name="CurrentHostInfoButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Thông tin</value>
+  </data>
+  <data name="DirectoryItemsCountLabel.Text" xml:space="preserve">
+    <value>Items:</value>
+  </data>
+  <data name="SwipeLeft.Text" xml:space="preserve">
+    <value>Quay về</value>
+  </data>
+  <data name="SwipeRight.Text" xml:space="preserve">
+    <value>Đi trước</value>
+  </data>
+  <data name="TeachingTipHostInfo.Title" xml:space="preserve">
+    <value>Các thông tin Host</value>
+  </data>
+  <data name="TeachingTipHostInfoConnectionTypeLabel.Text" xml:space="preserve">
+    <value>Kiểu kết nối</value>
+  </data>
+  <data name="TeachingTipHostInfoHostLabel.Text" xml:space="preserve">
+    <value>Host</value>
+  </data>
+  <data name="TeachingTipHostInfoPortLabel.Text" xml:space="preserve">
+    <value>Cổng</value>
+  </data>
+  <data name="TeachingTipHostInfoServerOSLabel.Text" xml:space="preserve">
+    <value>Hệ điều hành máy chủ</value>
+  </data>
+  <data name="TeachingTipHostInfoServerTypeLabel.Text" xml:space="preserve">
+    <value>Loại máy chủ</value>
+  </data>
+  <data name="TeachingTipHostInfoSystemTypeLabel.Text" xml:space="preserve">
+    <value>Thông tin hệ thống</value>
+  </data>
+  <data name="TeachingTipHostInfoUsernameLabel.Text" xml:space="preserve">
+    <value>Username</value>
+  </data>
 </root>

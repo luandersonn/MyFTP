@@ -12,4 +12,49 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="DeleteDialog.CloseButtonText" xml:space="preserve">
+    <value>Hủy</value>
+  </data>
+  <data name="DeleteDialog.PrimaryButtonText" xml:space="preserve">
+    <value>Xóa</value>
+  </data>
+  <data name="DeleteDialog.Title" xml:space="preserve">
+    <value>Xóa tất cả item vĩnh viễn ?</value>
+  </data>
+  <data name="LoginDialog.CloseButtonText" xml:space="preserve">
+    <value>Hủy</value>
+  </data>
+  <data name="LoginDialog.PrimaryButtonText" xml:space="preserve">
+    <value>Đăng nhập</value>
+  </data>
+  <data name="LoginDialog.Title" xml:space="preserve">
+    <value>Kết nối mới</value>
+  </data>
+  <data name="RenameDialog.CloseButtonText" xml:space="preserve">
+    <value>Đóng</value>
+  </data>
+  <data name="RenameDialog.PrimaryButtonText" xml:space="preserve">
+    <value>Đổi tên</value>
+  </data>
+  <data name="RenameDialog.Title" xml:space="preserve">
+    <value>Đổi tên item</value>
+  </data>
+  <data name="ReplaceDialog.CloseButtonText" xml:space="preserve">
+    <value>Bỏ qua file</value>
+  </data>
+  <data name="ReplaceDialog.PrimaryButtonText" xml:space="preserve">
+    <value>Thay thế</value>
+  </data>
+  <data name="ReplaceDialog.Title" xml:space="preserve">
+    <value>Đã có file trùng tên ở vị trí này</value>
+  </data>
+  <data name="ReplaceDialogCurrentFileLabel.Text" xml:space="preserve">
+    <value>File này</value>
+  </data>
+  <data name="ReplaceDialogDontAskAgainCheckbox.Content" xml:space="preserve">
+    <value>Đừng hỏi lần nữa</value>
+  </data>
+  <data name="ReplaceDialogNewFileLabel.Text" xml:space="preserve">
+    <value>File mới</value>
+  </data>
 </root>

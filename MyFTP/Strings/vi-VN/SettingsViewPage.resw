@@ -12,7 +12,184 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CollapseAllButtonText.Text" xml:space="preserve">
+    <value>Đóng tất</value>
+  </data>
+  <data name="DefaultSaveFolder.Text" xml:space="preserve">
+    <value>Tệp lưu trữ mặc định</value>
+  </data>
+  <data name="ExpandAllButtonText.Text" xml:space="preserve">
+    <value>Mở tất cả</value>
+  </data>
+  <data name="NoSavedHostsCase.Text" xml:space="preserve">
+    <value>Không có host lưu trữ sẵn</value>
+  </data>
+  <data name="RestoreDefaultFolder.Text" xml:space="preserve">
+    <value>Khôi phục tệp mặc định</value>
+  </data>
+  <data name="TitleBarControl.Title" xml:space="preserve">
+    <value>Các cài đặt</value>
+  </data>
+  <data name="BackButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Quay về</value>
+  </data>
+  <data name="BackButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Quay về</value>
+  </data>
+  <data name="DownloadUpdateButton.Content" xml:space="preserve">
+    <value>Tải</value>
+  </data>
+  <data name="InfoBarUpdate.Message" xml:space="preserve">
+    <value>Ứng dụng sẽ tái khởi động khi cập nhật thành công</value>
+  </data>
+  <data name="InfoBarUpdate.Title" xml:space="preserve">
+    <value>Có phiên bản mới</value>
+  </data>
+  <data name="CollapseAllButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Đóng tất cả các danh mục</value>
+  </data>
+  <data name="DownloadUpdateButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Tải bản cập nhật</value>
+  </data>
+  <data name="ExpandAllButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Mở tất cả các danh mục</value>
+  </data>
+  <data name="HostsExpanderHeader.Text" xml:space="preserve">
+    <value>Hosts</value>
+  </data>
+  <data name="RemoveHostSettingsButton.Content" xml:space="preserve">
+    <value>Gỡ</value>
+  </data>
   <data name="RemoveHostSettingsConfirmButton.Content" xml:space="preserve">
     <value>Cài đặt</value>
+  </data>
+  <data name="RemoveHostSettingsConfirmText.Text" xml:space="preserve">
+    <value>Bạn chắc chứ ?</value>
+  </data>
+  <data name="AppThemeLabel.Text" xml:space="preserve">
+    <value>Nền ứng dụng</value>
+  </data>
+  <data name="PersonalizationExpanderHeader.Text" xml:space="preserve">
+    <value>Cá nhân hóa</value>
+  </data>
+  <data name="AppThemeDark.Text" xml:space="preserve">
+    <value>Chế độ tối</value>
+  </data>
+  <data name="AppThemeDefault.Text" xml:space="preserve">
+    <value>Mặc định của</value>
+  </data>
+  <data name="AppThemeLight.Text" xml:space="preserve">
+    <value>Chế độ sáng</value>
+  </data>
+  <data name="KeyboardShortcutsExpanderHeader.Text" xml:space="preserve">
+    <value>Phím nhanh</value>
+  </data>
+  <data name="KeyboardShortcutsSectionActions.Text" xml:space="preserve">
+    <value>Hành động</value>
+  </data>
+  <data name="KeyboardShortcutsSectionNavigation.Text" xml:space="preserve">
+    <value>Điều hướng</value>
+  </data>
+  <data name="KeyboardShortcutsSectionWindow.Text" xml:space="preserve">
+    <value>Window</value>
+  </data>
+  <data name="KeyboardShortcutsAltKey.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Phím</value>
+  </data>
+  <data name="KeyboardShortcutsBackspaceKey.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Phím quay về</value>
+  </data>
+  <data name="KeyboardShortcutsDeleteKey.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Phím xóa</value>
+  </data>
+  <data name="KeyboardShortcutsEnterKey.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Phím enter</value>
+  </data>
+  <data name="KeyboardShortcutsLeftArrowKey.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Phím mũi tên trái</value>
+  </data>
+  <data name="KeyboardShortcutsRightArrowKey.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Phím mũi tên phải</value>
+  </data>
+  <data name="KeyboardShortcutsWindowsKey.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Phím Windows</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionAlt+LeftArrow.Text" xml:space="preserve">
+    <value>Xem tệp trước</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionAlt+RightArrow.Text" xml:space="preserve">
+    <value>Xem tệp tiếp theo</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionBackspace.Text" xml:space="preserve">
+    <value>Di  lên một tầng</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionCtrl+N.Text" xml:space="preserve">
+    <value>Tạo kết nối với host mới</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionLeftArrow.Text" xml:space="preserve">
+    <value>Đóng các tệp đang lựa chọn (nếu chúng đang mở), hoặc chọn tệp ở trong nhánh cây</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionRightArrow.Text" xml:space="preserve">
+    <value>Hiển thị những điều đang chọn (nếu nó đang ẩn), hoặc chọn tệp cha trên nhánh cây gần nhất</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionCtrl+Shift+N.Text" xml:space="preserve">
+    <value>Tạo mới tệp ở địa điểm này</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionCtrl+O.Text" xml:space="preserve">
+    <value>Mở trình chọn file để chèn dữ liệu vào vị trí hiện tại</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionCtrl+Shift+O.Text" xml:space="preserve">
+    <value>Mở tệp file để tải lên vào vị trí hiện tại</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionCtrl+A.Text" xml:space="preserve">
+    <value>Chọn/bỏ chọn tất cả các nhánh cây đang mở</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionCtrl+S.Text" xml:space="preserve">
+    <value>Thêm những item được chọn vào hàng tải về</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionCtrl+W.Text" xml:space="preserve">
+    <value>Ngắt kết nối toàn bộ host</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionDelete.Text" xml:space="preserve">
+    <value>Xóa tất cả item được chọn</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionF2.Text" xml:space="preserve">
+    <value>Đổi tên item đang chọn</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionF5.Text" xml:space="preserve">
+    <value>Tải lại nhánh cây đang mở</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionAlt+F4.Text" xml:space="preserve">
+    <value>Thoát ứng</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionF11.Text" xml:space="preserve">
+    <value>Mở hoặc thoát tràn màn hình</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionShift+Win+Enter.Text" xml:space="preserve">
+    <value>Mở hoặc thoát tràn màn hình</value>
+  </data>
+  <data name="AboutAppVersionLabel.Text" xml:space="preserve">
+    <value>Phiên bản</value>
+  </data>
+  <data name="AboutContactLabel.Text" xml:space="preserve">
+    <value>Liên lạc</value>
+  </data>
+  <data name="AboutExpanderHeader.Text" xml:space="preserve">
+    <value>Thông tin</value>
+  </data>
+  <data name="AboutReviewLabel.Text" xml:space="preserve">
+    <value>Đánh giá</value>
+  </data>
+  <data name="AboutSourceCodeLabel.Text" xml:space="preserve">
+    <value>Mã nguồn</value>
+  </data>
+  <data name="AboutSupportTheDevLabel.Text" xml:space="preserve">
+    <value>Đóng góp lập trình viên</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionAlt+UpArrow.Text" xml:space="preserve">
+    <value>Di chuyển lên một tầng</value>
+  </data>
+  <data name="KeyboardShortcutsUpArrowKey.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Nút hướng lên</value>
   </data>
 </root>
