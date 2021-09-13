@@ -147,7 +147,7 @@
 					</StackPanel>
 					<muxc:SplitButton.Flyout>
 						<MenuBarItemFlyout Placement="Bottom">
-
+              
 							<MenuFlyoutItem x:Uid="/HostViewPage/NewConnectionFlyout"
 											d:Text="New connection"
 											Click="{x:Bind NewConnectionAsync}">
@@ -158,7 +158,7 @@
 									<KeyboardAccelerator Key="N" Modifiers="Control" />
 								</MenuFlyoutItem.KeyboardAccelerators>
 							</MenuFlyoutItem>
-
+              
 							<MenuFlyoutItem x:Uid="/HostViewPage/SettingsFlyout"
 											d:Text="Settings"
 											Click="{x:Bind GoToSettings}"

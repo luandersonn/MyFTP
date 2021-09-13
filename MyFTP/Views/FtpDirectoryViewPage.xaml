@@ -190,7 +190,7 @@
 				</StackPanel>
 			</CommandBar.Content>
 			<AppBarSeparator />
-
+      
 			<AppBarButton x:Uid="/FtpDirectoryViewPage/NewFolderButton"
 						  d:Label="New folder"
 						  AccessKey="N"

@@ -883,6 +883,12 @@
 										 Content="E-mail"
 										 NavigateUri="mailto:luan.airton.ss+myftp@gmail.com" />
 
+						<HyperlinkButton Grid.Row="10"
+										 Grid.ColumnSpan="2"
+										 HorizontalAlignment="Center"
+										 Content="Luandersonn"
+										 NavigateUri="https://luandersonn.com" />
+
 					</Grid>
 				</muxc:Expander>
 

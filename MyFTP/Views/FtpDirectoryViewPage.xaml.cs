@@ -42,7 +42,6 @@ namespace MyFTP.Views
 			typeof(NavigationHistory<FtpListItemViewModel>), typeof(FtpDirectoryViewPage), new PropertyMetadata(null));
 
 
-
 		public FtpDirectoryViewPage()
 		{
 			this.InitializeComponent();
@@ -255,7 +254,7 @@ namespace MyFTP.Views
 			if (item != null)
 				NavigationHistory.NavigateTo(item, NavigationHistory.CurrentItemIndex + 1);
 		}
-
+    
 		private async void OnOpenProperties(object sender, RoutedEventArgs e)
 		{
 			var element = (FrameworkElement)sender;
