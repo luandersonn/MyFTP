@@ -5,41 +5,66 @@
 			   xmlns:local="using:MyFTP.Controls"
 			   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			   xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-			   Title="New connection"
-			   CloseButtonText="Cancel"
+			   xmlns:ui="using:Microsoft.Toolkit.Uwp.UI"
+			   xmlns:viewmodels="using:MyFTP.ViewModels"
+			   x:Uid="/Dialogs/LoginDialog"
+			   d:CloseButtonText="Cancel"
+			   d:PrimaryButtonText="Login"
+			   d:Title="New connection"
+			   Background="{ThemeResource TeachingTipTransientBackground}"
+			   DefaultButton="Primary"
 			   PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
 			   PrimaryButtonStyle="{ThemeResource AccentButtonStyle}"
-			   PrimaryButtonText="Login"
 			   SecondaryButtonClick="ContentDialog_SecondaryButtonClick"
 			   Style="{ThemeResource DefaultContentDialogStyle}"
 			   mc:Ignorable="d">
 
 	<Grid>
-		<ScrollViewer x:Name="pane1ScrollViewer" VerticalScrollBarVisibility="Auto">
+		<ScrollViewer VerticalScrollBarVisibility="Auto">
 			<StackPanel Width="320"
 						VerticalAlignment="Center"
 						x:DefaultBindMode="TwoWay"
 						Spacing="4">
 
-				<StackPanel Orientation="Horizontal" Spacing="4">
-					<TextBox Width="212"
+				<muxc:InfoBar x:Name="infoBar"
+							  x:Uid="/LoginViewPage/LoginErrorInfoBar"
+							  d:IsOpen="True"
+							  d:Message="Erro ao fazer login"
+							  d:Title="Login error"
+							  IsClosable="False"
+							  IsOpen="{x:Bind ViewModel.LoginCommand.ExecutionTask.IsFaulted, Mode=OneWay}"
+							  Message="{x:Bind ViewModel.LoginCommand.ExecutionTask.Exception.InnerException.Message, Mode=OneWay}"
+							  Severity="Error" />
+
+				<Grid ColumnSpacing="4">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition />
+						<ColumnDefinition Width="auto" MinWidth="100" />
+					</Grid.ColumnDefinitions>
+					<TextBox x:Uid="/LoginViewPage/HostTextBox"
 							 VerticalAlignment="Center"
-							 Header="Host"
-							 PlaceholderForeground="{ThemeResource SystemBaseLowColor}"
-							 PlaceholderText="ftp.example.com"
+							 d:Header="Host"
+							 d:PlaceholderText="ftp.example.com"
 							 Text="{x:Bind ViewModel.Host}" />
 
-					<muxc:NumberBox Width="100"
+					<muxc:NumberBox x:Uid="/LoginViewPage/PortTextBox"
+									Grid.Column="1"
+									MaxWidth="150"
 									VerticalAlignment="Bottom"
-									Header="Port"
+									d:Header="Port"
+									PlaceholderText="21"
 									Value="{x:Bind ViewModel.Port}" />
-				</StackPanel>
+				</Grid>
 
-				<TextBox Header="Username"
-						 PlaceholderForeground="{ThemeResource SystemBaseLowColor}"
-						 PlaceholderText="example@example.com"
+				<TextBox x:Uid="/LoginViewPage/UsernameTextBox"
+						 d:Header="Username"
+						 d:PlaceholderText="example@example.com"
 						 Text="{x:Bind ViewModel.Username, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" />
-				<PasswordBox Header="Password" Password="{x:Bind ViewModel.Password}" />
+
+				<PasswordBox x:Uid="/LoginViewPage/PasswordTextBox"
+							 d:Header="Password"
+							 Password="{x:Bind ViewModel.Password}"
+							 PlaceholderText="••••••••••••••" />
 
 				<Grid Opacity="0.6">
 					<Grid.ColumnDefinitions>
@@ -47,14 +72,16 @@
 						<ColumnDefinition Width="*" />
 					</Grid.ColumnDefinitions>
 					<FontIcon FontSize="12" Glyph="&#xE946;" />
-					<TextBlock Grid.Column="1"
+					<TextBlock x:Uid="/LoginViewPage/AnonymousLoginInfo"
+							   Grid.Column="1"
 							   VerticalAlignment="Center"
+							   d:Text="Leave username/password blank for anonymous login"
 							   FontSize="12"
-							   Text="Leave username/password blank for anonymous login"
 							   TextWrapping="Wrap" />
 				</Grid>
 
-				<CheckBox Content="Save credentials"
+				<CheckBox x:Uid="/LoginViewPage/SaveFtpCredentialsCheckbox"
+						  d:Content="Save credentials"
 						  IsChecked="{x:Bind ViewModel.SaveCredentials}"
 						  IsEnabled="{x:Bind ViewModel.CanSaveCredentials, Mode=OneTime}" />
 
@@ -63,16 +90,64 @@
 								  IsIndeterminate="{x:Bind ViewModel.LoginCommand.IsRunning, Mode=OneWay}"
 								  ShowError="{x:Bind infoBar.IsOpen, Mode=OneWay}" />
 
-				<muxc:InfoBar x:Name="infoBar"
-							  Title="Login error"
-							  d:IsOpen="True"
-							  d:Message="Erro ao fazer login"
-							  d:Title="Login error"
-							  IsClosable="False"
-							  IsOpen="{x:Bind ViewModel.LoginCommand.ExecutionTask.IsFaulted, Mode=OneWay}"
-							  Message="{x:Bind ViewModel.LoginCommand.ExecutionTask.Exception.InnerException.Message, Mode=OneWay}"
-							  Severity="Error" />
-				<HyperlinkButton Content="Privacy policy" NavigateUri="https://myftp.luandersonn.com/privacy" />
+				<Grid ColumnSpacing="8">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition />
+						<ColumnDefinition Width="auto" />
+					</Grid.ColumnDefinitions>
+
+					<HyperlinkButton x:Uid="/LoginViewPage/PrivacyPolicyHyperlink"
+									 d:Content="Privacy policy"
+									 NavigateUri="https://myftp.luandersonn.com/privacy" />
+
+					<Button x:Uid="/LoginViewPage/SavedCredentialsListButton"
+							Grid.Column="1"
+							Height="32"
+							HorizontalAlignment="Right"
+							x:DefaultBindMode="OneTime"
+							Visibility="{x:Bind ViewModel.SavedCredentialsList.Count, Converter={StaticResource ItemToBoolConverter}, Mode=OneWay}">
+						<Button.Flyout>
+							<Flyout Placement="LeftEdgeAlignedBottom">
+								<ListView ui:ListViewExtensions.Command="{x:Bind ViewModel.LoginCommand}"
+										  IsItemClickEnabled="True"
+										  ItemsSource="{x:Bind ViewModel.SavedCredentialsList}"
+										  SelectionMode="None">
+									<ListViewBase.Header>
+										<muxc:ProgressRing Margin="0,8"
+														   IsActive="{x:Bind ViewModel.LoginCommand.IsRunning, Mode=OneWay}"
+														   Visibility="{x:Bind ViewModel.LoginCommand.IsRunning, Mode=OneWay}" />
+									</ListViewBase.Header>
+									<ListView.ItemTemplate>
+										<DataTemplate x:DataType="viewmodels:FtpHostSettingsViewModel">
+											<Grid Padding="0,8"
+												  AutomationProperties.AccessibilityView="Raw"
+												  AutomationProperties.Name="{x:Bind Item.Host}"
+												  ColumnSpacing="12">
+												<Grid.ColumnDefinitions>
+													<ColumnDefinition Width="auto" />
+													<ColumnDefinition Width="*" />
+												</Grid.ColumnDefinitions>
+												<FontIcon FontSize="20" Glyph="&#xE13D;" />
+
+												<StackPanel Grid.Column="1" VerticalAlignment="Center">
+													<TextBlock VerticalAlignment="Bottom" TextTrimming="CharacterEllipsis">
+														<Run Text="{x:Bind Host}" /><Run Text=":" /><Run Text="{x:Bind Port}" />
+													</TextBlock>
+
+													<TextBlock FontStyle="Italic"
+															   Opacity="0.6"
+															   Text="{x:Bind Username}"
+															   Visibility="{x:Bind Username, Converter={StaticResource ItemToBoolConverter}}" />
+												</StackPanel>
+											</Grid>
+										</DataTemplate>
+									</ListView.ItemTemplate>
+								</ListView>
+							</Flyout>
+						</Button.Flyout>
+						<FontIcon FontSize="14" Glyph="&#xE136;" />
+					</Button>
+				</Grid>
 			</StackPanel>
 		</ScrollViewer>
 	</Grid>

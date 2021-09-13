@@ -7,6 +7,7 @@
 	  xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	  xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
 	  xmlns:viewmodels="using:MyFTP.ViewModels"
+	  d:Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	  mc:Ignorable="d">
 
 	<Page.Resources>
@@ -36,8 +37,9 @@
 		</Grid.RowDefinitions>
 
 		<controls:TitleBarControl x:Name="titleBar"
-								  Title="Settings"
+								  x:Uid="/SettingsViewPage/TitleBarControl"
 								  Height="42"
+								  d:Title="Settings"
 								  Background="{ThemeResource SystemAltLowColor}"
 								  BorderBrush="{ThemeResource SystemBaseLowColor}"
 								  BorderThickness="0,0,0,1">
@@ -47,11 +49,12 @@
 						   FontSize="20"
 						   IsHitTestVisible="False"
 						   Style="{ThemeResource BaseTextBlockStyle}"
-						   Text="Settings"
+						   Text="{x:Bind titleBar.Title}"
 						   Transitions="{StaticResource DefaultTransitions}" />
 			</controls:TitleBarControl.InnerContent>
 			<StackPanel Orientation="Horizontal" Spacing="8">
-				<Button VerticalAlignment="Stretch"
+				<Button x:Uid="/SettingsViewPage/BackButton"
+						VerticalAlignment="Stretch"
 						Click="{x:Bind GoBack}"
 						CornerRadius="0"
 						Style="{ThemeResource NavigationBackButtonNormalStyle}"
@@ -59,17 +62,21 @@
 			</StackPanel>
 		</controls:TitleBarControl>
 
-		<muxc:InfoBar Title="New version available"
+		<muxc:InfoBar x:Uid="/SettingsViewPage/InfoBarUpdate"
 					  Grid.Row="1"
 					  MaxWidth="{StaticResource MaxItemWidth}"
 					  Margin="18,8"
 					  d:IsOpen="True"
+					  d:Message="The app will restart when the update completes"
+					  d:Title="A new version of MyFTP is available for download"
 					  IsClosable="True"
 					  IsOpen="{x:Bind ViewModel.UpdateService.IsUpdateAvailable, Mode=OneWay}"
-					  Message="A new version of MyFTP is available for download"
+					  Severity="Informational"
 					  Transitions="{StaticResource DefaultTransitions}">
 			<muxc:InfoBar.ActionButton>
-				<Button Command="{x:Bind ViewModel.UpdateService.InstallUpdatesCommand}" Content="Download" />
+				<Button x:Uid="/SettingsViewPage/DownloadUpdateButton"
+						d:Content="Download"
+						Command="{x:Bind ViewModel.UpdateService.InstallUpdatesCommand}" />
 			</muxc:InfoBar.ActionButton>
 			<muxc:InfoBar.Content>
 				<StackPanel Margin="0,0,12,12" Visibility="{x:Bind ViewModel.UpdateService.UpdateInstallProgress, Converter={StaticResource ItemToBoolConverter}, Mode=OneWay}">
@@ -92,21 +99,34 @@
 			  MaxWidth="{StaticResource MaxItemWidth}"
 			  Margin="18,0,18,8"
 			  Transitions="{StaticResource DefaultTransitions}">
-			<Button x:Name="ExpandAllButton" Click="{x:Bind ExpandAll}">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition />
+				<ColumnDefinition />
+			</Grid.ColumnDefinitions>
+
+			<Button x:Name="ExpandAllButton"
+					x:Uid="/SettingsViewPage/ExpandAllButton"
+					Click="{x:Bind ExpandAll}">
 				<Button.Content>
 					<StackPanel Orientation="Horizontal" Spacing="8">
 						<FontIcon FontSize="14" Glyph="&#xE109;" />
-						<TextBlock VerticalAlignment="Center" Text="Expand all" />
+						<TextBlock x:Uid="/SettingsViewPage/ExpandAllButtonText"
+								   VerticalAlignment="Center"
+								   d:Text="Expand all" />
 					</StackPanel>
 				</Button.Content>
 			</Button>
 
 			<Button x:Name="CollapseAllButton"
+					x:Uid="/SettingsViewPage/CollapseAllButton"
+					Grid.Column="1"
 					HorizontalAlignment="Right"
 					Click="{x:Bind CollapseAll}">
 				<StackPanel Orientation="Horizontal" Spacing="8">
 					<FontIcon FontSize="14" Glyph="&#xE108;" />
-					<TextBlock VerticalAlignment="Center" Text="Collapse all" />
+					<TextBlock x:Uid="/SettingsViewPage/CollapseAllButtonText"
+							   VerticalAlignment="Center"
+							   d:Text="Collapse all" />
 				</StackPanel>
 			</Button>
 		</Grid>
@@ -130,17 +150,20 @@
 				</StackPanel.Resources>
 
 				<muxc:Expander Padding="0"
+							   AutomationProperties.LabeledBy="{x:Bind HostsExpanderHeader}"
 							   Collapsed="{x:Bind Collapsed}"
 							   Expanding="{x:Bind Expanding}">
 					<muxc:Expander.Header>
 						<StackPanel Orientation="Horizontal" Spacing="8">
 							<FontIcon FontSize="14" Glyph="&#xE17B;" />
-							<TextBlock Text="Hosts" />
+							<TextBlock x:Name="HostsExpanderHeader"
+									   x:Uid="/SettingsViewPage/HostsExpanderHeader"
+									   d:Text="Hosts" />
 						</StackPanel>
 					</muxc:Expander.Header>
 					<toolkit:SwitchPresenter TargetType="x:Int32" Value="{x:Bind ViewModel.FtpHostSettingsList.Count, Mode=OneWay}">
 						<toolkit:Case Value="0">
-							<TextBlock HorizontalAlignment="Center" Text="No saved hosts" />
+							<TextBlock x:Uid="/SettingsViewPage/NoSavedHostsCase" HorizontalAlignment="Center" />
 						</toolkit:Case>
 						<toolkit:Case IsDefault="True">
 							<muxc:ItemsRepeater ItemsSource="{x:Bind ViewModel.FtpHostSettingsList}">
@@ -169,7 +192,7 @@
 
 												<Grid.ContextFlyout>
 													<MenuFlyout>
-														<MenuFlyoutItem Command="{x:Bind ResetFolderCommand}" Text="Restore default folder">
+														<MenuFlyoutItem x:Uid="/SettingsViewPage/RestoreDefaultFolder" Command="{x:Bind ResetFolderCommand}">
 															<MenuFlyoutItem.Icon>
 																<FontIcon Glyph="&#xEBC4;" />
 															</MenuFlyoutItem.Icon>
@@ -177,9 +200,9 @@
 													</MenuFlyout>
 												</Grid.ContextFlyout>
 
-												<TextBlock VerticalAlignment="Center"
-														   Foreground="{ThemeResource SystemBaseMediumColor}"
-														   Text="Default save folder" />
+												<TextBlock x:Uid="/SettingsViewPage/DefaultSaveFolder"
+														   VerticalAlignment="Center"
+														   Foreground="{ThemeResource SystemBaseMediumColor}" />
 
 												<HyperlinkButton Grid.Column="1"
 																 VerticalAlignment="Center"
@@ -197,15 +220,17 @@
 												<TextBlock Opacity="0.6" Text="{x:Bind Username}" />
 												<TextBlock Opacity="0.6" Text="••••••••••••••••" />
 											</StackPanel>
-											<Button HorizontalAlignment="Right" Content="Remove">
+											<Button x:Uid="/SettingsViewPage/RemoveHostSettingsButton"
+													HorizontalAlignment="Right"
+													d:Content="Remove">
 												<Button.Flyout>
 													<Flyout Placement="Top">
 														<StackPanel Spacing="4">
-															<TextBlock Text="Are you sure?" />
-															<Button HorizontalAlignment="Stretch"
+															<TextBlock x:Uid="/SettingsViewPage/RemoveHostSettingsConfirmText" />
+															<Button x:Uid="/SettingsViewPage/RemoveHostSettingsConfirmButton"
+																	HorizontalAlignment="Stretch"
 																	Click="OnDeleteHostClicked"
 																	Command="{x:Bind DeleteSettingCommand}"
-																	Content="Yes, remove settings"
 																	Style="{ThemeResource DestructiveButtonStyle}" />
 														</StackPanel>
 													</Flyout>
@@ -219,11 +244,15 @@
 					</toolkit:SwitchPresenter>
 				</muxc:Expander>
 
-				<muxc:Expander Collapsed="{x:Bind Collapsed}" Expanding="{x:Bind Expanding}">
+				<muxc:Expander AutomationProperties.LabeledBy="{x:Bind PersonalizationExpanderHeader}"
+							   Collapsed="{x:Bind Collapsed}"
+							   Expanding="{x:Bind Expanding}">
 					<muxc:Expander.Header>
 						<StackPanel Orientation="Horizontal" Spacing="8">
 							<FontIcon FontSize="14" Glyph="&#xE790;" />
-							<TextBlock Text="Personalization" />
+							<TextBlock x:Name="PersonalizationExpanderHeader"
+									   x:Uid="/SettingsViewPage/PersonalizationExpanderHeader"
+									   d:Text="Personalization" />
 						</StackPanel>
 					</muxc:Expander.Header>
 					<Grid>
@@ -231,22 +260,36 @@
 							<ColumnDefinition />
 							<ColumnDefinition Width="180" />
 						</Grid.ColumnDefinitions>
-						<TextBlock VerticalAlignment="Center" Text="App theme" />
+						<TextBlock x:Name="AppThemeTextBlock"
+								   x:Uid="/SettingsViewPage/AppThemeLabel"
+								   VerticalAlignment="Center"
+								   d:Text="App theme" />
 						<ComboBox Grid.Column="1"
 								  HorizontalAlignment="Stretch"
+								  d:SelectedIndex="0"
+								  AutomationProperties.LabeledBy="{x:Bind AppThemeTextBlock}"
 								  SelectedIndex="{x:Bind ThemeIndex, Mode=TwoWay}">
-							<x:String>Windows Default</x:String>
-							<x:String>Light</x:String>
-							<x:String>Dark</x:String>
+							<ComboBox.Resources>
+								<Style TargetType="TextBlock">
+									<Setter Property="TextTrimming" Value="CharacterEllipsis" />
+								</Style>
+							</ComboBox.Resources>
+							<TextBlock x:Uid="/SettingsViewPage/AppThemeDefault" d:Text="Windows Default" />
+							<TextBlock x:Uid="/SettingsViewPage/AppThemeLight" d:Text="Light" />
+							<TextBlock x:Uid="/SettingsViewPage/AppThemeDark" d:Text="Dark" />
 						</ComboBox>
 					</Grid>
 				</muxc:Expander>
 
-				<muxc:Expander Collapsed="{x:Bind Collapsed}" Expanding="{x:Bind Expanding}">
+				<muxc:Expander AutomationProperties.LabeledBy="{x:Bind KeyboardShortcutsExpanderHeader}"
+							   Collapsed="{x:Bind Collapsed}"
+							   Expanding="{x:Bind Expanding}">
 					<muxc:Expander.Header>
 						<StackPanel Orientation="Horizontal" Spacing="8">
 							<FontIcon FontSize="14" Glyph="&#xE92E;" />
-							<TextBlock Text="Keyboard Shortcuts" />
+							<TextBlock x:Name="KeyboardShortcutsExpanderHeader"
+									   x:Uid="/SettingsViewPage/KeyboardShortcutsExpanderHeader"
+									   d:Text="Keyboard shortcuts" />
 						</StackPanel>
 					</muxc:Expander.Header>
 					<StackPanel Spacing="8">
@@ -255,6 +298,7 @@
 								<Setter Property="TextWrapping" Value="Wrap" />
 								<Setter Property="VerticalAlignment" Value="Center" />
 								<Setter Property="FontSize" Value="12" />
+								<d:Setter Property="Text" Value="Shortcut description text" />
 							</Style>
 							<Style TargetType="Border">
 								<Setter Property="Padding" Value="{ThemeResource ButtonPadding}" />
@@ -262,14 +306,19 @@
 								<Setter Property="BorderBrush" Value="{ThemeResource ButtonBorderBrush}" />
 								<Setter Property="BorderThickness" Value="{ThemeResource ButtonBorderThemeThickness}" />
 								<Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}" />
-								<Setter Property="MinWidth" Value="40" />
+								<Setter Property="MinWidth" Value="48" />
 								<Setter Property="VerticalAlignment" Value="Center" />
+							</Style>
+
+							<Style x:Key="SectionHeaderStyle" TargetType="TextBlock">
+								<Setter Property="FontSize" Value="14" />
+								<Setter Property="FontWeight" Value="Bold" />
 							</Style>
 						</StackPanel.Resources>
 
-						<TextBlock FontSize="14"
-								   FontWeight="Bold"
-								   Text="Navigation" />
+						<TextBlock x:Uid="/SettingsViewPage/KeyboardShortcutsSectionNavigation"
+								   d:Text="Navigation"
+								   Style="{StaticResource SectionHeaderStyle}" />
 
 						<Grid ColumnSpacing="18" RowSpacing="6">
 							<Grid.ColumnDefinitions>
@@ -277,94 +326,118 @@
 								<ColumnDefinition Width="2*" />
 							</Grid.ColumnDefinitions>
 							<Grid.RowDefinitions>
-								<RowDefinition Height="30" />
-								<RowDefinition Height="30" />
-								<RowDefinition Height="30" />
-								<RowDefinition Height="30" />
-								<RowDefinition Height="30" />
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
 							</Grid.RowDefinitions>
 							<!--#region ALT + LEFT ARROW-->
 							<StackPanel Orientation="Horizontal" Spacing="4">
-								<Border ToolTipService.ToolTip="Alt key">
-									<TextBlock FontSize="12" Text="Alt" />
+								<Border x:Uid="/SettingsViewPage/KeyboardShortcutsAltKey">
+									<TextBlock HorizontalAlignment="Center"
+											   FontSize="12"
+											   Text="Alt" />
 								</Border>
 								<TextBlock VerticalAlignment="Center" Text="+" />
-								<Border ToolTipService.ToolTip="Left arrow">
+								<Border x:Uid="/SettingsViewPage/KeyboardShortcutsLeftArrowKey">
 									<FontIcon FontSize="14" Glyph="&#xEC52;" />
 								</Border>
 							</StackPanel>
 
-							<TextBlock Grid.Column="1" Text="View the previous folder" />
+							<TextBlock x:Uid="/SettingsViewPage/KeyboardShortcutsDescriptionAlt+LeftArrow" Grid.Column="1" />
 							<!--#endregion-->
 
 							<!--#region ALT + RIGHT ARROW-->
 							<StackPanel Grid.Row="1"
 										Orientation="Horizontal"
 										Spacing="4">
-								<Border ToolTipService.ToolTip="Alt key">
-									<TextBlock FontSize="12" Text="Alt" />
+								<Border x:Uid="/SettingsViewPage/KeyboardShortcutsAltKey">
+									<TextBlock HorizontalAlignment="Center"
+											   FontSize="12"
+											   Text="Alt" />
 								</Border>
 								<TextBlock VerticalAlignment="Center" Text="+" />
-								<Border ToolTipService.ToolTip="Right arrow">
+								<Border x:Uid="/SettingsViewPage/KeyboardShortcutsRightArrowKey">
 									<FontIcon FontSize="14" Glyph="&#xEBE7;" />
 								</Border>
 							</StackPanel>
 
-							<TextBlock Grid.Row="1"
-									   Grid.Column="1"
-									   Text="View the next folder" />
+							<TextBlock x:Uid="/SettingsViewPage/KeyboardShortcutsDescriptionAlt+RightArrow"
+									   Grid.Row="1"
+									   Grid.Column="1" />
 							<!--#endregion-->
 
-							<!--#region BACKSPACE-->
+							<!--#region ALT + UP ARROW-->
 							<StackPanel Grid.Row="2"
 										Orientation="Horizontal"
 										Spacing="4">
-
-								<Border MinWidth="95" ToolTipService.ToolTip="Backspace">
-									<FontIcon FontSize="14" Glyph="&#xE750;" />
+								<Border x:Uid="/SettingsViewPage/KeyboardShortcutsAltKey">
+									<TextBlock HorizontalAlignment="Center"
+											   FontSize="12"
+											   Text="Alt" />
+								</Border>
+								<TextBlock VerticalAlignment="Center" Text="+" />
+								<Border x:Uid="/SettingsViewPage/KeyboardShortcutsUpArrowKey">
+									<FontIcon FontSize="14" Glyph="&#xE110;" />
 								</Border>
 							</StackPanel>
 
-							<TextBlock Grid.Row="2"
-									   Grid.Column="1"
-									   Text="Navigate up one directory level" />
+							<TextBlock x:Uid="/SettingsViewPage/KeyboardShortcutsDescriptionAlt+UpArrow"
+									   Grid.Row="2"
+									   Grid.Column="1" />
 							<!--#endregion-->
 
-							<!--#region LEFT ARROW-->
+							<!--#region BACKSPACE-->
 							<StackPanel Grid.Row="3"
 										Orientation="Horizontal"
 										Spacing="4">
 
-								<Border MinWidth="95" ToolTipService.ToolTip="Left arrow">
-									<FontIcon FontSize="14" Glyph="&#xEC52;" />
+								<Border x:Uid="/SettingsViewPage/KeyboardShortcutsBackspaceKey" MinWidth="114">
+									<FontIcon FontSize="14" Glyph="&#xE750;" />
 								</Border>
 							</StackPanel>
 
-							<TextBlock Grid.Row="3"
-									   Grid.Column="1"
-									   Text="Collapse the current selection (if it's expanded), or select the folder that the folder was in (TreeView)" />
+							<TextBlock x:Uid="/SettingsViewPage/KeyboardShortcutsDescriptionBackspace"
+									   Grid.Row="3"
+									   Grid.Column="1" />
 							<!--#endregion-->
 
-							<!--#region RIGHT ARROW-->
+							<!--#region LEFT ARROW-->
 							<StackPanel Grid.Row="4"
 										Orientation="Horizontal"
 										Spacing="4">
 
-								<Border MinWidth="95" ToolTipService.ToolTip="Right arrow">
+								<Border x:Uid="/SettingsViewPage/KeyboardShortcutsLeftArrowKey" MinWidth="114">
+									<FontIcon FontSize="14" Glyph="&#xEC52;" />
+								</Border>
+							</StackPanel>
+
+							<TextBlock x:Uid="/SettingsViewPage/KeyboardShortcutsDescriptionLeftArrow"
+									   Grid.Row="4"
+									   Grid.Column="1" />
+							<!--#endregion-->
+
+							<!--#region RIGHT ARROW-->
+							<StackPanel Grid.Row="5"
+										Orientation="Horizontal"
+										Spacing="4">
+
+								<Border x:Uid="/SettingsViewPage/KeyboardShortcutsRightArrowKey" MinWidth="114">
 									<FontIcon FontSize="14" Glyph="&#xEBE7;" />
 								</Border>
 							</StackPanel>
 
-							<TextBlock Grid.Row="4"
-									   Grid.Column="1"
-									   Text="Display the current selection (if it's collapsed), or select the first subfolder (TreeView)" />
+							<TextBlock x:Uid="/SettingsViewPage/KeyboardShortcutsDescriptionRightArrow"
+									   Grid.Row="5"
+									   Grid.Column="1" />
 							<!--#endregion-->
-
 						</Grid>
 
-						<TextBlock FontSize="14"
-								   FontWeight="Bold"
-								   Text="Actions" />
+						<TextBlock x:Uid="/SettingsViewPage/KeyboardShortcutsSectionActions"
+								   d:Text="Actions"
+								   Style="{StaticResource SectionHeaderStyle}" />
 
 						<Grid ColumnSpacing="18" RowSpacing="6">
 							<Grid.ColumnDefinitions>
@@ -372,22 +445,22 @@
 								<ColumnDefinition Width="2*" />
 							</Grid.ColumnDefinitions>
 							<Grid.RowDefinitions>
-								<RowDefinition Height="30" />
-								<RowDefinition Height="30" />
-								<RowDefinition Height="30" />
-								<RowDefinition Height="30" />
-								<RowDefinition Height="30" />
-								<RowDefinition Height="30" />
-								<RowDefinition Height="30" />
-								<RowDefinition Height="30" />
-								<RowDefinition Height="30" />
-								<RowDefinition Height="30" />
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
+								<RowDefinition />
 							</Grid.RowDefinitions>
 
 							<!--#region Ctrl + N-->
 							<StackPanel Grid.Row="0"
 										Orientation="Horizontal"
-										Spacing="2">
+										Spacing="4">
 
 								<Border>
 									<TextBlock HorizontalAlignment="Center"
@@ -402,15 +475,15 @@
 								</Border>
 							</StackPanel>
 
-							<TextBlock Grid.Row="0"
-									   Grid.Column="1"
-									   Text="Create a connection with new Host" />
+							<TextBlock x:Uid="/SettingsViewPage/KeyboardShortcutsDescriptionCtrl+N"
+									   Grid.Row="0"
+									   Grid.Column="1" />
 							<!--#endregion-->
 
-							<!--#region CTRL + SHIFT + N-->
+							<!--#region Ctrl + SHIFT + N-->
 							<StackPanel Grid.Row="1"
 										Orientation="Horizontal"
-										Spacing="2">
+										Spacing="4">
 
 								<Border>
 									<TextBlock HorizontalAlignment="Center"
@@ -424,22 +497,22 @@
 											   Text="Shift" />
 								</Border>
 								<TextBlock Text="+" />
-								<Border ToolTipService.ToolTip="Enter">
+								<Border>
 									<TextBlock HorizontalAlignment="Center"
 											   FontSize="12"
 											   Text="N" />
 								</Border>
 							</StackPanel>
 
-							<TextBlock Grid.Row="1"
-									   Grid.Column="1"
-									   Text="Create a new folder in the current directory" />
+							<TextBlock x:Uid="/SettingsViewPage/KeyboardShortcutsDescriptionCtrl+Shift+N"
+									   Grid.Row="1"
+									   Grid.Column="1" />
 							<!--#endregion-->
 
 							<!--#region Ctrl + O-->
 							<StackPanel Grid.Row="2"
 										Orientation="Horizontal"
-										Spacing="2">
+										Spacing="4">
 
 								<Border>
 									<TextBlock HorizontalAlignment="Center"
@@ -454,15 +527,15 @@
 								</Border>
 							</StackPanel>
 
-							<TextBlock Grid.Row="2"
-									   Grid.Column="1"
-									   Text="Open file picker to upload files to current directory" />
+							<TextBlock x:Uid="/SettingsViewPage/KeyboardShortcutsDescriptionCtrl+O"
+									   Grid.Row="2"
+									   Grid.Column="1" />
 							<!--#endregion-->
 
 							<!--#region Ctrl + SHIFT + O-->
 							<StackPanel Grid.Row="3"
 										Orientation="Horizontal"
-										Spacing="2">
+										Spacing="4">
 
 								<Border>
 									<TextBlock HorizontalAlignment="Center"
@@ -483,15 +556,15 @@
 								</Border>
 							</StackPanel>
 
-							<TextBlock Grid.Row="3"
-									   Grid.Column="1"
-									   Text="Open folder picker to upload a folder to current directory" />
+							<TextBlock x:Uid="/SettingsViewPage/KeyboardShortcutsDescriptionCtrl+Shift+O"
+									   Grid.Row="3"
+									   Grid.Column="1" />
 							<!--#endregion-->
 
 							<!--#region Ctrl + S-->
 							<StackPanel Grid.Row="4"
 										Orientation="Horizontal"
-										Spacing="2">
+										Spacing="4">
 
 								<Border>
 									<TextBlock HorizontalAlignment="Center"
@@ -506,15 +579,15 @@
 								</Border>
 							</StackPanel>
 
-							<TextBlock Grid.Row="4"
-									   Grid.Column="1"
-									   Text="Add all selected items to the download queue" />
+							<TextBlock x:Uid="/SettingsViewPage/KeyboardShortcutsDescriptionCtrl+S"
+									   Grid.Row="4"
+									   Grid.Column="1" />
 							<!--#endregion-->
 
 							<!--#region Ctrl + A-->
 							<StackPanel Grid.Row="5"
 										Orientation="Horizontal"
-										Spacing="2">
+										Spacing="4">
 
 								<Border>
 									<TextBlock HorizontalAlignment="Center"
@@ -529,9 +602,9 @@
 								</Border>
 							</StackPanel>
 
-							<TextBlock Grid.Row="5"
-									   Grid.Column="1"
-									   Text="Select/unselect all items in the active directory" />
+							<TextBlock x:Uid="/SettingsViewPage/KeyboardShortcutsDescriptionCtrl+A"
+									   Grid.Row="5"
+									   Grid.Column="1" />
 							<!--#endregion-->
 
 							<!--#region F5-->
@@ -539,54 +612,54 @@
 										Orientation="Horizontal"
 										Spacing="4">
 
-								<Border MinWidth="95">
+								<Border MinWidth="114">
 									<TextBlock HorizontalAlignment="Center" Text="F5" />
 								</Border>
 							</StackPanel>
 
-							<TextBlock Grid.Row="6"
-									   Grid.Column="1"
-									   Text="Refresh the active directory" />
+							<TextBlock x:Uid="/SettingsViewPage/KeyboardShortcutsDescriptionF5"
+									   Grid.Row="6"
+									   Grid.Column="1" />
 							<!--#endregion-->
 
 							<!--#region Delete-->
 							<StackPanel Grid.Row="7"
 										Orientation="Horizontal"
-										Spacing="2">
+										Spacing="4">
 
-								<Border Width="95" ToolTipService.ToolTip="Delete key">
+								<Border x:Uid="/SettingsViewPage/KeyboardShortcutsDeleteKey" Width="114">
 									<TextBlock HorizontalAlignment="Center"
 											   FontSize="12"
 											   Text="Del" />
 								</Border>
 							</StackPanel>
 
-							<TextBlock Grid.Row="7"
-									   Grid.Column="1"
-									   Text="Delete all selected items" />
+							<TextBlock x:Uid="/SettingsViewPage/KeyboardShortcutsDescriptionDelete"
+									   Grid.Row="7"
+									   Grid.Column="1" />
 							<!--#endregion-->
 
 							<!--#region F2-->
 							<StackPanel Grid.Row="8"
 										Orientation="Horizontal"
-										Spacing="2">
+										Spacing="4">
 
-								<Border Width="95">
+								<Border Width="114">
 									<TextBlock HorizontalAlignment="Center"
 											   FontSize="12"
 											   Text="F2" />
 								</Border>
 							</StackPanel>
 
-							<TextBlock Grid.Row="8"
-									   Grid.Column="1"
-									   Text="Rename the selected item" />
+							<TextBlock x:Uid="/SettingsViewPage/KeyboardShortcutsDescriptionF2"
+									   Grid.Row="8"
+									   Grid.Column="1" />
 							<!--#endregion-->
 
 							<!--#region Ctrl + W-->
 							<StackPanel Grid.Row="9"
 										Orientation="Horizontal"
-										Spacing="2">
+										Spacing="4">
 
 								<Border>
 									<TextBlock HorizontalAlignment="Center"
@@ -601,16 +674,16 @@
 								</Border>
 							</StackPanel>
 
-							<TextBlock Grid.Row="9"
-									   Grid.Column="1"
-									   Text="Disconnect the active Host" />
+							<TextBlock x:Uid="/SettingsViewPage/KeyboardShortcutsDescriptionCtrl+W"
+									   Grid.Row="9"
+									   Grid.Column="1" />
 							<!--#endregion-->
 
 						</Grid>
 
-						<TextBlock FontSize="14"
-								   FontWeight="Bold"
-								   Text="Window" />
+						<TextBlock x:Uid="/SettingsViewPage/KeyboardShortcutsSectionWindow"
+								   d:Text="Window"
+								   Style="{StaticResource SectionHeaderStyle}" />
 
 						<Grid ColumnSpacing="18" RowSpacing="6">
 							<Grid.ColumnDefinitions>
@@ -625,7 +698,7 @@
 							<!--#region SHIFT + ALT + ENTER-->
 							<StackPanel Grid.Row="0"
 										Orientation="Horizontal"
-										Spacing="2">
+										Spacing="4">
 
 								<Border>
 									<TextBlock HorizontalAlignment="Center"
@@ -633,7 +706,7 @@
 											   Text="Shift" />
 								</Border>
 								<TextBlock Text="+" />
-								<Border ToolTipService.ToolTip="Windows Key">
+								<Border x:Uid="/SettingsViewPage/KeyboardShortcutsWindowsKey">
 									<Path Width="16"
 										  Height="16"
 										  Margin="-2,0,0,0"
@@ -647,14 +720,14 @@
 										  Stretch="Uniform" />-->
 								</Border>
 								<TextBlock Text="+" />
-								<Border ToolTipService.ToolTip="Enter">
+								<Border x:Uid="/SettingsViewPage/KeyboardShortcutsEnterKey">
 									<FontIcon FontSize="14" Glyph="&#xE751;" />
 								</Border>
 							</StackPanel>
 
-							<TextBlock Grid.Row="0"
-									   Grid.Column="1"
-									   Text="Enter or exit from Fullscreen mode" />
+							<TextBlock x:Uid="/SettingsViewPage/KeyboardShortcutsDescriptionShift+Win+Enter"
+									   Grid.Row="0"
+									   Grid.Column="1" />
 							<!--#endregion-->
 
 							<!--#region F11-->
@@ -662,16 +735,16 @@
 										Orientation="Horizontal"
 										Spacing="4">
 
-								<Border MinWidth="95">
+								<Border MinWidth="114">
 									<TextBlock HorizontalAlignment="Center"
 											   FontSize="12"
 											   Text="F11" />
 								</Border>
 							</StackPanel>
 
-							<TextBlock Grid.Row="1"
-									   Grid.Column="1"
-									   Text="Enter or exit from Fullscreen mode" />
+							<TextBlock x:Uid="/SettingsViewPage/KeyboardShortcutsDescriptionF11"
+									   Grid.Row="1"
+									   Grid.Column="1" />
 							<!--#endregion-->
 
 							<!--#region ALT + F4-->
@@ -679,33 +752,36 @@
 										Orientation="Horizontal"
 										Spacing="4">
 
-								<Border>
+								<Border x:Uid="/SettingsViewPage/KeyboardShortcutsAltKey">
 									<TextBlock HorizontalAlignment="Center"
 											   FontSize="12"
 											   Text="Alt" />
 								</Border>
 								<TextBlock Text="+" />
 								<Border>
-									<TextBlock Text="F4" />
+									<TextBlock HorizontalAlignment="Center" Text="F4" />
 								</Border>
 							</StackPanel>
 
-							<TextBlock Grid.Row="2"
-									   Grid.Column="1"
-									   Text="Exit app" />
+							<TextBlock x:Uid="/SettingsViewPage/KeyboardShortcutsDescriptionAlt+F4"
+									   Grid.Row="2"
+									   Grid.Column="1" />
 							<!--#endregion-->
 						</Grid>
 					</StackPanel>
 
 				</muxc:Expander>
 
-				<muxc:Expander Collapsed="{x:Bind Collapsed}"
+				<muxc:Expander AutomationProperties.LabeledBy="{x:Bind AboutExpanderHeader}"
+							   Collapsed="{x:Bind Collapsed}"
 							   Expanding="{x:Bind Expanding}"
 							   IsExpanded="True">
 					<muxc:Expander.Header>
 						<StackPanel Orientation="Horizontal" Spacing="8">
 							<FontIcon FontSize="14" Glyph="&#xE946;" />
-							<TextBlock Text="About" />
+							<TextBlock x:Name="AboutExpanderHeader"
+									   x:Uid="/SettingsViewPage/AboutExpanderHeader"
+									   d:Text="About" />
 						</StackPanel>
 					</muxc:Expander.Header>
 					<Grid ColumnSpacing="8" RowSpacing="4">
@@ -719,11 +795,6 @@
 							</Style>
 						</Grid.Resources>
 						<Grid.RowDefinitions>
-							<RowDefinition />
-							<RowDefinition />
-							<RowDefinition />
-							<RowDefinition />
-							<RowDefinition />
 							<RowDefinition />
 							<RowDefinition />
 							<RowDefinition />
@@ -747,94 +818,66 @@
 									<BitmapImage DecodePixelWidth="128" UriSource="/Assets/Square44x44Logo.png" />
 								</Image.Source>
 							</Image>
-							<TextBlock Grid.Column="1"
+							<TextBlock x:Uid="AppName"
+									   Grid.Column="1"
 									   VerticalAlignment="Center"
+									   d:Text="MyFTP Client"
 									   FontSize="20"
-									   FontWeight="Bold"
-									   Text="MyFTP Client" />
+									   FontWeight="Bold" />
 						</Grid>
 
-						<TextBlock Grid.Row="1"
-								   Foreground="{ThemeResource SystemBaseMediumColor}"
-								   Text="App version" />
+						<TextBlock x:Uid="/SettingsViewPage/AboutAppVersionLabel"
+								   Grid.Row="1"
+								   d:Text="App version"
+								   Foreground="{ThemeResource SystemBaseMediumColor}" />
 
 						<TextBlock Grid.Row="1" Grid.Column="1">
 							<Run d:Text="1.0.0.0" Text="{x:Bind ViewModel.Settings.AppVersion}" />
 							<Run Text="(Preview)" />
 						</TextBlock>
 
-						<TextBlock Grid.Row="2"
-								   Foreground="{ThemeResource SystemBaseMediumColor}"
-								   Text="Manufacturer" />
-
-						<TextBlock Grid.Row="2"
-								   Grid.Column="1"
-								   d:Text="Microsoft"
-								   Text="{x:Bind ViewModel.SystemInformation.DeviceManufacturer}" />
-
-						<TextBlock Grid.Row="3"
-								   Foreground="{ThemeResource SystemBaseMediumColor}"
-								   Text="Model" />
-
-						<TextBlock Grid.Row="3"
-								   Grid.Column="1"
-								   d:Text="PC 2"
-								   Text="{x:Bind ViewModel.SystemInformation.DeviceModel}" />
-
-						<TextBlock Grid.Row="4"
-								   Foreground="{ThemeResource SystemBaseMediumColor}"
-								   Text="OS Version" />
-
-						<TextBlock Grid.Row="4"
-								   Grid.Column="1"
-								   d:Text="10.0.0"
-								   Text="{x:Bind ViewModel.SystemInformation.OperatingSystemVersion}" />
-
-						<TextBlock Grid.Row="5"
-								   Foreground="{ThemeResource SystemBaseMediumColor}"
-								   Text="OS Architecture" />
-
-						<TextBlock Grid.Row="5"
-								   Grid.Column="1"
-								   d:Text="X64"
-								   Text="{x:Bind ViewModel.SystemInformation.OperatingSystemArchitecture}" />
-
-						<TextBlock Grid.Row="6"
+						<TextBlock x:Name="sourceCodeTextBlock"
+								   x:Uid="/SettingsViewPage/AboutSourceCodeLabel"
+								   Grid.Row="2"
 								   VerticalAlignment="Center"
 								   Foreground="{ThemeResource SystemBaseMediumColor}"
 								   Text="Source code" />
 
-						<HyperlinkButton Grid.Row="6"
+						<HyperlinkButton Grid.Row="2"
 										 Grid.Column="1"
 										 Padding="0"
+										 AutomationProperties.LabeledBy="{x:Bind sourceCodeTextBlock}"
 										 Content="GitHub"
 										 NavigateUri="https://github.com/luandersonn/MyFTP" />
 
-						<TextBlock Grid.Row="7"
-								   Foreground="{ThemeResource SystemBaseMediumColor}"
-								   Text="Support the dev" />
+						<TextBlock x:Uid="/SettingsViewPage/AboutSupportTheDevLabel"
+								   Grid.Row="3"
+								   d:Text="Support the dev"
+								   Foreground="{ThemeResource SystemBaseMediumColor}" />
 
-						<HyperlinkButton Grid.Row="7"
+						<HyperlinkButton Grid.Row="3"
 										 Grid.Column="1"
 										 Padding="0"
 										 Content="Buy me a coffee"
 										 NavigateUri="https://www.buymeacoffee.com/luandersonn1" />
 
-						<TextBlock Grid.Row="8"
-								   Foreground="{ThemeResource SystemBaseMediumColor}"
-								   Text="Review" />
+						<TextBlock x:Uid="/SettingsViewPage/AboutReviewLabel"
+								   Grid.Row="4"
+								   d:Text="Review"
+								   Foreground="{ThemeResource SystemBaseMediumColor}" />
 
-						<HyperlinkButton Grid.Row="8"
+						<HyperlinkButton Grid.Row="4"
 										 Grid.Column="1"
 										 Padding="0"
 										 Click="OnReviewButtonClicked"
-										 Content="Open Microsoft Store" />
+										 Content="Microsoft Store" />
 
-						<TextBlock Grid.Row="9"
-								   Foreground="{ThemeResource SystemBaseMediumColor}"
-								   Text="Contact" />
+						<TextBlock x:Uid="/SettingsViewPage/AboutContactLabel"
+								   Grid.Row="5"
+								   d:Text="Contact"
+								   Foreground="{ThemeResource SystemBaseMediumColor}" />
 
-						<HyperlinkButton Grid.Row="9"
+						<HyperlinkButton Grid.Row="5"
 										 Grid.Column="1"
 										 Padding="0"
 										 Content="E-mail"
@@ -849,7 +892,38 @@
 					</Grid>
 				</muxc:Expander>
 
-				<Rectangle Height="20" />
+				<muxc:Expander x:Name="DebugExpander" x:Load="False"
+							   Collapsed="{x:Bind Collapsed}"
+							   Expanding="{x:Bind Expanding}"
+							   IsExpanded="True">
+					<muxc:Expander.Header>
+						<StackPanel Orientation="Horizontal" Spacing="8">
+							<FontIcon FontSize="14" Glyph="&#xEBE8;" />
+							<TextBlock Text="Debug" />
+						</StackPanel>
+					</muxc:Expander.Header>
+					<StackPanel>
+						<Grid>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition />
+								<ColumnDefinition Width="180" />
+							</Grid.ColumnDefinitions>
+							<TextBlock VerticalAlignment="Center" Text="Languages" />
+							<ComboBox Grid.Column="1"
+									  HorizontalAlignment="Stretch"
+									  Loaded="ComboBox_Loaded"
+									  SelectionChanged="ComboBox_SelectionChanged" />
+						</Grid>
+					</StackPanel>
+				</muxc:Expander>
+
+				<HyperlinkButton MaxWidth="{StaticResource MaxItemWidth}"
+								 Margin="12,12,12,30"
+								 HorizontalAlignment="Center"
+								 Content="Made with ❤ by Luandersonn Airton"
+								 Language="en-us"
+								 NavigateUri="https://luandersonn.com" />
+
 			</StackPanel>
 		</ScrollViewer>
 

@@ -48,35 +48,42 @@
 				</Grid.BackgroundTransition>
 				<Grid.ContextFlyout>
 					<MenuFlyout>
-						<MenuFlyoutItem Click="MenuFlyoutItem_Click" Text="Open">
+						<MenuFlyoutItem x:Uid="Open"
+										d:Text="Open"
+										Click="MenuFlyoutItem_Click">
 							<MenuFlyoutItem.Icon>
 								<FontIcon Glyph="&#xE143;" />
 							</MenuFlyoutItem.Icon>
 						</MenuFlyoutItem>
-						<MenuFlyoutItem Command="{x:Bind DownloadCommand}"
-										Icon="Download"
-										Text="Download" />
+						<MenuFlyoutItem x:Uid="Download"
+										d:Text="Download"
+										Command="{x:Bind DownloadCommand}"
+										Icon="Download" />
 
 						<MenuFlyoutSeparator />
 
-						<MenuFlyoutItem Command="{x:Bind DeleteCommand}"
-										Icon="Delete"
-										Text="Delete">
+						<MenuFlyoutItem x:Uid="Delete"
+										d:Text="Delete"
+										Command="{x:Bind DeleteCommand}"
+										Icon="Delete">
 							<MenuFlyoutItem.KeyboardAccelerators>
 								<KeyboardAccelerator Key="Delete" />
 							</MenuFlyoutItem.KeyboardAccelerators>
 						</MenuFlyoutItem>
 
-						<MenuFlyoutItem Command="{x:Bind OpenRenameDialogCommand}"
-										Icon="Rename"
-										Text="Rename">
+						<MenuFlyoutItem x:Uid="Rename"
+										d:Text="Rename"
+										Command="{x:Bind OpenRenameDialogCommand}"
+										Icon="Rename">
 							<MenuFlyoutItem.KeyboardAccelerators>
 								<KeyboardAccelerator Key="F2" />
 							</MenuFlyoutItem.KeyboardAccelerators>
 						</MenuFlyoutItem>
 						<MenuFlyoutSeparator />
 
-						<MenuFlyoutItem IsEnabled="False" Text="Properties">
+						<MenuFlyoutItem x:Uid="Properties"
+										d:Text="Properties"
+										Click="OnOpenProperties">
 							<MenuFlyoutItem.Icon>
 								<FontIcon Glyph="&#xE946;" />
 							</MenuFlyoutItem.Icon>
@@ -114,7 +121,8 @@
 						   FontSize="12"
 						   Foreground="{ThemeResource SystemBaseMediumColor}"
 						   Text="{x:Bind Modified, Converter={StaticResource DateTimeHumanizeConverter}}"
-						   TextTrimming="CharacterEllipsis" />
+						   TextTrimming="CharacterEllipsis"
+						   ToolTipService.ToolTip="{x:Bind Modified.ToLongDateString()}" />
 
 				<TextBlock Grid.Column="4"
 						   VerticalAlignment="Center"
@@ -135,35 +143,58 @@
 			<RowDefinition />
 		</Grid.RowDefinitions>
 
-		<CommandBar Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" DefaultLabelPosition="Right">
+		<CommandBar AccessKey="M"
+					Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+					DefaultLabelPosition="Right">
 			<CommandBar.Content>
 				<StackPanel Orientation="Horizontal">
-					<AppBarButton Width="40"
+					<AppBarButton x:Uid="/FtpDirectoryViewPage/NavigationBackButton"
+								  Width="40"
+								  d:Label="Back"
+								  AccessKey="B"
 								  Click="{x:Bind NavigationHistory.GoBack}"
 								  Icon="Back"
 								  IsEnabled="{x:Bind NavigationHistory.CanGoBack, Mode=OneWay}"
-								  LabelPosition="Collapsed"
-								  ToolTipService.ToolTip="Go Back" />
+								  LabelPosition="Collapsed">
+						<AppBarButton.KeyboardAccelerators>
+							<KeyboardAccelerator Key="Left" Modifiers="Menu" />
+						</AppBarButton.KeyboardAccelerators>
+					</AppBarButton>
 
-					<AppBarButton Width="40"
+					<AppBarButton x:Uid="/FtpDirectoryViewPage/NavigationForwardButton"
+								  Width="40"
+								  d:Label="Forward"
+								  AccessKey="F"
 								  Click="{x:Bind NavigationHistory.GoForward}"
 								  Icon="Forward"
 								  IsEnabled="{x:Bind NavigationHistory.CanGoForward, Mode=OneWay}"
-								  LabelPosition="Collapsed"
-								  ToolTipService.ToolTip="Go Forward" />
+								  LabelPosition="Collapsed">
+						<AppBarButton.KeyboardAccelerators>
+							<KeyboardAccelerator Key="Right" Modifiers="Menu" />
+						</AppBarButton.KeyboardAccelerators>
+					</AppBarButton>
 
-					<AppBarButton Width="40"
-								  Click="AppBarButton_Click"
+					<AppBarButton x:Uid="/FtpDirectoryViewPage/NavigationUpButton"
+								  Width="40"
+								  d:Label="Up"
+								  AccessKey="U"
+								  Click="{x:Bind OnNavigateUp}"
 								  Icon="Up"
 								  IsEnabled="{x:Bind NavigationHistory.CurrentItem.Parent, Converter={StaticResource ItemToBoolConverter}, Mode=OneWay}"
-								  LabelPosition="Collapsed"
-								  ToolTipService.ToolTip="Navigate up one directory level" />
+								  LabelPosition="Collapsed">
+						<AppBarButton.KeyboardAccelerators>
+							<KeyboardAccelerator Key="Up" Modifiers="Menu" />
+						</AppBarButton.KeyboardAccelerators>
+					</AppBarButton>
 
 				</StackPanel>
 			</CommandBar.Content>
 			<AppBarSeparator />
-			<AppBarButton Icon="NewFolder"
-						  Label="New folder"
+      
+			<AppBarButton x:Uid="/FtpDirectoryViewPage/NewFolderButton"
+						  d:Label="New folder"
+						  AccessKey="N"
+						  Icon="NewFolder"
 						  LabelPosition="Collapsed">
 				<AppBarButton.Flyout>
 					<Flyout Opened="{x:Bind FocusNewFolderTextBox, Mode=OneTime}"
@@ -176,14 +207,16 @@
 							</Grid.ColumnDefinitions>
 
 							<TextBox x:Name="createFolderTextbox"
+									 x:Uid="/FtpDirectoryViewPage/CreateFolderTextbox"
 									 VerticalAlignment="Center"
-									 AllowFocusOnInteraction="True"
-									 PlaceholderText="Folder name" />
-							<Button Grid.Column="1"
+									 d:PlaceholderText="Folder name"
+									 AllowFocusOnInteraction="True" />
+							<Button x:Uid="/FtpDirectoryViewPage/CreateFolderButton"
+									Grid.Column="1"
 									VerticalAlignment="Center"
+									d:Content="Create"
 									Command="{x:Bind ViewModel.CreateFolderCommand, Mode=OneWay}"
 									CommandParameter="{x:Bind createFolderTextbox.Text, Mode=OneWay}"
-									Content="Create"
 									Style="{ThemeResource AccentButtonStyle}" />
 						</Grid>
 					</Flyout>
@@ -192,18 +225,25 @@
 					<KeyboardAccelerator Key="N" Modifiers="Control,Shift" />
 				</AppBarButton.KeyboardAccelerators>
 			</AppBarButton>
+
 			<AppBarSeparator />
-			<AppBarButton Icon="Upload" Label="Upload">
+
+			<AppBarButton x:Uid="/FtpDirectoryViewPage/UploadButton"
+						  d:Label="Upload"
+						  AccessKey="O"
+						  Icon="Upload">
 				<AppBarButton.Flyout>
 					<MenuFlyout Placement="Bottom">
-						<MenuFlyoutItem Command="{x:Bind ViewModel.UploadFilesCommand, Mode=OneWay}"
-										Icon="OpenFile"
-										Text="Files">
+						<MenuFlyoutItem x:Uid="/FtpDirectoryViewPage/UploadFileFlyout"
+										d:Text="Files"
+										Command="{x:Bind ViewModel.UploadFilesCommand, Mode=OneWay}"
+										Icon="OpenFile">
 							<MenuFlyoutItem.KeyboardAccelerators>
 								<KeyboardAccelerator Key="O" Modifiers="Control" />
 							</MenuFlyoutItem.KeyboardAccelerators>
 						</MenuFlyoutItem>
-						<MenuFlyoutItem Command="{x:Bind ViewModel.UploadFolderCommand, Mode=OneWay}"
+						<MenuFlyoutItem x:Uid="/FtpDirectoryViewPage/UploadFolderFlyout"
+										Command="{x:Bind ViewModel.UploadFolderCommand, Mode=OneWay}"
 										Icon="NewFolder"
 										Text="Folder">
 							<MenuFlyoutItem.KeyboardAccelerators>
@@ -213,17 +253,23 @@
 					</MenuFlyout>
 				</AppBarButton.Flyout>
 			</AppBarButton>
-			<AppBarButton Command="{x:Bind ViewModel.DownloadCommand, Mode=OneWay}"
+
+			<AppBarButton x:Uid="/FtpDirectoryViewPage/DownloadButton"
+						  d:Label="Download"
+						  AccessKey="D"
+						  Command="{x:Bind ViewModel.DownloadCommand, Mode=OneWay}"
 						  CommandParameter="{x:Bind SelectedItems, Mode=OneWay}"
-						  Icon="Download"
-						  Label="Download">
+						  Icon="Download">
 				<AppBarButton.KeyboardAccelerators>
 					<KeyboardAccelerator Key="S" Modifiers="Control" />
 				</AppBarButton.KeyboardAccelerators>
 			</AppBarButton>
-			<AppBarButton Command="{x:Bind ViewModel.RefreshCommand, Mode=OneWay}"
+
+			<AppBarButton x:Uid="/FtpDirectoryViewPage/RefreshButton"
+						  d:Label="Refresh"
+						  AccessKey="R"
+						  Command="{x:Bind ViewModel.RefreshCommand, Mode=OneWay}"
 						  Icon="Refresh"
-						  Label="Refresh"
 						  LabelPosition="Collapsed">
 				<AppBarButton.KeyboardAccelerators>
 					<KeyboardAccelerator Key="F5" />
@@ -232,23 +278,30 @@
 
 			<CommandBar.SecondaryCommands>
 
-				<AppBarButton Click="{x:Bind SelectAll}"
-							  Icon="SelectAll"
-							  Label="Select all">
+				<AppBarButton x:Uid="/FtpDirectoryViewPage/SelectAllButton"
+							  d:Label="Select all"
+							  Click="{x:Bind SelectAll}"
+							  Icon="SelectAll">
 					<AppBarButton.KeyboardAccelerators>
 						<KeyboardAccelerator Key="A" Modifiers="Control" />
 					</AppBarButton.KeyboardAccelerators>
 				</AppBarButton>
-				<AppBarButton Command="{x:Bind ViewModel.DeleteCommand, Mode=OneWay}"
+
+				<AppBarButton x:Uid="/FtpDirectoryViewPage/DeleteButton"
+							  d:Label="Delete"
+							  Command="{x:Bind ViewModel.DeleteCommand, Mode=OneWay}"
 							  CommandParameter="{x:Bind SelectedItems, Mode=OneWay}"
-							  Icon="Delete"
-							  Label="Delete">
+							  Icon="Delete">
 					<AppBarButton.KeyboardAccelerators>
 						<KeyboardAccelerator Key="Delete" />
 					</AppBarButton.KeyboardAccelerators>
 				</AppBarButton>
+
 				<AppBarSeparator />
-				<AppBarButton IsEnabled="False" Label="Properties">
+
+				<AppBarButton x:Uid="/FtpDirectoryViewPage/PropertiesButton"
+							  d:Label="Properties"
+							  IsEnabled="False">
 					<AppBarButton.Icon>
 						<FontIcon Glyph="&#xE946;" />
 					</AppBarButton.Icon>
@@ -298,11 +351,13 @@
 					<Grid.Resources>
 						<Style TargetType="TextBlock">
 							<Setter Property="VerticalAlignment" Value="Center" />
+							<Setter Property="TextTrimming" Value="CharacterEllipsis" />
 						</Style>
 					</Grid.Resources>
-					<TextBlock Grid.ColumnSpan="2"
-							   FontSize="12"
-							   Text="Name" />
+					<TextBlock x:Uid="/FtpDirectoryViewPage/ListViewHeaderName"
+							   Grid.ColumnSpan="2"
+							   d:Text="Name"
+							   FontSize="12" />
 
 					<Rectangle Grid.Column="1"
 							   Width="1"
@@ -311,9 +366,10 @@
 							   Fill="{ThemeResource SystemBaseLowColor}" />
 
 
-					<TextBlock Grid.Column="2"
-							   FontSize="12"
-							   Text="Size" />
+					<TextBlock x:Uid="/FtpDirectoryViewPage/ListViewHeaderSize"
+							   Grid.Column="2"
+							   d:Text="Size"
+							   FontSize="12" />
 
 					<Rectangle Grid.Column="2"
 							   Width="1"
@@ -322,9 +378,10 @@
 							   Fill="{ThemeResource SystemBaseLowColor}" />
 
 
-					<TextBlock Grid.Column="3"
-							   FontSize="12"
-							   Text="Modified" />
+					<TextBlock x:Uid="/FtpDirectoryViewPage/ListViewHeaderModified"
+							   Grid.Column="3"
+							   d:Text="Modified"
+							   FontSize="12" />
 
 					<Rectangle Grid.Column="3"
 							   Width="1"
@@ -332,9 +389,10 @@
 							   VerticalAlignment="Stretch"
 							   Fill="{ThemeResource SystemBaseLowColor}" />
 
-					<TextBlock Grid.Column="4"
-							   FontSize="12"
-							   Text="Permissions" />
+					<TextBlock x:Uid="/FtpDirectoryViewPage/ListViewHeaderPermissions"
+							   Grid.Column="4"
+							   d:Text="Permissions"
+							   FontSize="12" />
 				</Grid>
 			</ListViewBase.Header>
 		</ListView>
@@ -347,9 +405,10 @@
 					<toolkit:Case Value="True">
 						<toolkit:SwitchPresenter TargetType="x:Int32" Value="{x:Bind ViewModel.Items.Count, Mode=OneWay}">
 							<toolkit:Case Value="0">
-								<TextBlock HorizontalAlignment="Center"
+								<TextBlock x:Uid="/FtpDirectoryViewPage/EmptyFolderMessage"
+										   HorizontalAlignment="Center"
 										   VerticalAlignment="Center"
-										   Text="This folder is empty" />
+										   d:Text="This folder is empty" />
 							</toolkit:Case>
 						</toolkit:SwitchPresenter>
 					</toolkit:Case>
@@ -359,11 +418,12 @@
 								<muxc:ProgressBar Margin="50" IsIndeterminate="True" />
 							</toolkit:Case>
 							<toolkit:Case Value="False">
-								<Button MinWidth="120"
+								<Button x:Uid="/FtpDirectoryViewPage/LoadItemsButton"
+										MinWidth="120"
 										HorizontalAlignment="Center"
 										VerticalAlignment="Center"
+										d:Content="Load items"
 										Command="{x:Bind ViewModel.RefreshCommand, Mode=OneWay}"
-										Content="Load items"
 										Style="{ThemeResource AccentButtonStyle}" />
 							</toolkit:Case>
 						</toolkit:SwitchPresenter>
@@ -423,7 +483,8 @@
 						  FontSize="30"
 						  Glyph="&#xE11C;" />
 
-				<TextBlock MaxLines="2"
+				<TextBlock x:Uid="/FtpDirectoryViewPage/DragAndDropArea"
+						   MaxLines="2"
 						   Text="Drop here to upload to this folder"
 						   TextAlignment="Center"
 						   TextTrimming="CharacterEllipsis"

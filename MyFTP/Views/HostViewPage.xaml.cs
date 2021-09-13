@@ -49,11 +49,8 @@ namespace MyFTP.Views
 				_onTreeViewSelectedItemChangedToken = treeView.RegisterPropertyChangedCallback(muxc.TreeView.SelectedItemProperty, OnSelectedItemChanged);
 				Window.Current.CoreWindow.PointerPressed += OnCoreWindowPointerPressed;
 
-				this.AddKeyboardAccelerator(VirtualKey.Back, OnAcceleratorRequested);
-				this.AddKeyboardAccelerator(VirtualKey.Left, VirtualKeyModifiers.Menu, OnAcceleratorRequested);
-				this.AddKeyboardAccelerator(VirtualKey.Right, VirtualKeyModifiers.Menu, OnAcceleratorRequested);
-				this.AddKeyboardAccelerator(VirtualKey.N, VirtualKeyModifiers.Control, OnAcceleratorRequested);
-				this.AddKeyboardAccelerator(VirtualKey.O, VirtualKeyModifiers.Control | VirtualKeyModifiers.Shift, OnAcceleratorRequested);
+				this.AddKeyboardAccelerator(VirtualKey.Back, OnAcceleratorRequested);				
+				this.AddKeyboardAccelerator(VirtualKey.N, VirtualKeyModifiers.Control, OnAcceleratorRequested);				
 				this.AddKeyboardAccelerator(VirtualKey.W, VirtualKeyModifiers.Control, OnAcceleratorRequested);
 				this.AddKeyboardAccelerator(VirtualKey.F11, OnAcceleratorRequested);
 
@@ -186,28 +183,12 @@ namespace MyFTP.Views
 					var item = NavigationHistory.CurrentItem.Parent;
 					NavigationHistory.NavigateTo(item, NavigationHistory.CurrentItemIndex + 1);
 					args.Handled = true;
-					break;
-
-				case VirtualKey.Left when args.KeyboardAccelerator.Modifiers == VirtualKeyModifiers.Menu:
-					args.Handled = NavigationHistory.GoBack();
-					break;
-
-				case VirtualKey.Right when args.KeyboardAccelerator.Modifiers == VirtualKeyModifiers.Menu:
-					args.Handled = NavigationHistory.GoForward();
-					break;
+					break;				
 
 				case VirtualKey.N when args.KeyboardAccelerator.Modifiers == VirtualKeyModifiers.Control:
 					args.Handled = true;
 					await NewConnectionAsync();
-					break;
-
-				case VirtualKey.O when args.KeyboardAccelerator.Modifiers == (VirtualKeyModifiers.Control | VirtualKeyModifiers.Shift)
-												&& treeView.SelectedItem is FtpListItemViewModel dir
-												&& dir.IsDirectory
-												&& dir.UploadFolderCommand.CanExecute(null):
-					dir.UploadFolderCommand.Execute(null);
-					args.Handled = true;
-					break;
+					break;				
 
 				case VirtualKey.W when args.KeyboardAccelerator.Modifiers == VirtualKeyModifiers.Control
 												&& ViewModel.DisconnectCommand.CanExecute(treeView.SelectedItem):

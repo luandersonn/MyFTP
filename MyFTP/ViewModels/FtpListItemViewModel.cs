@@ -1,4 +1,5 @@
 ﻿using FluentFTP;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.Input;
 using Microsoft.Toolkit.Mvvm.Messaging;
 using MyFTP.Collections;
@@ -26,6 +27,8 @@ namespace MyFTP.ViewModels
 		private bool _isRenameDialogOpen;
 		private bool _isRenaming;
 		private FtpPermission _ownerPermissions;
+		private FtpPermission _groupPermissions;
+		private FtpPermission _othersPermissions;
 		private string _name;
 		private FtpListItemViewModel _parent;
 		private readonly FtpListItem _ftpItem;
@@ -78,6 +81,8 @@ namespace MyFTP.ViewModels
 			Size = item.Size;
 			Modified = item.Modified;
 			OwnerPermissions = item.OwnerPermissions;
+			GroupPermissions = item.GroupPermissions;
+			OthersPermissions = item.OthersPermissions;
 		}
 		#endregion
 
@@ -95,6 +100,8 @@ namespace MyFTP.ViewModels
 			}
 		}
 		public FtpPermission OwnerPermissions { get => _ownerPermissions; private set => Set(ref _ownerPermissions, value); }
+		public FtpPermission GroupPermissions { get => _groupPermissions; private set => Set(ref _groupPermissions, value); }
+		public FtpPermission OthersPermissions { get => _othersPermissions; private set => Set(ref _othersPermissions, value); }
 		public FtpListItemViewModel Parent { get => _parent; private set => Set(ref _parent, value); }
 		public FtpFileSystemObjectType Type { get; }
 		public FtpFileSystemObjectSubType SubType { get; }
@@ -240,7 +247,7 @@ namespace MyFTP.ViewModels
 				if (arg != null && arg.Any())
 				{
 					arg = arg.ToList(); // Force linq execution
-					// Delete collection of items
+										// Delete collection of items
 					if (await _dialogService.AskForDeleteAsync(arg))
 					{
 						foreach (var item in arg)
@@ -254,7 +261,7 @@ namespace MyFTP.ViewModels
 								if (item.Parent != null)
 									item.Parent._items.RemoveItem(item);
 							}
-							catch(Exception e)
+							catch (Exception e)
 							{
 								_weakMessenger.Send<ErrorMessage>(new ErrorMessage(e));
 							}
@@ -307,7 +314,11 @@ namespace MyFTP.ViewModels
 				RenameCommand.NotifyCanExecuteChanged();
 				var newRemotePath = FullName.Substring(0, FullName.Length - Name.Length) + newItemName;
 				if (await Client.DirectoryExistsAsync(newRemotePath, token) || await Client.FileExistsAsync(newRemotePath))
-					throw new FtpException("This name is already used by a directory or file");
+				{
+					// "This name is already used by a directory or file"
+					var message = GetLocalized("NameAlreadyUsed");
+					throw new FtpException(message);
+				}
 				await Client.RenameAsync(FullName, newRemotePath, token: token);
 				Name = newItemName;
 				OnPropertyChanged(nameof(FullName));
@@ -436,7 +447,7 @@ namespace MyFTP.ViewModels
 
 		public async void DropItems(IEnumerable<IDragTarget> items)
 		{
-			int success = 0, error = 0;
+			int successCount = 0, errorCount = 0;
 			foreach (var item in items.Cast<FtpListItemViewModel>())
 			{
 				try
@@ -456,7 +467,7 @@ namespace MyFTP.ViewModels
 
 					if (hasSuccess)
 					{
-						success++;
+						successCount++;
 						item.Parent?._items.RemoveItem(item);
 						item.Parent = this;
 						OnPropertyChanged(FullName);
@@ -464,17 +475,21 @@ namespace MyFTP.ViewModels
 					}
 					else
 					{
-						error++;
+						errorCount++;
 					}
 				}
 				catch
 				{
-					error++;
+					errorCount++;
 				}
 			}
 
-			if (error != 0)
-				_weakMessenger.Send(new ErrorMessage(new Exception($"{error} items cannot be moved")));
+			if (errorCount != 0)
+			{
+				// "Items cannot be moved"
+				var message = string.Format("{0}: {1}", GetLocalized("ItemsCannotBeMoved"), errorCount);
+				_weakMessenger.Send(new ErrorMessage(new FtpException(message)));
+			}
 		}
 
 		public void DropItems(IReadOnlyList<IStorageItem> items)
@@ -495,6 +510,13 @@ namespace MyFTP.ViewModels
 
 		public bool IsDragItemSupported(IDragTarget item) => item.GetType() == typeof(FtpListItemViewModel) && item != this;
 
+		private string GetLocalized(string resourceName)
+		{
+			var settings = App.Current.Services.GetService<ISettings>();
+			if (settings == null)
+				return "[Error: No ISettings service]";
+			return settings.GetStringFromResource(resourceName, "Messages");
+		}
 		#endregion
 	}
 }

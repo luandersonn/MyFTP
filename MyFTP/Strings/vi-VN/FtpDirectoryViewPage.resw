@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="NavigationForwardButton.Label" xml:space="preserve">
+    <value>Đi trước</value>
+  </data>
+  <data name="NavigationBackButton.Label" xml:space="preserve">
+    <value>Đi về</value>
+  </data>
+  <data name="NavigationUpButton.Label" xml:space="preserve">
+    <value>Đi lên</value>
+  </data>
+  <data name="DeleteButton.Label" xml:space="preserve">
+    <value>Xóa</value>
+  </data>
+  <data name="DownloadButton.Label" xml:space="preserve">
+    <value>Tải về</value>
+  </data>
+  <data name="NewFolderButton.Label" xml:space="preserve">
+    <value>Tệp mới</value>
+  </data>
+  <data name="PropertiesButton.Label" xml:space="preserve">
+    <value>Các thuộc tính</value>
+  </data>
+  <data name="RefreshButton.Label" xml:space="preserve">
+    <value>Làm mới</value>
+  </data>
+  <data name="SelectAllButton.Label" xml:space="preserve">
+    <value>Chọn tất cả</value>
+  </data>
+  <data name="UploadButton.Label" xml:space="preserve">
+    <value>Tải lên</value>
+  </data>
+  <data name="CreateFolderButton.Content" xml:space="preserve">
+    <value>Tạo</value>
+  </data>
+  <data name="CreateFolderTextbox.PlaceholderText" xml:space="preserve">
+    <value>Tên tệp</value>
+  </data>
+  <data name="UploadFileFlyout.Text" xml:space="preserve">
+    <value>Files</value>
+  </data>
+  <data name="UploadFolderFlyout.Text" xml:space="preserve">
+    <value>Tệp</value>
+  </data>
+  <data name="DragAndDropArea.Text" xml:space="preserve">
+    <value>Hãy thả ở đây để tải lên</value>
+  </data>
+  <data name="EmptyFolderMessage.Text" xml:space="preserve">
+    <value>Tệp này đang rỗng</value>
+  </data>
+  <data name="LoadItemsButton.Content" xml:space="preserve">
+    <value>Tải dữ liệu</value>
+  </data>
+  <data name="ListViewHeaderModified.Text" xml:space="preserve">
+    <value>Tùy chỉnh</value>
+  </data>
+  <data name="ListViewHeaderName.Text" xml:space="preserve">
+    <value>Tên</value>
+  </data>
+  <data name="ListViewHeaderPermissions.Text" xml:space="preserve">
+    <value>Quyền truy cập</value>
+  </data>
+  <data name="ListViewHeaderSize.Text" xml:space="preserve">
+    <value>Dung lượng</value>
+  </data>
+</root>
