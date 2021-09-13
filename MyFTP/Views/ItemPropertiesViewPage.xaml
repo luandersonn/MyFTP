@@ -1,0 +1,178 @@
+﻿<Page x:Class="MyFTP.Views.ItemPropertiesViewPage"
+	  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	  xmlns:local="using:MyFTP.Views"
+	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	  xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+	  Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+	  mc:Ignorable="d">
+
+	<Grid MaxWidth="450"
+		  Padding="12,4"
+		  ColumnSpacing="12"
+		  CornerRadius="8">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="30" />
+			<RowDefinition Height="25" />
+			<RowDefinition Height="25" />
+			<RowDefinition Height="35" />
+			<RowDefinition Height="25" />
+			<RowDefinition />
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="auto" />
+			<ColumnDefinition />
+		</Grid.ColumnDefinitions>
+
+		<Image Grid.RowSpan="3" HorizontalAlignment="Left">
+			<Image.Source>
+				<BitmapImage x:Name="image" />
+			</Image.Source>
+		</Image>
+
+		<TextBlock Grid.Column="1"
+				   VerticalAlignment="Center"
+				   FontSize="20"
+				   FontWeight="Bold"
+				   Text="{x:Bind ViewModel.Name}"
+				   TextWrapping="Wrap" />
+
+		<TextBlock x:Name="contentTypeTextBlock"
+				   Grid.Row="1"
+				   Grid.Column="1"
+				   Opacity="0.6" />
+
+		<TextBlock Grid.Row="2"
+				   Grid.Column="1"
+				   Text="{x:Bind ViewModel.Size, Converter={StaticResource SizeInBytesHumanizeConverter}}" />
+
+		<TextBlock Grid.Row="3"
+				   VerticalAlignment="Bottom"
+				   Opacity="0.6"
+				   Text="Full Name:" />
+
+		<TextBlock Grid.Row="3"
+				   Grid.Column="1"
+				   VerticalAlignment="Bottom"
+				   IsTextSelectionEnabled="True"
+				   Text="{x:Bind ViewModel.FullName}" />
+
+		<TextBlock Grid.Row="4"
+				   Opacity="0.6"
+				   Text="Modified:" />
+		<TextBlock Grid.Row="4"
+				   Grid.Column="1"
+				   Text="{x:Bind ViewModel.Modified.Date}" />
+
+		<StackPanel Grid.Row="5"
+					Grid.ColumnSpan="2"
+					Padding="12"
+					VerticalAlignment="Top"
+					BorderBrush="{ThemeResource SystemBaseLowColor}"
+					BorderThickness="1"
+					CornerRadius="4">
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition />
+					<ColumnDefinition />
+					<ColumnDefinition />
+					<ColumnDefinition />
+				</Grid.ColumnDefinitions>
+				<TextBlock Text="Permissions:" />
+				<TextBlock Grid.Column="1"
+						   HorizontalAlignment="Center"
+						   Text="Read" />
+				<TextBlock Grid.Column="2"
+						   HorizontalAlignment="Center"
+						   Text="Write" />
+				<TextBlock Grid.Column="3"
+						   HorizontalAlignment="Center"
+						   Text="Execute" />
+			</Grid>
+
+			<Rectangle Height="1"
+					   Margin="0,8"
+					   HorizontalAlignment="Stretch"
+					   Fill="{ThemeResource SystemBaseLowColor}" />
+
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition />
+					<ColumnDefinition />
+					<ColumnDefinition />
+					<ColumnDefinition />
+				</Grid.ColumnDefinitions>
+				<TextBlock Text="Owner" />
+				<CheckBox Grid.Column="1"
+						  MinWidth="0"
+						  HorizontalAlignment="Center"
+						  IsChecked="{x:Bind CanRead(ViewModel.OwnerPermissions)}"
+						  IsEnabled="False" />
+				<CheckBox Grid.Column="2"
+						  MinWidth="0"
+						  HorizontalAlignment="Center"
+						  IsChecked="{x:Bind CanWrite(ViewModel.OwnerPermissions)}"
+						  IsEnabled="False" />
+				<CheckBox Grid.Column="3"
+						  MinWidth="0"
+						  HorizontalAlignment="Center"
+						  IsChecked="{x:Bind CanExecute(ViewModel.OwnerPermissions)}"
+						  IsEnabled="False" />
+			</Grid>
+
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition />
+					<ColumnDefinition />
+					<ColumnDefinition />
+					<ColumnDefinition />
+				</Grid.ColumnDefinitions>
+				<TextBlock Text="Group" />
+
+				<CheckBox Grid.Column="1"
+						  MinWidth="0"
+						  HorizontalAlignment="Center"
+						  IsChecked="{x:Bind CanRead(ViewModel.GroupPermissions)}"
+						  IsEnabled="False" />
+				<CheckBox Grid.Column="2"
+						  MinWidth="0"
+						  HorizontalAlignment="Center"
+						  IsChecked="{x:Bind CanWrite(ViewModel.GroupPermissions)}"
+						  IsEnabled="False" />
+				<CheckBox Grid.Column="3"
+						  MinWidth="0"
+						  HorizontalAlignment="Center"
+						  IsChecked="{x:Bind CanExecute(ViewModel.GroupPermissions)}"
+						  IsEnabled="False" />
+			</Grid>
+
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition />
+					<ColumnDefinition />
+					<ColumnDefinition />
+					<ColumnDefinition />
+				</Grid.ColumnDefinitions>
+				<TextBlock Text="Others" />
+
+				<CheckBox Grid.Column="1"
+						  MinWidth="0"
+						  HorizontalAlignment="Center"
+						  IsChecked="{x:Bind CanRead(ViewModel.OthersPermissions)}"
+						  IsEnabled="False" />
+				<CheckBox Grid.Column="2"
+						  MinWidth="0"
+						  HorizontalAlignment="Center"
+						  IsChecked="{x:Bind CanWrite(ViewModel.OthersPermissions)}"
+						  IsEnabled="False" />
+				<CheckBox Grid.Column="3"
+						  MinWidth="0"
+						  HorizontalAlignment="Center"
+						  IsChecked="{x:Bind CanExecute(ViewModel.OthersPermissions)}"
+						  IsEnabled="False" />
+			</Grid>
+		</StackPanel>
+
+	</Grid>
+</Page>

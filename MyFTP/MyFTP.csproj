@@ -169,6 +169,7 @@
     <Compile Include="Utils\IconHelper.cs" />
     <Compile Include="Utils\NavigationHistory.cs" />
     <Compile Include="Utils\FtpHostSettings.cs" />
+    <Compile Include="Utils\WindowHelper.cs" />
     <Compile Include="ViewModels\FtpHostSettingsViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="Utils\Comparers\FtpListItemComparer.cs" />
@@ -181,6 +182,9 @@
     <Compile Include="ViewModels\UpdateServiceViewModel.cs" />
     <Compile Include="Views\FtpDirectoryViewPage.xaml.cs">
       <DependentUpon>FtpDirectoryViewPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ItemPropertiesViewPage.xaml.cs">
+      <DependentUpon>ItemPropertiesViewPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LoginViewPage.xaml.cs">
       <DependentUpon>LoginViewPage.xaml</DependentUpon>
@@ -290,6 +294,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\FtpDirectoryViewPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ItemPropertiesViewPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
