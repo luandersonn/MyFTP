@@ -49,8 +49,8 @@ namespace MyFTP.Views
 				_onTreeViewSelectedItemChangedToken = treeView.RegisterPropertyChangedCallback(muxc.TreeView.SelectedItemProperty, OnSelectedItemChanged);
 				Window.Current.CoreWindow.PointerPressed += OnCoreWindowPointerPressed;
 
-				this.AddKeyboardAccelerator(VirtualKey.Back, OnAcceleratorRequested);				
-				this.AddKeyboardAccelerator(VirtualKey.N, VirtualKeyModifiers.Control, OnAcceleratorRequested);				
+				this.AddKeyboardAccelerator(VirtualKey.Back, OnAcceleratorRequested);
+				this.AddKeyboardAccelerator(VirtualKey.N, VirtualKeyModifiers.Control, OnAcceleratorRequested);
 				this.AddKeyboardAccelerator(VirtualKey.W, VirtualKeyModifiers.Control, OnAcceleratorRequested);
 				this.AddKeyboardAccelerator(VirtualKey.F11, OnAcceleratorRequested);
 
@@ -183,12 +183,12 @@ namespace MyFTP.Views
 					var item = NavigationHistory.CurrentItem.Parent;
 					NavigationHistory.NavigateTo(item, NavigationHistory.CurrentItemIndex + 1);
 					args.Handled = true;
-					break;				
+					break;
 
 				case VirtualKey.N when args.KeyboardAccelerator.Modifiers == VirtualKeyModifiers.Control:
 					args.Handled = true;
 					await NewConnectionAsync();
-					break;				
+					break;
 
 				case VirtualKey.W when args.KeyboardAccelerator.Modifiers == VirtualKeyModifiers.Control
 												&& ViewModel.DisconnectCommand.CanExecute(treeView.SelectedItem):
@@ -219,6 +219,20 @@ namespace MyFTP.Views
 			infoBar.Severity = Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error;
 			infoBar.IsOpen = true;
 			Debug.WriteLineIf(e != null, e);
+		}
+
+		private async void OnNewConnectionMenuFlyoutClick(object sender, RoutedEventArgs e)
+		{
+			var element = (Control)sender;
+			try
+			{
+				element.IsEnabled = false;
+				await NewConnectionAsync();
+			}
+			finally
+			{
+				element.IsEnabled = true;
+			}
 		}
 
 		private void OnButtonUpClicked(object sender, RoutedEventArgs args)

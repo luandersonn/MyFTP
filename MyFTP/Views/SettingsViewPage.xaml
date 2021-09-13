@@ -388,12 +388,11 @@
 									   Grid.Row="2"
 									   Grid.Column="1" />
 							<!--#endregion-->
-
+              
 							<!--#region BACKSPACE-->
 							<StackPanel Grid.Row="3"
 										Orientation="Horizontal"
 										Spacing="4">
-
 								<Border x:Uid="/SettingsViewPage/KeyboardShortcutsBackspaceKey" MinWidth="114">
 									<FontIcon FontSize="14" Glyph="&#xE750;" />
 								</Border>
@@ -850,7 +849,8 @@
 										 Content="GitHub"
 										 NavigateUri="https://github.com/luandersonn/MyFTP" />
 
-						<TextBlock x:Uid="/SettingsViewPage/AboutSupportTheDevLabel"
+						<TextBlock x:Name="supportTheDevTextBlock"
+								   x:Uid="/SettingsViewPage/AboutSupportTheDevLabel"
 								   Grid.Row="3"
 								   d:Text="Support the dev"
 								   Foreground="{ThemeResource SystemBaseMediumColor}" />
@@ -858,10 +858,12 @@
 						<HyperlinkButton Grid.Row="3"
 										 Grid.Column="1"
 										 Padding="0"
+										 AutomationProperties.LabeledBy="{x:Bind supportTheDevTextBlock}"
 										 Content="Buy me a coffee"
 										 NavigateUri="https://www.buymeacoffee.com/luandersonn1" />
 
-						<TextBlock x:Uid="/SettingsViewPage/AboutReviewLabel"
+						<TextBlock x:Name="reviewTextBlock"
+								   x:Uid="/SettingsViewPage/AboutReviewLabel"
 								   Grid.Row="4"
 								   d:Text="Review"
 								   Foreground="{ThemeResource SystemBaseMediumColor}" />
@@ -869,10 +871,11 @@
 						<HyperlinkButton Grid.Row="4"
 										 Grid.Column="1"
 										 Padding="0"
+										 AutomationProperties.LabeledBy="{x:Bind reviewTextBlock}"
 										 Click="OnReviewButtonClicked"
 										 Content="Microsoft Store" />
-
-						<TextBlock x:Uid="/SettingsViewPage/AboutContactLabel"
+						<TextBlock x:Name="contactTextBlock"
+								   x:Uid="/SettingsViewPage/AboutContactLabel"
 								   Grid.Row="5"
 								   d:Text="Contact"
 								   Foreground="{ThemeResource SystemBaseMediumColor}" />
@@ -880,22 +883,19 @@
 						<HyperlinkButton Grid.Row="5"
 										 Grid.Column="1"
 										 Padding="0"
+										 AutomationProperties.LabeledBy="{x:Bind contactTextBlock}"
 										 Content="E-mail"
 										 NavigateUri="mailto:luan.airton.ss+myftp@gmail.com" />
-
-						<HyperlinkButton Grid.Row="10"
-										 Grid.ColumnSpan="2"
-										 HorizontalAlignment="Center"
-										 Content="Luandersonn"
-										 NavigateUri="https://luandersonn.com" />
 
 					</Grid>
 				</muxc:Expander>
 
 				<muxc:Expander x:Name="DebugExpander" x:Load="False"
+							   AutomationProperties.Name="Debug"
 							   Collapsed="{x:Bind Collapsed}"
 							   Expanding="{x:Bind Expanding}"
-							   IsExpanded="True">
+							   IsExpanded="True"
+							   Language="en-us">
 					<muxc:Expander.Header>
 						<StackPanel Orientation="Horizontal" Spacing="8">
 							<FontIcon FontSize="14" Glyph="&#xEBE8;" />
@@ -908,9 +908,12 @@
 								<ColumnDefinition />
 								<ColumnDefinition Width="180" />
 							</Grid.ColumnDefinitions>
-							<TextBlock VerticalAlignment="Center" Text="Languages" />
+							<TextBlock x:Name="langsTextBlock"
+									   VerticalAlignment="Center"
+									   Text="Languages" />
 							<ComboBox Grid.Column="1"
 									  HorizontalAlignment="Stretch"
+									  AutomationProperties.LabeledBy="{x:Bind langsTextBlock}"
 									  Loaded="ComboBox_Loaded"
 									  SelectionChanged="ComboBox_SelectionChanged" />
 						</Grid>
