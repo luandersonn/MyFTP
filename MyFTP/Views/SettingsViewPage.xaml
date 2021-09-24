@@ -7,6 +7,7 @@
 	  xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
 	  xmlns:toolkit="using:Microsoft.Toolkit.Uwp.UI.Controls"
 	  xmlns:viewmodels="using:MyFTP.ViewModels"
+	  muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
 	  d:Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	  mc:Ignorable="d">
 
@@ -132,8 +133,7 @@
 		</Grid>
 
 		<ScrollViewer Grid.Row="3"
-					  Padding="18,0"
-					  muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
+					  Padding="18,0"					  
 					  Transitions="{StaticResource DefaultTransitions}"
 					  VerticalScrollBarVisibility="Auto">
 
