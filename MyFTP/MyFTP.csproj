@@ -359,6 +359,13 @@
     <None Include="..\.editorconfig">
       <Link>.editorconfig</Link>
     </None>
+    <PRIResource Include="Strings\it-IT\SettingsViewPage.resw" />
+    <PRIResource Include="Strings\it-IT\Resources.resw" />
+    <PRIResource Include="Strings\it-IT\Messages.resw" />
+    <PRIResource Include="Strings\it-IT\LoginViewPage.resw" />
+    <PRIResource Include="Strings\it-IT\HostViewPage.resw" />
+    <PRIResource Include="Strings\it-IT\FtpDirectoryViewPage.resw" />
+    <PRIResource Include="Strings\it-IT\Dialogs.resw" />
     <PRIResource Include="Strings\vi-VN\FtpDirectoryViewPage.resw" />
     <PRIResource Include="Strings\pt-BR\FtpDirectoryViewPage.resw" />
     <PRIResource Include="Strings\fr-fr\FtpDirectoryViewPage.resw" />
@@ -392,6 +399,7 @@
   <ItemGroup />
   <ItemGroup>
     <XliffResource Include="MultilingualResources\MyFTP.fr-FR.xlf" />
+    <XliffResource Include="MultilingualResources\MyFTP.it-IT.xlf" />
     <XliffResource Include="MultilingualResources\MyFTP.pt-BR.xlf" />
     <XliffResource Include="MultilingualResources\MyFTP.vi-VN.xlf" />
   </ItemGroup>

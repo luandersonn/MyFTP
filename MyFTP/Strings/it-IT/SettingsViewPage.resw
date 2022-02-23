@@ -1,0 +1,300 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AboutAppVersionLabel.Text" xml:space="preserve">
+    <value>Versione</value>
+  </data>
+  <data name="AboutContactLabel.Text" xml:space="preserve">
+    <value>Contatti</value>
+  </data>
+  <data name="AboutExpanderHeader.Text" xml:space="preserve">
+    <value>Informazioni</value>
+  </data>
+  <data name="AboutReviewLabel.Text" xml:space="preserve">
+    <value>Recensisci</value>
+  </data>
+  <data name="AboutSourceCodeLabel.Text" xml:space="preserve">
+    <value>Codice sorgente</value>
+  </data>
+  <data name="AboutSupportTheDevLabel.Text" xml:space="preserve">
+    <value>Supporta gli sviluppatori</value>
+  </data>
+  <data name="AppThemeDark.Text" xml:space="preserve">
+    <value>Scuro</value>
+  </data>
+  <data name="AppThemeDefault.Text" xml:space="preserve">
+    <value>Predefinito di Windows</value>
+  </data>
+  <data name="AppThemeLabel.Text" xml:space="preserve">
+    <value>Tema</value>
+  </data>
+  <data name="AppThemeLight.Text" xml:space="preserve">
+    <value>Chiaro</value>
+  </data>
+  <data name="BackButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Indietro</value>
+  </data>
+  <data name="BackButton.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Indietro</value>
+  </data>
+  <data name="CollapseAllButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Comprimi tutte le sezioni</value>
+  </data>
+  <data name="CollapseAllButtonText.Text" xml:space="preserve">
+    <value>Comprimi tutto</value>
+  </data>
+  <data name="DefaultSaveFolder.Text" xml:space="preserve">
+    <value>Cartella di salvataggio predefinita</value>
+  </data>
+  <data name="DownloadUpdateButton.Content" xml:space="preserve">
+    <value>Download</value>
+  </data>
+  <data name="DownloadUpdateButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Scarica aggiornamenti</value>
+  </data>
+  <data name="ExpandAllButton.[using:Windows.UI.Xaml.Automation]AutomationProperties.Name" xml:space="preserve">
+    <value>Espandi tutte le sezioni</value>
+  </data>
+  <data name="ExpandAllButtonText.Text" xml:space="preserve">
+    <value>Espandi tutto</value>
+  </data>
+  <data name="HostsExpanderHeader.Text" xml:space="preserve">
+    <value>Hosts</value>
+  </data>
+  <data name="InfoBarUpdate.Message" xml:space="preserve">
+    <value>L'app si riavvierà al termine dell'aggiornamento</value>
+  </data>
+  <data name="InfoBarUpdate.Title" xml:space="preserve">
+    <value>È disponibile una nuova versione di MyFTP</value>
+  </data>
+  <data name="KeyboardShortcutsAltKey.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Tasto Alt</value>
+  </data>
+  <data name="KeyboardShortcutsBackspaceKey.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Tasto Backspace</value>
+  </data>
+  <data name="KeyboardShortcutsDeleteKey.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Tasto Canc</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionAlt+F4.Text" xml:space="preserve">
+    <value>Esci dall'app</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionAlt+LeftArrow.Text" xml:space="preserve">
+    <value>Vai alla cartella precedente</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionAlt+RightArrow.Text" xml:space="preserve">
+    <value>Vai alla cartella successiva</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionAlt+UpArrow.Text" xml:space="preserve">
+    <value>Vai alla cartella superiore</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionBackspace.Text" xml:space="preserve">
+    <value>Vai alla cartella superiore</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionCtrl+A.Text" xml:space="preserve">
+    <value>Seleziona/deseleziona tutti gli elementi nella cartella corrente</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionCtrl+N.Text" xml:space="preserve">
+    <value>Crea una connessione con un nuovo host</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionCtrl+O.Text" xml:space="preserve">
+    <value>Seleziona file da caricare nella cartella corrente</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionCtrl+S.Text" xml:space="preserve">
+    <value>Aggiungi gli elementi selezionati alla coda di download</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionCtrl+Shift+N.Text" xml:space="preserve">
+    <value>Crea una nuova cartella nella posizione corrente</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionCtrl+Shift+O.Text" xml:space="preserve">
+    <value>Seleziona cartella da caricare nella posizione corrente</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionCtrl+W.Text" xml:space="preserve">
+    <value>Disconnetti dall'host attivo</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionDelete.Text" xml:space="preserve">
+    <value>Elementi gli elementi selezionati</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionF11.Text" xml:space="preserve">
+    <value>Entra o esci dalla modalità Schermo intero</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionF2.Text" xml:space="preserve">
+    <value>Rinomina l'elemento selezionato</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionF5.Text" xml:space="preserve">
+    <value>Aggiorna la cartella corrente</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionLeftArrow.Text" xml:space="preserve">
+    <value>Comprimi la selezione corrente (se espansa), o seleziona la cartella superiore (visualizzazione albero)</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionRightArrow.Text" xml:space="preserve">
+    <value>Visualizza la selezione corrente (se compressa), o seleziona la prima sottocartella (visualizzazione albero)</value>
+  </data>
+  <data name="KeyboardShortcutsDescriptionShift+Win+Enter.Text" xml:space="preserve">
+    <value>Entra o esci dalla modalità Schermo intero</value>
+  </data>
+  <data name="KeyboardShortcutsEnterKey.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Tasto Invio</value>
+  </data>
+  <data name="KeyboardShortcutsExpanderHeader.Text" xml:space="preserve">
+    <value>Scorciatoie da tastiera</value>
+  </data>
+  <data name="KeyboardShortcutsLeftArrowKey.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Tasto freccia sinistra</value>
+  </data>
+  <data name="KeyboardShortcutsRightArrowKey.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Tasto freccia destra</value>
+  </data>
+  <data name="KeyboardShortcutsSectionActions.Text" xml:space="preserve">
+    <value>Azioni</value>
+  </data>
+  <data name="KeyboardShortcutsSectionNavigation.Text" xml:space="preserve">
+    <value>Navigazione</value>
+  </data>
+  <data name="KeyboardShortcutsSectionWindow.Text" xml:space="preserve">
+    <value>Finestra</value>
+  </data>
+  <data name="KeyboardShortcutsUpArrowKey.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Tasto freccia su</value>
+  </data>
+  <data name="KeyboardShortcutsWindowsKey.[using:Windows.UI.Xaml.Controls]ToolTipService.ToolTip" xml:space="preserve">
+    <value>Tasto Windows</value>
+  </data>
+  <data name="NoSavedHostsCase.Text" xml:space="preserve">
+    <value>Nessun host salvato</value>
+  </data>
+  <data name="PersonalizationExpanderHeader.Text" xml:space="preserve">
+    <value>Personalizzazione</value>
+  </data>
+  <data name="RemoveHostSettingsButton.Content" xml:space="preserve">
+    <value>Rimuovi</value>
+  </data>
+  <data name="RemoveHostSettingsConfirmButton.Content" xml:space="preserve">
+    <value>Sì, rimuovi impostazioni</value>
+  </data>
+  <data name="RemoveHostSettingsConfirmText.Text" xml:space="preserve">
+    <value>Sei sicuro?</value>
+  </data>
+  <data name="RestoreDefaultFolder.Text" xml:space="preserve">
+    <value>Ripristina cartella predefinita</value>
+  </data>
+  <data name="TitleBarControl.Title" xml:space="preserve">
+    <value>Impostazioni</value>
+  </data>
+</root>
