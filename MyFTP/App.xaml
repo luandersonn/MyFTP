@@ -1,13 +1,13 @@
 ﻿<Application x:Class="MyFTP.App"
-			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-			 xmlns:controls="using:Microsoft.UI.Xaml.Controls"
-			 xmlns:local="using:MyFTP">
-	<Application.Resources>
-		<controls:XamlControlsResources>
-			<controls:XamlControlsResources.MergedDictionaries>
-				<ResourceDictionary Source="/Themes/Generic.xaml" />
-			</controls:XamlControlsResources.MergedDictionaries>
-		</controls:XamlControlsResources>
-	</Application.Resources>
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+             xmlns:local="using:MyFTP">
+    <Application.Resources>
+        <controls:XamlControlsResources>
+            <controls:XamlControlsResources.MergedDictionaries>
+                <ResourceDictionary Source="/Themes/Generic.xaml" />
+            </controls:XamlControlsResources.MergedDictionaries>
+        </controls:XamlControlsResources>
+    </Application.Resources>
 </Application>

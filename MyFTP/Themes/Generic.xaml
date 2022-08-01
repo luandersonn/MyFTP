@@ -1,15 +1,15 @@
 <ResourceDictionary x:Class="MyFTP.Themes.Generic"
-					xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-					xmlns:converters="using:MyFTP.Utils.Converters"
-					xmlns:local="using:MyFTP">
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:converters="using:MyFTP.Utils.Converters"
+                    xmlns:local="using:MyFTP">
 
-	<ResourceDictionary.MergedDictionaries>
-		<ResourceDictionary Source="/Controls/TitleBarControl.xaml" />
-		<ResourceDictionary Source="/Themes/DestructiveButtonStyle.xaml" />
-	</ResourceDictionary.MergedDictionaries>
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Controls/TitleBarControl.xaml" />
+        <ResourceDictionary Source="/Themes/DestructiveButtonStyle.xaml" />
+    </ResourceDictionary.MergedDictionaries>
 
-	<converters:ItemToBoolConverter x:Key="ItemToBoolConverter" />
-	<converters:SizeInBytesHumanizeConverter x:Key="SizeInBytesHumanizeConverter" />
-	<converters:DateTimeHumanizeConverter x:Key="DateTimeHumanizeConverter" />
+    <converters:ItemToBoolConverter x:Key="ItemToBoolConverter" />
+    <converters:SizeInBytesHumanizeConverter x:Key="SizeInBytesHumanizeConverter" />
+    <converters:DateTimeHumanizeConverter x:Key="DateTimeHumanizeConverter" />
 </ResourceDictionary>

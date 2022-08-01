@@ -144,9 +144,12 @@
       <DependentUpon>TitleBarControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Services\AppCenterService.cs" />
+    <Compile Include="Services\FileLogger.cs" />
     <Compile Include="Services\StoreService.cs" />
     <Compile Include="Utils\DragAndDropHelper.cs" />
     <Compile Include="Utils\FileHelper.cs" />
+    <Compile Include="Services\ILogger.cs" />
+    <Compile Include="Utils\LoggerFactory.cs" />
     <Compile Include="Utils\Messages.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AppSettings.cs" />
@@ -169,6 +172,7 @@
     <Compile Include="Utils\IconHelper.cs" />
     <Compile Include="Utils\NavigationHistory.cs" />
     <Compile Include="Utils\FtpHostSettings.cs" />
+    <Compile Include="Utils\StringExt.cs" />
     <Compile Include="Utils\WindowHelper.cs" />
     <Compile Include="ViewModels\FtpHostSettingsViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
@@ -316,40 +320,40 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="FluentFTP">
-      <Version>35.0.4</Version>
+      <Version>39.0.0</Version>
     </PackageReference>
     <PackageReference Include="Humanizer.Core">
-      <Version>2.11.10</Version>
+      <Version>2.14.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.AppCenter.Analytics">
-      <Version>4.3.0</Version>
+      <Version>4.5.3</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.AppCenter.Crashes">
-      <Version>4.3.0</Version>
+      <Version>4.5.3</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection">
-      <Version>5.0.2</Version>
+      <Version>6.0.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.2.12</Version>
+      <Version>6.2.14</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Mvvm">
-      <Version>7.0.2</Version>
+      <Version>7.1.2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Animations">
-      <Version>7.0.2</Version>
+      <Version>7.1.2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Behaviors">
-      <Version>7.0.2</Version>
+      <Version>7.1.2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
-      <Version>7.0.2</Version>
+      <Version>7.1.2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls.DataGrid">
-      <Version>7.0.2</Version>
+      <Version>7.1.2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.UI.Xaml">
-      <Version>2.6.2</Version>
+      <Version>2.8.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

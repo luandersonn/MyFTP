@@ -50,7 +50,7 @@ namespace MyFTP.ViewModels
 				(item) => item.DeleteCommand.CanExecute(item));
 
 			DisconnectCommand = new AsyncRelayCommand<FtpListItemViewModel>(OnDisconnectCommandAsync, IsNotNull);
-		}		
+		}
 
 		private async Task DownloadCommandAsync(IEnumerable<FtpListItemViewModel> items)
 		{
@@ -59,7 +59,7 @@ namespace MyFTP.ViewModels
 			{
 				foreach (var item in items)
 				{
-					if (item.Type == FtpFileSystemObjectType.Directory)
+					if (item.Type == FtpObjectType.Directory)
 					{
 						var newFolder = await folder.CreateFolderAsync(item.Name, CreationCollisionOption.ReplaceExisting);
 						TransferService.EnqueueDownload(item.Client, item.FullName, newFolder);
@@ -82,9 +82,12 @@ namespace MyFTP.ViewModels
 				while (root.Parent != null)
 					root = root.Parent;
 				await root.Client.DisconnectAsync(token);
+
 			}
 			finally
 			{
+				root.Client?.Dispose();
+				root.Logger?.Dispose();
 				_root.RemoveItem(root);
 			}
 		}

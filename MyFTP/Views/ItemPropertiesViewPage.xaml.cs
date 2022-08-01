@@ -35,7 +35,7 @@ namespace MyFTP.Views
 				uint size = 80;
 				StorageItemThumbnail thumbnail;
 				var extension = Path.GetExtension(m.Name);
-				if (m.Type == FluentFTP.FtpFileSystemObjectType.Directory)
+				if (m.Type == FluentFTP.FtpObjectType.Directory)
 				{
 					thumbnail = await Utils.IconHelper.GetFolderIconAsync(size);
 				}

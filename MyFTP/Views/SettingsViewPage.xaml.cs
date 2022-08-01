@@ -1,16 +1,20 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.Messaging;
 using Microsoft.Toolkit.Uwp.Helpers;
+using Microsoft.Toolkit.Uwp.UI;
 using MyFTP.Services;
 using MyFTP.Utils;
 using MyFTP.ViewModels;
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using muxc = Microsoft.UI.Xaml.Controls;
 
@@ -25,6 +29,7 @@ namespace MyFTP.Views
 		public SettingsViewPage()
 		{
 			InitializeComponent();
+
 			DataContext = App.Current.Services.GetRequiredService<SettingsViewModel>();
 			AppCenterService = App.Current.Services.GetService<AppCenterService>();
 			Loaded += (sender, args) =>
@@ -51,13 +56,11 @@ namespace MyFTP.Views
 
 		protected override void OnNavigatedTo(NavigationEventArgs e)
 		{
-			totalExpanderCount = RootStackPanel.Children.OfType<muxc.Expander>().Count();
-			UpdateExpanderButtons();
 			if (ViewModel.UpdateService?.CheckForUpdatesCommand.CanExecute(null) == true)
 				ViewModel.UpdateService.CheckForUpdatesCommand.Execute(null);
 
 #if DEBUG
-			FindName(nameof(DebugExpander));//.Visibility = Visibility.Visible;
+			FindName(nameof(DebugExpander));
 #endif
 		}
 
@@ -66,13 +69,10 @@ namespace MyFTP.Views
 		#region expanders		
 		public bool IsAllExpanded
 		{
-			get
-			{
-				return RootStackPanel
+			get => RootStackPanel
 								.Children
 								.OfType<muxc.Expander>()
 								.All(expander => expander.IsExpanded);
-			}
 			set
 			{
 				foreach (var element in RootStackPanel
@@ -85,27 +85,51 @@ namespace MyFTP.Views
 		}
 		private void ExpandAll() => IsAllExpanded = true;
 		private void CollapseAll() => IsAllExpanded = false;
-		private void Expanding()
+		private void Expanding(muxc.Expander sender, muxc.ExpanderExpandingEventArgs args)
 		{
+			var tag = (string)sender.Tag;
+			SaveExpanderState(tag, true);
 			expandedCount++;
 			UpdateExpanderButtons();
+
+			switch (tag)
+			{
+				case "Logs":
+					ViewModel.RefreshLogsListCommand.Execute(null);
+					break;
+
+				case "Host":
+					ViewModel.RefreshHostSettingsCommand.Execute(null);
+					break;
+			}
+
 		}
-		private void Collapsed()
+		private void Collapsed(muxc.Expander sender, muxc.ExpanderCollapsedEventArgs args)
 		{
+			SaveExpanderState((string)sender.Tag, false);
 			expandedCount--;
+			UpdateExpanderButtons();
+		}
+
+		private void ExpanderLoaded(object sender, RoutedEventArgs args)
+		{
+			var expander = (muxc.Expander)sender;
+			expander.IsExpanded = GetExpanderState((string)expander.Tag);
+			totalExpanderCount++;
 			UpdateExpanderButtons();
 		}
 		private void UpdateExpanderButtons()
 		{
-			if (expandedCount == 0)
-				CollapseAllButton.IsEnabled = false;
-			else
-				CollapseAllButton.IsEnabled = true;
+			CollapseAllButton.IsEnabled = expandedCount != 0;
+			ExpandAllButton.IsEnabled = expandedCount != totalExpanderCount;
+		}
 
-			if (expandedCount == totalExpanderCount)
-				ExpandAllButton.IsEnabled = false;
-			else
-				ExpandAllButton.IsEnabled = true;
+		private void SaveExpanderState(string id, bool state) => ViewModel.Settings.TrySet(id, state, "ExpanderState");
+		private bool GetExpanderState(string id)
+		{
+			bool isExpanded = false;
+			ViewModel.Settings.TryGet(id, out isExpanded, "ExpanderState");
+			return isExpanded;
 		}
 		#endregion
 
@@ -150,15 +174,6 @@ namespace MyFTP.Views
 			}
 		}
 
-		private bool GoBack()
-		{
-			if (Frame.CanGoBack)
-			{
-				Frame.GoBack();
-				return true;
-			}
-			return false;
-		}
 		#region DEBUG		
 		private async void ComboBox_Loaded(object sender, RoutedEventArgs e)
 		{
@@ -179,5 +194,59 @@ namespace MyFTP.Views
 			Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride = item;
 		}
 		#endregion
+
+		private async void OnListViewContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
+		{
+			if (args.ItemContainer.ContentTemplateRoot is Grid root
+							&& args.Item is StorageFile file
+							&& root.FindDescendant<HyperlinkButton>().Content is Image image)
+			{
+
+				if (args.InRecycleQueue)
+				{
+					image.Source = null;
+				}
+				else
+				{
+					args.Handled = true;
+					switch (args.Phase)
+					{
+						case 0:
+							args.RegisterUpdateCallback(1, OnListViewContainerContentChanging);
+							break;
+
+						case 1:
+
+							var source = new BitmapImage
+							{
+								DecodePixelType = DecodePixelType.Logical
+							};
+							image.Source = source;
+
+							try
+							{
+								var thumbnail = await Utils.IconHelper.GetFileIconAsync(file.FileType, 256);
+								thumbnail.Seek(0);
+								await source.SetSourceAsync(thumbnail);
+							}
+							catch (Exception e)
+							{
+								Debug.WriteLine(e);
+							}
+							break;
+					}
+				}
+			}
+		}
+
+		private bool GoBack()
+		{
+			if (Frame.CanGoBack)
+			{
+				Frame.GoBack();
+				return true;
+			}
+			return false;
+		}
 	}
 }

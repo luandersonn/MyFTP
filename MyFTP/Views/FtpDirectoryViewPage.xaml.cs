@@ -125,10 +125,10 @@ namespace MyFTP.Views
 							{
 								switch (item.Type)
 								{
-									case FluentFTP.FtpFileSystemObjectType.File:
+									case FluentFTP.FtpObjectType.File:
 										thumbnail = await Utils.IconHelper.GetFileIconAsync(Path.GetExtension(item.Name));
 										break;
-									case FluentFTP.FtpFileSystemObjectType.Directory:
+									case FluentFTP.FtpObjectType.Directory:
 										thumbnail = await Utils.IconHelper.GetFolderIconAsync();
 										break;
 									default:
@@ -170,7 +170,7 @@ namespace MyFTP.Views
 
 			//TODO: Remove this from final version		
 			var transferService = App.Current.Services.GetService<Services.ITransferItemService>();
-			if (item.Type == FluentFTP.FtpFileSystemObjectType.File && transferService != null)
+			if (item.Type == FluentFTP.FtpObjectType.File && transferService != null)
 			{
 				await OpenFileAsync(item, transferService);
 			}
@@ -185,7 +185,7 @@ namespace MyFTP.Views
 			var item = (FtpListItemViewModel)frameworkElement.DataContext;
 			//TODO: Remove this from final version		
 			var transferService = App.Current.Services.GetService<Services.ITransferItemService>();
-			if (item.Type == FluentFTP.FtpFileSystemObjectType.File && transferService != null)
+			if (item.Type == FluentFTP.FtpObjectType.File && transferService != null)
 			{
 				await OpenFileAsync(item, transferService);
 			}
@@ -254,7 +254,7 @@ namespace MyFTP.Views
 			if (item != null)
 				NavigationHistory.NavigateTo(item, NavigationHistory.CurrentItemIndex + 1);
 		}
-    
+
 		private async void OnOpenProperties(object sender, RoutedEventArgs e)
 		{
 			var element = (FrameworkElement)sender;

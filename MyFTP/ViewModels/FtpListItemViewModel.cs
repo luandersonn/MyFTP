@@ -39,7 +39,12 @@ namespace MyFTP.ViewModels
 		#endregion
 
 		#region constructor
-		public FtpListItemViewModel(IFtpClient client, FtpListItem item, FtpListItemViewModel parent, ITransferItemService transferService, IDialogService dialogService)
+		public FtpListItemViewModel(IFtpClient client,
+							  FtpListItem item,
+							  FtpListItemViewModel parent,
+							  ITransferItemService transferService,
+							  IDialogService dialogService,
+							  ILogger logger = null)
 		{
 			Client = client ?? throw new ArgumentNullException(nameof(client));
 			Parent = parent;
@@ -65,6 +70,7 @@ namespace MyFTP.ViewModels
 
 			_transferService = transferService;
 			_dialogService = dialogService;
+			Logger = logger;
 			_guid = Guid.NewGuid().ToString();
 			_weakMessenger.Register<object, string>(this, _guid, UploadFinished);
 
@@ -103,14 +109,15 @@ namespace MyFTP.ViewModels
 		public FtpPermission GroupPermissions { get => _groupPermissions; private set => Set(ref _groupPermissions, value); }
 		public FtpPermission OthersPermissions { get => _othersPermissions; private set => Set(ref _othersPermissions, value); }
 		public FtpListItemViewModel Parent { get => _parent; private set => Set(ref _parent, value); }
-		public FtpFileSystemObjectType Type { get; }
-		public FtpFileSystemObjectSubType SubType { get; }
-		public bool IsDirectory => Type == FtpFileSystemObjectType.Directory;
+		public FtpObjectType Type { get; }
+		public FtpObjectSubType SubType { get; }
+		public bool IsDirectory => Type == FtpObjectType.Directory;
 		public long Size { get; }
 		public DateTime Modified { get; }
 		public ReadOnlyObservableCollection<FtpListItemViewModel> Items { get; }
 		public bool IsLoaded { get => _isLoaded; private set => Set(ref _isLoaded, value); }
 		public bool IsLoading { get => _isLoading; private set => Set(ref _isLoading, value); }
+		public ILogger Logger { get; }
 		#endregion
 
 		#region commands
@@ -129,7 +136,7 @@ namespace MyFTP.ViewModels
 			RefreshCommand.NotifyCanExecuteChanged();
 			try
 			{
-				if (Type != FtpFileSystemObjectType.Directory)
+				if (Type != FtpObjectType.Directory)
 					throw new NotSupportedException();
 				// Load the root permission manually
 				var result = await Client.GetListingAsync(FullName, token);
@@ -205,7 +212,7 @@ namespace MyFTP.ViewModels
 					{
 						foreach (var item in arg)
 						{
-							if (item.Type == FtpFileSystemObjectType.Directory)
+							if (item.Type == FtpObjectType.Directory)
 							{
 								var _foder = await folder.CreateFolderAsync(item.Name, CreationCollisionOption.OpenIfExists);
 								_transferService.EnqueueDownload(item.Client, item.FullName, _foder);
@@ -218,7 +225,7 @@ namespace MyFTP.ViewModels
 						}
 					}
 				}
-				else if (Type == FtpFileSystemObjectType.Directory)
+				else if (Type == FtpObjectType.Directory)
 				{
 					var folder = await _weakMessenger.Send<RequestOpenFolderMessage>();
 					if (folder != null)
@@ -254,7 +261,7 @@ namespace MyFTP.ViewModels
 						{
 							try
 							{
-								if (item.Type == FtpFileSystemObjectType.Directory)
+								if (item.Type == FtpObjectType.Directory)
 									await item.Client.DeleteDirectoryAsync(item.FullName, token);
 								else
 									await item.Client.DeleteFileAsync(item.FullName, token);
@@ -272,7 +279,7 @@ namespace MyFTP.ViewModels
 				{
 					if (await _dialogService.AskForDeleteAsync(new FtpListItemViewModel[] { this }))
 					{
-						if (Type == FtpFileSystemObjectType.Directory)
+						if (Type == FtpObjectType.Directory)
 							await Client.DeleteDirectoryAsync(FullName, token);
 						else
 							await Client.DeleteFileAsync(FullName, token);
@@ -357,7 +364,7 @@ namespace MyFTP.ViewModels
 		private bool CanExecuteRefreshCommand()
 		{
 			var isNotLoading = !IsLoading;
-			var isDirectory = Type == FtpFileSystemObjectType.Directory;
+			var isDirectory = Type == FtpObjectType.Directory;
 
 			return isNotLoading && IsDirectory;
 		}
@@ -365,7 +372,7 @@ namespace MyFTP.ViewModels
 		private bool CanExecuteUploadCommand()
 		{
 			var canWritePermission = (OwnerPermissions & FtpPermission.Write) == FtpPermission.Write;
-			var isDirectory = Type == FtpFileSystemObjectType.Directory;
+			var isDirectory = Type == FtpObjectType.Directory;
 			var transferServiceExists = _transferService != null;
 
 			return canWritePermission && IsDirectory && transferServiceExists;
@@ -398,7 +405,7 @@ namespace MyFTP.ViewModels
 		{
 			var canWritePermission = (OwnerPermissions & FtpPermission.Write) == FtpPermission.Write;
 			var nameIsNoEmpty = !string.IsNullOrWhiteSpace(itemName);
-			var nameIsValidPath = Type == FtpFileSystemObjectType.Directory
+			var nameIsValidPath = Type == FtpObjectType.Directory
 				? itemName?.IndexOfAny(Path.GetInvalidPathChars()) == -1
 				: itemName?.IndexOfAny(Path.GetInvalidFileNameChars()) == -1;
 			var notEqualsToCurrent = itemName != Name;
@@ -412,7 +419,7 @@ namespace MyFTP.ViewModels
 			var canWritePermission = (OwnerPermissions & FtpPermission.Write) == FtpPermission.Write;
 			var nameIsNoEmpty = !string.IsNullOrWhiteSpace(folderName);
 			var nameIsValidPath = folderName?.IndexOfAny(Path.GetInvalidPathChars()) == -1;
-			var isDirectory = Type == FtpFileSystemObjectType.Directory;
+			var isDirectory = Type == FtpObjectType.Directory;
 			return canWritePermission && nameIsNoEmpty && nameIsValidPath && isDirectory;
 		}
 		#endregion
@@ -456,11 +463,11 @@ namespace MyFTP.ViewModels
 					bool hasSuccess = false;
 					switch (item.Type)
 					{
-						case FtpFileSystemObjectType.File:
+						case FtpObjectType.File:
 							hasSuccess = await Client.MoveFileAsync(item.FullName, newRemotePath, FtpRemoteExists.Skip, default);
 							break;
 
-						case FtpFileSystemObjectType.Directory:
+						case FtpObjectType.Directory:
 							hasSuccess = await Client.MoveDirectoryAsync(item.FullName, newRemotePath, FtpRemoteExists.Skip, default);
 							break;
 					}

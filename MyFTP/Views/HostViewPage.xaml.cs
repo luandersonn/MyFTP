@@ -278,10 +278,10 @@ namespace MyFTP.Views
 							{
 								switch (item.Type)
 								{
-									case FluentFTP.FtpFileSystemObjectType.File:
+									case FluentFTP.FtpObjectType.File:
 										thumbnail = await Utils.IconHelper.GetFileIconAsync(Path.GetExtension(item.Name));
 										break;
-									case FluentFTP.FtpFileSystemObjectType.Directory:
+									case FluentFTP.FtpObjectType.Directory:
 										thumbnail = await Utils.IconHelper.GetFolderIconAsync();
 										break;
 									default:
